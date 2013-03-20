@@ -4,6 +4,7 @@
  */
 package verplaatsingensysteem;
 
+import domain.Movement;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -35,7 +37,7 @@ public class XMLParser
     }
 
     public String readXML()
-    {  
+    {
         try
         {
             parser.parse(xmlToRead, handler);
@@ -43,14 +45,14 @@ public class XMLParser
         {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         //handler.readList();
-        
+
         return null;
     }
-    
-        public ArrayList<Movement> readMovementXML()
-    {  
+
+    public ArrayList<Movement> readMovementXML()
+    {
         try
         {
             parser.parse(xmlToRead, handler);
@@ -58,9 +60,17 @@ public class XMLParser
         {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         //handler.readList();
-        
+
         return null;
+    }
+
+    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
+    {
+        if(qName.equalsIgnoreCase("timestep"))
+        {
+            Movement m = new Movement();
+        }
     }
 }
