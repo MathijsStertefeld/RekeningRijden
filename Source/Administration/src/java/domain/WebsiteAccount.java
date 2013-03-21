@@ -21,9 +21,9 @@ public class WebsiteAccount implements Serializable {
     private String address;
     private String zipCode;
     private Date dateOfBirth;
-    @OneToMany
+    @OneToMany(cascade={CascadeType.ALL})
     private List<Bill> bills;
-    @OneToMany
+    @OneToMany(cascade={CascadeType.ALL})
     private List<Car> cars;
     //</editor-fold>
 
