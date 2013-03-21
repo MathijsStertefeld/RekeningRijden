@@ -4,6 +4,8 @@
  */
 package domain;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Leslie Aerts
@@ -11,32 +13,41 @@ package domain;
 public class Lane
 {
 
-    private Edge beginEdge;
-    private Edge endEdge;
-
-    public Lane(Edge edge1, Edge edge2)
+    private String id;
+    private ArrayList<VehiclePosition> positions;
+    
+    public Lane(String value)
     {
-        this.beginEdge = edge1;
-        this.endEdge = edge2;
+        this.id = value;
+        positions = new ArrayList<VehiclePosition>();
+    }
+    
+    public void addVehicle(VehiclePosition pos)
+    {
+        positions.add(pos);
     }
 
-    public Edge getBeginEdge()
+    public String getId()
     {
-        return beginEdge;
+        return id;
     }
 
-    public void setBeginEdge(Edge beginEdge)
+    public void setId(String id)
     {
-        this.beginEdge = beginEdge;
+        this.id = id;
     }
 
-    public Edge getEndEdge()
+    public ArrayList<VehiclePosition> getPositions()
     {
-        return endEdge;
+        return positions;
     }
 
-    public void setEndEdge(Edge endEdge)
+    public void setPositions(ArrayList<VehiclePosition> positions)
     {
-        this.endEdge = endEdge;
+        this.positions = positions;
     }
+    
+    
+    
+    
 }

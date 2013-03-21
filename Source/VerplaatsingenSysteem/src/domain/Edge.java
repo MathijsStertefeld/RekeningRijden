@@ -4,34 +4,46 @@
  */
 package domain;
 
+import java.util.List;
+
 /**
  *
  * @author Leslie Aerts
  */
 public class Edge
 {
-    private int posX;
-    private int posY;
 
-    public int getPosX()
+    private String id;
+    private List<Lane> lanes;
+    
+    public Edge(String id)
     {
-        return posX;
+        this.id = id;
     }
 
-    public void setPosX(int posX)
+    public String getId()
     {
-        this.posX = posX;
+        return id;
     }
 
-    public int getPosY()
+    public void setId(String id)
     {
-        return posY;
+        this.id = id;
     }
 
-    public void setPosY(int posY)
+    public List<Lane> getLanes()
     {
-        this.posY = posY;
+        return lanes;
+    }
+
+    public void setLanes(List<Lane> lanes)
+    {
+        this.lanes = lanes;
     }
     
+    public void addLane(Lane l)
+    {
+        lanes.add(l);
+    }
     
 }
