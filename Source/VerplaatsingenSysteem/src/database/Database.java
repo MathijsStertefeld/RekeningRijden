@@ -15,6 +15,7 @@ import java.sql.Statement;
  */
 public class Database
 {
+
     public static Connection getConnection() throws ClassNotFoundException, SQLException
     {
         String driver = "oracle.jdbc.driver.OracleDriver";
@@ -26,13 +27,54 @@ public class Database
         return conn;
     }
 
-    public static void newMovement() throws ClassNotFoundException, SQLException
+    public static void newVehiclePosition() throws ClassNotFoundException, SQLException
     {
-        Connection connection = getConnection();
-        Statement statement = connection.createStatement();
-        statement.executeUpdate("insert into Movement(timestamp) values(10.0)");
-        
-        statement.close();
-        connection.close();
+        try
+        {
+            Connection connection = getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("insert into VehiclePosition(position, speed, lane_id) values()");
+
+            statement.close();
+            connection.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println("Failed creating a new VEHICLE POSITION to the database.");
+        }
+    }
+
+    public static void newTimeStep() throws ClassNotFoundException, SQLException
+    {
+        try
+        {
+            Connection connection = getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("insert into Lane(lane) values(10.0)");
+
+            statement.close();
+            connection.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println("Failed creating a new TIMESTEP to the database.");
+        }
+    }
+    
+    public static void newSession() throws ClassNotFoundException, SQLException
+    {
+        try
+        {
+            Connection connection = getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("insert into Lane(lane) values(10.0)");
+
+            statement.close();
+            connection.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println("Failed creating a new SESSION to the database.");
+        }
     }
 }
