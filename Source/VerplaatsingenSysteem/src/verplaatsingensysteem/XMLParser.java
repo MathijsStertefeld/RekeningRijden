@@ -6,11 +6,14 @@ package verplaatsingensysteem;
 
 import domain.Edge;
 import domain.Lane;
+import domain.Session;
 import domain.TimeStep;
 import domain.VehiclePosition;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,6 +37,7 @@ public class XMLParser extends DefaultHandler
     private Lane currentLane;
     private Edge currentEdge;
 
+    //
     public XMLParser(String fileName) throws SAXException, IOException, ParserConfigurationException
     {
         SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -42,7 +46,7 @@ public class XMLParser extends DefaultHandler
         timesteps = new ArrayList<TimeStep>();
     }
 
-    public ArrayList<TimeStep> readMovementXML()
+    public Session readMovementXML()
     {
         try
         {
@@ -51,8 +55,23 @@ public class XMLParser extends DefaultHandler
         {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return timesteps;
+        
+        //Bestandsnaam MOET "verplaatsing_yyyymmdd.xml" zijn.
+        String temp = xmlToRead.getName();
+        String[] parts = temp.split("_");
+        
+        String dateName = parts[1].split("\\.")[0];
+        System.out.println("Date is " + dateName);
+        int year = Integer.parseInt(dateName.substring(0, 4));
+        int month = Integer.parseInt(dateName.substring(4,6));
+        int day = Integer.parseInt(dateName.substring(6,8));
+        
+        GregorianCalendar gc = new GregorianCalendar(year, month-1, day);
+        Date d = gc.getTime();
+        
+        System.out.println(year + " " + month + " " + day);
+        Session s = new Session(d, timesteps);
+        return s;
     }
 
     @Override

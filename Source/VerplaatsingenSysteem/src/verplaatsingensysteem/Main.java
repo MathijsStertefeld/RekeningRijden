@@ -6,6 +6,7 @@ package verplaatsingensysteem;
 
 import domain.Edge;
 import domain.Lane;
+import domain.Session;
 import domain.TimeStep;
 import domain.VehiclePosition;
 import java.io.IOException;
@@ -29,31 +30,33 @@ public class Main
         XMLParser parser = null;
         try
         {
-            parser = new XMLParser("testverplaatsing.xml");
+            parser = new XMLParser("verplaatsing_19901218.xml");
         } catch (SAXException | IOException | ParserConfigurationException ex)
         {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        //Test read
+        Session s = parser.readMovementXML();
 
-        for (TimeStep ts : parser.readMovementXML())
-        {
-            System.out.println("Timestep " + ts.getTime());
-
-            for (Edge e : ts.getEdges())
-            {
-                System.out.println("     Edge " + e.getId());
-                for (Lane l : e.getLanes())
-                {
-                    System.out.println("          Lane " + l.getId());
-
-                    for (VehiclePosition pos : l.getPositions())
-                    {
-                        System.out.println("                         Car" + pos.getCarPos() +" " + pos.getCarTrackerId() + " " + pos.getCarSpeed());
-                    }
-                }
-            }
-        }
-
+        System.out.println("Session was started on " + s.getSessionDate().toString());
+//        for (TimeStep ts : s.getTimesteps())
+//        {
+//            System.out.println("Timestep " + ts.getTime());
+//
+//            for (Edge e : ts.getEdges())
+//            {
+//                System.out.println("     Edge " + e.getId());
+//                for (Lane l : e.getLanes())
+//                {
+//                    System.out.println("          Lane " + l.getId());
+//
+//                    for (VehiclePosition pos : l.getPositions())
+//                    {
+//                        System.out.println("                         Car" + pos.getCarPos() + " " + pos.getCarTrackerId() + " " + pos.getCarSpeed());
+//                    }
+//                }
+//            }
+//        }
     }
 }
