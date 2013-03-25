@@ -4,6 +4,7 @@
  */
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,11 +15,12 @@ public class Edge
 {
 
     private String id;
-    private List<Lane> lanes;
+    private ArrayList<Lane> lanes;
     
     public Edge(String id)
     {
         this.id = id;
+        lanes = new ArrayList<Lane>();
     }
 
     public String getId()
@@ -36,7 +38,7 @@ public class Edge
         return lanes;
     }
 
-    public void setLanes(List<Lane> lanes)
+    public void setLanes(ArrayList<Lane> lanes)
     {
         this.lanes = lanes;
     }

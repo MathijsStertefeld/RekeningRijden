@@ -4,6 +4,8 @@
  */
 package domain;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Leslie Aerts
@@ -12,16 +14,17 @@ public class TimeStep
 {
 
     private double time;
-    private Edge currentEdge;
+    private ArrayList<Edge> edges;
 
-    public TimeStep(int timestep, Edge edge)
+    public TimeStep(int timestep)
     {
         this.time = timestep;
-        this.currentEdge = edge;
+        edges = new ArrayList<Edge>();
     }
-    
+
     public TimeStep()
     {
+        edges = new ArrayList<Edge>();
     }
 
     public double getTime()
@@ -34,17 +37,18 @@ public class TimeStep
         this.time = time;
     }
 
-    public Edge getCurrentEdge()
+    public ArrayList<Edge> getEdges()
     {
-        return currentEdge;
+        return edges;
     }
 
-    public void setCurrentEdge(Edge currentEdge)
+    public void setEdges(ArrayList<Edge> edges)
     {
-        this.currentEdge = currentEdge;
+        this.edges = edges;
     }
-    
-    
-    
-    
+
+    public void addEdge(Edge e)
+    {
+        edges.add(e);
+    }
 }

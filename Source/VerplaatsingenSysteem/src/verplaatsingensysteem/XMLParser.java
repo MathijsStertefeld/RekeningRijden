@@ -8,7 +8,6 @@ import domain.Edge;
 import domain.Lane;
 import domain.TimeStep;
 import domain.VehiclePosition;
-import java.awt.Label;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,12 +32,14 @@ public class XMLParser extends DefaultHandler
     private ArrayList<TimeStep> timesteps;
     private TimeStep currentTimeStep;
     private Lane currentLane;
+    private Edge currentEdge;
 
     public XMLParser(String fileName) throws SAXException, IOException, ParserConfigurationException
     {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         parser = factory.newSAXParser();
         xmlToRead = new File(fileName);
+        timesteps = new ArrayList<TimeStep>();
     }
 
     public ArrayList<TimeStep> readMovementXML()
@@ -51,31 +52,35 @@ public class XMLParser extends DefaultHandler
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return null;
+        return timesteps;
     }
 
     @Override
     public void startElement(String s, String s1, String elementName, Attributes attributes) throws SAXException
     {
-        currentTimeStep = new TimeStep();
+        //currentTimeStep = new TimeStep();
 
         //If it gets to a new main element (Which is a timestep) create a new movement.
         if (elementName.equalsIgnoreCase("timestep"))
         {
+            currentTimeStep = new TimeStep();
             double timeStep = Double.parseDouble(attributes.getValue("time"));
+            System.out.println("Starting new Timestep..." + timeStep);
             currentTimeStep.setTime(timeStep);
         }
 
-        Edge e = null;
         if (elementName.equalsIgnoreCase("edge"))
         {
-            e = new Edge(attributes.getValue("id"));
-            currentTimeStep.setCurrentEdge(e);
+
+            currentEdge = new Edge(attributes.getValue("id"));
+            System.out.println("Starting new edge..." + currentEdge.getId());
+            //currentTimeStep.setCurrentEdge(currentEdge);
         }
 
         if (elementName.equalsIgnoreCase("lane"))
         {
             String laneId = attributes.getValue("id");
+            System.out.println("Starting new Lane..." + laneId);
             currentLane = new Lane(laneId);
         }
 
@@ -85,9 +90,8 @@ public class XMLParser extends DefaultHandler
             double vehiclePos = Double.parseDouble(attributes.getValue("pos"));
             double vehicleSpeed = Double.parseDouble(attributes.getValue("speed"));
             VehiclePosition vehPos = new VehiclePosition(vehicleId, vehiclePos, vehicleSpeed);
+            System.out.println("Starting new vehicle..." + vehicleId + " " + vehiclePos + " " + vehicleSpeed);
             currentLane.addVehicle(vehPos);
-            // currentTimeStep.getCurrentEdge().getLanes().get(index)
-            //currentTimeStep`.getCurrentEdge().();
         }
     }
 
@@ -97,16 +101,22 @@ public class XMLParser extends DefaultHandler
         //This means the main node (timestep) comes to an end
         if (element.equalsIgnoreCase("timestep"))
         {
+            System.out.println("Ending timestep...");
             timesteps.add(currentTimeStep);
         }
 
+        if (element.equalsIgnoreCase("edge"))
+        {
+            System.out.println("Ending edge...");
+            currentTimeStep.addEdge(currentEdge);
+        }
+
+
         if (element.equalsIgnoreCase("lane"))
         {
-            currentTimeStep.getCurrentEdge().addLane(currentLane);
+            System.out.println("Ending Lane...");
+            System.out.println(currentLane.getId());
+            currentEdge.addLane(currentLane);
         }
-    }
-
-    public void testPrint()
-    {
     }
 }
