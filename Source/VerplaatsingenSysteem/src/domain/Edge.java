@@ -33,7 +33,7 @@ public class Edge
         this.id = id;
     }
 
-    public List<Lane> getLanes()
+    public ArrayList<Lane> getLanes()
     {
         return lanes;
     }

@@ -7,9 +7,11 @@ package database;
 import domain.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -29,10 +31,27 @@ public class Database
         return conn;
     }
 
+    
+    public static void test() throws ClassNotFoundException, SQLException
+    {
+        
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+
+        statement.execute("SELECT * FROM Edge WHERE id = " + 21);
+        
+        while(statement.getResultSet().next())
+        {
+            System.err.println(statement.getResultSet().getInt("id"));
+        }
+        
+        
+        statement.close();
+        connection.close();
+    }
     public static void doSomething(TimeStep timestep) throws ClassNotFoundException, SQLException
     {
         Connection connection = getConnection();
-        Statement statement = connection.createStatement();
 
         newTimeStep(timestep);
         
@@ -41,21 +60,41 @@ public class Database
 
         for (int i = 0; i < edges.size(); i++)
         {
-            if (statement.execute("SELECT * FROM Edge WHERE id = " + edges.get(i).getId()) == false)
+            Statement statement = connection.createStatement();
+            statement.execute("SELECT * FROM Edge WHERE id = " + edges.get(i).getId());
+            ResultSet resultSet = statement.getResultSet();
+            
+            if (resultSet.next() == false)
             {
                 newEdge(edges.get(i));
             }
             
-           // ArrayList<Lane> lanes = edges.get(i).getLanes();
+            ArrayList<Lane> lanes = edges.get(i).getLanes();
             
-//            for (int j = 0; j < lanes.size(); j++)
-//            {
-//            }
+            for (int j = 0; j < lanes.size(); j++)
+            {
+                statement = connection.createStatement();
+                statement.execute("SELECT * FROM Lane WHERE id = " + lanes.get(i).getId());
+                
+                ResultSet resultSet1 = statement.getResultSet();
+            
+                // If the current lane is not found in the database add it to the database.
+                if (resultSet1.next() == false)
+                {
+                    newLane(lanes.get(i), edges.get(i).getId());
+                }
+                
+                ArrayList<VehiclePosition> vehiclePositions = lanes.get(i).getPositions();
+                
+                for (int k = 0; k < vehiclePositions.size(); k++)
+                {
+                    newVehiclePosition(vehiclePositions.get(i));
+                }
+            }
+            
+            statement.close();
         }
-        
 
-
-        statement.close();
         connection.close();
     }
 
@@ -78,32 +117,15 @@ public class Database
         }
     }
 
-    public static void newVehiclePosition(VehiclePosition vehiclePosition) throws ClassNotFoundException, SQLException
+
+
+    public static void newLane(Lane lane, String edgeId) throws ClassNotFoundException, SQLException
     {
         try
         {
             Connection connection = getConnection();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("insert into VehiclePosition(carTracker_ID, position, speed, lane_id, timestep_time) values("
-                    + vehiclePosition.getCarTrackerId() + "," + vehiclePosition.getCarPos() + "," + vehiclePosition.getCarSpeed()
-                    + ",");
-
-            statement.close();
-            connection.close();
-        }
-        catch (Exception e)
-        {
-            System.err.println("Failed creating a new VEHICLE POSITION to the database.");
-        }
-    }
-
-    public static void newLane(Lane lane) throws ClassNotFoundException, SQLException
-    {
-        try
-        {
-            Connection connection = getConnection();
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO Lane(id, edge_id) VALUES("+ lane.getId() + ")");
+            statement.executeUpdate("INSERT INTO Lane(id, edge_id) VALUES("+ lane.getId() + "," + edgeId + ")");
 
             statement.close();
             connection.close();
@@ -146,6 +168,25 @@ public class Database
         catch (Exception e)
         {
             System.err.println("Failed creating a new SESSION to the database.");
+        }
+    }
+    
+    public static void newVehiclePosition(VehiclePosition vehiclePosition) throws ClassNotFoundException, SQLException
+    {
+        try
+        {
+            Connection connection = getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("insert into VehiclePosition(carTracker_ID, position, speed, lane_id, timestep_time) values("
+                    + vehiclePosition.getCarTrackerId() + "," + vehiclePosition.getCarPos() + "," + vehiclePosition.getCarSpeed()
+                    + ",");
+
+            statement.close();
+            connection.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println("Failed creating a new VEHICLE POSITION to the database.");
         }
     }
 }
