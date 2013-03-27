@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,74 +32,67 @@ public class Database
         return conn;
     }
 
-    
-    public static void test() throws ClassNotFoundException, SQLException
+    public static void writeToDatabase(TimeStep timestep, Session session) throws ClassNotFoundException, SQLException
     {
-        
         Connection connection = getConnection();
-        Statement statement = connection.createStatement();
 
-        statement.execute("SELECT * FROM Edge WHERE id = " + 21);
-        
-        while(statement.getResultSet().next())
+        Statement newStatement = connection.createStatement();
+        newStatement.execute("SELECT * FROM Simsession WHERE startdate = " + session.getSessionDate().getTime());
+        ResultSet newResultSet = newStatement.getResultSet();
+
+        if (newResultSet.next() == false)
         {
-            System.err.println(statement.getResultSet().getInt("id"));
+            newSession(session);
         }
-        
-        
-        statement.close();
-        connection.close();
-    }
-    public static void doSomething(TimeStep timestep) throws ClassNotFoundException, SQLException
-    {
-        Connection connection = getConnection();
 
-        newTimeStep(timestep);
-        
+        newStatement.close();
+
+        int timestepId = newTimeStep(timestep);
+
         // Check if the edges are in the database, if not add them to the database.
         ArrayList<Edge> edges = timestep.getEdges();
 
         for (int i = 0; i < edges.size(); i++)
         {
             Statement statement = connection.createStatement();
-            statement.execute("SELECT * FROM Edge WHERE id = " + edges.get(i).getId());
+            statement.execute("SELECT * FROM Edge WHERE id='" + edges.get(i).getId() + "'");
             ResultSet resultSet = statement.getResultSet();
-            
+
             if (resultSet.next() == false)
             {
                 newEdge(edges.get(i));
             }
-            
+
             ArrayList<Lane> lanes = edges.get(i).getLanes();
-            
+
             for (int j = 0; j < lanes.size(); j++)
             {
                 statement = connection.createStatement();
-                statement.execute("SELECT * FROM Lane WHERE id = " + lanes.get(i).getId());
-                
+                statement.execute("SELECT * FROM Lane WHERE id ='" + lanes.get(j).getId() + "'");
+
                 ResultSet resultSet1 = statement.getResultSet();
-            
+
                 // If the current lane is not found in the database add it to the database.
                 if (resultSet1.next() == false)
                 {
-                    newLane(lanes.get(i), edges.get(i).getId());
+                    newLane(lanes.get(j), edges.get(i).getId());
                 }
-                
-                ArrayList<VehiclePosition> vehiclePositions = lanes.get(i).getPositions();
-                
+
+                ArrayList<VehiclePosition> vehiclePositions = lanes.get(j).getPositions();
+
                 for (int k = 0; k < vehiclePositions.size(); k++)
                 {
-                    newVehiclePosition(vehiclePositions.get(i));
+                    newVehiclePosition(vehiclePositions.get(k), lanes.get(j), timestepId);
                 }
             }
-            
+
             statement.close();
         }
 
         connection.close();
     }
 
-    public static void newTimeStep(TimeStep timestep) throws ClassNotFoundException, SQLException
+    private static int newTimeStep(TimeStep timestep) throws ClassNotFoundException, SQLException
     {
         try
         {
@@ -106,44 +100,60 @@ public class Database
             Statement statement = connection.createStatement();
 
             // Add the new timestep to the database.
-            statement.executeUpdate("INSERT INTO Timestep(time, session_id) VALUES(" + timestep.getTime() + "," + "1)");
+            statement.executeUpdate("SELECT COUNT(*) FROM Timestep ");
+            ResultSet temp = statement.getResultSet();
+
+            int index = 0;
+
+            while (temp.next())
+            {
+                index = temp.getInt(1);
+                index++;
+            }
+            
+            statement.executeUpdate("INSERT INTO Timestep(id, time, session_id) VALUES(" + index + "," + timestep.getTime() + "," + 1 + ")");
 
             statement.close();
             connection.close();
+            
+            return index;
         }
         catch (Exception e)
         {
             System.err.println("Failed creating a new TIMESTEP to the database.");
+            System.err.println("Exception " + e.toString());
         }
+        
+        return -1;
     }
 
-
-
-    public static void newLane(Lane lane, String edgeId) throws ClassNotFoundException, SQLException
+    private static void newLane(Lane lane, String edgeId) throws ClassNotFoundException, SQLException
     {
         try
         {
             Connection connection = getConnection();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO Lane(id, edge_id) VALUES("+ lane.getId() + "," + edgeId + ")");
+            statement.executeUpdate("INSERT INTO Lane(id, edge_id) VALUES('" + lane.getId() + "','" + edgeId + "')");
 
             statement.close();
             connection.close();
         }
         catch (Exception e)
         {
+            System.err.println("With following lane: " + lane.getId() + " and edge: " + edgeId);
             System.err.println("Failed creating a new LANE to the database.");
+            System.err.println("Exception " + e.toString());
         }
     }
 
-    public static void newEdge(Edge edge) throws ClassNotFoundException, SQLException
+    private static void newEdge(Edge edge) throws ClassNotFoundException, SQLException
     {
         try
         {
             Connection connection = getConnection();
             Statement statement = connection.createStatement();
-            
-            statement.executeUpdate("INSERT INTO Edge(id) VALUES("+ edge.getId() + ")");
+
+            statement.executeUpdate("INSERT INTO Edge(id) VALUES('" + edge.getId() + "')");
 
             statement.close();
             connection.close();
@@ -151,16 +161,17 @@ public class Database
         catch (Exception e)
         {
             System.err.println("Failed creating a new EDGE to the database.");
+            System.err.println("Exception " + e.toString());
         }
     }
 
-    public static void newSession() throws ClassNotFoundException, SQLException
+    private static void newSession(Session session) throws ClassNotFoundException, SQLException
     {
         try
         {
             Connection connection = getConnection();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("insert into Lane(lane) values(10.0)");
+            statement.executeUpdate("INSERT INTO SIMSESSION(id, startdate) values(1," + session.getSessionDate().getTime() + ")");
 
             statement.close();
             connection.close();
@@ -168,25 +179,28 @@ public class Database
         catch (Exception e)
         {
             System.err.println("Failed creating a new SESSION to the database.");
+            System.err.println("Exception " + e.toString());
         }
     }
-    
-    public static void newVehiclePosition(VehiclePosition vehiclePosition) throws ClassNotFoundException, SQLException
+
+    private static void newVehiclePosition(VehiclePosition vehiclePosition, Lane lane, int timeStepId) throws ClassNotFoundException, SQLException
     {
         try
         {
             Connection connection = getConnection();
             Statement statement = connection.createStatement();
-            statement.executeUpdate("insert into VehiclePosition(carTracker_ID, position, speed, lane_id, timestep_time) values("
-                    + vehiclePosition.getCarTrackerId() + "," + vehiclePosition.getCarPos() + "," + vehiclePosition.getCarSpeed()
-                    + ",");
+            statement.executeUpdate("INSERT INTO VehiclePosition(cartracker_id, position, speed, lane_id, timestep_id) VALUES('"
+                    + vehiclePosition.getCarTrackerId() + "'," + vehiclePosition.getCarPos() + "," + vehiclePosition.getCarSpeed()
+                    + ",'" + lane.getId() + "'," + timeStepId + ")");
 
             statement.close();
             connection.close();
         }
         catch (Exception e)
         {
+            System.err.println("With following vehiclePosition: " + vehiclePosition.getCarTrackerId());
             System.err.println("Failed creating a new VEHICLE POSITION to the database.");
+            System.err.println("Exception " + e.toString());
         }
     }
 }

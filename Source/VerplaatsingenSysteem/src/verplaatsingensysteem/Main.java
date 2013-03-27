@@ -33,7 +33,8 @@ public class Main
         try
         {
             parser = new XMLParser("verplaatsing_19901218.xml");
-        } catch (SAXException | IOException | ParserConfigurationException ex)
+        }
+        catch (SAXException | IOException | ParserConfigurationException ex)
         {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -42,37 +43,40 @@ public class Main
         Session s = parser.readMovementXML();
 
         System.out.println("Session was started on " + s.getSessionDate().toString());
-        try
+
+        for (TimeStep ts : s.getTimesteps())
         {
-            Database.test();
- 
+            System.out.println("Timestep " + ts.getTime());
+
+            for (Edge e : ts.getEdges())
+            {
+                System.out.println("     Edge " + e.getId());
+                for (Lane l : e.getLanes())
+                {
+                    System.out.println("          Lane " + l.getId());
+
+                    for (VehiclePosition pos : l.getPositions())
+                    {
+                        System.out.println("                         Car" + pos.getCarPos() + " " + pos.getCarTrackerId() + " " + pos.getCarSpeed());
+                    }
+                }
+            }
         }
-        catch (ClassNotFoundException ex)
+
+        for (TimeStep ts : s.getTimesteps())
         {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            try
+            {
+                Database.writeToDatabase(ts, s);
+            }
+            catch (ClassNotFoundException ex)
+            {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch (SQLException ex)
+            {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-           //        for (TimeStep ts : s.getTimesteps())
-    //        {
-    //            System.out.println("Timestep " + ts.getTime());
-    //
-    //            for (Edge e : ts.getEdges())
-    //            {
-    //                System.out.println("     Edge " + e.getId());
-    //                for (Lane l : e.getLanes())
-    //                {
-    //                    System.out.println("          Lane " + l.getId());
-    //
-    //                    for (VehiclePosition pos : l.getPositions())
-    //                    {
-    //                        System.out.println("                         Car" + pos.getCarPos() + " " + pos.getCarTrackerId() + " " + pos.getCarSpeed());
-    //                    }
-    //                }
-    //        }
-    //        }
     }
 }
