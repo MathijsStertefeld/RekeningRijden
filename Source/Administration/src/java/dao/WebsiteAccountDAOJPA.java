@@ -21,17 +21,25 @@ public class WebsiteAccountDAOJPA implements WebsiteAccountDAO {
 
     @Override
     public void insert(WebsiteAccount websiteAccount) {
-        em.persist(websiteAccount);
+        if (websiteAccount != null && find(websiteAccount.getBsn()) == null) {
+            em.persist(websiteAccount);
+        }
     }
 
     @Override
     public WebsiteAccount update(WebsiteAccount websiteAccount) {
-        return em.merge(websiteAccount);
+        if (websiteAccount != null && find(websiteAccount.getBsn()) != null) {
+            websiteAccount = em.merge(websiteAccount);
+        }
+        
+        return websiteAccount;
     }
 
     @Override
     public void delete(WebsiteAccount websiteAccount) {
-        em.remove(websiteAccount);
+        if (websiteAccount != null && find(websiteAccount.getBsn()) != null) {
+            em.remove(websiteAccount);
+        }
     }
 
     @Override

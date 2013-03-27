@@ -21,17 +21,25 @@ public class RateDAOJPA implements RateDAO {
 
     @Override
     public void insert(Rate rate) {
-        em.persist(rate);
+        if (rate != null && find(rate.getName()) == null) {
+            em.persist(rate);
+        }
     }
 
     @Override
     public Rate update(Rate rate) {
-        return em.merge(rate);
+        if (rate != null && find(rate.getName()) != null) {
+            rate = em.merge(rate);
+        }
+        
+        return rate;
     }
 
     @Override
     public void delete(Rate rate) {
-        em.remove(rate);
+        if (rate != null && find(rate.getName()) != null) {
+            em.remove(rate);
+        }
     }
 
     @Override
