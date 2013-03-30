@@ -24,7 +24,7 @@ public class Database
     public static Connection getConnection() throws ClassNotFoundException, SQLException
     {
         String driver = "oracle.jdbc.driver.OracleDriver";
-        String url = "jdbc:oracle:thin:@localhost:1521:XE";
+        String url = "jdbc:oracle:thin:@86.92.20.205:1521:XE";
         String username = "PROFTAAK";
         String password = "wachtwoord";
         Class.forName(driver);

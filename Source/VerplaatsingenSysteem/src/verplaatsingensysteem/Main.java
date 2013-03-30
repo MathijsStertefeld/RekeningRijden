@@ -23,7 +23,6 @@ import org.xml.sax.SAXException;
  */
 public class Main
 {
-
     /**
      * @param args the command line arguments
      */
@@ -63,20 +62,20 @@ public class Main
             }
         }
 
-        for (TimeStep ts : s.getTimesteps())
-        {
-            try
-            {
-                Database.writeToDatabase(ts, s);
-            }
-            catch (ClassNotFoundException ex)
-            {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            catch (SQLException ex)
-            {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        for (TimeStep ts : s.getTimesteps())
+//        {
+//            try
+//            {
+//                Database.writeToDatabase(ts, s);
+//            }
+//            catch (ClassNotFoundException ex)
+//            {
+//                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            catch (SQLException ex)
+//            {
+//                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }
 }

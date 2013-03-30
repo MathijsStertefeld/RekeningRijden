@@ -29,7 +29,6 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class XMLParser extends DefaultHandler
 {
-
     SAXParser parser;
     private File xmlToRead;
     private ArrayList<TimeStep> timesteps;
@@ -90,7 +89,6 @@ public class XMLParser extends DefaultHandler
 
         if (elementName.equalsIgnoreCase("edge"))
         {
-
             currentEdge = new Edge(attributes.getValue("id"));
             System.out.println("Starting new edge..." + currentEdge.getId());
             //currentTimeStep.setCurrentEdge(currentEdge);
