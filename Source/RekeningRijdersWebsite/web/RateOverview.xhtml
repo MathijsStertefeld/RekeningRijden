@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>
+            Rekening Rijders - Tarieven Overzicht
+        </title>
+    </h:head>
+    <h:body>
+        <ui:composition template="Template.xhtml">
+            <ui:define name="PageTitle">
+                Cartrackers Overzicht
+            </ui:define>
+            
+            <ui:define name="TypeTitle">
+                 Administratie
+            </ui:define>
+            
+            <ui:define name="SiteTypeSelection">
+                <li class="">                           
+                    <a href="faces/Login.xhtml">
+                        Gebruiker
+                    </a>
+                </li>		
+                <li class="selected">
+                    <a href="faces/Login.xhtml">
+                        Administratie
+                    </a>
+                </li>
+            </ui:define>
+            
+            <ui:define name="Breadcrumbs">
+                <li>
+                    <a href="" title="Administratie">
+                        Administratie
+                    </a>
+                </li>
+
+                <li class="selected">
+                    <a href="" title="Cartrackers">
+                        Tarieven
+                    </a>
+                </li>
+                
+                <li class="selected">
+                    <a href="" title="Overzicht">
+                        Overzicht
+                    </a>
+                </li>
+            </ui:define>
+            
+            <ui:define name="SidebarLinks">
+                <li class="categorylink">
+                    <a href="faces/CarOverview.xhtml" class="">
+                        Cartrackers
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="faces/RateOverview.xhtml" class="">
+                        Tarieven
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="faces/BillOverview.xhtml" class="">
+                        Facturen
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="faces/Login.xhtml" class="">
+                        Uitloggen
+                    </a>          
+                </li>
+            </ui:define>
+            
+            <ui:define name="SiteContent">
+                
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+
