@@ -10,7 +10,7 @@
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
-                Cartrackers Overzicht
+                Facturen Overzicht
             </ui:define>
             
             <ui:define name="TypeTitle">
@@ -38,8 +38,8 @@
                 </li>
 
                 <li class="selected">
-                    <a href="faces/CarOverview.xhtml" title="Cartrackers">
-                        Cartrackers
+                    <a href="faces/BillOverview.xhtml" title="Facturen">
+                        Facturen
                     </a>
                 </li>
             </ui:define>
@@ -68,10 +68,28 @@
             </ui:define>
             
             <ui:define name="SiteContent">
-                <h:form id="carForm">
+                <h:form id="billForm">
+                    
+                    <p:dataTable id="dataTable" var="bill" value="#{billBean.bills}">    
+                        <p:column sortBy="#{bill.paymentAmount}}" headerText="Amount">  
+                            <h:outputText value="#{bill.paymentAmount}" />  
+                        </p:column>  
+
+                        <p:column sortBy="#{bill.paymentDate}" headerText="Date">  
+                            <h:outputText value="#{bill.paymentDate}" />  
+                        </p:column>  
+
+                        <p:column sortBy="#{bill.paymentStatus}" headerText="Status">
+                            <h:outputText value="#{bill.paymentStatus}" />
+                        </p:column> 
+
+                        <p:column sortBy="#{bill.id}" headerText="Number">
+                            <h:outputText value="#{bill.id}" />
+                        </p:column>
+                    </p:dataTable>
                     
                     <br/>
-                    <h:commandButton id="submit" value=" Wijzigen " action="faces/CarEditing.xhtml" />
+                    <h:commandButton id="submit" value=" Wijzigen " action="faces/BillEditing.xhtml" />
                 </h:form>
             </ui:define>
 
