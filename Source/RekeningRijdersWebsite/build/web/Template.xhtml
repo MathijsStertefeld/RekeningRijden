@@ -8,7 +8,14 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
         <title>
-            RRW Template
+            Rekening Rijders - 
+            <ui:insert name="TypeTitle">
+                Type title
+            </ui:insert>
+             - 
+            <ui:insert name="PageTitle">
+                Page title
+            </ui:insert>
         </title>
         
         <link rel="shortcut icon" href="ResourceFiles/favicon0.ico" type="image/vnd.microsoft.icon" />
@@ -22,8 +29,9 @@
 		<div class="logo">       
                     <a href="" title="logo RDW - home"><img src="ResourceFiles/logo0000.png" alt="logo RDW - home" /></a>
 			<span id="ctl00_Logo_ctl01_SiteTitleLabel">
+                            Rekening Rijders
                             <ui:insert name="TypeTitle">
-				Gebruiker
+				Gebruiker of Admin
                             </ui:insert>
 			</span>
 		</div>
@@ -59,7 +67,11 @@
 			</div>
 
 			<!--Page Title-->
-			<h1>Login</h1>
+			<h1>
+                            <ui:insert name="PageTitle">
+                                Pagina titel
+                            </ui:insert>
+                        </h1>
 			
                     </header>
                     
@@ -68,44 +80,64 @@
             
 			<nav>
                             <span class="border" />
-                            <h2>Administratie</h2>
+                            <h2>
+                                <ui:insert name="TypeTitle">
+                                    Administratie of gebruiker
+                                </ui:insert>
+                            </h2>
 
                             <ul class="navigation">			
-                                <li class="categorylink">
-                                    <a href="RekeningOverzicht" title="Kopen" class="">
-                                        Cartrackers
-                                    </a>            
+                                <ui:insert name="SidebarLinks">
+                                    Links in the sidebar
+                                    <li class="categorylink">
+                                    <a href="" class="">
+                                        Linknaam
+                                    </a>           
                                 </li>
+                                </ui:insert>
 
-                                <li class="categorylink">
-                                    <a href="" title="AutoOverzicht" class="">
+                                <!--li class="categorylink">
+                                    <a href="" class="">
                                         Tarieven
                                     </a>          
                                 </li>
 
                                 <li class="categorylink">
-                                    <a href="" title="PersoonsGegevens" class="">
+                                    <a href="" class="">
                                         Facturen
                                     </a>           
                                 </li>
 
                                 <li class="categorylink">
-                                    <a href="" title="Uitloggen" class="">
+                                    <a href="" class="">
                                         Uitloggen
                                     </a>        
-                                </li>
+                                </li-->
                             </ul>  
 			</nav>
 
                         <!--Main body of the page-->
                         <article>
                             <div id="ctl00_PlaceHolderMain_PublishingPageContent__ControlWrapper_RichHtmlField">
-					
+                                <ui:insert name="SiteContent">
+                                    body
+                                </ui:insert>
                             </div>         
                         </article>
                     </section>
                     
                 </div>
+                
+                <footer>
+                    <div class="download">
+                        <p>
+                            <!--Put language selection here-->				
+                            <img src="ResourceFiles/FlagDutch.png" width="50px"></img>
+                            <img src="ResourceFiles/FlagUKUSA.png" width="50px"></img>	
+                            <strong>  -  Gemaakt door MARBLE</strong>
+			</p>
+                    </div>
+		</footer>
                 
             </div>
         </div>

@@ -12,8 +12,12 @@
     </h:head>
     <h:body>
         <ui:composition template="Template.xhtml">
+            <ui:define name="PageTitle">
+                Login
+            </ui:define>
+            
             <ui:define name="TypeTitle">
-                Administratie
+                 Administratie
             </ui:define>
             
             <ui:define name="SiteTypeSelection">
@@ -36,17 +40,23 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="" title="Facturen">
-                        Facturen
-                    </a>
-                </li>
-
                 <li class="selected">
-                    <a href="" title="Overzicht">
-                        Overzicht
+                    <a href="" title="Inloggen">
+                        Inloggen
                     </a>
                 </li>
+            </ui:define>
+            
+            <ui:define name="SidebarLinks">
+                <li class="categorylink">
+                    <a href="" class="">
+                        Inloggen
+                    </a>          
+                </li>
+            </ui:define>
+            
+            <ui:define name="SiteContent">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et sapien ac massa tincidunt congue eu vel erat. Aliquam aliquet sapien sed ante tincidunt vitae facilisis risus accumsan. Morbi tincidunt venenatis ligula, eu bibendum eros consequat nec. Quisque nisl mauris, cursus eu tempor at, ornare at nisi. Pellentesque sed risus diam, ornare fermentum leo. Praesent sed lectus vitae dolor lacinia commodo eget eget dolor. Etiam in fringilla nulla. In lectus purus, malesuada ac tincidunt sodales, dignissim quis risus. Phasellus faucibus erat et urna mollis pellentesque. Suspendisse non neque quis tortor pharetra blandit. Praesent feugiat sodales velit vel ullamcorper. Nulla condimentum, purus vitae lobortis bibendum, orci orci malesuada metus, eget consectetur nibh turpis at enim. Maecenas volutpat eleifend turpis nec lacinia. Nullam aliquet, ipsum eu cursus mattis, felis nisi lacinia lacus, id malesuada orci tortor sed risus. Nullam est lorem, accumsan sed malesuada et, elementum ut magna. Morbi faucibus malesuada odio, pulvinar placerat libero molestie in.
             </ui:define>
 
         </ui:composition>
