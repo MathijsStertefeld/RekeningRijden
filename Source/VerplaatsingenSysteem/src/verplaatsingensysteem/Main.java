@@ -64,16 +64,16 @@ public class Main
 
         for (TimeStep ts : s.getTimesteps())
         {
-            vpService.createTimeStep(ts);
+           // vpService.createTimeStep(ts);
             for (Edge e : ts.getEdges())
             {
-                vpService.createEdge(e);
+             //   vpService.createEdge(e);
                 for (Lane l : e.getLanes())
                 {
-                    vpService.createLane(l);
+                 //   vpService.createLane(l);
                     for (VehiclePosition pos : l.getPositions())
                     {
-                        vpService.createVehiclePosition(pos);
+                 //       vpService.createVehiclePosition(pos);
                     }
                 }
             }

@@ -18,18 +18,23 @@ import javax.persistence.*;
 public class Lane implements Serializable
 {
     @Id
-    private String id;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private long id;
+    private String lane_id;
     
-//    @OneToMany(cascade= CascadeType.ALL)
+    @OneToMany(cascade= CascadeType.PERSIST,mappedBy="parentLane")
     private Collection<VehiclePosition> positions;
-
+    @ManyToOne(cascade= CascadeType.MERGE)
+    private Edge parentEdge;
+    
     public Lane()
     {
     }
     
-    public Lane(String value)
+    public Lane(String value,Edge parent)
     {
-        this.id = value;
+        this.lane_id = value;
+        parentEdge = parent;
         positions = new ArrayList<VehiclePosition>();
     }
     
@@ -40,12 +45,12 @@ public class Lane implements Serializable
 
     public String getId()
     {
-        return id;
+        return lane_id;
     }
 
     public void setId(String id)
     {
-        this.id = id;
+        this.lane_id = id;
     }
 
     public Collection<VehiclePosition> getPositions()

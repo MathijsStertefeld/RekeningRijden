@@ -16,29 +16,36 @@ import javax.persistence.*;
 @Entity
 public class Edge implements Serializable
 {
+
     @Id
-    private String id;
-    @OneToMany(cascade= CascadeType.MERGE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    
+    private String edge_id;
+    @OneToMany(cascade= CascadeType.PERSIST,mappedBy = "parentEdge")
     private Collection<Lane> lanes;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private TimeStep parentTimeStep;
 
     public Edge()
     {
     }
 
-    public Edge(String id)
+    public Edge(String id, TimeStep parent)
     {
-        this.id = id;
+        this.edge_id = id;
         lanes = new ArrayList<Lane>();
+        parentTimeStep = parent;
     }
 
     public String getId()
     {
-        return id;
+        return edge_id;
     }
 
     public void setId(String id)
     {
-        this.id = id;
+        this.edge_id = id;
     }
 
     public Collection<Lane> getLanes()

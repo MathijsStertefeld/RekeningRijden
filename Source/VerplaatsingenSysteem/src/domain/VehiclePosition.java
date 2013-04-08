@@ -14,23 +14,25 @@ import javax.persistence.*;
 @Entity
 public class VehiclePosition implements Serializable
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String carTrackerId;
     private double carPos;
     private double carSpeed;
-
+    @ManyToOne(cascade= CascadeType.MERGE)
+    private Lane parentLane;
+    
     public VehiclePosition()
     {
     }
 
-    public VehiclePosition(String carTrackerId, double carPos, double carSpeed)
+    public VehiclePosition(String carTrackerId, double carPos, double carSpeed, Lane parent)
     {
         this.carTrackerId = carTrackerId;
         this.carPos = carPos;
         this.carSpeed = carSpeed;
+        this.parentLane = parent;
     }
 
     public String getCarTrackerId()

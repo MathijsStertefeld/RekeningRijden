@@ -16,22 +16,28 @@ import javax.persistence.*;
 @Entity
 public class TimeStep implements Serializable
 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-//    @OneToMany(cascade= CascadeType.PERSIST)
+    @OneToMany(cascade= CascadeType.PERSIST,mappedBy="parentTimeStep")
     private Collection<Edge> edges;
     private double timestepTime;
-
-    public TimeStep(int timestep)
-    {
-        this.timestepTime = timestep;
-        edges = new ArrayList<Edge>();
-    }
+    
+    @ManyToOne(cascade= CascadeType.MERGE)
+    private Session parentSession;
 
     public TimeStep()
     {
         edges = new ArrayList<Edge>();
+    }
+
+    public TimeStep(int timestep, Session parent)
+    {
+        this.timestepTime = timestep;
+        this.parentSession = parent;
+        edges = new ArrayList<Edge>();
+        
     }
 
     public double getTime()

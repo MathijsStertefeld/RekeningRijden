@@ -88,7 +88,7 @@ public class XMLParser extends DefaultHandler
 
         if (elementName.equalsIgnoreCase("edge"))
         {
-            currentEdge = new Edge(attributes.getValue("id"));
+            currentEdge = new Edge(attributes.getValue("id"),currentTimeStep);
             System.out.println("Starting new edge..." + currentEdge.getId());
 
         }
@@ -97,7 +97,7 @@ public class XMLParser extends DefaultHandler
         {
             String laneId = attributes.getValue("id");
             System.out.println("Starting new Lane..." + laneId);
-            currentLane = new Lane(laneId);
+            currentLane = new Lane(laneId,currentEdge);
         }
 
         if (elementName.equalsIgnoreCase("vehicle"))
@@ -105,7 +105,7 @@ public class XMLParser extends DefaultHandler
             String vehicleId = attributes.getValue("id");
             double vehiclePos = Double.parseDouble(attributes.getValue("pos"));
             double vehicleSpeed = Double.parseDouble(attributes.getValue("speed"));
-            VehiclePosition vehPos = new VehiclePosition(vehicleId, vehiclePos, vehicleSpeed);
+            VehiclePosition vehPos = new VehiclePosition(vehicleId, vehiclePos, vehicleSpeed,currentLane);
             System.out.println("Starting new vehicle..." + vehicleId + " " + vehiclePos + " " + vehicleSpeed);
             currentLane.addVehicle(vehPos);
         }
