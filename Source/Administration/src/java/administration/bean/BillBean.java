@@ -2,6 +2,7 @@ package administration.bean;
 
 import administration.domain.Bill;
 import administration.domain.Driver;
+import administration.domain.PaymentStatus;
 import administration.service.AdministrationService;
 import java.io.Serializable;
 import java.util.Collection;
@@ -33,5 +34,18 @@ public class BillBean implements Serializable {
     
     public Collection<Bill> getBills() {
         return bills;
+    }
+    
+    public void changeBillStatus(int id, int status)
+    {   
+        Driver driver = administrationService.findDriver(bsn);
+        
+        Bill b = driver.getBill(id);
+        
+        b.setPaymentStatus(PaymentStatus.values()[status]);
+        
+        if (driver != null) {
+            bills = driver.getBills();
+        }
     }
 }

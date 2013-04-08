@@ -132,6 +132,19 @@ public class Driver implements Serializable {
     public List<Bill> getBills() {
         return bills;
     }
+    
+    public Bill getBill(int id)
+    {
+        for(Bill b : bills)
+        {
+            if(b.getId() == id)
+            {
+                return b;
+            }
+        }
+        
+        return null;
+    }
 
     public void setBills(List<Bill> bills) {
         this.bills = bills;
