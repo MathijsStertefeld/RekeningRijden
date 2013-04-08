@@ -21,10 +21,13 @@ import java.util.List;
 public class Database
 {
 
+    private static Connection connection;
+
+    
     public static Connection getConnection() throws ClassNotFoundException, SQLException
     {
         String driver = "oracle.jdbc.driver.OracleDriver";
-        String url = "jdbc:oracle:thin:@86.92.20.205:1521:XE";
+        String url = "jdbc:oracle:thin:@127.0.0.1:1521:XE";
         String username = "PROFTAAK";
         String password = "wachtwoord";
         Class.forName(driver);
@@ -34,8 +37,7 @@ public class Database
 
     public static void writeToDatabase(TimeStep timestep, Session session) throws ClassNotFoundException, SQLException
     {
-        Connection connection = getConnection();
-
+        connection  = getConnection();
         Statement newStatement = connection.createStatement();
         newStatement.execute("SELECT * FROM Simsession WHERE startdate = " + session.getSessionDate().getTime());
         ResultSet newResultSet = newStatement.getResultSet();
@@ -96,7 +98,6 @@ public class Database
     {
         try
         {
-            Connection connection = getConnection();
             Statement statement = connection.createStatement();
 
             // Add the new timestep to the database.
@@ -114,7 +115,7 @@ public class Database
             statement.executeUpdate("INSERT INTO Timestep(id, time, session_id) VALUES(" + index + "," + timestep.getTime() + "," + 1 + ")");
 
             statement.close();
-            connection.close();
+
             
             return index;
         }
@@ -131,12 +132,10 @@ public class Database
     {
         try
         {
-            Connection connection = getConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO Lane(id, edge_id) VALUES('" + lane.getId() + "','" + edgeId + "')");
 
             statement.close();
-            connection.close();
         }
         catch (Exception e)
         {
@@ -150,13 +149,11 @@ public class Database
     {
         try
         {
-            Connection connection = getConnection();
             Statement statement = connection.createStatement();
 
             statement.executeUpdate("INSERT INTO Edge(id) VALUES('" + edge.getId() + "')");
 
             statement.close();
-            connection.close();
         }
         catch (Exception e)
         {
@@ -169,12 +166,10 @@ public class Database
     {
         try
         {
-            Connection connection = getConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO SIMSESSION(id, startdate) values(1," + session.getSessionDate().getTime() + ")");
 
             statement.close();
-            connection.close();
         }
         catch (Exception e)
         {
@@ -187,14 +182,12 @@ public class Database
     {
         try
         {
-            Connection connection = getConnection();
             Statement statement = connection.createStatement();
             statement.executeUpdate("INSERT INTO VehiclePosition(cartracker_id, position, speed, lane_id, timestep_id) VALUES('"
                     + vehiclePosition.getCarTrackerId() + "'," + vehiclePosition.getCarPos() + "," + vehiclePosition.getCarSpeed()
                     + ",'" + lane.getId() + "'," + timeStepId + ")");
 
             statement.close();
-            connection.close();
         }
         catch (Exception e)
         {

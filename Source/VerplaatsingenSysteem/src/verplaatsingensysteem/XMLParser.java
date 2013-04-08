@@ -60,7 +60,7 @@ public class XMLParser extends DefaultHandler
         String[] parts = temp.split("_");
         
         String dateName = parts[1].split("\\.")[0];
-        System.out.println("Date is " + dateName);
+        //System.out.println("Date is " + dateName);
         int year = Integer.parseInt(dateName.substring(0, 4));
         int month = Integer.parseInt(dateName.substring(4,6));
         int day = Integer.parseInt(dateName.substring(6,8));
@@ -68,7 +68,7 @@ public class XMLParser extends DefaultHandler
         GregorianCalendar gc = new GregorianCalendar(year, month-1, day);
         Date d = gc.getTime();
         
-        System.out.println(year + " " + month + " " + day);
+       // System.out.println(year + " " + month + " " + day);
         Session s = new Session(d, timesteps);
         return s;
     }
@@ -83,21 +83,21 @@ public class XMLParser extends DefaultHandler
         {
             currentTimeStep = new TimeStep();
             double timeStep = Double.parseDouble(attributes.getValue("time"));
-            System.out.println("Starting new Timestep..." + timeStep);
+            //System.out.println("Starting new Timestep..." + timeStep);
             currentTimeStep.setTime(timeStep);
         }
 
         if (elementName.equalsIgnoreCase("edge"))
         {
             currentEdge = new Edge(attributes.getValue("id"));
-            System.out.println("Starting new edge..." + currentEdge.getId());
+            //System.out.println("Starting new edge..." + currentEdge.getId());
             //currentTimeStep.setCurrentEdge(currentEdge);
         }
 
         if (elementName.equalsIgnoreCase("lane"))
         {
             String laneId = attributes.getValue("id");
-            System.out.println("Starting new Lane..." + laneId);
+            //System.out.println("Starting new Lane..." + laneId);
             currentLane = new Lane(laneId);
         }
 
@@ -107,7 +107,7 @@ public class XMLParser extends DefaultHandler
             double vehiclePos = Double.parseDouble(attributes.getValue("pos"));
             double vehicleSpeed = Double.parseDouble(attributes.getValue("speed"));
             VehiclePosition vehPos = new VehiclePosition(vehicleId, vehiclePos, vehicleSpeed);
-            System.out.println("Starting new vehicle..." + vehicleId + " " + vehiclePos + " " + vehicleSpeed);
+            //System.out.println("Starting new vehicle..." + vehicleId + " " + vehiclePos + " " + vehicleSpeed);
             currentLane.addVehicle(vehPos);
         }
     }
@@ -118,21 +118,21 @@ public class XMLParser extends DefaultHandler
         //This means the main node (timestep) comes to an end
         if (element.equalsIgnoreCase("timestep"))
         {
-            System.out.println("Ending timestep...");
+            //System.out.println("Ending timestep...");
             timesteps.add(currentTimeStep);
         }
 
         if (element.equalsIgnoreCase("edge"))
         {
-            System.out.println("Ending edge...");
+            //System.out.println("Ending edge...");
             currentTimeStep.addEdge(currentEdge);
         }
 
 
         if (element.equalsIgnoreCase("lane"))
         {
-            System.out.println("Ending Lane...");
-            System.out.println(currentLane.getId());
+           // System.out.println("Ending Lane...");
+           // System.out.println(currentLane.getId());
             currentEdge.addLane(currentLane);
         }
     }

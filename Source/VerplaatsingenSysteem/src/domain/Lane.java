@@ -5,16 +5,25 @@
 package domain;
 
 import java.util.ArrayList;
+import javax.persistence.*;
 
 /**
  *
- * @author Leslie Aerts
+ * @author Alexander Arends & Leslie Aerts
  */
+@Entity
+@Table (name = "LANE")
 public class Lane
 {
-
+    @Id
     private String id;
+    
+    @OneToMany
     private ArrayList<VehiclePosition> positions;
+
+    public Lane()
+    {
+    }
     
     public Lane(String value)
     {

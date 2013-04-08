@@ -6,16 +6,26 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 
 /**
  *
- * @author Leslie Aerts
+ * @author Alexander Arends & Leslie Aerts
  */
+@Entity
+@Table (name = "EDGE")
 public class Edge
 {
 
+    @Id
     private String id;
+    
+    @OneToMany
     private ArrayList<Lane> lanes;
+
+    public Edge()
+    {
+    }
     
     public Edge(String id)
     {

@@ -6,16 +6,29 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Date;
+import javax.persistence.*;
 
 /**
  *
- * @author Leslie Aerts
+ * @author Leslie Aerts & Alexander Arends
  */
+@Entity
+@Table (name = "SIMSESSION")
 public class Session
 {
-
+    
+    
+    @Temporal(TemporalType.DATE)
     private Date sessionDate;
+    
     private ArrayList<TimeStep> timesteps;
+    
+    @Id
+    private Long id;
+
+    public Session()
+    {
+    }
 
     public Session(Date sessionDate, ArrayList<TimeStep> timesteps)
     {
@@ -41,5 +54,15 @@ public class Session
     public void setTimesteps(ArrayList<TimeStep> timesteps)
     {
         this.timesteps = timesteps;
+    }
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 }

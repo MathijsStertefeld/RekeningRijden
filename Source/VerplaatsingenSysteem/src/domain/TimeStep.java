@@ -5,16 +5,26 @@
 package domain;
 
 import java.util.ArrayList;
+import javax.persistence.*;
+
 
 /**
  *
  * @author Leslie Aerts
  */
+@Entity
+@Table (name = "TIMESTEP")
 public class TimeStep
 {
-
+    
+    
     private double time;
+    
+    @ManyToOne
     private ArrayList<Edge> edges;
+    
+    @Id
+    private Long id;
 
     public TimeStep(int timestep)
     {
@@ -50,5 +60,15 @@ public class TimeStep
     public void addEdge(Edge e)
     {
         edges.add(e);
+    }
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 }

@@ -4,15 +4,25 @@
  */
 package domain;
 
+import javax.persistence.*;
+
 /**
  *
  * @author Leslie Aerts
  */
+@Entity
+@Table (name = "VEHICLEPOSITION")
 public class VehiclePosition
 {
+    @Id
     private String carTrackerId;
+    
     private double carPos;
     private double carSpeed;
+
+    public VehiclePosition()
+    {
+    }
 
     public VehiclePosition(String carTrackerId, double carPos, double carSpeed)
     {
