@@ -1,9 +1,6 @@
 package service;
 
-import domain.AdministrationAccount;
-import domain.Bill;
-import domain.PaymentStatus;
-import domain.WebsiteAccount;
+import domain.*;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -19,8 +16,15 @@ public class StartupService {
 
     @PostConstruct
     public void postConstruct() {
+        Group admin = new Group("ADMIN");
+        Group user = new Group("USER");
+        
         AdministrationAccount henk = new AdministrationAccount("Henk", "henk123", false);
         AdministrationAccount truus = new AdministrationAccount("Truus", "truus123", true);
+        
+        henk.getGroups().add(admin);
+        henk.getGroups().add(user);
+        truus.getGroups().add(user);
         
         administrationService.persist(henk);
         administrationService.persist(truus);

@@ -1,6 +1,8 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,8 @@ public class AdministrationAccount implements Serializable {
     @Id
     private String name;
     private String password;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    private Collection<Group> groups;
     private Boolean privilege;
     //</editor-fold>
 
@@ -30,6 +34,14 @@ public class AdministrationAccount implements Serializable {
         this.password = password;
     }
 
+    public Collection<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Collection<Group> groups) {
+        this.groups = groups;
+    }
+
     public Boolean getPrivilege() {
         return privilege;
     }
@@ -48,6 +60,8 @@ public class AdministrationAccount implements Serializable {
         this.name = username;
         this.password = password;
         this.privilege = privilege;
+
+        groups = new ArrayList<Group>();
     }
     //</editor-fold>
 

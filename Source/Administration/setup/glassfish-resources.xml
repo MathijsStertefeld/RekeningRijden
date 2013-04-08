@@ -12,4 +12,12 @@
     <property name="User" value="Ruud"/>
     <property name="Password" value="Lenders"/>
   </jdbc-connection-pool>
+  <security-role-mapping>
+      <role-name>ADMIN</role-name>
+      <group-name>ADMIN</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+      <role-name>USER</role-name>
+      <group-name>USER</group-name>
+  </security-role-mapping>
 </resources>
