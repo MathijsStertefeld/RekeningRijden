@@ -5,13 +5,11 @@ import java.util.List;
 
 public interface AdministrationAccountDAO {
     
-    int size();
+    void persist(AdministrationAccount administrationAccount);
 
-    void insert(AdministrationAccount administrationAccount);
+    AdministrationAccount merge(AdministrationAccount administrationAccount);
 
-    AdministrationAccount update(AdministrationAccount administrationAccount);
-
-    void delete(AdministrationAccount administrationAccount);
+    void remove(AdministrationAccount administrationAccount);
 
     List<AdministrationAccount> findAll();
 

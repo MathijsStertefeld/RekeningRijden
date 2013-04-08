@@ -5,13 +5,11 @@ import java.util.List;
 
 public interface RateDAO {
     
-    int size();
+    void persist(Rate rate);
 
-    void insert(Rate rate);
+    Rate merge(Rate rate);
 
-    Rate update(Rate rate);
-
-    void delete(Rate rate);
+    void remove(Rate rate);
 
     List<Rate> findAll();
 

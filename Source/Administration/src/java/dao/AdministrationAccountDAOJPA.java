@@ -15,28 +15,23 @@ public class AdministrationAccountDAOJPA implements AdministrationAccountDAO {
     private EntityManager em;
 
     @Override
-    public int size() {
-        return findAll().size();
-    }
-
-    @Override
-    public void insert(AdministrationAccount administrationAccount) {
-        if (administrationAccount != null && find(administrationAccount.getUsername()) == null) {
+    public void persist(AdministrationAccount administrationAccount) {
+        if (administrationAccount != null && find(administrationAccount.getName()) == null) {
             em.persist(administrationAccount);
         }
     }
 
     @Override
-    public AdministrationAccount update(AdministrationAccount administrationAccount) {
-        if (administrationAccount != null && find(administrationAccount.getUsername()) != null) {
+    public AdministrationAccount merge(AdministrationAccount administrationAccount) {
+        if (administrationAccount != null && find(administrationAccount.getName()) != null) {
             administrationAccount = em.merge(administrationAccount);
         }
         return administrationAccount;
     }
 
     @Override
-    public void delete(AdministrationAccount administrationAccount) {
-        if (administrationAccount != null && find(administrationAccount.getUsername()) != null) {
+    public void remove(AdministrationAccount administrationAccount) {
+        if (administrationAccount != null && find(administrationAccount.getName()) != null) {
             em.remove(administrationAccount);
         }
     }

@@ -1,8 +1,8 @@
 package domain;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
@@ -20,6 +20,7 @@ public class WebsiteAccount implements Serializable {
     private String residence;
     private String address;
     private String zipCode;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateOfBirth;
     @OneToMany(cascade={CascadeType.ALL})
     private List<Bill> bills;
@@ -116,7 +117,7 @@ public class WebsiteAccount implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public WebsiteAccount() {
-        this(0, "", "", "", "", "", "", "", "", new Date(0));
+        this(0, "", "", "", "", "", "", "", "", new Date());
     }
 
     public WebsiteAccount(int bsn, String email, String hashedPassword,

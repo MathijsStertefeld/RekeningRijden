@@ -6,18 +6,18 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 import service.AdministrationService;
 
-@ManagedBean
+@Named
 @SessionScoped
 public class LoginBean implements Serializable {
 
-    @EJB
+    @Inject
     AdministrationService administrationService;
     String username;
     String password;
@@ -43,9 +43,8 @@ public class LoginBean implements Serializable {
     }
 
     public void login() {
-        System.out.println("LOGIN 1");
         for (AdministrationAccount administrationAccount : getAdministrationAccounts()) {
-            if (administrationAccount.getUsername().toLowerCase().equals(username.toLowerCase())) {
+            if (administrationAccount.getName().toLowerCase().equals(username.toLowerCase())) {
                 if (administrationAccount.getPassword().equals(password)) {
                     try {
                         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
@@ -57,6 +56,5 @@ public class LoginBean implements Serializable {
                 break;
             }
         }
-        System.out.println("LOGIN 2");
     }
 }

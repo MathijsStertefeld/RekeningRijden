@@ -15,19 +15,14 @@ public class WebsiteAccountDAOJPA implements WebsiteAccountDAO {
     private EntityManager em;
 
     @Override
-    public int size() {
-        return findAll().size();
-    }
-
-    @Override
-    public void insert(WebsiteAccount websiteAccount) {
+    public void persist(WebsiteAccount websiteAccount) {
         if (websiteAccount != null && find(websiteAccount.getBsn()) == null) {
             em.persist(websiteAccount);
         }
     }
 
     @Override
-    public WebsiteAccount update(WebsiteAccount websiteAccount) {
+    public WebsiteAccount merge(WebsiteAccount websiteAccount) {
         if (websiteAccount != null && find(websiteAccount.getBsn()) != null) {
             websiteAccount = em.merge(websiteAccount);
         }
@@ -36,7 +31,7 @@ public class WebsiteAccountDAOJPA implements WebsiteAccountDAO {
     }
 
     @Override
-    public void delete(WebsiteAccount websiteAccount) {
+    public void remove(WebsiteAccount websiteAccount) {
         if (websiteAccount != null && find(websiteAccount.getBsn()) != null) {
             em.remove(websiteAccount);
         }

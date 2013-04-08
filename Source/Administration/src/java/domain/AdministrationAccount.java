@@ -8,18 +8,18 @@ public class AdministrationAccount implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
-    private String username;
+    private String name;
     private String password;
     private Boolean privilege;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setBsn(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -45,7 +45,7 @@ public class AdministrationAccount implements Serializable {
     }
 
     public AdministrationAccount(String username, String password, Boolean privilege) {
-        this.username = username;
+        this.name = username;
         this.password = password;
         this.privilege = privilege;
     }
@@ -64,7 +64,7 @@ public class AdministrationAccount implements Serializable {
 
     @Override
     public String toString() {
-        return "AdministrationAccount{" + "username=" + username + '}';
+        return "AdministrationAccount{" + "username=" + name + '}';
     }
     //</editor-fold>
 }

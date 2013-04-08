@@ -15,19 +15,14 @@ public class RateDAOJPA implements RateDAO {
     private EntityManager em;
 
     @Override
-    public int size() {
-        return findAll().size();
-    }
-
-    @Override
-    public void insert(Rate rate) {
+    public void persist(Rate rate) {
         if (rate != null && find(rate.getName()) == null) {
             em.persist(rate);
         }
     }
 
     @Override
-    public Rate update(Rate rate) {
+    public Rate merge(Rate rate) {
         if (rate != null && find(rate.getName()) != null) {
             rate = em.merge(rate);
         }
@@ -36,7 +31,7 @@ public class RateDAOJPA implements RateDAO {
     }
 
     @Override
-    public void delete(Rate rate) {
+    public void remove(Rate rate) {
         if (rate != null && find(rate.getName()) != null) {
             em.remove(rate);
         }

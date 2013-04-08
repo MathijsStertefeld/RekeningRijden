@@ -5,13 +5,11 @@ import java.util.List;
 
 public interface WebsiteAccountDAO {
     
-    int size();
+    void persist(WebsiteAccount websiteAccount);
 
-    void insert(WebsiteAccount websiteAccount);
+    WebsiteAccount merge(WebsiteAccount websiteAccount);
 
-    WebsiteAccount update(WebsiteAccount websiteAccount);
-
-    void delete(WebsiteAccount websiteAccount);
+    void remove(WebsiteAccount websiteAccount);
 
     List<WebsiteAccount> findAll();
 

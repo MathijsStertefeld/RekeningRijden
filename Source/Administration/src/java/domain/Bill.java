@@ -1,8 +1,8 @@
 package domain;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
@@ -12,6 +12,7 @@ public class Bill implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
     private int number;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date paymentDate;
     private double paymentAmount;
     private PaymentStatus paymentStatus;
@@ -63,7 +64,7 @@ public class Bill implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Bill() {
-        this(0, new Date(0), 0, PaymentStatus.OPEN);
+        this(0, new Date(), 0, PaymentStatus.OPEN);
     }
     
     public Bill(int number, Date paymentDate, double paymentAmount, PaymentStatus paymentStatus) {
