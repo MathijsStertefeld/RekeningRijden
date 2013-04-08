@@ -11,6 +11,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import service.AdministrationService;
 
 @Named
@@ -43,18 +45,13 @@ public class LoginBean implements Serializable {
     }
 
     public void login() {
-        for (AdministrationAccount administrationAccount : getAdministrationAccounts()) {
-            if (administrationAccount.getName().toLowerCase().equals(username.toLowerCase())) {
-                if (administrationAccount.getPassword().equals(password)) {
-                    try {
-                        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-                        context.redirect("view.xhtml");
-                    } catch (IOException ex) {
-                        Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                break;
-            }
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) context.getRequest();
+        try {
+            request.login(username, password);
+            context.redirect("admin/view.xhtml");
+        } catch (Exception ex) {
+            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
