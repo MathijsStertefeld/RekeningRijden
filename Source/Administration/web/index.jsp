@@ -7,6 +7,6 @@
         <title>Index</title>
     </head>
     <body>
-        <% response.sendRedirect("faces/home.xhtml"); %>
+        <% response.sendRedirect("faces/login.xhtml"); %>
     </body>
 </html>
