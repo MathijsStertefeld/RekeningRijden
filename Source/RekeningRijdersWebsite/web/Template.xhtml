@@ -20,13 +20,93 @@
             <div class="container">
         
 		<div class="logo">       
-                    <a href="" title="logo RDW - home"><img src="ResourceFiles/logo0000.png" alt="logo RDW - home"></a>
+                    <a href="" title="logo RDW - home"><img src="ResourceFiles/logo0000.png" alt="logo RDW - home" /></a>
 			<span id="ctl00_Logo_ctl01_SiteTitleLabel">
-                            <ui:define name="TypeTitle">
+                            <ui:insert name="TypeTitle">
 				Gebruiker
-                            </ui:define>
+                            </ui:insert>
 			</span>
 		</div>
+                
+                <ul class="sections">
+                    <div id="zz1_TopNavigationMenuV4" class="s4-tn">
+                        <div class="menu horizontal menu-horizontal">
+                            <ul class="root static">
+                                <ui:insert name="SiteTypeSelection">
+                                    Selectie bar voor admin of gebruiker
+                                </ui:insert>
+                            </ul>
+                        </div>
+                    </div>
+                </ul>
+                
+                
+                <div class="wrapper with-nav" id="to-content">
+                    
+                    <header>
+            
+			<ul class="breadcrumbs">
+                            <ui:insert name="Breadcrumbs">
+                                Breadcrumbs voor website navigation hier
+                            </ui:insert>	
+			</ul>
+		
+			<div class="print">
+                            <a href="" rel="external" class="no-new-window-icon"> 
+                                <span />
+                                Print deze pagina
+                            </a>
+			</div>
+
+			<!--Page Title-->
+			<h1>Login</h1>
+			
+                    </header>
+                    
+                    <!--Left sidebar-->
+                    <section class="content">
+            
+			<nav>
+                            <span class="border" />
+                            <h2>Administratie</h2>
+
+                            <ul class="navigation">			
+                                <li class="categorylink">
+                                    <a href="RekeningOverzicht" title="Kopen" class="">
+                                        Cartrackers
+                                    </a>            
+                                </li>
+
+                                <li class="categorylink">
+                                    <a href="" title="AutoOverzicht" class="">
+                                        Tarieven
+                                    </a>          
+                                </li>
+
+                                <li class="categorylink">
+                                    <a href="" title="PersoonsGegevens" class="">
+                                        Facturen
+                                    </a>           
+                                </li>
+
+                                <li class="categorylink">
+                                    <a href="" title="Uitloggen" class="">
+                                        Uitloggen
+                                    </a>        
+                                </li>
+                            </ul>  
+			</nav>
+
+                        <!--Main body of the page-->
+                        <article>
+                            <div id="ctl00_PlaceHolderMain_PublishingPageContent__ControlWrapper_RichHtmlField">
+					
+                            </div>         
+                        </article>
+                    </section>
+                    
+                </div>
+                
             </div>
         </div>
     </h:body>

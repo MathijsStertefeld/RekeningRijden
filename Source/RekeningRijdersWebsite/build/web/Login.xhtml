@@ -2,19 +2,53 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>
             Rekening Rijders - Login
         </title>
     </h:head>
     <h:body>
-        Testttt
         <ui:composition template="Template.xhtml">
-            <ui:insert name="TypeTitle">
-                Test here
-            </ui:insert>
-            Test2 here
+            <ui:define name="TypeTitle">
+                Administratie
+            </ui:define>
+            
+            <ui:define name="SiteTypeSelection">
+                <li class="">                           
+                    <a href="">
+                        Gebruiker
+                    </a>
+                </li>		
+                <li class="selected">
+                    <a href="">
+                        Administratie
+                    </a>
+                </li>
+            </ui:define>
+            
+            <ui:define name="Breadcrumbs">
+                <li>
+                    <a href="" title="Administratie">
+                        Administratie
+                    </a>
+                </li>
+
+                <li>
+                    <a href="" title="Facturen">
+                        Facturen
+                    </a>
+                </li>
+
+                <li class="selected">
+                    <a href="" title="Overzicht">
+                        Overzicht
+                    </a>
+                </li>
+            </ui:define>
+
         </ui:composition>
     </h:body>
 </html>
