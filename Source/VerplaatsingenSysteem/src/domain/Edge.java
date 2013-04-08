@@ -16,10 +16,9 @@ import javax.persistence.*;
 @Entity
 public class Edge implements Serializable
 {
-
     @Id
     private String id;
-    @OneToMany(cascade= CascadeType.ALL)
+    @OneToMany(cascade= CascadeType.MERGE)
     private Collection<Lane> lanes;
 
     public Edge()

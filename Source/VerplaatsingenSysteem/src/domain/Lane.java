@@ -20,7 +20,7 @@ public class Lane implements Serializable
     @Id
     private String id;
     
-    @OneToMany(cascade= CascadeType.ALL)
+//    @OneToMany(cascade= CascadeType.ALL)
     private Collection<VehiclePosition> positions;
 
     public Lane()

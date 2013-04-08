@@ -14,7 +14,10 @@ import javax.persistence.*;
 @Entity
 public class VehiclePosition implements Serializable
 {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String carTrackerId;
     private double carPos;
     private double carSpeed;
@@ -59,6 +62,14 @@ public class VehiclePosition implements Serializable
     {
         this.carSpeed = carSpeed;
     }
-    
-    
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
 }

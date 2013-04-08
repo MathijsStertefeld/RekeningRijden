@@ -16,11 +16,10 @@ import javax.persistence.*;
 @Entity
 public class TimeStep implements Serializable
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(cascade= CascadeType.PERSIST)
+//    @OneToMany(cascade= CascadeType.PERSIST)
     private Collection<Edge> edges;
     private double timestepTime;
 

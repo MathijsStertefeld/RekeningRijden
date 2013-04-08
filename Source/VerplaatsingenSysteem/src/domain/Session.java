@@ -23,7 +23,8 @@ public class Session implements Serializable
     private Long id;
     @Temporal(TemporalType.DATE)
     private Date sessionDate;
-    @OneToMany(cascade = CascadeType.ALL)
+    
+    //@OneToMany(cascade = CascadeType.PERSIST)
     private Collection<TimeStep> timesteps;
 
     public Session()
