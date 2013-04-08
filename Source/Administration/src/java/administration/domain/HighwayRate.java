@@ -1,6 +1,7 @@
 package administration.domain;
 
 import java.sql.Time;
+import java.util.Collection;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -10,44 +11,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class HighwayRate extends Rate {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
-    private double rushPrice;
-    private Time rushBegin;
-    private Time rushEnd;
+    private double[] prices;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public double getRushPrice() {
-        return rushPrice;
+    public double[] getPrices() {
+        return prices;
     }
 
-    public void setRushPrice(double rushPrice) {
-        this.rushPrice = rushPrice;
-    }
-
-    public Time getRushBegin() {
-        return rushBegin;
-    }
-
-    public void setRushBegin(Time rushBegin) {
-        this.rushBegin = rushBegin;
-    }
-
-    public Time getRushEnd() {
-        return rushEnd;
-    }
-
-    public void setRushEnd(Time rushEnd) {
-        this.rushEnd = rushEnd;
+    public void setPrices(double[] prices) {
+        this.prices = prices;
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public HighwayRate() {
-        super();
+        this("", new double[24]);
     }
 
-    public HighwayRate(String name) {
-        super(name);
+    public HighwayRate(String name, double[] prices) {
+        super(name, 0);
+        this.prices = prices;
     }
     //</editor-fold>
 

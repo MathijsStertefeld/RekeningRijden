@@ -25,15 +25,24 @@ public abstract class Rate implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public double getPrice() {
+        return price;
+    }
+    
+    public void setPrice(double price) {
+        this.price = price;
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Rate() {
-        this("");
+        this("", 0);
     }
 
-    public Rate(String name) {
+    public Rate(String name, double price) {
         this.name = name;
+        this.price = price;
     }
     //</editor-fold>
 

@@ -10,11 +10,11 @@ public class CityRate extends Rate {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public CityRate() {
-        super();
+        this("", 0);
     }
 
-    public CityRate(String name) {
-        super(name);
+    public CityRate(String name, double price) {
+        super(name, price);
     }
     //</editor-fold>
 

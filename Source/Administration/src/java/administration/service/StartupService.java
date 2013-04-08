@@ -44,7 +44,7 @@ public class StartupService {
         
         d1.getBills().add(new Bill(1, new Date(), new Date(), 1000, PaymentStatus.CANCELED));
         d1.getBills().add(new Bill(2, new Date(), new Date(), 1000, PaymentStatus.PAID));
-        d1.getBills().add(new Bill(3, new Date(), new Date(), 1000, PaymentStatus.OPEN));
+        d4.getBills().add(new Bill(3, new Date(), new Date(), 1000, PaymentStatus.OPEN));
         
         d1.getCars().add(new Car("ABCD", CarType.AUTOBUS, PaintColor.BLACK, 1000,
                 Classification.EEV, "AB-CD-12", "Suzuki", "Swift"));

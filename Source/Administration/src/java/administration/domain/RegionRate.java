@@ -10,11 +10,11 @@ public class RegionRate extends Rate {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public RegionRate() {
-        super();
+        this("", 0);
     }
 
-    public RegionRate(String name) {
-        super(name);
+    public RegionRate(String name, double price) {
+        super(name, price);
     }
     //</editor-fold>
 
