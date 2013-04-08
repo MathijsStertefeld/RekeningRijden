@@ -76,7 +76,6 @@ public class XMLParser extends DefaultHandler
     @Override
     public void startElement(String s, String s1, String elementName, Attributes attributes) throws SAXException
     {
-        //currentTimeStep = new TimeStep();
 
         //If it gets to a new main element (Which is a timestep) create a new movement.
         if (elementName.equalsIgnoreCase("timestep"))
@@ -90,14 +89,14 @@ public class XMLParser extends DefaultHandler
         if (elementName.equalsIgnoreCase("edge"))
         {
             currentEdge = new Edge(attributes.getValue("id"));
-            //System.out.println("Starting new edge..." + currentEdge.getId());
-            //currentTimeStep.setCurrentEdge(currentEdge);
+            System.out.println("Starting new edge..." + currentEdge.getId());
+
         }
 
         if (elementName.equalsIgnoreCase("lane"))
         {
             String laneId = attributes.getValue("id");
-            //System.out.println("Starting new Lane..." + laneId);
+            System.out.println("Starting new Lane..." + laneId);
             currentLane = new Lane(laneId);
         }
 
@@ -107,7 +106,7 @@ public class XMLParser extends DefaultHandler
             double vehiclePos = Double.parseDouble(attributes.getValue("pos"));
             double vehicleSpeed = Double.parseDouble(attributes.getValue("speed"));
             VehiclePosition vehPos = new VehiclePosition(vehicleId, vehiclePos, vehicleSpeed);
-            //System.out.println("Starting new vehicle..." + vehicleId + " " + vehiclePos + " " + vehicleSpeed);
+            System.out.println("Starting new vehicle..." + vehicleId + " " + vehiclePos + " " + vehicleSpeed);
             currentLane.addVehicle(vehPos);
         }
     }
@@ -118,21 +117,20 @@ public class XMLParser extends DefaultHandler
         //This means the main node (timestep) comes to an end
         if (element.equalsIgnoreCase("timestep"))
         {
-            //System.out.println("Ending timestep...");
+            System.out.println("Ending timestep...");
             timesteps.add(currentTimeStep);
         }
 
         if (element.equalsIgnoreCase("edge"))
         {
-            //System.out.println("Ending edge...");
+            System.out.println("Ending edge...");
             currentTimeStep.addEdge(currentEdge);
         }
 
 
         if (element.equalsIgnoreCase("lane"))
         {
-           // System.out.println("Ending Lane...");
-           // System.out.println(currentLane.getId());
+            System.out.println("Ending Lane...");
             currentEdge.addLane(currentLane);
         }
     }

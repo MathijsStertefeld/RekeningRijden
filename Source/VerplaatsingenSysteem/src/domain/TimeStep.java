@@ -9,30 +9,24 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.*;
 
-
 /**
  *
  * @author Leslie Aerts
  */
 @Entity
-@Table (name = "TIMESTEP")
 public class TimeStep implements Serializable
 {
-    
-    
-    private double time;
-    
-    @ManyToOne (cascade = { CascadeType.PERSIST
-    })
-    private Collection<Edge> edges;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @OneToMany(cascade= CascadeType.PERSIST)
+    private Collection<Edge> edges;
+    private double timestepTime;
 
     public TimeStep(int timestep)
     {
-        this.time = timestep;
+        this.timestepTime = timestep;
         edges = new ArrayList<Edge>();
     }
 
@@ -43,20 +37,20 @@ public class TimeStep implements Serializable
 
     public double getTime()
     {
-        return time;
+        return timestepTime;
     }
 
     public void setTime(double time)
     {
-        this.time = time;
+        this.timestepTime = time;
     }
 
-    public ArrayList<Edge> getEdges()
+    public Collection<Edge> getEdges()
     {
-        return (ArrayList<Edge>) edges;
+        return edges;
     }
 
-    public void setEdges(ArrayList<Edge> edges)
+    public void setEdges(Collection<Edge> edges)
     {
         this.edges = edges;
     }

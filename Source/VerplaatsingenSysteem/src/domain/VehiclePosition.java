@@ -12,12 +12,10 @@ import javax.persistence.*;
  * @author Leslie Aerts
  */
 @Entity
-@Table (name = "VEHICLEPOSITION")
 public class VehiclePosition implements Serializable
 {
     @Id
     private String carTrackerId;
-    
     private double carPos;
     private double carSpeed;
 

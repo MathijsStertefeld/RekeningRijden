@@ -52,7 +52,7 @@ public class Database
         int timestepId = newTimeStep(timestep);
 
         // Check if the edges are in the database, if not add them to the database.
-        ArrayList<Edge> edges = timestep.getEdges();
+        ArrayList<Edge> edges = (ArrayList<Edge>) timestep.getEdges();
 
         for (int i = 0; i < edges.size(); i++)
         {
@@ -65,7 +65,7 @@ public class Database
                 newEdge(edges.get(i));
             }
 
-            ArrayList<Lane> lanes = edges.get(i).getLanes();
+            ArrayList<Lane> lanes = (ArrayList<Lane>) edges.get(i).getLanes();
 
             for (int j = 0; j < lanes.size(); j++)
             {
@@ -80,7 +80,7 @@ public class Database
                     newLane(lanes.get(j), edges.get(i).getId());
                 }
 
-                ArrayList<VehiclePosition> vehiclePositions = lanes.get(j).getPositions();
+                ArrayList<VehiclePosition> vehiclePositions = (ArrayList<VehiclePosition>) lanes.get(j).getPositions();
 
                 for (int k = 0; k < vehiclePositions.size(); k++)
                 {
@@ -115,7 +115,6 @@ public class Database
             statement.executeUpdate("INSERT INTO Timestep(id, time, session_id) VALUES(" + index + "," + timestep.getTime() + "," + 1 + ")");
 
             statement.close();
-
             
             return index;
         }

@@ -6,6 +6,7 @@ package domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.*;
 
 /**
@@ -13,14 +14,14 @@ import javax.persistence.*;
  * @author Alexander Arends & Leslie Aerts
  */
 @Entity
-@Table (name = "LANE")
+
 public class Lane implements Serializable
 {
     @Id
     private String id;
     
-    @OneToMany
-    private ArrayList<VehiclePosition> positions;
+    @OneToMany(cascade= CascadeType.ALL)
+    private Collection<VehiclePosition> positions;
 
     public Lane()
     {
@@ -47,7 +48,7 @@ public class Lane implements Serializable
         this.id = id;
     }
 
-    public ArrayList<VehiclePosition> getPositions()
+    public Collection<VehiclePosition> getPositions()
     {
         return positions;
     }

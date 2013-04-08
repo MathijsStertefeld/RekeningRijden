@@ -13,16 +13,17 @@ import javax.persistence.*;
  */
 public class VerplaatsingSysteemService
 {
-
     private final EntityManagerFactory emf;
 
     public VerplaatsingSysteemService()
     {
         emf = Persistence.createEntityManagerFactory("VerplaatsingenSysteemPU");
+        System.out.println("Factory created");
     }
 
     public void createEdge(Edge edge)
     {
+        System.out.println("Creating Edge...");
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
 
@@ -39,6 +40,7 @@ public class VerplaatsingSysteemService
 
     public void createLane(Lane lane)
     {
+        System.out.println("Creating Lane...");
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
 

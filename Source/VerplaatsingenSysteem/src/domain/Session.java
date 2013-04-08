@@ -6,6 +6,7 @@ package domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -14,19 +15,16 @@ import javax.persistence.*;
  * @author Leslie Aerts & Alexander Arends
  */
 @Entity
-@Table (name = "SIMSESSION")
+@Table(name = "simsession")
 public class Session implements Serializable
 {
-    
-    
-    @Temporal(TemporalType.DATE)
-    private Date sessionDate;
-    
-    private ArrayList<TimeStep> timesteps;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Temporal(TemporalType.DATE)
+    private Date sessionDate;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<TimeStep> timesteps;
 
     public Session()
     {
@@ -48,12 +46,12 @@ public class Session implements Serializable
         this.sessionDate = sessionDate;
     }
 
-    public ArrayList<TimeStep> getTimesteps()
+    public Collection<TimeStep> getTimesteps()
     {
         return timesteps;
     }
 
-    public void setTimesteps(ArrayList<TimeStep> timesteps)
+    public void setTimesteps(Collection<TimeStep> timesteps)
     {
         this.timesteps = timesteps;
     }
