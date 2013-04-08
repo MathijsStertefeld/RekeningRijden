@@ -6,9 +6,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>
-            Rekening Rijders - Auto Overzicht
-        </title>
     </h:head>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -35,20 +32,14 @@
             
             <ui:define name="Breadcrumbs">
                 <li>
-                    <a href="" title="Administratie">
+                    <a href="faces/Login.xhtml" title="Administratie">
                         Administratie
                     </a>
                 </li>
 
                 <li class="selected">
-                    <a href="" title="Cartrackers">
+                    <a href="faces/CarOverview.xhtml" title="Cartrackers">
                         Cartrackers
-                    </a>
-                </li>
-                
-                <li class="selected">
-                    <a href="" title="Overzicht">
-                        Overzicht
                     </a>
                 </li>
             </ui:define>
@@ -77,7 +68,11 @@
             </ui:define>
             
             <ui:define name="SiteContent">
-                
+                <h:form id="carForm">
+                    
+                    <br/>
+                    <h:commandButton id="submit" value=" Wijzigen " action="faces/CarEditing.xhtml" />
+                </h:form>
             </ui:define>
 
         </ui:composition>

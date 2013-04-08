@@ -10,7 +10,7 @@
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
-                Cartrackers Overzicht
+                Wijzigen Facturen
             </ui:define>
             
             <ui:define name="TypeTitle">
@@ -37,9 +37,15 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="faces/BillOverview.xhtml" title="Facturen">
+                        Facturen
+                    </a>
+                </li>
+                
                 <li class="selected">
-                    <a href="faces/CarOverview.xhtml" title="Cartrackers">
-                        Cartrackers
+                    <a href="" title="Wijzigen">
+                        Wijzigen
                     </a>
                 </li>
             </ui:define>
@@ -68,10 +74,31 @@
             </ui:define>
             
             <ui:define name="SiteContent">
-                <h:form id="carForm">
-                    
+                <h:form id="billEditForm">
+                    <h:outputLabel  value="Bill ID: " /> <br/>              
+                    <h:inputText id="number"  style="width: 250px" disabled="true"/> <br/>
+
+                    <h:outputLabel  value="BSN eigenaar: " /> <br/>              
+                    <h:inputText id="ownerBsn"  style="width: 250px" disabled="true"/> <br/>
+
+                    <h:outputLabel  value="Periode: " /> <br/>              
+                    <h:inputText id="period"  style="width: 250px" disabled="true"/> <br/>
+
+                    <h:outputLabel  value="Totaalbedrag: " /> <br/>              
+                    <h:inputText id="paymentAmount"  style="width: 250px" disabled="true"/> <br/>
+
+                    <h:outputLabel  value="Betaal datum: " /> <br/>              
+                    <h:inputText id="paymentDate"  style="width: 250px" /> <br/>
+
+                    <h:outputLabel  value="Betaalstatus: " /> <br/>              
+                    <h:selectOneMenu id="paymentStatus" style="width: 250px">
+                        <f:selectItem itemValue="OPEN" itemLabel="Onbetaald" />
+                        <f:selectItem itemValue="PAYED" itemLabel="Betaald" />
+                        <f:selectItem itemValue="CANCELED" itemLabel="Geannuleerd" />
+                    </h:selectOneMenu><br/>
+
                     <br/>
-                    <h:commandButton id="submit" value=" Wijzigen " action="faces/CarEditing.xhtml" />
+                    <h:commandButton id="submit" value=" Opslaan " action="faces/BillOverview.xhtml" />
                 </h:form>
             </ui:define>
 
