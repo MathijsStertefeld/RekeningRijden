@@ -4,6 +4,7 @@
  */
 package domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.*;
 
@@ -13,7 +14,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table (name = "LANE")
-public class Lane
+public class Lane implements Serializable
 {
     @Id
     private String id;

@@ -4,6 +4,7 @@
  */
 package domain;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 /**
@@ -12,7 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table (name = "VEHICLEPOSITION")
-public class VehiclePosition
+public class VehiclePosition implements Serializable
 {
     @Id
     private String carTrackerId;
