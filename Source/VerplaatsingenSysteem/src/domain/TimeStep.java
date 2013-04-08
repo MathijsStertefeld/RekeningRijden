@@ -20,11 +20,10 @@ public class TimeStep implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(cascade= CascadeType.PERSIST,mappedBy="parentTimeStep")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "parentTimeStep")
     private Collection<Edge> edges;
     private double timestepTime;
-    
-    @ManyToOne(cascade= CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Session parentSession;
 
     public TimeStep()
@@ -32,12 +31,12 @@ public class TimeStep implements Serializable
         edges = new ArrayList<Edge>();
     }
 
-    public TimeStep(int timestep, Session parent)
+    public TimeStep(double timestep, Session parent)
     {
         this.timestepTime = timestep;
         this.parentSession = parent;
         edges = new ArrayList<Edge>();
-        
+
     }
 
     public double getTime()
@@ -73,5 +72,10 @@ public class TimeStep implements Serializable
     public void setId(Long id)
     {
         this.id = id;
+    }
+
+    public void setParentSession(Session s)
+    {
+        this.parentSession = s;
     }
 }

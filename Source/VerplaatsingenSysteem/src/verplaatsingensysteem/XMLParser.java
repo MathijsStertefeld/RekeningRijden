@@ -29,14 +29,16 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class XMLParser extends DefaultHandler
 {
+
     SAXParser parser;
     private File xmlToRead;
+    private Session s;
     private ArrayList<TimeStep> timesteps;
     private TimeStep currentTimeStep;
     private Lane currentLane;
     private Edge currentEdge;
 
-    //
+    
     public XMLParser(String fileName) throws SAXException, IOException, ParserConfigurationException
     {
         SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -47,6 +49,21 @@ public class XMLParser extends DefaultHandler
 
     public Session readMovementXML()
     {
+        s = new Session();
+
+        //Bestandsnaam MOET "verplaatsing_yyyymmdd.xml" zijn.
+        String temp = xmlToRead.getName();
+        String[] parts = temp.split("_");
+
+        String dateName = parts[1].split("\\.")[0];
+        //System.out.println("Date is " + dateName);
+        int year = Integer.parseInt(dateName.substring(0, 4));
+        int month = Integer.parseInt(dateName.substring(4, 6));
+        int day = Integer.parseInt(dateName.substring(6, 8));
+
+        GregorianCalendar gc = new GregorianCalendar(year, month - 1, day);
+        Date d = gc.getTime();
+
         try
         {
             parser.parse(xmlToRead, this);
@@ -54,22 +71,10 @@ public class XMLParser extends DefaultHandler
         {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        //Bestandsnaam MOET "verplaatsing_yyyymmdd.xml" zijn.
-        String temp = xmlToRead.getName();
-        String[] parts = temp.split("_");
-        
-        String dateName = parts[1].split("\\.")[0];
-        //System.out.println("Date is " + dateName);
-        int year = Integer.parseInt(dateName.substring(0, 4));
-        int month = Integer.parseInt(dateName.substring(4,6));
-        int day = Integer.parseInt(dateName.substring(6,8));
-        
-        GregorianCalendar gc = new GregorianCalendar(year, month-1, day);
-        Date d = gc.getTime();
-        
-       // System.out.println(year + " " + month + " " + day);
-        Session s = new Session(d, timesteps);
+        s.setSessionDate(d);
+        s.setTimesteps(timesteps);
+        // System.out.println(year + " " + month + " " + day);
+        //s = new Session(d, timesteps);
         return s;
     }
 
@@ -80,15 +85,17 @@ public class XMLParser extends DefaultHandler
         //If it gets to a new main element (Which is a timestep) create a new movement.
         if (elementName.equalsIgnoreCase("timestep"))
         {
-            currentTimeStep = new TimeStep();
             double timeStep = Double.parseDouble(attributes.getValue("time"));
+            currentTimeStep = new TimeStep(timeStep, this.s);
+
             //System.out.println("Starting new Timestep..." + timeStep);
-            currentTimeStep.setTime(timeStep);
+            //currentTimeStep.setTime(timeStep);
+            //currentTimeStep.setParentSession(this.s);
         }
 
         if (elementName.equalsIgnoreCase("edge"))
         {
-            currentEdge = new Edge(attributes.getValue("id"),currentTimeStep);
+            currentEdge = new Edge(attributes.getValue("id"), currentTimeStep);
             System.out.println("Starting new edge..." + currentEdge.getId());
 
         }
@@ -97,7 +104,7 @@ public class XMLParser extends DefaultHandler
         {
             String laneId = attributes.getValue("id");
             System.out.println("Starting new Lane..." + laneId);
-            currentLane = new Lane(laneId,currentEdge);
+            currentLane = new Lane(laneId, currentEdge);
         }
 
         if (elementName.equalsIgnoreCase("vehicle"))
@@ -105,7 +112,7 @@ public class XMLParser extends DefaultHandler
             String vehicleId = attributes.getValue("id");
             double vehiclePos = Double.parseDouble(attributes.getValue("pos"));
             double vehicleSpeed = Double.parseDouble(attributes.getValue("speed"));
-            VehiclePosition vehPos = new VehiclePosition(vehicleId, vehiclePos, vehicleSpeed,currentLane);
+            VehiclePosition vehPos = new VehiclePosition(vehicleId, vehiclePos, vehicleSpeed, currentLane);
             System.out.println("Starting new vehicle..." + vehicleId + " " + vehiclePos + " " + vehicleSpeed);
             currentLane.addVehicle(vehPos);
         }
