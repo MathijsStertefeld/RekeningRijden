@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity(name = "Employee")
 @Table(name = "EMPLOYEE", schema = "ADMINISTRATION")
+@XmlRootElement
 public class Employee implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">

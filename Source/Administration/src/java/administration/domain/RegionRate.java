@@ -1,9 +1,11 @@
 package administration.domain;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity(name = "RegionRate")
 @Table(name = "REGION_RATE", schema = "ADMINISTRATION")
+@XmlRootElement
 public class RegionRate extends Rate {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">

@@ -1,6 +1,6 @@
 package administration.dao;
 
-import administration.domain.Driver;
+import administration.domain.Bill;
 import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -8,55 +8,55 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.*;
 
 @Stateless
-@Path("/driver")
-public class DriverDAO extends AbstractDAO<Driver, Integer> {
+@Path("/bill")
+public class BillDAO extends AbstractDAO<Bill, Integer> {
 
     @PersistenceContext(unitName = "AdministrationPU")
     private EntityManager em;
 
-    public DriverDAO() {
-        super(Driver.class);
+    public BillDAO() {
+        super(Bill.class);
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Driver entity) {
+    public void create(Bill entity) {
         super.create(entity);
     }
 
     @PUT
     @Override
     @Consumes({"application/xml", "application/json"})
-    public Driver edit(Driver entity) {
+    public Bill edit(Bill entity) {
         return super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer bsn) {
-        super.remove(super.find(bsn));
+    public void remove(@PathParam("id") Integer id) {
+        super.remove(super.find(id));
     }
 
     @GET
     @Override
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public Driver find(@PathParam("id") Integer bsn) {
-        return super.find(bsn);
+    public Bill find(@PathParam("id") Integer id) {
+        return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
-    public Collection<Driver> findAll() {
+    public Collection<Bill> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
-    public Collection<Driver> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public Collection<Bill> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

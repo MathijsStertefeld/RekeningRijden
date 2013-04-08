@@ -15,9 +15,11 @@ public class Bill implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
     @Column(nullable = false)
-    private int number;
+    private int id;
     @Column(nullable = false)
     private int driverBsn;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date periodDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date paymentDate;
     private double paymentAmount;
@@ -28,12 +30,12 @@ public class Bill implements Serializable {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public int getNumber() {
-        return number;
+    public int getId() {
+        return id;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getOwnerBsn() {
@@ -42,6 +44,14 @@ public class Bill implements Serializable {
 
     public void setOwnerBsn(int driverBsn) {
         this.driverBsn = driverBsn;
+    }
+
+    public Date getPeriodDate() {
+        return periodDate;
+    }
+
+    public void setPeriodDate(Date periodDate) {
+        this.periodDate = periodDate;
     }
 
     public Date getPaymentDate() {
@@ -79,11 +89,12 @@ public class Bill implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Bill() {
-        this(0, new Date(), 0, PaymentStatus.OPEN);
+        this(0, new Date(), new Date(), 0, PaymentStatus.OPEN);
     }
 
-    public Bill(int number, Date paymentDate, double paymentAmount, PaymentStatus paymentStatus) {
-        this.number = number;
+    public Bill(int id, Date periodDate, Date paymentDate, double paymentAmount, PaymentStatus paymentStatus) {
+        this.id = id;
+        this.periodDate = periodDate;
         this.paymentDate = paymentDate;
         this.paymentAmount = paymentAmount;
         this.paymentStatus = paymentStatus;
@@ -95,7 +106,7 @@ public class Bill implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Overrides">
     @Override
     public int hashCode() {
-        return number;
+        return id;
     }
 
     @Override
@@ -105,7 +116,7 @@ public class Bill implements Serializable {
 
     @Override
     public String toString() {
-        return "Bill{" + "number=" + number + '}';
+        return "Bill{" + "number=" + id + '}';
     }
     //</editor-fold>
 }

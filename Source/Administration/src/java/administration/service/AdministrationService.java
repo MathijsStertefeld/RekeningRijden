@@ -40,39 +40,39 @@ public class AdministrationService {
         return rateDAO.find(name);
     }
     
-    public void persist(Employee employee) {
-        employeeDAO.persist(employee);
+    public void create(Driver driver) {
+        driverDAO.create(driver);
     }
     
-    public void persist(Driver driver) {
-        driverDAO.persist(driver);
+    public void create(Employee employee) {
+        employeeDAO.create(employee);
     }
     
-    public void persist(Rate rate) {
-        rateDAO.persist(rate);
+    public void create(Rate rate) {
+        rateDAO.create(rate);
     }
     
-    public Employee merge(Employee employee) {
-        return employeeDAO.merge(employee);
+    public Driver edit(Driver driver) {
+        return driverDAO.edit(driver);
     }
     
-    public Driver merge(Driver driver) {
-        return driverDAO.merge(driver);
+    public Employee edit(Employee employee) {
+        return employeeDAO.edit(employee);
     }
     
-    public Rate merge(Rate rate) {
-        return rateDAO.merge(rate);
-    }
-    
-    public void remove(Employee employee) {
-        employeeDAO.remove(employee);
+    public Rate edit(Rate rate) {
+        return rateDAO.edit(rate);
     }
     
     public void remove(Driver driver) {
         driverDAO.remove(driver);
     }
     
+    public void remove(Employee employee) {
+        employeeDAO.remove(employee);
+    }
+    
     public void remove(Rate rate) {
-        rateDAO.persist(rate);
+        rateDAO.remove(rate);
     }
 }

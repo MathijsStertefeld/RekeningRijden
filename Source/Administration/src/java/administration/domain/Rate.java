@@ -2,9 +2,11 @@ package administration.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity(name = "Rate")
 @Table(name = "RATE", schema = "ADMINISTRATION")
+@XmlRootElement
 public abstract class Rate implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">

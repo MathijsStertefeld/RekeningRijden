@@ -2,9 +2,11 @@ package administration.domain;
 
 import java.sql.Time;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity(name = "HighwayRate")
 @Table(name = "HIGHWAY_RATE", schema = "ADMINISTRATION")
+@XmlRootElement
 public class HighwayRate extends Rate {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">

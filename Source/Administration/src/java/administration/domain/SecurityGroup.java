@@ -2,9 +2,11 @@ package administration.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity(name = "SecurityGroup")
 @Table(name = "SECURITY_GROUP", schema = "ADMINISTRATION")
+@XmlRootElement
 public class SecurityGroup implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
