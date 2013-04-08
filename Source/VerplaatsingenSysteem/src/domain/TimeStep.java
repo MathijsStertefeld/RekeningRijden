@@ -4,7 +4,9 @@
  */
 package domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.*;
 
 
@@ -14,16 +16,18 @@ import javax.persistence.*;
  */
 @Entity
 @Table (name = "TIMESTEP")
-public class TimeStep
+public class TimeStep implements Serializable
 {
     
     
     private double time;
     
-    @ManyToOne
-    private ArrayList<Edge> edges;
+    @ManyToOne (cascade = { CascadeType.PERSIST
+    })
+    private Collection<Edge> edges;
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     public TimeStep(int timestep)
@@ -49,7 +53,7 @@ public class TimeStep
 
     public ArrayList<Edge> getEdges()
     {
-        return edges;
+        return (ArrayList<Edge>) edges;
     }
 
     public void setEdges(ArrayList<Edge> edges)

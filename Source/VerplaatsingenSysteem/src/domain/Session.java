@@ -4,6 +4,7 @@
  */
 package domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table (name = "SIMSESSION")
-public class Session
+public class Session implements Serializable
 {
     
     
@@ -24,6 +25,7 @@ public class Session
     private ArrayList<TimeStep> timesteps;
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     public Session()

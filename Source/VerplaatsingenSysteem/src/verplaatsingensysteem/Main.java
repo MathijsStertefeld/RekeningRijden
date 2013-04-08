@@ -5,6 +5,7 @@
 package verplaatsingensysteem;
 
 import database.Database;
+import database.VerplaatsingSysteemService;
 import domain.Edge;
 import domain.Lane;
 import domain.Session;
@@ -23,6 +24,7 @@ import org.xml.sax.SAXException;
  */
 public class Main
 {
+    
     /**
      * @param args the command line arguments
      */
@@ -31,7 +33,7 @@ public class Main
         XMLParser parser = null;
         try
         {
-            parser = new XMLParser("verplaatsingen_20110209.xml");
+            parser = new XMLParser("verplaatsing_19901218.xml");
         }
         catch (SAXException | IOException | ParserConfigurationException ex)
         {
@@ -62,20 +64,28 @@ public class Main
 //            }
 //        }
 
+        VerplaatsingSysteemService verplaatsingSysteemService = new VerplaatsingSysteemService();
+
+        verplaatsingSysteemService.createSession(s);
+        
         for (TimeStep ts : s.getTimesteps())
         {
             try
             {
-                Database.writeToDatabase(ts, s);
+               // Database.writeToDatabase(ts, s);
+               // verplaatsingSysteemService.createTimeStep(ts);
             }
-            catch (ClassNotFoundException ex)
+            catch (Exception ex)
             {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
-            catch (SQLException ex)
-            {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            catch (ClassNotFoundException ex)
+//            {
+//                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            catch (SQLException ex)
+//            {
+//                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
     }
 }

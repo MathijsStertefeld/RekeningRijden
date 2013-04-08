@@ -13,18 +13,19 @@ import javax.persistence.*;
  */
 public class VerplaatsingSysteemService
 {
-    
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("auctionPU");
-    
+
+    private final EntityManagerFactory emf;
+
     public VerplaatsingSysteemService()
     {
+        emf = Persistence.createEntityManagerFactory("VerplaatsingenSysteemPU");
     }
-    
+
     public void createEdge(Edge edge)
     {
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
-        
+
         try
         {
             vpDAO.createEdge(edge);
@@ -32,14 +33,15 @@ public class VerplaatsingSysteemService
         catch (Exception e)
         {
             System.err.println("Edge creating failed");
+            System.err.println(e);
         }
     }
-    
+
     public void createLane(Lane lane)
     {
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
-        
+
         try
         {
             vpDAO.createLane(lane);
@@ -47,14 +49,15 @@ public class VerplaatsingSysteemService
         catch (Exception e)
         {
             System.err.println("Lane creating failed");
+            System.err.println(e);
         }
     }
-    
+
     public void createTimeStep(TimeStep timeStep)
     {
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
-        
+
         try
         {
             vpDAO.createTimeStep(timeStep);
@@ -62,14 +65,15 @@ public class VerplaatsingSysteemService
         catch (Exception e)
         {
             System.err.println("TimeStep creating failed");
+            System.err.println(e);
         }
     }
-    
+
     public void createSession(Session session)
     {
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
-        
+
         try
         {
             vpDAO.createSession(session);
@@ -78,14 +82,15 @@ public class VerplaatsingSysteemService
         catch (Exception e)
         {
             System.err.println("Session creating failed");
+            System.err.println(e);
         }
     }
-    
+
     public void createVehiclePosition(VehiclePosition vehiclePosition)
     {
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
-        
+
         try
         {
             vpDAO.createVehiclePosition(vehiclePosition);
@@ -93,6 +98,7 @@ public class VerplaatsingSysteemService
         catch (Exception e)
         {
             System.err.println("VehiclePosition creating failed");
+            System.err.println(e);
         }
     }
 }
