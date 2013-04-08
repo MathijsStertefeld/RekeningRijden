@@ -25,6 +25,14 @@ public class AdministrationService {
     public List<AdministrationAccount> findAllAdministrationAccounts() {
         return administrationAccountDAO.findAll();
     }
+    
+    public List<WebsiteAccount> findAllWebsiteAccounts(){
+        return websiteAccountDAO.findAll();
+    }
+    
+    public WebsiteAccount findWebsiteAccount(int bsn){
+        return websiteAccountDAO.find(bsn);
+    }
 
     @PostConstruct
     public void initAccounts() {

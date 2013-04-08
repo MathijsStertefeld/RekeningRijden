@@ -107,6 +107,11 @@ public class WebsiteAccount implements Serializable {
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+    
+    public List<Bill> getAllBills()
+    {
+        return this.bills;
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
