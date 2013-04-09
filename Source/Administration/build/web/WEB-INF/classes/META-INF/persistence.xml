@@ -3,6 +3,16 @@
   <persistence-unit name="AdministrationPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>AdministrationDB</jta-data-source>
+    <class>administration.domain.Bill</class>
+    <class>administration.domain.Car</class>
+    <class>administration.domain.CityRate</class>
+    <class>administration.domain.Driver</class>
+    <class>administration.domain.Employee</class>
+    <class>administration.domain.HighwayRate</class>
+    <class>administration.domain.Rate</class>
+    <class>administration.domain.RegionRate</class>
+    <class>administration.domain.SecurityGroup</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
       <property name="eclipselink.ddl-generation" value="create-tables"/>
