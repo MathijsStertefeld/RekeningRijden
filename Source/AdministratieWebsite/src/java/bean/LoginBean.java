@@ -1,8 +1,9 @@
 package bean;
 
 import administration.domain.Employee;
-import administration.service.AdministrationService;
+//import administration.service.AdministrationService;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,8 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 @SessionScoped
 public class LoginBean implements Serializable {
 
-    @Inject
-    AdministrationService administrationService;
+    //@Inject
+    //AdministrationService administrationService;
     String username;
     String password;
 
@@ -39,15 +40,18 @@ public class LoginBean implements Serializable {
     }
     
     public Collection<Employee> getEmployees() {
-        return administrationService.findAllEmployees();
+        Collection<Employee> empColl = new ArrayList<Employee>();
+        empColl.add(new Employee("admin", "admin", true));
+        return empColl;
+        //return administrationService.findAllEmployees();
     }
 
     public void login() {
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) context.getRequest();
+        //HttpServletRequest request = (HttpServletRequest) context.getRequest();
         try {
-            request.login(username, password);
-            context.redirect("employee/bill.xhtml");
+            //request.login(username, password);
+            context.redirect("CarOverview.xhtml");
         } catch (Exception ex) {
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }

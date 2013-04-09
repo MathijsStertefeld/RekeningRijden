@@ -70,22 +70,28 @@
             <ui:define name="SiteContent">
                 <h:form id="carForm">
                     
-                   <p:dataTable id="dataTable" var="bill" value="#{billBean.bills}">    
-                        <p:column sortBy="#{bill.paymentAmount}}" headerText="Amount">  
-                            <h:outputText value="#{bill.paymentAmount}" />  
+                    <p:dataTable id="dataTable" var="car" value="#{carBean}"  tableStyle="table-layout:fixed;">    
+                        
+                        <p:column sortBy="#{carBean}}" style="white-space:normal" headerText="Cartracker ID">  
+                            <h:outputText value="#{carBean}" />  
                         </p:column>  
 
-                        <p:column sortBy="#{bill.paymentDate}" headerText="Date">  
-                            <h:outputText value="#{bill.paymentDate}" />  
+                        <p:column sortBy="#{carBean}" style="white-space:normal" headerText="Eigenaar">  
+                            <h:outputText value="#{carBean}" />  
                         </p:column>  
 
-                        <p:column sortBy="#{bill.paymentStatus}" headerText="Status">
-                            <h:outputText value="#{bill.paymentStatus}" />
+                        <p:column sortBy="#{carBean}" style="white-space:normal" headerText="Kenteken">
+                            <h:outputText value="#{carBean}" />
                         </p:column> 
 
-                        <p:column sortBy="#{bill.id}" headerText="Number">
-                            <h:outputText value="#{bill.id}" />
+                        <p:column sortBy="#{carBean}" style="white-space:normal" headerText="Merk">
+                            <h:outputText value="#{carBean}" />
                         </p:column>
+                       
+                       <p:column sortBy="#{carBean}" style="white-space:normal" headerText="Model">
+                            <h:outputText value="#{carBean}" />
+                        </p:column>
+                        
                     </p:dataTable>
                     
                     <br/>

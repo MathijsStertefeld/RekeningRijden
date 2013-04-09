@@ -19,12 +19,12 @@
             
             <ui:define name="SiteTypeSelection">
                 <li class="">                           
-                    <a href="faces/Login.xhtml">
+                    <a href="Login.xhtml">
                         Gebruiker
                     </a>
                 </li>		
                 <li class="selected">
-                    <a href="faces/Login.xhtml">
+                    <a href="Login.xhtml">
                         Administratie
                     </a>
                 </li>
@@ -32,13 +32,13 @@
             
             <ui:define name="Breadcrumbs">
                 <li>
-                    <a href="faces/Login.xhtml" title="Administratie">
+                    <a href="Login.xhtml" title="Administratie">
                         Administratie
                     </a>
                 </li>
 
                 <li>
-                    <a href="faces/CarOverview.xhtml" title="Cartrackers">
+                    <a href="CarOverview.xhtml" title="Cartrackers">
                         Cartrackers
                     </a>
                 </li>
@@ -52,22 +52,22 @@
             
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
-                    <a href="faces/CarOverview.xhtml" class="">
+                    <a href="CarOverview.xhtml" class="">
                         Cartrackers
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="faces/RateOverview.xhtml" class="">
+                    <a href="RateOverview.xhtml" class="">
                         Tarieven
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="faces/BillOverview.xhtml" class="">
+                    <a href="BillOverview.xhtml" class="">
                         Facturen
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="faces/Login.xhtml" class="">
+                    <a href="Login.xhtml" class="">
                         Uitloggen
                     </a>          
                 </li>
@@ -90,6 +90,14 @@
                     <h:outputLabel  value="Model: " /> <br/>              
                     <h:inputText id="model"  style="width: 250px" disabled="true" /> <br/>
 
+                    <h:outputLabel  value="Type: " /> <br/>              
+                    <h:selectOneMenu id="type" style="width: 250px" disabled="true">
+                        <f:selectItem itemValue="PASSENGER_CAR" itemLabel="Personenauto" />
+                        <f:selectItem itemValue="VAN" itemLabel="Bedrijfsauto" />
+                        <f:selectItem itemValue="AUTOBUS" itemLabel="Autobus" />
+                        <f:selectItem itemValue="TRUCK" itemLabel="Vrachtwagen" />
+                    </h:selectOneMenu><br/>                    
+                    
                     <h:outputLabel  value="Kleur: " /> <br/>              
                     <h:selectOneMenu id="paintColor" style="width: 250px">
                         <f:selectItem itemValue="VARIOUS" itemLabel="Diversen" />
@@ -124,7 +132,9 @@
                     </h:selectOneMenu><br/>
                     
                     <br/>
-                    <h:commandButton id="submit" value=" Opslaan " action="faces/CarOverview.xhtml" />
+                    <h:commandButton id="submit" value=" Opslaan " action="CarOverview.xhtml" />
+                    &nbsp;
+                    <h:commandButton id="cancel" value=" Annuleren " action="CarOverview.xhtml" />
                 </h:form>
             </ui:define>
 

@@ -19,12 +19,12 @@
             
             <ui:define name="SiteTypeSelection">
                 <li class="">                           
-                    <a href="faces/Login.xhtml">
+                    <a href="Login.xhtml">
                         Gebruiker
                     </a>
                 </li>		
                 <li class="selected">
-                    <a href="faces/Login.xhtml">
+                    <a href="Login.xhtml">
                         Administratie
                     </a>
                 </li>
@@ -46,7 +46,7 @@
             
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
-                    <a href="faces/Login.xhtml" class="">
+                    <a href="Login.xhtml" class="">
                         Inloggen
                     </a>          
                 </li>
@@ -54,16 +54,16 @@
             
             <ui:define name="SiteContent">
                 <h:form>
-                    <h:outputLabel  value="Email: " />
+                    <h:outputLabel  value="Username: " />
                     <br/>
-                    <h:inputText id="username"  style="width: 250px" />
+                    <h:inputText id="username" value="#{loginBean.username}"  style="width: 250px" />
                     <br/>
                     <h:outputLabel  value="Password: " />
                     <br/>
-                    <h:inputSecret id="password"  style="width: 250px" />
+                    <h:inputSecret id="password" value="#{loginBean.password}"  style="width: 250px" />
                     <br/>
                     <br/>
-                    <h:commandButton id="submit" value=" Login " action="faces/CarOverview.xhtml" />
+                    <h:commandButton id="submit" value=" Login " action="#{loginBean.login()}" />
                 </h:form>
             </ui:define>
 
