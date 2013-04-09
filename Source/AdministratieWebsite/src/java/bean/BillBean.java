@@ -47,12 +47,12 @@ public class BillBean implements Serializable {
     }
 
     public void create() {
-        service.path("resources").path("bills").path("follow")
+        service.path("resources").path("bills")
                 .accept(MediaType.APPLICATION_JSON).post(currentBill);
     }
 
     public void edit() {
-        service.path("resources").path("bills").path("follow")
+        service.path("resources").path("bills")
                 .accept(MediaType.APPLICATION_JSON).put(currentBill);
     }
 }

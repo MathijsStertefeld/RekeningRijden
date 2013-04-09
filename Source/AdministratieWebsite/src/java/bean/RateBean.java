@@ -1,48 +1,58 @@
 package bean;
 
-import administration.domain.CityRate;
-import administration.domain.HighwayRate;
-import administration.domain.RegionRate;
+import administration.domain.Rate;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.GenericType;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Named;
+import javax.ws.rs.core.MediaType;
 
 @Named
 @RequestScoped
-public class RateBean {
+public class RateBean implements Serializable {
 
-    /**
-     * Creates a new instance of RateBean
-     */
-    public RateBean() {
+    WebResource service;
+    private Rate currentRate;
+    private Collection<Rate> rates;
+
+    public void setCurrentRate(Rate rate) {
+        this.currentRate = rate;
     }
-    
-    public CityRate getCityRate()
-    {
-        return null;
+
+    public Rate getCurrentRate() {
+        return currentRate;
     }
-    
-    public HighwayRate getHighwayRate()
-    {
-        return null;
+
+    public Collection<Rate> getRates() {
+        return rates;
     }
-    
-    public RegionRate getRegionRate()
-    {
-        return null;
+
+    @PostConstruct
+    public void postConstruct() {
+        ClientConfig config = new DefaultClientConfig();
+        Client client = Client.create(config);
+        service = client.resource("http://localhost:8080/Kwetter/");
+
+        rates = new ArrayList<Rate>(service.path("resources").path("rates")
+                .accept(MediaType.APPLICATION_JSON)
+                .get(new GenericType<Collection<Rate>>() {
+        }));
     }
-    
-    public void setRate()
-    {
-        
+
+    public void create() {
+        service.path("resources").path("rates")
+                .accept(MediaType.APPLICATION_JSON).post(currentRate);
     }
-    
-    public void save()
-    {
-        
-    }
-    
-    public void edit()
-    {
-        
+
+    public void edit() {
+        service.path("resources").path("rates")
+                .accept(MediaType.APPLICATION_JSON).put(currentRate);
     }
 }

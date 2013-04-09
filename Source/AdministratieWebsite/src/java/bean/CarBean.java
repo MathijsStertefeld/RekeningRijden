@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 
 @Named
 @RequestScoped
-public class CarBean{
+public class CarBean {
 
     private WebResource service;
     private Car currentCar;
@@ -46,12 +46,12 @@ public class CarBean{
     }
 
     public void create() {
-        service.path("resources").path("cars").path("follow")
+        service.path("resources").path("cars")
                 .accept(MediaType.APPLICATION_JSON).post(currentCar);
     }
 
     public void edit() {
-        service.path("resources").path("cars").path("follow")
+        service.path("resources").path("cars")
                 .accept(MediaType.APPLICATION_JSON).put(currentCar);
     }
 }
