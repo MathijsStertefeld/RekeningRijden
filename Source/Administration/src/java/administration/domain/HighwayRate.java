@@ -1,7 +1,5 @@
 package administration.domain;
 
-import java.sql.Time;
-import java.util.Collection;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 

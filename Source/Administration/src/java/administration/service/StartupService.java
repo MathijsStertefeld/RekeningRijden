@@ -1,6 +1,7 @@
 package administration.service;
 
 import administration.domain.*;
+import java.io.Serializable;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -9,7 +10,7 @@ import javax.inject.Inject;
 
 @Singleton
 @Startup
-public class StartupService {
+public class StartupService implements Serializable {
 
     @Inject
     AdministrationService administrationService;
@@ -30,6 +31,7 @@ public class StartupService {
         e2.getSecurityGroups().add(employee);
         e3.getSecurityGroups().add(employee);
         
+        administrationService.create(e1);
         administrationService.create(e2);
         administrationService.create(e3);
         

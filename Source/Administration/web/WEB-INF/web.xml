@@ -75,12 +75,8 @@
         </auth-constraint>
     </security-constraint>
     <login-config>
-        <auth-method>FORM</auth-method>
-        <realm-name>jdbc/administration/realm</realm-name>
-        <form-login-config>
-            <form-login-page>/employee/bill.xhtml</form-login-page>
-            <form-error-page>/login.xhtml</form-error-page>
-        </form-login-config>
+        <auth-method>DIGEST</auth-method>
+        <realm-name>jdbcRealm</realm-name>
     </login-config>
     <security-role>
         <description/>

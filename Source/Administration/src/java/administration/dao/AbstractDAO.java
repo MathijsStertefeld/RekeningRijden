@@ -1,9 +1,10 @@
 package administration.dao;
 
+import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.EntityManager;
 
-public abstract class AbstractDAO<Entity, ID> {
+public abstract class AbstractDAO<Entity, ID> implements Serializable {
 
     private Class<Entity> entityClass;
 

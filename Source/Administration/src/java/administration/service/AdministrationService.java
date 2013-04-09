@@ -2,18 +2,19 @@ package administration.service;
 
 import administration.dao.*;
 import administration.domain.*;
+import java.io.Serializable;
 import java.util.Collection;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 @Stateless
-public class AdministrationService {
+public class AdministrationService implements Serializable {
 
-    @EJB
+    @Inject
     private DriverDAO driverDAO;
-    @EJB
+    @Inject
     private EmployeeDAO employeeDAO;
-    @EJB
+    @Inject
     private RateDAO rateDAO;
     
     public Collection<Driver> findAllDrivers(){
