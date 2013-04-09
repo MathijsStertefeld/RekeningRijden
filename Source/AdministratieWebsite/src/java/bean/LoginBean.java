@@ -39,8 +39,8 @@ public class LoginBean implements Serializable {
         this.password = password;
     }
     
-    public Collection<Employee> getEmployees() {
-        Collection<Employee> empColl = new ArrayList<Employee>();
+    public ArrayList<Employee> getEmployees() {
+        ArrayList<Employee> empColl = new ArrayList<Employee>();
         empColl.add(new Employee("admin", "admin", true));
         return empColl;
         //return administrationService.findAllEmployees();
@@ -48,22 +48,23 @@ public class LoginBean implements Serializable {
 
     public void login() {
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-        //HttpServletRequest request = (HttpServletRequest) context.getRequest();
+        HttpServletRequest request = (HttpServletRequest) context.getRequest();
         try {
             //request.login(username, password);
-            context.redirect("CarOverview.xhtml");
+
+            if (getEmployees().get(0).getName().equals(username))
+            {
+
+                if (getEmployees().get(0).getPassword().equals(password))
+                {
+                    username = "";
+                    password = "";                
+                    context.redirect("CarOverview.xhtml");
+                }
+            }
+            
         } catch (Exception ex) {
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    public void save()
-    {
-        
-    }
-    
-    public void edit()
-    {
-        
     }
 }
