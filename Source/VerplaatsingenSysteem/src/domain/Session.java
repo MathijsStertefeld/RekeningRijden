@@ -24,7 +24,8 @@ public class Session implements Serializable
     @Temporal(TemporalType.DATE)
     private Date sessionDate;
    
-    @OneToMany(cascade= CascadeType.PERSIST,mappedBy="parentSession")
+    //@OneToMany(cascade= CascadeType.PERSIST,mappedBy="parentSession")
+    @Transient
     private Collection<TimeStep> timesteps;
 
     public Session()

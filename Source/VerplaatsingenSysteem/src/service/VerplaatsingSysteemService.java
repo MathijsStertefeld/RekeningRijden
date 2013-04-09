@@ -14,7 +14,6 @@ import javax.persistence.*;
  */
 public class VerplaatsingSysteemService
 {
-
     private final EntityManagerFactory emf;
 
     public VerplaatsingSysteemService()
@@ -28,7 +27,7 @@ public class VerplaatsingSysteemService
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
 
-        System.out.println("create session");
+        //System.out.println("create session");
         try
         {
             em.getTransaction().begin();
@@ -46,7 +45,7 @@ public class VerplaatsingSysteemService
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
 
-        System.out.println("Creating Timestep...");
+        //System.out.println("Creating Timestep...");
         try
         {
             em.getTransaction().begin();
@@ -61,7 +60,7 @@ public class VerplaatsingSysteemService
 
     public void createEdge(Edge edge)
     {
-        System.out.println("Creating Edge...");
+       // System.out.println("Creating Edge...");
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
 
@@ -79,7 +78,7 @@ public class VerplaatsingSysteemService
 
     public void createLane(Lane lane)
     {
-        System.out.println("Creating Lane...");
+       // System.out.println("Creating Lane...");
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
 
@@ -100,7 +99,7 @@ public class VerplaatsingSysteemService
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
 
-        System.out.println("Creating vehicle pos");
+       // System.out.println("Creating vehicle pos");
         try
         {
             em.getTransaction().begin();

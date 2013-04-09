@@ -32,7 +32,7 @@ public class Main
         XMLParser parser = null;
         try
         {
-            parser = new XMLParser("verplaatsing_19901218.xml");
+            parser = new XMLParser("verplaatsingen_20110209.xml");
         } catch (SAXException | IOException | ParserConfigurationException ex)
         {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -45,22 +45,27 @@ public class Main
 
         for (TimeStep ts : s.getTimesteps())
         {
-            System.out.println("Timestep " + ts.getTime());
-            for (Edge e : ts.getEdges())
-            {   
-                System.out.println("     Edge " + e.getId());
-                for (Lane l : e.getLanes())
-                {
-
-                    System.out.println("          Lane " + l.getId());
-                    for (VehiclePosition pos : l.getPositions())
-                    {
-
-                        System.out.println("                         Car" + pos.getCarPos() + " " + pos.getCarTrackerId() + " " + pos.getCarSpeed());
-                    }
-                }
-            }
+            vpService.createTimeStep(ts);
         }
+
+//        for (TimeStep ts : s.getTimesteps())
+//        {
+//            System.out.println("Timestep " + ts.getTime());
+//            for (Edge e : ts.getEdges())
+//            {   
+//                System.out.println("     Edge " + e.getId());
+//                for (Lane l : e.getLanes())
+//                {
+//
+//                    System.out.println("          Lane " + l.getId());
+//                    for (VehiclePosition pos : l.getPositions())
+//                    {
+//
+//                        System.out.println("                         Car" + pos.getCarPos() + " " + pos.getCarTrackerId() + " " + pos.getCarSpeed());
+//                    }
+//                }
+//            }
+//        }
 
 //        for (TimeStep ts : s.getTimesteps())
 //        {
