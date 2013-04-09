@@ -33,6 +33,16 @@ public class RateBean implements Serializable {
     public Collection<Rate> getRates() {
         return rates;
     }
+    
+    public String getName() {
+        return currentRate.getName();
+    }
+    
+    public void setName(String name) {
+        currentRate = service.path("resources").path("rates").path(name)
+                .accept(MediaType.APPLICATION_JSON)
+                .get(Rate.class);
+    }
 
     @PostConstruct
     public void postConstruct() {

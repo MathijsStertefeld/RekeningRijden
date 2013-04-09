@@ -32,6 +32,16 @@ public class CarBean {
     public Collection<Car> getCars() {
         return cars;
     }
+    
+    public String getCarTrackerId() {
+        return currentCar.getCarTrackerId();
+    }
+    
+    public void setCarTrackerId(String carTrackerId) {
+        currentCar = service.path("resources").path("cars").path(carTrackerId)
+                .accept(MediaType.APPLICATION_JSON)
+                .get(Car.class);
+    }
 
     @PostConstruct
     public void postConstruct() {

@@ -33,6 +33,16 @@ public class BillBean implements Serializable {
     public Collection<Bill> getBills() {
         return bills;
     }
+    
+    public int getId() {
+        return currentBill.getId();
+    }
+    
+    public void setId(int id) {
+        currentBill = service.path("resources").path("bills").path(Integer.toString(id))
+                .accept(MediaType.APPLICATION_JSON)
+                .get(Bill.class);
+    }
 
     @PostConstruct
     public void postConstruct() {
