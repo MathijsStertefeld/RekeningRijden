@@ -15,13 +15,13 @@ public class Car implements Serializable {
     private String carTrackerId;
     @Column(nullable = false)
     private int driverBsn;
+    private String licensePlate;
+    private String brand;
+    private String model;
     private CarType type;
     private PaintColor paintColor;
     private int mass;
     private Classification classification;
-    private String licencePlate;
-    private String brand;
-    private String model;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -39,6 +39,30 @@ public class Car implements Serializable {
 
     public void setDriverBsn(int driverBsn) {
         this.driverBsn = driverBsn;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public CarType getType() {
@@ -72,46 +96,22 @@ public class Car implements Serializable {
     public void setClassification(Classification classification) {
         this.classification = classification;
     }
-
-    public String getLicencePlate() {
-        return licencePlate;
-    }
-
-    public void setLicencePlate(String licencePlate) {
-        this.licencePlate = licencePlate;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Car() {
-        this("", CarType.PASSENGER_CAR, PaintColor.VARIOUS, 0,
-                Classification.ZERO, "", "", "");
+        this("", CarType.UNKNOWN, PaintColor.UNKNOWN, 0,
+                Classification.UNKNOWN, "", "", "");
     }
 
     public Car(String carTrackerId, CarType type, PaintColor paintColor, int mass,
-            Classification classification, String licencePlate, String brand, String model) {
+            Classification classification, String licensePlate, String brand, String model) {
         this.carTrackerId = carTrackerId;
         this.type = type;
         this.paintColor = paintColor;
         this.mass = mass;
         this.classification = classification;
-        this.licencePlate = licencePlate;
+        this.licensePlate = licensePlate;
         this.brand = brand;
         this.model = model;
     }

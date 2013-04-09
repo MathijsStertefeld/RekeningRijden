@@ -6,7 +6,11 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
+        
     </h:head>
+    <f:metadata>
+        <f:viewParam name="name" value="#{rateBean.name}" />
+    </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
@@ -75,17 +79,20 @@
             
             <ui:define name="SiteContent">
                 <h:form id="carEditForm">                  
-                    <h:outputLabel  value="Naam: " /> <br/>              
-                    <h:inputText id="name"  style="width: 250px" disabled="true"/> <br/>
+                    <h:outputLabel for="name" value="Naam: " /> <br/>              
+                    <h:inputText id="name" value="#{rateBean.name}" style="width: 250px" disabled="true"/> <br/>
                     
-                    <h:outputLabel  value="Tarief type: " /> <br/>              
+                    <h:outputLabel for="price" value="Tarief: " /> <br/>              
+                    <h:inputText id="price" value="#{rateBean.price}" style="width: 250px"/> <br/>
+                    
+                    <h:outputLabel for="roadType" value="Tarief type: " /> <br/>              
                     <h:selectOneMenu id="roadType" style="width: 250px">
                         <f:selectItem itemValue="REGION" itemLabel="Regio" />                     
                         <f:selectItem itemValue="CITY" itemLabel="Stad" />
                         <f:selectItem itemValue="HIGHWAY" itemLabel="Snelweg" />
                     </h:selectOneMenu><br/>
                     
-                    <h:outputLabel  value="Tijdsperiode: " /> <br/>              
+                    <h:outputLabel for="timePeriod" value="Tijdsperiode: " /> <br/>              
                     <h:selectOneMenu id="timePeriod" style="width: 250px">
                         <f:selectItem itemValue="00-01" itemLabel="00:00 - 01:00" />
                         <f:selectItem itemValue="01-02" itemLabel="01:00 - 02:00" />
@@ -113,13 +120,10 @@
                         <f:selectItem itemValue="23-00" itemLabel="23:00 - 00:00" />
                     </h:selectOneMenu><br/>
                     
-                    <h:outputLabel  value="Tarief: " /> <br/>              
-                    <h:inputText id="price"  style="width: 250px"/> <br/>
-                    
                     <br/>
                     <h:commandButton id="submit" value=" Opslaan " action="RateOverview.xhtml" />
                     &nbsp;
-                    <h:commandButton id="cancel" value=" Annuleren " action="RateOverview.xhtml" />
+                    <h:commandButton id="cancel" value=" Annuleren " onclick="history.go(-1); return false;" />
                 </h:form>
             </ui:define>
 

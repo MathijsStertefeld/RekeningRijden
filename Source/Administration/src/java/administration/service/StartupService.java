@@ -44,9 +44,9 @@ public class StartupService implements Serializable {
         Driver d4 = new Driver(4444, "sjaak@sjaak.nl", "sjaak123", "en", "Sjaak",
                 "Sjaken", "Eindhoven", "Hoofdstraat 4", "1234DD", new Date());
         
-        d1.getBills().add(new Bill(1, new Date(), new Date(), 1000, PaymentStatus.CANCELED));
-        d1.getBills().add(new Bill(2, new Date(), new Date(), 1000, PaymentStatus.PAID));
-        d4.getBills().add(new Bill(3, new Date(), new Date(), 1000, PaymentStatus.OPEN));
+        d1.getBills().add(new Bill(1L, new Date(), new Date(), 1000, PaymentStatus.CANCELED));
+        d1.getBills().add(new Bill(2L, new Date(), new Date(), 1000, PaymentStatus.PAID));
+        d4.getBills().add(new Bill(3L, new Date(), new Date(), 1000, PaymentStatus.OPEN));
         
         d1.getCars().add(new Car("ABCD", CarType.AUTOBUS, PaintColor.BLACK, 1000,
                 Classification.EEV, "AB-CD-12", "Suzuki", "Swift"));

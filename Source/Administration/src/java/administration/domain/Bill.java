@@ -2,8 +2,8 @@ package administration.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -15,7 +15,7 @@ public class Bill implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
     @Column(nullable = false)
-    private int id;
+    private Long id;
     @Column(nullable = false)
     private int driverBsn;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -26,23 +26,23 @@ public class Bill implements Serializable {
     private PaymentStatus paymentStatus;
     //@OneToMany(cascade = {CascadeType.ALL})
     //@JoinTable(name = "BILL_MOVEMENT", schema = "ADMINISTRATION")
-    private List<Object> movements;
+    private Collection<Object> movements;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getOwnerBsn() {
+    public int getDriverBsn() {
         return driverBsn;
     }
 
-    public void setOwnerBsn(int driverBsn) {
+    public void setDriverBsn(int driverBsn) {
         this.driverBsn = driverBsn;
     }
 
@@ -78,21 +78,21 @@ public class Bill implements Serializable {
         this.paymentStatus = paymentStatus;
     }
 
-    public List<Object> getMovements() {
+    public Collection<Object> getMovements() {
         return movements;
     }
 
-    public void setMovements(List<Object> movements) {
+    public void setMovements(Collection<Object> movements) {
         this.movements = movements;
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Bill() {
-        this(0, new Date(), new Date(), 0, PaymentStatus.OPEN);
+        this(0L, new Date(), new Date(), 0, PaymentStatus.UNKNOWN);
     }
 
-    public Bill(int id, Date periodDate, Date paymentDate, double paymentAmount, PaymentStatus paymentStatus) {
+    public Bill(Long id, Date periodDate, Date paymentDate, double paymentAmount, PaymentStatus paymentStatus) {
         this.id = id;
         this.periodDate = periodDate;
         this.paymentDate = paymentDate;
@@ -106,7 +106,7 @@ public class Bill implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Overrides">
     @Override
     public int hashCode() {
-        return id;
+        return id.hashCode();
     }
 
     @Override

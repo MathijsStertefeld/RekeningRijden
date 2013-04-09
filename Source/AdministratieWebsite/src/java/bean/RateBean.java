@@ -1,6 +1,6 @@
 package bean;
 
-import administration.domain.Rate;
+import administration.domain.*;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
@@ -10,59 +10,68 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.ws.rs.core.MediaType;
 
 @Named
-@RequestScoped
+@SessionScoped
 public class RateBean implements Serializable {
 
     WebResource service;
-    private Rate currentRate;
+    private Rate rate;
     private Collection<Rate> rates;
-
-    public void setCurrentRate(Rate rate) {
-        this.currentRate = rate;
-    }
-
-    public Rate getCurrentRate() {
-        return currentRate;
-    }
 
     public Collection<Rate> getRates() {
         return rates;
     }
     
     public String getName() {
-        return currentRate.getName();
+        if (rate != null) {
+            return rate.getName();
+        }
+        return "";
     }
     
     public void setName(String name) {
-        currentRate = service.path("resources").path("rates").path(name)
+        rate = service.path("resources").path("rate").path(name)
                 .accept(MediaType.APPLICATION_JSON)
                 .get(Rate.class);
+    }
+    
+    public double getPrice() {
+        if (rate != null) {
+            return rate.getPrice();
+        } else {
+            return 0;
+        }
+    }
+    
+    public void setPrice(double price) {
+        if (rate != null) {
+            rate.setPrice(price);
+        }
+    }
+
+    public void create() {
+        service.path("resources").path("rate")
+                .accept(MediaType.APPLICATION_JSON).post(rate);
+    }
+
+    public void edit() {
+        service.path("resources").path("rate")
+                .accept(MediaType.APPLICATION_JSON).put(rate);
     }
 
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        service = client.resource("http://localhost:8080/Kwetter/");
+        service = client.resource("http://localhost:8080/Administration/");
 
-        rates = new ArrayList<Rate>(service.path("resources").path("rates")
+        rates = new ArrayList<Rate>(service.path("resources").path("rate")
                 .accept(MediaType.APPLICATION_JSON)
                 .get(new GenericType<Collection<Rate>>() {
         }));
-    }
-
-    public void create() {
-        service.path("resources").path("rates")
-                .accept(MediaType.APPLICATION_JSON).post(currentRate);
-    }
-
-    public void edit() {
-        service.path("resources").path("rates")
-                .accept(MediaType.APPLICATION_JSON).put(currentRate);
     }
 }

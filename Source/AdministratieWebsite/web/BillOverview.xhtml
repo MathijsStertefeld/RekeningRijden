@@ -6,9 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <f:metadata>
-            <f:viewParam name="bsn" value="#{billBean.bsn}" />
-        </f:metadata>
+        
     </h:head>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -92,11 +90,17 @@
 
                         <p:column sortBy="#{bill.paymentStatus}" style="white-space:normal" headerText="Betaal status">
                             <h:outputText value="#{bill.paymentStatus}" />
-                        </p:column> 
+                        </p:column>
+                        
+                        <p:column style="white-space:normal" headerText="Wijzigen">
+                            <h:outputLink value="BillEditing.xhtml">
+                                <h:outputText value=" Wijzigen " />
+                                <f:param name="id" value="#{bill.id}" />
+                            </h:outputLink>
+                        </p:column>
                     </p:dataTable>
                     
                     <br/>
-                    <h:commandButton id="submit" value=" Wijzigen " action="faces/BillEditing.xhtml" />
                 </h:form>
             </ui:define>
 

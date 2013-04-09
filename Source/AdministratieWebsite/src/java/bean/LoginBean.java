@@ -1,16 +1,13 @@
 package bean;
 
 import administration.domain.Employee;
-//import administration.service.AdministrationService;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,8 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 @SessionScoped
 public class LoginBean implements Serializable {
 
-    //@Inject
-    //AdministrationService administrationService;
     String username;
     String password;
 
@@ -43,7 +38,6 @@ public class LoginBean implements Serializable {
         ArrayList<Employee> empColl = new ArrayList<Employee>();
         empColl.add(new Employee("admin", "admin", true));
         return empColl;
-        //return administrationService.findAllEmployees();
     }
 
     public void login() {
@@ -52,11 +46,8 @@ public class LoginBean implements Serializable {
         try {
             //request.login(username, password);
 
-            if (getEmployees().get(0).getName().equals(username))
-            {
-
-                if (getEmployees().get(0).getPassword().equals(password))
-                {
+            if (getEmployees().get(0).getName().equals(username)) {
+                if (getEmployees().get(0).getPassword().equals(password)) {
                     username = "";
                     password = "";                
                     context.redirect("CarOverview.xhtml");

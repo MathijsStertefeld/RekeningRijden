@@ -6,6 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
+        
     </h:head>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -92,14 +93,16 @@
                             <h:outputText value="#{car.model}" />
                         </p:column>
                         
-                        <p:column  style="white-space:normal" headerText="Wijzigen">
-                            <h:commandButton id="submit" value=" Wijzigen " action="CarEditing.xhtml?carTrackerId=#{car.carTrackerId}" />
+                        <p:column style="white-space:normal" headerText="Wijzigen">
+                            <h:outputLink value="CarEditing.xhtml">
+                                <h:outputText value=" Wijzigen " />
+                                <f:param name="carTrackerId" value="#{car.carTrackerId}" />
+                            </h:outputLink>
                         </p:column>
                         
                     </p:dataTable>
                     
                     <br/>
-                    <!--h:commandButton id="submit" value=" Wijzigen " action="faces/CarEditing.xhtml" /-->
                 </h:form>
             </ui:define>
 

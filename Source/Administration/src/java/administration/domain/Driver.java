@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,10 +33,10 @@ public class Driver implements Serializable {
     private Date dateOfBirth;
     @OneToMany(cascade={CascadeType.ALL})
     @JoinTable(name = "DRIVER_BILL", schema = "ADMINISTRATION")
-    private List<Bill> bills;
+    private Collection<Bill> bills;
     @OneToMany(cascade={CascadeType.ALL})
     @JoinTable(name = "DRIVER_CAR", schema = "ADMINISTRATION")
-    private List<Car> cars;
+    private Collection<Car> cars;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -129,7 +128,7 @@ public class Driver implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Bill> getBills() {
+    public Collection<Bill> getBills() {
         return bills;
     }
     
@@ -146,15 +145,15 @@ public class Driver implements Serializable {
         return null;
     }
 
-    public void setBills(List<Bill> bills) {
+    public void setBills(Collection<Bill> bills) {
         this.bills = bills;
     }
 
-    public List<Car> getCars() {
+    public Collection<Car> getCars() {
         return cars;
     }
 
-    public void setCars(List<Car> cars) {
+    public void setCars(Collection<Car> cars) {
         this.cars = cars;
     }
     //</editor-fold>

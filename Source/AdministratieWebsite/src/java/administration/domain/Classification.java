@@ -1,5 +1,5 @@
 package administration.domain;
 
 public enum Classification {
-    ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, EEV, R;
+    UNKNOWN, ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, EEV, R;
 }
