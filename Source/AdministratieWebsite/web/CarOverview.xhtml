@@ -70,32 +70,36 @@
             <ui:define name="SiteContent">
                 <h:form id="carForm">
                     
-                    <p:dataTable id="dataTable" var="car" value="#{carBean}"  tableStyle="table-layout:fixed;">    
+                    <p:dataTable id="dataTable" var="car" value="#{carBean.cars}"  tableStyle="table-layout:fixed;">    
                         
-                        <p:column sortBy="#{carBean}}" style="white-space:normal" headerText="Cartracker ID">  
-                            <h:outputText value="#{carBean}" />  
+                        <p:column sortBy="#{car.carTrackerId}" style="white-space:normal" headerText="Cartracker ID">  
+                            <h:outputText value="#{car.carTrackerId}" />  
                         </p:column>  
 
-                        <p:column sortBy="#{carBean}" style="white-space:normal" headerText="Eigenaar">  
-                            <h:outputText value="#{carBean}" />  
+                        <p:column sortBy="#{car.driverBsn}" style="white-space:normal" headerText="Eigenaar">  
+                            <h:outputText value="#{car.driverBsn}" />  
                         </p:column>  
 
-                        <p:column sortBy="#{carBean}" style="white-space:normal" headerText="Kenteken">
-                            <h:outputText value="#{carBean}" />
+                        <p:column sortBy="#{car.licensePlate}" style="white-space:normal" headerText="Kenteken">
+                            <h:outputText value="#{car.licensePlate}" />
                         </p:column> 
 
-                        <p:column sortBy="#{carBean}" style="white-space:normal" headerText="Merk">
-                            <h:outputText value="#{carBean}" />
+                        <p:column sortBy="#{car.brand}" style="white-space:normal" headerText="Merk">
+                            <h:outputText value="#{car.brand}" />
                         </p:column>
                        
-                       <p:column sortBy="#{carBean}" style="white-space:normal" headerText="Model">
-                            <h:outputText value="#{carBean}" />
+                       <p:column sortBy="#{car.model}" style="white-space:normal" headerText="Model">
+                            <h:outputText value="#{car.model}" />
+                        </p:column>
+                        
+                        <p:column  style="white-space:normal" headerText="Wijzigen">
+                            <h:commandButton id="submit" value=" Wijzigen " action="CarEditing.xhtml?carTrackerId=#{car.carTrackerId}" />
                         </p:column>
                         
                     </p:dataTable>
                     
                     <br/>
-                    <h:commandButton id="submit" value=" Wijzigen " action="faces/CarEditing.xhtml" />
+                    <!--h:commandButton id="submit" value=" Wijzigen " action="faces/CarEditing.xhtml" /-->
                 </h:form>
             </ui:define>
 

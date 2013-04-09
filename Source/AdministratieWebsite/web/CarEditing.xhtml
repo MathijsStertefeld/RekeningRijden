@@ -6,6 +6,9 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
+        <f:metadata>
+            <f:viewParam name="carTrackerId" value="#{carBean.carTrackerId}" />
+        </f:metadata>
     </h:head>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -76,22 +79,22 @@
             <ui:define name="SiteContent">
                 <h:form id="carEditForm">
                     <h:outputLabel  value="Cartracker ID: " /> <br/>              
-                    <h:inputText id="carTrackerId"  style="width: 250px" /> <br/>
+                    <h:inputText id="carTrackerId" value="#{carBean.currentCar.carTrackerId}"  style="width: 250px" /> <br/>
 
                     <h:outputLabel  value="BSN eigenaar: " /> <br/>              
-                    <h:inputText id="ownerBsn"  style="width: 250px" disabled="true"/> <br/>
+                    <h:inputText id="ownerBsn" value="#{carBean.currentCar.driverBsn}" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel  value="Kenteken: " /> <br/>              
-                    <h:inputText id="licensePlate"  style="width: 250px" disabled="true"/> <br/>
+                    <h:inputText id="licensePlate" value="#{carBean.currentCar.licencePlate}" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel  value="Merk: " /> <br/>              
-                    <h:inputText id="brand"  style="width: 250px" disabled="true"/> <br/>
+                    <h:inputText id="brand" value="#{carBean.currentCar.brand}" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel  value="Model: " /> <br/>              
-                    <h:inputText id="model"  style="width: 250px" disabled="true" /> <br/>
+                    <h:inputText id="model" value="#{carBean.currentCar.model}" style="width: 250px" disabled="true" /> <br/>
 
                     <h:outputLabel  value="Type: " /> <br/>              
-                    <h:selectOneMenu id="type" style="width: 250px" disabled="true">
+                    <h:selectOneMenu id="type" value="#{carBean.currentCar.type}" style="width: 250px" disabled="true">
                         <f:selectItem itemValue="PASSENGER_CAR" itemLabel="Personenauto" />
                         <f:selectItem itemValue="VAN" itemLabel="Bedrijfsauto" />
                         <f:selectItem itemValue="AUTOBUS" itemLabel="Autobus" />
@@ -99,7 +102,7 @@
                     </h:selectOneMenu><br/>                    
                     
                     <h:outputLabel  value="Kleur: " /> <br/>              
-                    <h:selectOneMenu id="paintColor" style="width: 250px">
+                    <h:selectOneMenu id="paintColor" value="#{carBean.currentCar.paintColor}" style="width: 250px">
                         <f:selectItem itemValue="VARIOUS" itemLabel="Diversen" />
                         <f:selectItem itemValue="ORANGE" itemLabel="Oranje" />
                         <f:selectItem itemValue="PINK" itemLabel="Roze" />
@@ -116,10 +119,10 @@
                     </h:selectOneMenu><br/>
 
                     <h:outputLabel  value="Massa: " /> <br/>              
-                    <h:inputText id="mass"  style="width: 250px"/> <br/>
+                    <h:inputText id="mass" value="#{carBean.currentCar.mass}" style="width: 250px"/> <br/>
                     
                     <h:outputLabel  value="Milieuclassificatie: " /> <br/>              
-                    <h:selectOneMenu id="environmentalClassification" style="width: 250px">
+                    <h:selectOneMenu value="#{carBean.currentCar.classification}" id="environmentalClassification" style="width: 250px">
                         <f:selectItem itemValue="ZERO" itemLabel="0" />
                         <f:selectItem itemValue="ONE" itemLabel="1" />
                         <f:selectItem itemValue="TWO" itemLabel="2" />
@@ -132,7 +135,7 @@
                     </h:selectOneMenu><br/>
                     
                     <br/>
-                    <h:commandButton id="submit" value=" Opslaan " action="CarOverview.xhtml" />
+                    <h:commandButton id="submit" value=" Opslaan " action="#{carBean.edit()}" />
                     &nbsp;
                     <h:commandButton id="cancel" value=" Annuleren " action="CarOverview.xhtml" />
                 </h:form>
