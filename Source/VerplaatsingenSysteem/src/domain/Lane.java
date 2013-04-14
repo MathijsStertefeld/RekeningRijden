@@ -17,12 +17,15 @@ import javax.persistence.*;
 
 public class Lane implements Serializable
 {
+   // @Id
+  //  @GeneratedValue(strategy= GenerationType.AUTO)
+  //  private long id;
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private long id;
     private String lane_id;
     
-    @OneToMany(cascade= CascadeType.PERSIST,mappedBy="parentLane")
+   // @OneToMany(cascade= CascadeType.PERSIST,mappedBy="parentLane")
+    
+    @Transient
     private Collection<VehiclePosition> positions;
     @ManyToOne(cascade= CascadeType.MERGE)
     private Edge parentEdge;

@@ -15,7 +15,7 @@ import javax.persistence.*;
  * @author Leslie Aerts & Alexander Arends
  */
 @Entity
-@Table(name = "simsession")
+@Table(name = "SIMSESSION")
 public class Session implements Serializable
 {
     @Id
@@ -67,4 +67,10 @@ public class Session implements Serializable
     {
         this.id = id;
     }
+
+    public void setId(long id)
+    {
+        this.id = id;
+    }
+    
 }

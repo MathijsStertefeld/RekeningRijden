@@ -42,7 +42,7 @@ public class VerplaatsingSysteemDAOJPA implements VerplaatsingSysteemDAO
     @Override
     public void createEdge(Edge edge)
     {
-        if (findEdge(edge.getId()) != null)
+        if (findEdge(edge.getId()) == null)
         {
             em.persist(edge);
         }
@@ -51,7 +51,7 @@ public class VerplaatsingSysteemDAOJPA implements VerplaatsingSysteemDAO
     @Override
     public void createLane(Lane lane)
     {
-        if (findEdge(lane.getId()) != null)
+        if (findLane(lane.getId()) == null)
         {
             em.persist(lane);
         }

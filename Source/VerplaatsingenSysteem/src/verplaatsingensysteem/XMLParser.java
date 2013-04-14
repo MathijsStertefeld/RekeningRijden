@@ -112,7 +112,7 @@ public class XMLParser extends DefaultHandler
             String vehicleId = attributes.getValue("id");
             double vehiclePos = Double.parseDouble(attributes.getValue("pos"));
             double vehicleSpeed = Double.parseDouble(attributes.getValue("speed"));
-            VehiclePosition vehPos = new VehiclePosition(vehicleId, vehiclePos, vehicleSpeed, currentLane);
+            VehiclePosition vehPos = new VehiclePosition(vehicleId, vehiclePos, vehicleSpeed, currentLane,currentTimeStep);
             //System.out.println("Starting new vehicle..." + vehicleId + " " + vehiclePos + " " + vehicleSpeed);
             currentLane.addVehicle(vehPos);
         }

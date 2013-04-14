@@ -17,15 +17,18 @@ import javax.persistence.*;
 public class Edge implements Serializable
 {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+   // @Id
+   // @GeneratedValue(strategy = GenerationType.AUTO)
+   // private long id;
     
+    @Id
     private String edge_id;
-    @OneToMany(cascade= CascadeType.PERSIST,mappedBy = "parentEdge")
+    //@OneToMany(cascade= CascadeType.PERSIST,mappedBy = "parentEdge")
+    
+    @Transient
     private Collection<Lane> lanes;
-    @ManyToOne(cascade = CascadeType.MERGE)
-    private TimeStep parentTimeStep;
+//    @ManyToOne(cascade = CascadeType.MERGE)
+//    private TimeStep parentTimeStep;
 
     public Edge()
     {
@@ -35,7 +38,7 @@ public class Edge implements Serializable
     {
         this.edge_id = id;
         lanes = new ArrayList<Lane>();
-        parentTimeStep = parent;
+        //parentTimeStep = parent;
     }
 
     public String getId()

@@ -22,17 +22,19 @@ public class VehiclePosition implements Serializable
     private double carSpeed;
     @ManyToOne(cascade= CascadeType.MERGE)
     private Lane parentLane;
-    
+    @ManyToOne(cascade= CascadeType.MERGE)
+    private TimeStep parentTimeStep;
     public VehiclePosition()
     {
     }
 
-    public VehiclePosition(String carTrackerId, double carPos, double carSpeed, Lane parent)
+    public VehiclePosition(String carTrackerId, double carPos, double carSpeed, Lane parent, TimeStep parentTimeStep)
     {
         this.carTrackerId = carTrackerId;
         this.carPos = carPos;
         this.carSpeed = carSpeed;
         this.parentLane = parent;
+        this.parentTimeStep = parentTimeStep;
     }
 
     public String getCarTrackerId()

@@ -20,7 +20,8 @@ public class TimeStep implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "parentTimeStep")
+   // @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "parentTimeStep")
+    @Transient
     private Collection<Edge> edges;
     private double timestepTime;
     @ManyToOne(cascade = CascadeType.MERGE)
