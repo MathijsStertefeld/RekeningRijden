@@ -1,6 +1,5 @@
 package administration.bean;
 
-import administration.service.AdministrationService;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -13,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequestScoped
 public class LoginBean implements Serializable {
 
-    @Inject
-    AdministrationService administrationService;
     String username;
     String password;
 

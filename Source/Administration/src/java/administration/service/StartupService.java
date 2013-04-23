@@ -1,5 +1,6 @@
 package administration.service;
 
+import administration.dao.*;
 import administration.domain.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -13,7 +14,9 @@ import javax.inject.Inject;
 public class StartupService implements Serializable {
 
     @Inject
-    AdministrationService administrationService;
+    private DriverDAO driverDAO;
+    @Inject
+    private EmployeeDAO employeeDAO;
 
     @PostConstruct
     public void postConstruct() {
@@ -31,9 +34,9 @@ public class StartupService implements Serializable {
         e2.getSecurityGroups().add(employee);
         e3.getSecurityGroups().add(employee);
         
-        administrationService.create(e1);
-        administrationService.create(e2);
-        administrationService.create(e3);
+        employeeDAO.create(e1);
+        employeeDAO.create(e2);
+        employeeDAO.create(e3);
         
         Driver d1 = new Driver(1111, "hans@hans.nl", "hans123", "en", "Hans",
                 "Hansen", "Eindhoven", "Hoofdstraat 1", "1234AA", new Date());
@@ -48,16 +51,16 @@ public class StartupService implements Serializable {
         d1.getBills().add(new Bill(2L, new Date(), new Date(), 1000, PaymentStatus.PAID));
         d4.getBills().add(new Bill(3L, new Date(), new Date(), 1000, PaymentStatus.OPEN));
         
-        d1.getCars().add(new Car("ABCD", CarType.AUTOBUS, PaintColor.BLACK, 1000,
-                Classification.EEV, "AB-CD-12", "Suzuki", "Swift"));
-        d2.getCars().add(new Car("EFGH", CarType.AUTOBUS, PaintColor.RED, 800,
-                Classification.EEV, "EF-GH-34", "Fiat", "Panda"));
-        d3.getCars().add(new Car("IJKL", CarType.AUTOBUS, PaintColor.WHITE, 1200,
-                Classification.EEV, "IJ-KL-56", "Volkswagen", "Golf"));
+        d1.getCars().add(new Car("AB-CD-12", "ABCD", CarType.AUTOBUS, PaintColor.BLACK, 1000,
+                Classification.EEV, "Suzuki", "Swift"));
+        d2.getCars().add(new Car("EF-GH-34", "EFGH", CarType.AUTOBUS, PaintColor.RED, 800,
+                Classification.EEV, "Fiat", "Panda"));
+        d3.getCars().add(new Car("IJ-KL-56", "IJKL", CarType.AUTOBUS, PaintColor.WHITE, 1200,
+                Classification.EEV, "Volkswagen", "Golf"));
         
-        administrationService.create(d1);
-        administrationService.create(d2);
-        administrationService.create(d3);
-        administrationService.create(d4);
+        driverDAO.create(d1);
+        driverDAO.create(d2);
+        driverDAO.create(d3);
+        driverDAO.create(d4);
     }
 }

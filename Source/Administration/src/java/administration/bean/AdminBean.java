@@ -2,7 +2,7 @@ package administration.bean;
 
 import administration.domain.Bill;
 import administration.domain.Driver;
-import administration.service.AdministrationService;
+import administration.service.DriverService;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.enterprise.context.SessionScoped;
@@ -14,7 +14,7 @@ import javax.inject.Named;
 public class AdminBean implements Serializable {
 
     @Inject
-    AdministrationService administrationService;
+    private DriverService driverService;
     private int bsn;
     private Collection<Bill> bills;
 
@@ -25,7 +25,7 @@ public class AdminBean implements Serializable {
     public void setBsn(int bsn) {
         this.bsn = bsn;
 
-        Driver driver = administrationService.findDriver(bsn);
+        Driver driver = driverService.find(bsn);
         if (driver != null) {
             bills = driver.getBills();
         }

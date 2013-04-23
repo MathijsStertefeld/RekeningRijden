@@ -11,16 +11,4 @@
     <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
   </jdbc-connection-pool>
   <jdbc-resource enabled="true" jndi-name="AdministrationDB" object-type="user" pool-name="derby_net_AdministrationDB_RuudPool"/>
-  <security-role-mapping>
-      <role-name>ADMIN</role-name>
-      <group-name>ADMIN</group-name>
-  </security-role-mapping>
-  <security-role-mapping>
-      <role-name>DRIVER</role-name>
-      <group-name>DRIVER</group-name>
-  </security-role-mapping>
-  <security-role-mapping>
-      <role-name>EMPLOYEE</role-name>
-      <group-name>EMPLOYEE</group-name>
-  </security-role-mapping>
 </resources>
