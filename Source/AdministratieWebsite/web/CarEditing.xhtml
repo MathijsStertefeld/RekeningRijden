@@ -9,7 +9,7 @@
         
     </h:head>
     <f:metadata>
-        <f:viewParam name="carTrackerId" value="#{carBean.carTrackerId}" />
+        <f:viewParam name="licensePlate" value="#{carBean.licensePlate}" />
     </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -79,14 +79,14 @@
             
             <ui:define name="SiteContent">
                 <h:form id="carEditForm">
+                    <h:outputLabel for="licensePlate" value="Kenteken: " /> <br/>              
+                    <h:inputText id="licensePlate" value="#{carBean.licensePlate}" style="width: 250px" disabled="true"/> <br/>
+
                     <h:outputLabel for="carTrackerId" value="Cartracker ID: " /> <br/>              
                     <h:inputText id="carTrackerId" value="#{carBean.carTrackerId}"  style="width: 250px" /> <br/>
 
                     <h:outputLabel for="ownerBsn" value="BSN eigenaar: " /> <br/>              
                     <h:inputText id="ownerBsn" value="#{carBean.driverBsn}" style="width: 250px" disabled="true"/> <br/>
-
-                    <h:outputLabel for="licensePlate" value="Kenteken: " /> <br/>              
-                    <h:inputText id="licensePlate" value="#{carBean.licensePlate}" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel for="brand" value="Merk: " /> <br/>              
                     <h:inputText id="brand" value="#{carBean.brand}" style="width: 250px" disabled="true"/> <br/>
@@ -136,9 +136,11 @@
                     </h:selectOneMenu><br/>
                     
                     <br/>
-                    <h:commandButton id="submit" value=" Opslaan " action="#{carBean.edit()}" />
+                    <h:commandButton id="submit" value=" Opslaan " action="CarOverview">
+                        <f:actionListener binding="#{carBean.edit()}" />
+                    </h:commandButton>
                     &nbsp;
-                    <h:commandButton id="cancel" value=" Annuleren " onclick="history.go(-1); return false;" />
+                    <h:commandButton id="cancel" value=" Annuleren " action="CarOverview" />
                 </h:form>
             </ui:define>
 

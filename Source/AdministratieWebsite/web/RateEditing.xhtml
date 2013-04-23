@@ -121,9 +121,11 @@
                     </h:selectOneMenu><br/>
                     
                     <br/>
-                    <h:commandButton id="submit" value=" Opslaan " action="RateOverview.xhtml" />
+                    <h:commandButton id="submit" value=" Opslaan " action="RateOverview">
+                        <f:actionListener binding="#{rateBean.edit()}" />
+                    </h:commandButton>
                     &nbsp;
-                    <h:commandButton id="cancel" value=" Annuleren " onclick="history.go(-1); return false;" />
+                    <h:commandButton id="cancel" value=" Annuleren " action="RateOverview" />
                 </h:form>
             </ui:define>
 

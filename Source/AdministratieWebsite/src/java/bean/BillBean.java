@@ -19,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 @SessionScoped
 public class BillBean implements Serializable {
 
-    WebResource service;
+    private transient WebResource service;
     private Bill bill;
     private Collection<Bill> bills;
 

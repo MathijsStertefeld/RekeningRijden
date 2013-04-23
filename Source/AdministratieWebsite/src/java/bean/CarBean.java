@@ -18,12 +18,26 @@ import javax.ws.rs.core.MediaType;
 @SessionScoped
 public class CarBean implements Serializable {
 
-    private WebResource service;
+    private transient WebResource service;
     private Car car;
     private Collection<Car> cars;
 
     public Collection<Car> getCars() {
         return cars;
+    }
+    
+    public String getLicensePlate() {
+        if (car != null) {
+            return car.getLicensePlate();
+        } else {
+            return "";
+        }
+    }
+    
+    public void setLicensePlate(String licencePlate) {
+        car = service.path("resources").path("car").path(licencePlate)
+                .accept(MediaType.APPLICATION_JSON)
+                .get(Car.class);
     }
     
     public String getCarTrackerId() {
@@ -35,9 +49,9 @@ public class CarBean implements Serializable {
     }
     
     public void setCarTrackerId(String carTrackerId) {
-        car = service.path("resources").path("car").path(carTrackerId)
-                .accept(MediaType.APPLICATION_JSON)
-                .get(Car.class);
+        if (car != null) {
+            car.setCarTrackerId(carTrackerId);
+        }
     }
     
     public int getDriverBsn() {
@@ -45,14 +59,6 @@ public class CarBean implements Serializable {
             return car.getDriverBsn();
         } else {
             return 0;
-        }
-    }
-    
-    public String getLicensePlate() {
-        if (car != null) {
-            return car.getLicensePlate();
-        } else {
-            return "";
         }
     }
     
@@ -128,8 +134,10 @@ public class CarBean implements Serializable {
     }
 
     public void edit() {
+        System.out.println("edit");
         service.path("resources").path("car")
                 .accept(MediaType.APPLICATION_JSON).put(car);
+        updateCars();
     }
 
     @PostConstruct
@@ -137,7 +145,10 @@ public class CarBean implements Serializable {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
         service = client.resource("http://localhost:8080/Administration/");
-
+        updateCars();
+    }
+    
+    public void updateCars() {
         cars = new ArrayList<Car>(service.path("resources").path("car")
                 .accept(MediaType.APPLICATION_JSON)
                 .get(new GenericType<Collection<Car>>() {

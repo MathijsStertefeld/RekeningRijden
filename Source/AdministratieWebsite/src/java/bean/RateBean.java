@@ -18,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 @SessionScoped
 public class RateBean implements Serializable {
 
-    WebResource service;
+    private transient WebResource service;
     private Rate rate;
     private Collection<Rate> rates;
 
