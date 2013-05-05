@@ -115,4 +115,26 @@ public class VerplaatsingSysteemService
             System.err.println(e);
         }
     }
+    
+    public VehiclePosition getVehiclePosition (String cartrackerId)
+    {
+        EntityManager em = emf.createEntityManager();
+        
+       VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
+       
+       try 
+       {
+           VehiclePosition vehiclePosition = vpDAO.findVehiclePosition(cartrackerId);
+           return vehiclePosition;           
+       }
+       catch (Exception e)
+       {
+           return null;
+       }
+    }
+    
+    public TimeStep getTimeStep ()
+    {
+        return new TimeStep();
+    }
 }

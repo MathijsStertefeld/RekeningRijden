@@ -94,6 +94,7 @@ public class VerplaatsingSysteemDAOJPA implements VerplaatsingSysteemDAO
     @Override
     public VehiclePosition findVehiclePosition(String id)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        VehiclePosition vehiclePosition = em.find(VehiclePosition.class, id);
+        return vehiclePosition;
     }
 }
