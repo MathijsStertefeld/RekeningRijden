@@ -18,6 +18,7 @@ import verplaatsingensysteem.domain.VehiclePosition;
  */
 public class VerplaatsingSysteemService
 {
+
     private final EntityManagerFactory emf;
 
     public VerplaatsingSysteemService()
@@ -37,7 +38,8 @@ public class VerplaatsingSysteemService
             em.getTransaction().begin();
             vpDAO.createSession(session);
             em.getTransaction().commit();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.err.println("Session creating failed");
             System.err.println(e);
@@ -55,7 +57,8 @@ public class VerplaatsingSysteemService
             em.getTransaction().begin();
             vpDAO.createTimeStep(timeStep);
             em.getTransaction().commit();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.err.println("TimeStep creating failed");
             System.err.println(e);
@@ -64,7 +67,7 @@ public class VerplaatsingSysteemService
 
     public void createEdge(Edge edge)
     {
-       // System.out.println("Creating Edge...");
+        // System.out.println("Creating Edge...");
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
 
@@ -73,7 +76,8 @@ public class VerplaatsingSysteemService
             em.getTransaction().begin();
             vpDAO.createEdge(edge);
             em.getTransaction().commit();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.err.println("Edge creating failed");
             System.err.println(e);
@@ -82,7 +86,7 @@ public class VerplaatsingSysteemService
 
     public void createLane(Lane lane)
     {
-       // System.out.println("Creating Lane...");
+        // System.out.println("Creating Lane...");
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
 
@@ -91,7 +95,8 @@ public class VerplaatsingSysteemService
             em.getTransaction().begin();
             vpDAO.createLane(lane);
             em.getTransaction().commit();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.err.println("Lane creating failed");
             System.err.println(e);
@@ -103,38 +108,88 @@ public class VerplaatsingSysteemService
         EntityManager em = emf.createEntityManager();
         VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
 
-       // System.out.println("Creating vehicle pos");
+        // System.out.println("Creating vehicle pos");
         try
         {
             em.getTransaction().begin();
             vpDAO.createVehiclePosition(vehiclePosition);
             em.getTransaction().commit();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.err.println("VehiclePosition creating failed");
             System.err.println(e);
         }
     }
-    
-    public VehiclePosition getVehiclePosition (String cartrackerId)
+
+    public VehiclePosition getVehiclePosition(String cartrackerId)
     {
         EntityManager em = emf.createEntityManager();
-        
-       VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
-       
-       try 
-       {
-           VehiclePosition vehiclePosition = vpDAO.findVehiclePosition(cartrackerId);
-           return vehiclePosition;           
-       }
-       catch (Exception e)
-       {
-           return null;
-       }
+
+        VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
+
+        try
+        {
+            VehiclePosition vehiclePosition = vpDAO.findVehiclePosition(cartrackerId);
+            return vehiclePosition;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
-    
-    public TimeStep getTimeStep ()
+
+    public TimeStep getTimeStep(double time)
     {
-        return new TimeStep();
+        EntityManager em = emf.createEntityManager();
+
+        VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
+
+        try
+        {
+            TimeStep timeStep = vpDAO.findTimeStep(time);
+
+            return timeStep;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public Lane getLane(String id)
+    {
+        EntityManager em = emf.createEntityManager();
+
+        VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
+
+        try
+        {
+            Lane lane = vpDAO.findLane(id);
+
+            return lane;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public Edge getEdge(String id)
+    {
+        EntityManager em = emf.createEntityManager();
+
+        VerplaatsingSysteemDAOJPA vpDAO = new VerplaatsingSysteemDAOJPA(em);
+
+        try
+        {
+            Edge edge = vpDAO.findEdge(id);
+
+            return edge;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 }

@@ -11,6 +11,7 @@ import verplaatsingensysteem.domain.TimeStep;
 import verplaatsingensysteem.domain.VehiclePosition;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -71,9 +72,10 @@ public class VerplaatsingSysteemDAOJPA implements VerplaatsingSysteemDAO
     }
 
     @Override
-    public TimeStep findTimeStep(String id)
+    public TimeStep findTimeStep(double time)
     {
-        TimeStep ts = em.find(TimeStep.class, id);
+        Query q = em.createQuery("SELECT * FROM TIMESTEP WHERE time = '" + time + "'");
+        TimeStep ts = (TimeStep) q.getSingleResult();
         return ts;
     }
 

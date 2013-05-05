@@ -22,7 +22,7 @@ public interface VerplaatsingSysteemDAO
 
     void createTimeStep(TimeStep timeStep);
 
-    TimeStep findTimeStep(String id);
+    TimeStep findTimeStep(double time);
 
     void createEdge(Edge edge);
 
