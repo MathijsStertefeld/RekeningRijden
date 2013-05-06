@@ -15,73 +15,69 @@ import javax.ws.rs.core.MediaType;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 @SessionScoped
-public class RekeningrijdersService implements Serializable{
-    
+public class RekeningrijdersService implements Serializable {
+
     private WebResource service;
-    
-    public void payBill(Long billID)
-    {       
-        Bill bill = getBill(billID);  
-        bill.pay();     
-        service.path("resources").path("bill").put(Bill.class, bill);    
+
+    public void payBill(Long billID) {
+        Bill bill = getBill(billID);
+        bill.pay();
+        service.path("resources").path("bill").put(Bill.class, bill);
     }
-    
-    public void subscribeTrafficJamInfo()
-    {
+
+    public void subscribeTrafficJamInfo() {
         throw new NotImplementedException();
     }
-    
-    public void editDriver(Driver driver)
-    {
-        service.path("resources").path("driver").put(Driver.class, driver); 
+
+    public void editDriver(Driver driver) {
+        service.path("resources").path("driver").put(Driver.class, driver);
     }
-    
-    public Driver getDriver(int bsn)
-    {
+
+    public Driver getDriver(int bsn) {
         Driver driver = service.path("resources").path("driver").path(Integer.toString(bsn))
-                        .accept(MediaType.APPLICATION_JSON).get(Driver.class);     
+                .accept(MediaType.APPLICATION_JSON).get(Driver.class);
         return driver;
     }
-    
-    public void register(Driver driver){
+
+    public void register(Driver driver) {
         service.path("resources").path("driver").post(Driver.class, driver);
-    };
-    
-    public void login(){
-        throw new NotImplementedException();
-    };
-    
-    public void logout(){
+    }
+   
+    public void login() {
         throw new NotImplementedException();
     }
     
-    public Collection<Bill> getBillsFromDriver(int bsn){
+    public void logout() {
+        throw new NotImplementedException();
+    }
+
+    public Collection<Bill> getBillsFromDriver(int bsn) {
         Driver driver = getDriver(bsn);
         return driver.getBills();
     }
-    
-    public Bill getBill(Long billID){
+
+    public Bill getBill(Long billID) {
         Bill bill = service.path("resources").path("bill").path(Long.toString(billID))
                 .accept(MediaType.APPLICATION_JSON).get(Bill.class);
-        
+
         return bill;
     }
-    
-    public Collection<Car> getCarsFromDriver(int bsn){
+
+    public Collection<Car> getCarsFromDriver(int bsn) {
         Driver driver = getDriver(bsn);
         return driver.getCars();
     }
-    
-    public Car getCar(String licensePlate){
+
+    public Car getCar(String licensePlate) {
         Car car = service.path("resources").path("car").path(licensePlate)
                 .accept(MediaType.APPLICATION_JSON).get(Car.class);
         return car;
     }
-      
-    public void editCar(Car car){
-        service.path("resources").path("var").put(Car.class, car); 
+
+    public void editCar(Car car) {
+        service.path("resources").path("var").put(Car.class, car);
     }
-    
+
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
