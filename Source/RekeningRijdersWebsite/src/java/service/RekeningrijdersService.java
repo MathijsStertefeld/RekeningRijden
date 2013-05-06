@@ -51,7 +51,7 @@ public class RekeningrijdersService implements Serializable {
     public void logout() {
         throw new NotImplementedException();
     }
-
+    
     public Collection<Bill> getBillsFromDriver(int bsn) {
         Driver driver = getDriver(bsn);
         return driver.getBills();
@@ -62,6 +62,11 @@ public class RekeningrijdersService implements Serializable {
                 .accept(MediaType.APPLICATION_JSON).get(Bill.class);
 
         return bill;
+    }
+    
+    public void editBill(Bill bill)
+    {
+        service.path("resources").path("bill").accept(MediaType.APPLICATION_JSON).put(bill);
     }
 
     public Collection<Car> getCarsFromDriver(int bsn) {
@@ -76,7 +81,7 @@ public class RekeningrijdersService implements Serializable {
     }
 
     public void editCar(Car car) {
-        service.path("resources").path("var").put(Car.class, car);
+        service.path("resources").path("car").put(Car.class, car);
     }
 
     @PostConstruct
