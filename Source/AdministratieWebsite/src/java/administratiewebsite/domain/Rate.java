@@ -1,4 +1,4 @@
-package administration.domain;
+package administratiewebsite.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package administration.domain;
+package administratiewebsite.domain;
 
 import java.sql.Time;
 import java.util.Collection;

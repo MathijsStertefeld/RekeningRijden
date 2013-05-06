@@ -1,4 +1,4 @@
-package administration.domain;
+package administratiewebsite.domain;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;

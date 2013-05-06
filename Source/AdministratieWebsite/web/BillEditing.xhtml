@@ -87,11 +87,13 @@
 
                     <h:outputLabel for="periodDate" value="Periode: " /> <br/>              
                     <h:inputText id="periodDate" value="#{billBean.periodDate}" style="width: 250px" disabled="true">
-                        <f:convertDateTime pattern="MM/DD/YYYY" />
-                    </h:inputText><br/>
+                        <f:convertDateTime pattern="d/M/yyyy" />
+                    </h:inputText> <br/>
 
                     <h:outputLabel for="paymentDate" value="Betaal datum: " /> <br/>              
-                    <h:inputText id="paymentDate" value="#{billBean.paymentDate}" style="width: 250px" /> <br/>
+                    <h:inputText id="paymentDate" value="#{billBean.paymentDate}" style="width: 250px">
+                        <f:convertDateTime pattern="d/M/yyyy" />
+                    </h:inputText> <br/>
 
                     <h:outputLabel for="paymentAmount" value="Totaalbedrag: " /> <br/>              
                     <h:inputText id="paymentAmount" value="#{billBean.paymentAmount}" style="width: 250px" disabled="true"/> <br/>

@@ -1,24 +1,23 @@
-package bean;
+package administratiewebsite.bean;
 
-import administration.domain.*;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.GenericType;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
+import administratiewebsite.domain.Car;
+import administratiewebsite.domain.CarType;
+import administratiewebsite.domain.Classification;
+import administratiewebsite.domain.PaintColor;
+import administratiewebsite.service.CarService;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.ws.rs.core.MediaType;
 
 @Named
 @SessionScoped
 public class CarBean implements Serializable {
 
-    private transient WebResource service;
+    @Inject
+    private CarService carService;
     private Car car;
     private Collection<Car> cars;
 
@@ -35,9 +34,7 @@ public class CarBean implements Serializable {
     }
     
     public void setLicensePlate(String licencePlate) {
-        car = service.path("resources").path("car").path(licencePlate)
-                .accept(MediaType.APPLICATION_JSON)
-                .get(Car.class);
+        car = carService.find(licencePlate);
     }
     
     public String getCarTrackerId() {
@@ -128,30 +125,18 @@ public class CarBean implements Serializable {
         }
     }
 
+    @PostConstruct
+    public void postConstruct() {
+        cars = carService.findAll();
+    }
+
     public void create() {
-        service.path("resources").path("car")
-                .accept(MediaType.APPLICATION_JSON).post(car);
+        carService.create(car);
+        cars = carService.findAll();
     }
 
     public void edit() {
-        System.out.println("edit");
-        service.path("resources").path("car")
-                .accept(MediaType.APPLICATION_JSON).put(car);
-        updateCars();
-    }
-
-    @PostConstruct
-    public void postConstruct() {
-        ClientConfig config = new DefaultClientConfig();
-        Client client = Client.create(config);
-        service = client.resource("http://localhost:8080/Administration/");
-        updateCars();
-    }
-    
-    public void updateCars() {
-        cars = new ArrayList<Car>(service.path("resources").path("car")
-                .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<Collection<Car>>() {
-        }));
+        carService.edit(car);
+        cars = carService.findAll();
     }
 }
