@@ -10,11 +10,12 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
 import javax.enterprise.context.SessionScoped;
 import javax.ws.rs.core.MediaType;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-@SessionScoped
+@Stateless
 public class RekeningrijdersService implements Serializable {
 
     private WebResource service;
