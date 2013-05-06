@@ -119,4 +119,10 @@ public class Bill implements Serializable {
         return "Bill{" + "number=" + id + '}';
     }
     //</editor-fold>
+    
+    public void pay()
+    {
+        this.paymentStatus = PaymentStatus.PAID;
+        this.paymentDate = new Date();
+    }
 }
