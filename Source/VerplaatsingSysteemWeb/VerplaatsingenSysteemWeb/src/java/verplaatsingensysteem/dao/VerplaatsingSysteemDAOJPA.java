@@ -4,25 +4,31 @@
  */
 package verplaatsingensysteem.dao;
 
+import javax.ejb.Stateless;
+import javax.enterprise.inject.Alternative;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import verplaatsingensysteem.domain.Edge;
 import verplaatsingensysteem.domain.Lane;
 import verplaatsingensysteem.domain.Session;
 import verplaatsingensysteem.domain.TimeStep;
 import verplaatsingensysteem.domain.VehiclePosition;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
  * @author Eagle
  */
+@Stateless
 public class VerplaatsingSysteemDAOJPA implements VerplaatsingSysteemDAO
 {
-
     @PersistenceContext
     private EntityManager em;
 
+    public VerplaatsingSysteemDAOJPA()
+    {
+    }
+    
     public VerplaatsingSysteemDAOJPA(EntityManager em)
     {
         this.em = em;

@@ -4,8 +4,11 @@
  */
 package verplaatsingensysteem.beans;
 
+import java.io.Serializable;
+import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import verplaatsingensysteem.service.VerplaatsingSysteemService;
 
 /**
  *
@@ -13,13 +16,16 @@ import javax.enterprise.context.Dependent;
  */
 @Named(value = "receiverBean")
 @Dependent
-public class ReceiverBean
+@Stateless
+public class ReceiverBean implements Serializable
 {
-
+    
+    private VerplaatsingSysteemService vpService;
     /**
      * Creates a new instance of ReceiverBean
      */
     public ReceiverBean()
     {
+        vpService = new VerplaatsingSysteemService();
     }
 }
