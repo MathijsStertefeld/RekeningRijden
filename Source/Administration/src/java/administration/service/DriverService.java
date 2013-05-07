@@ -39,6 +39,14 @@ public class DriverService implements Serializable {
     public Driver find(@PathParam("id") Integer bsn) {
         return driverDAO.find(bsn);
     }
+    
+    @GET
+    @Path("email/{email}")
+    @Produces({"application/xml", "application/json"})
+    public Driver findByEmail(@PathParam("email") String email)
+    {
+        return driverDAO.findDriverByEmail(email);    
+    }
 
     @GET
     @Produces({"application/xml", "application/json"})

@@ -16,7 +16,7 @@ public class Driver implements Serializable {
     @Id
     @Column(nullable = false)
     private int bsn;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
     private String password;

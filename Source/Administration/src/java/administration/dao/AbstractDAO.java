@@ -10,7 +10,7 @@ import javax.persistence.criteria.CriteriaQuery;
 public abstract class AbstractDAO<Entity extends Serializable, ID extends Serializable> implements Serializable {
 
     @PersistenceContext(unitName = "AdministrationPU")
-    private EntityManager em;
+    protected EntityManager em;
     private Class<Entity> entityClass;
 
     public AbstractDAO(Class<Entity> entityClass) {
