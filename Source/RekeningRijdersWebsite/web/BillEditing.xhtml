@@ -9,7 +9,7 @@
         
     </h:head>
     <f:metadata>
-        <f:viewParam name="id" value="#{billBean.id}" />
+        <f:viewParam name="id" value="#{billBean.billID}" />
     </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -79,30 +79,31 @@
             
             <ui:define name="SiteContent">
                 <h:form id="billEditForm">
-                    <h:outputLabel for="id" value="Bill ID: " /> <br/>              
-                    <h:inputText id="id" value="#{billBean.id}" style="width: 250px" disabled="true"/> <br/>
+                    <strong><h:outputLabel for="id" value="Bill ID: " /></strong> <br/>              
+                    <h:outputText id="id" value="#{billBean.billID}" style="width: 250px" disabled="true"/> <br/>
 
-                    <h:outputLabel for="driverBsn" value="BSN eigenaar: " /> <br/>              
-                    <h:inputText id="driverBsn" value="#{billBean.driverBsn}" style="width: 250px" disabled="true"/> <br/>
+                    <strong><h:outputLabel for="driverBsn" value="BSN eigenaar: " /></strong> <br/>              
+                    <h:outputText id="driverBsn" value="#{billBean.bsn}" style="width: 250px" disabled="true"/> <br/>
 
-                    <h:outputLabel for="periodDate" value="Periode: " /> <br/>              
-                    <h:inputText id="periodDate" value="#{billBean.periodDate}" style="width: 250px" disabled="true"/> <br/>
+                    <strong><h:outputLabel for="periodDate" value="Periode: " /></strong> <br/>              
+                    <h:outputText id="periodDate" value="" style="width: 250px" disabled="true"/> <br/>
 
-                    <h:outputLabel for="paymentDate" value="Betaal datum: " /> <br/>              
-                    <h:inputText id="paymentDate" value="#{billBean.paymentDate}" style="width: 250px" /> <br/>
+                    <strong><h:outputLabel for="paymentDate" value="Betaal datum: " /></strong> <br/>              
+                    <h:outputText id="paymentDate" value="" style="width: 250px" /> <br/>
 
-                    <h:outputLabel for="paymentAmount" value="Totaalbedrag: " /> <br/>              
-                    <h:inputText id="paymentAmount" value="#{billBean.paymentAmount}" style="width: 250px" disabled="true"/> <br/>
+                    <strong><h:outputLabel for="paymentAmount" value="Totaalbedrag: " /></strong> <br/>              
+                    <h:outputText id="paymentAmount" value="" style="width: 250px" disabled="true"/> <br/>
 
-                    <h:outputLabel for="paymentStatus" value="Betaalstatus: " /> <br/>              
-                    <h:selectOneMenu id="paymentStatus" value="#{billBean.paymentStatus}" style="width: 250px">
+                    <strong><h:outputLabel for="paymentStatus" value="Betaalstatus: " /></strong> <br/>              
+                    <h:outputText id="paymentStatus" value="" style="width: 250px" disabled="true"/> <br/>
+                    <!--h:selectOneMenu id="paymentStatus" value="" style="width: 250px">
                         <f:selectItem itemValue="OPEN" itemLabel="Onbetaald" />
                         <f:selectItem itemValue="PAYED" itemLabel="Betaald" />
                         <f:selectItem itemValue="CANCELED" itemLabel="Geannuleerd" />
-                    </h:selectOneMenu><br/>
+                    </h:selectOneMenu--><br/>
 
                     <br/>
-                    <h:commandButton id="submit" value=" Opslaan " action="BillOverview.xhtml" />
+                    <h:commandButton id="submit" value=" Betalen " action="BillOverview.xhtml" />
                     &nbsp;
                     <h:commandButton id="cancel" value=" Annuleren " onclick="history.go(-1); return false;" />
                 </h:form>

@@ -9,7 +9,7 @@
         
     </h:head>
     <f:metadata>
-        <f:viewParam name="name" value="#{rateBean.name}" />
+        <f:viewParam name="name" value="#{settingsBean.name}" />
     </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -79,7 +79,79 @@
             
             <ui:define name="SiteContent">
                 <h:form id="settingsEditForm">                  
+                    <h2>Persoons</h2>
                     
+                    <p>
+                        <strong>Voornaam</strong>
+                        <br/>
+                        <h:inputText value="#{settingsBean.firstName}" />
+                    </p>
+                    
+                    <p>
+                        <strong>Achternaam</strong>
+                        <br/>
+                        <h:inputText value="#{settingsBean.lastName}" />
+                    </p>
+                    
+                    <p>
+                        <strong>Woonplaats</strong>
+                        <br/>
+                        <h:inputText value="#{settingsBean.residence}" />
+                    </p>
+                    
+                    <p>
+                        <strong>Adres</strong>
+                        <br/>
+                        <h:inputText value="#{settingsBean.address}" />
+                    </p>
+                    
+                    <p>
+                        <strong>Postcode</strong>
+                        <br/>
+                        <h:inputText value="#{settingsBean.zipCode}" />
+                    </p>
+                    
+                    <p>
+                        <strong>Geboortedatum</strong>
+                        <br/>
+                        <h:inputText value="#{settingsBean.dateOfBirth}" />
+                    </p>
+                    
+                    <br/>
+                    
+                    <h2>Account</h2>
+                    
+                    <p>
+                        <strong>Email Adres</strong>
+                        <br/>
+                        <h:inputText value="#{settingsBean.email}" />
+                    </p>
+                    
+                    <p>
+                        <strong>Voorkeurstaal</strong>
+                        <br/>
+                        <h:inputText value="#{settingsBean.languageCode}" />
+                    </p>
+                    
+                    <p>
+                        <strong>Oude Wachtwoord</strong>
+                        <br/>
+                        <h:inputText />
+                        
+                        <br/>
+                        <strong>Nieuwe Wachtwoord</strong>
+                        <br/>
+                        <h:inputText />
+                        
+                        <br/>
+                        <strong>Herhalen Nieuwe Wachtwoord</strong>
+                        <br/>
+                        <h:inputText />
+                    </p>
+                    
+                    <br/>
+                    
+                    <h:commandButton value=" Opslaan " />
                 </h:form>
             </ui:define>
 

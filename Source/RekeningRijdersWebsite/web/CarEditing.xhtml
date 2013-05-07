@@ -9,7 +9,7 @@
         
     </h:head>
     <f:metadata>
-        <f:viewParam name="carTrackerId" value="#{carBean.carTrackerId}" />
+        <f:viewParam name="carTrackerId" value="#{carBean.licensePlate}" />
     </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -80,30 +80,30 @@
             <ui:define name="SiteContent">
                 <h:form id="carEditForm">
                     <h:outputLabel for="carTrackerId" value="Cartracker ID: " /> <br/>              
-                    <h:inputText id="carTrackerId" value="#{carBean.carTrackerId}"  style="width: 250px" /> <br/>
+                    <h:inputText id="carTrackerId" value="#{carBean.licensePlate}"  style="width: 250px" /> <br/>
 
                     <h:outputLabel for="ownerBsn" value="BSN eigenaar: " /> <br/>              
-                    <h:inputText id="ownerBsn" value="#{carBean.driverBsn}" style="width: 250px" disabled="true"/> <br/>
+                    <h:inputText id="ownerBsn" value="#{carBean.bsn}" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel for="licensePlate" value="Kenteken: " /> <br/>              
                     <h:inputText id="licensePlate" value="#{carBean.licensePlate}" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel for="brand" value="Merk: " /> <br/>              
-                    <h:inputText id="brand" value="#{carBean.brand}" style="width: 250px" disabled="true"/> <br/>
+                    <h:inputText id="brand" value="" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel for="model" value="Model: " /> <br/>              
-                    <h:inputText id="model" value="#{carBean.model}" style="width: 250px" disabled="true" /> <br/>
+                    <h:inputText id="model" value="" style="width: 250px" disabled="true" /> <br/>
 
                     <h:outputLabel for="type" value="Type: " /> <br/>              
-                    <h:selectOneMenu id="type" value="#{carBean.type}" style="width: 250px" disabled="true">
+                    <!--h:selectOneMenu id="type" value="#{carBean.type}" style="width: 250px" disabled="true">
                         <f:selectItem itemValue="PASSENGER_CAR" itemLabel="Personenauto" />
                         <f:selectItem itemValue="VAN" itemLabel="Bedrijfsauto" />
                         <f:selectItem itemValue="AUTOBUS" itemLabel="Autobus" />
                         <f:selectItem itemValue="TRUCK" itemLabel="Vrachtwagen" />
-                    </h:selectOneMenu><br/>                    
+                    </h:selectOneMenu><br/-->                    
                     
                     <h:outputLabel for="paintColor" value="Kleur: " /> <br/>              
-                    <h:selectOneMenu id="paintColor" value="#{carBean.paintColor}" style="width: 250px">
+                    <h:selectOneMenu id="paintColor" value="" style="width: 250px">
                         <f:selectItem itemValue="VARIOUS" itemLabel="Diversen" />
                         <f:selectItem itemValue="ORANGE" itemLabel="Oranje" />
                         <f:selectItem itemValue="PINK" itemLabel="Roze" />
@@ -120,10 +120,10 @@
                     </h:selectOneMenu><br/>
 
                     <h:outputLabel for="mass" value="Massa: " /> <br/>              
-                    <h:inputText id="mass" value="#{carBean.mass}" style="width: 250px"/> <br/>
+                    <h:inputText id="mass" value="" style="width: 250px"/> <br/>
                     
                     <h:outputLabel for="classification" value="Milieuclassificatie: " /> <br/>              
-                    <h:selectOneMenu id="classification" value="#{carBean.classification}" style="width: 250px">
+                    <!--h:selectOneMenu id="classification" value="#{carBean.classification}" style="width: 250px">
                         <f:selectItem itemValue="ZERO" itemLabel="0" />
                         <f:selectItem itemValue="ONE" itemLabel="1" />
                         <f:selectItem itemValue="TWO" itemLabel="2" />
@@ -133,7 +133,7 @@
                         <f:selectItem itemValue="SIX" itemLabel="6" />
                         <f:selectItem itemValue="EEV" itemLabel="EEV" />
                         <f:selectItem itemValue="R" itemLabel="R" />
-                    </h:selectOneMenu><br/>
+                    </h:selectOneMenu><br/-->
                     
                     <br/>
                     <h:commandButton id="submit" value=" Opslaan " action="#{carBean.edit()}" />

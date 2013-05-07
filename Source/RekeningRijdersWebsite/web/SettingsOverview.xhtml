@@ -8,6 +8,11 @@
     <h:head>
         
     </h:head>
+    
+    <f:metadata>
+        <f:viewParam name="name" value="#{settingsBean.bsn}" />
+    </f:metadata>
+    
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
@@ -69,72 +74,72 @@
             </ui:define>
             
             <ui:define name="SiteContent">
-                <h:form id="rateForm">
+                <h:form id="settingsForm">
                     
-                    <strong>Regio</strong>
-                    <p:dataTable id="regionDataTable" var="rate" value="#{rateBean.rates}" tableStyle="table-layout:fixed;"> 
-                        
-                        <p:column sortBy="#{rate}}" style="white-space:normal" headerText="Naam">  
-                            <h:outputText value="#{rate}" />  
-                        </p:column>  
-
-                        <p:column sortBy="#{rate}" style="white-space:normal" headerText="Tarief">  
-                            <h:outputText value="#{rate}" />  
-                        </p:column>  
-                        
-                    </p:dataTable>
+                    <h2>Persoons</h2>
                     
-                    <strong>Stad</strong>
-                    <p:dataTable id="cityDataTable" var="rate" value="#{rateBean.rates}" tableStyle="table-layout:fixed;">    
-                        
-                        <p:column sortBy="#{rate}}" style="white-space:normal" headerText="Naam">  
-                            <h:outputText value="#{rate}" />  
-                        </p:column>  
-
-                        <p:column sortBy="#{rate}" style="white-space:normal" headerText="Tarief">  
-                            <h:outputText value="#{rate}" />  
-                        </p:column>  
-                        
-                    </p:dataTable>
+                    <p>
+                        <strong>Voornaam</strong>
+                        <br/>
+                        <h:outputText value="#{settingsBean.firstName}" />
+                    </p>
                     
-                    <strong>Snelweg</strong>
-                    <p:dataTable id="highwayDataTable" var="rate" value="#{rateBean.rates}" tableStyle="table-layout:fixed;">    
-                        
-                        <p:column sortBy="#{rate}}" style="white-space:normal" headerText="Naam">  
-                            <h:outputText value="#{rate}" />  
-                        </p:column>  
-
-                        <p:column sortBy="#{rate}" style="white-space:normal" headerText="Laag Tarief">  
-                            <h:outputText value="#{rate}" />  
-                        </p:column>  
-
-                        <p:column sortBy="#{rate}" style="white-space:normal" headerText="Hoog Tarief">
-                            <h:outputText value="#{rate}" />
-                        </p:column> 
-                        
-                    </p:dataTable>
+                    <p>
+                        <strong>Achternaam</strong>
+                        <br/>
+                        <h:outputText value="#{settingsBean.lastName}" />
+                    </p>
                     
-                    <strong>Voertuig Type</strong>
-                    <p:dataTable id="verhicleTypeDataTable" var="rate" value="#{rateBean.rates}" tableStyle="table-layout:fixed;"> 
-                        
-                        <p:column sortBy="#{rate}}" style="white-space:normal" headerText="Voertuig Type">  
-                            <h:outputText value="#{rate}" />  
-                        </p:column>  
-
-                        <p:column sortBy="#{rate}" style="white-space:normal" headerText="Tarief">  
-                            <h:outputText value="#{rate}" />  
-                        </p:column>
-                        
-                        <p:column style="white-space:normal" headerText="Wijzigen">
-                            <h:outputLink value="RateEditing.xhtml">
-                                <h:outputText value=" Wijzigen " />
-                                <f:param name="name" value="#{rate.name}" />
-                            </h:outputLink>
-                        </p:column>
-                        
-                    </p:dataTable>
+                    <p>
+                        <strong>Woonplaats</strong>
+                        <br/>
+                        <h:outputText value="#{settingsBean.residence}" />
+                    </p>
+                    
+                    <p>
+                        <strong>Adres</strong>
+                        <br/>
+                        <h:outputText value="#{settingsBean.address}" />
+                    </p>
+                    
+                    <p>
+                        <strong>Postcode</strong>
+                        <br/>
+                        <h:outputText value="#{settingsBean.zipCode}" />
+                    </p>
+                    
+                    <p>
+                        <strong>Geboortedatum</strong>
+                        <br/>
+                        <h:outputText value="#{settingsBean.dateOfBirth}" />
+                    </p>
                     
                     <br/>
+                    
+                    <h2>Account</h2>
+                    
+                    <p>
+                        <strong>Email Adres</strong>
+                        <br/>
+                        <h:outputText value="#{settingsBean.email}" />
+                    </p>
+                    
+                    <p>
+                        <strong>Voorkeurstaal</strong>
+                        <br/>
+                        <h:outputText value="#{settingsBean.languageCode}" />
+                    </p>
+                    
+                    <p>
+                        <strong>Wachtwoord</strong>
+                        <br/>
+                        <h:outputText value="#{settingsBean.password}" />
+                    </p>
+                    
+                    <br/>
+                    
+                    <h:commandButton action="SettingsEditing.xhtml" value="Opslaan" />
+                    
                 </h:form>
             </ui:define>
 
