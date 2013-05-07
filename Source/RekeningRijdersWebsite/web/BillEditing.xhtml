@@ -22,12 +22,12 @@
             </ui:define>
             
             <ui:define name="SiteTypeSelection">
-                <li class="">                           
+                <li class="selected">                           
                     <a href="Login.xhtml">
                         Gebruiker
                     </a>
                 </li>		
-                <li class="selected">
+                <li class="">
                     <a href="Login.xhtml">
                         Administratie
                     </a>
@@ -36,7 +36,7 @@
             
             <ui:define name="Breadcrumbs">
                 <li>
-                    <a href="Login.xhtml" title="Administratie">
+                    <a href="Login.xhtml" title="Gebruiker">
                         Gebruiker
                     </a>
                 </li>
@@ -48,7 +48,7 @@
                 </li>
                 
                 <li class="selected">
-                    <a href="" title="Wijzigen">
+                    <a href="" title="Inzien">
                         Inzien
                     </a>
                 </li>
@@ -56,18 +56,18 @@
             
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
+                    <a href="BillOverview.xhtml" class="">
+                        Facturen
+                    </a>          
+                </li>
+                <li class="categorylink">
                     <a href="CarOverview.xhtml" class="">
                         Auto's
                     </a>          
                 </li>
                 <li class="categorylink">
                     <a href="SettingsOverview.xhtml" class="">
-                        Tarieven
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <a href="BillOverview.xhtml" class="">
-                        Facturen
+                        Gegevens
                     </a>          
                 </li>
                 <li class="categorylink">

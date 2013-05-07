@@ -11,20 +11,20 @@
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
-                Cartrackers Overzicht
+                Gegevens Overzicht
             </ui:define>
             
             <ui:define name="TypeTitle">
-                 Administratie
+                 Gebruiker
             </ui:define>
             
             <ui:define name="SiteTypeSelection">
-                <li class="">                           
+                <li class="selected">                           
                     <a href="Login.xhtml">
                         Gebruiker
                     </a>
                 </li>		
-                <li class="selected">
+                <li class="">
                     <a href="Login.xhtml">
                         Administratie
                     </a>
@@ -33,32 +33,32 @@
             
             <ui:define name="Breadcrumbs">
                 <li>
-                    <a href="Login.xhtml" title="Administratie">
-                        Administratie
+                    <a href="Login.xhtml" title="Gebruiker">
+                        Gebruiker
                     </a>
                 </li>
 
                 <li class="selected">
-                    <a href="SettingsOverview.xhtml" title="Tarieven">
-                        Tarieven
+                    <a href="SettingsOverview.xhtml" title="Gegevens">
+                        Gegevens
                     </a>
                 </li>
             </ui:define>
             
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
+                    <a href="BillOverview.xhtml" class="">
+                        Facturen
+                    </a>          
+                </li>
+                <li class="categorylink">
                     <a href="CarOverview.xhtml" class="">
-                        Cartrackers
+                        Auto's
                     </a>          
                 </li>
                 <li class="categorylink">
                     <a href="SettingsOverview.xhtml" class="">
-                        Tarieven
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <a href="BillOverview.xhtml" class="">
-                        Facturen
+                        Gegevens
                     </a>          
                 </li>
                 <li class="categorylink">
