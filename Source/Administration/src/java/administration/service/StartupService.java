@@ -1,9 +1,17 @@
 package administration.service;
 
+import administration.bean.LoginBean;
 import administration.dao.*;
 import administration.domain.*;
+import administration.security.PasswordHasher;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -37,6 +45,7 @@ public class StartupService implements Serializable {
         employeeDAO.create(e1);
         employeeDAO.create(e2);
         employeeDAO.create(e3);
+        
         
         Driver d1 = new Driver(1111, "hans@hans.nl", "hans123", "en", "Hans",
                 "Hansen", "Eindhoven", "Hoofdstraat 1", "1234AA", new Date());
