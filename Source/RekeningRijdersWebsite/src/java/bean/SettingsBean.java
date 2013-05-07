@@ -106,7 +106,7 @@ public class SettingsBean implements Serializable {
     
     public void setBsn(int i){
         this.bsn = i;
-        driver = service.getDriver(bsn);
+        driver = service.getDriverByBSN(bsn);
     }
     
     public void editDriver(String s)

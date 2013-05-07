@@ -34,9 +34,17 @@ public class RekeningrijdersService implements Serializable {
         service.path("resources").path("driver").put(Driver.class, driver);
     }
 
-    public Driver getDriver(int bsn) {
+    public Driver getDriverByBSN(int bsn) {
         Driver driver = service.path("resources").path("driver").path(Integer.toString(bsn))
                 .accept(MediaType.APPLICATION_JSON).get(Driver.class);
+        return driver;
+    }
+    
+    public Driver getDriverByEmail(String email)
+    {
+        Driver driver = service.path("resources").path("driver").path("email").path(email)
+                .accept(MediaType.APPLICATION_JSON).get(Driver.class);
+        
         return driver;
     }
 
@@ -53,7 +61,7 @@ public class RekeningrijdersService implements Serializable {
     }
     
     public Collection<Bill> getBillsFromDriver(int bsn) {
-        Driver driver = getDriver(bsn);
+        Driver driver = getDriverByBSN(bsn);
         return driver.getBills();
     }
 
@@ -70,7 +78,7 @@ public class RekeningrijdersService implements Serializable {
     }
 
     public Collection<Car> getCarsFromDriver(int bsn) {
-        Driver driver = getDriver(bsn);
+        Driver driver = getDriverByBSN(bsn);
         return driver.getCars();
     }
 
