@@ -4,8 +4,8 @@
  */
 package verplaatsingensysteem.dao;
 
+
 import javax.ejb.Stateless;
-import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;

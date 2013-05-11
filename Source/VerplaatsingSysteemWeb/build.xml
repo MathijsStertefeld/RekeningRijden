@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="VerplaatsingenSysteemWeb" default="default" basedir=".">
-    <description>Builds, tests, and runs the project VerplaatsingenSysteemWeb.</description>
+<project name="VerplaatsingSysteemWeb" default="default" basedir=".">
+    <description>Builds, tests, and runs the project VerplaatsingSysteemWeb.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 

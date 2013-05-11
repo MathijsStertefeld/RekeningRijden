@@ -5,15 +5,11 @@
 package tempautoejb;
 
 import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.multipart.FormDataMultiPart;
+import domain.Session;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -27,29 +23,42 @@ public class Main
      */
     public static void main(String[] args)
     {
-        ClientConfig config = new DefaultClientConfig();
-        Client client = Client.create(config);
-        WebResource service = client.resource("http://localhost:8080/VerplaatsingenSysteemWeb/");
-
         File f = new File("verplaatsing_19901218.xml");
         System.out.println("File found: " + f);
 
-        System.out.println("Sending file...");
-        ClientResponse response = service.path("resources").path("xml").path("plain").type(MediaType.TEXT_XML).accept(MediaType.TEXT_PLAIN).post(ClientResponse.class);
-        System.out.println("Done. " + response);
-       
-        InputStream is = null;
+        System.out.println("Normally, you would start with java objects, but we're going to create them now with the reader.");
         try
         {
-            is = new FileInputStream(f);
+            Session s = null;
 
+            System.out.println("Reading XML...");
+            XMLParser parser = new XMLParser(f);
+            s = parser.readMovementXML();
+            System.out.println("Done. Session: " + s.getSessionDate().toString());
+
+
+            System.out.println("Starting webservice...");
+            ClientConfig config = new DefaultClientConfig();
+            Client client = Client.create(config);
+            WebResource service = client.resource("http://localhost:8080/VerplaatsingSysteemWeb/");
+
+//        System.out.println("Method 2...");
+//        service.path("resources").path("xml").path("alt").type(MediaType.APPLICATION_XML).post(xml);
+            System.out.println("Test Getting...");
+            Session s2 = service.path("resources").path("xml").path("get_session").get(Session.class);  
+            
+            System.out.println(s2.getTimesteps());
+            
+            System.out.println("Now I'm posting...");
+            System.out.println("Method 1...");
+            service.path("resources").path("xml").post(s);
         } catch (Exception e)
         {
             e.printStackTrace();
         }
-        FormDataMultiPart part = new FormDataMultiPart().field("file", is, MediaType.TEXT_PLAIN_TYPE);
-        response = service.path("resources").path("xml").path("xml").type(MediaType.MULTIPART_FORM_DATA_TYPE).accept(MediaType.MULTIPART_FORM_DATA).post(ClientResponse.class,part);
-        System.out.println("Done. " + response);
+
+
+
 
     }
 }
