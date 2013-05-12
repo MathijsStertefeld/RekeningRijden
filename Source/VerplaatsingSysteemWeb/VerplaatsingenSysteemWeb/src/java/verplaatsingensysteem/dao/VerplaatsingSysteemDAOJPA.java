@@ -4,11 +4,12 @@
  */
 package verplaatsingensysteem.dao;
 
-
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import verplaatsingensysteem.domain.Edge;
 import verplaatsingensysteem.domain.Lane;
 import verplaatsingensysteem.domain.Session;
@@ -22,13 +23,14 @@ import verplaatsingensysteem.domain.VehiclePosition;
 @Stateless
 public class VerplaatsingSysteemDAOJPA implements VerplaatsingSysteemDAO
 {
+
     @PersistenceContext
     private EntityManager em;
 
     public VerplaatsingSysteemDAOJPA()
     {
     }
-    
+
     public VerplaatsingSysteemDAOJPA(EntityManager em)
     {
         this.em = em;
@@ -80,7 +82,9 @@ public class VerplaatsingSysteemDAOJPA implements VerplaatsingSysteemDAO
     @Override
     public TimeStep findTimeStep(double time)
     {
-        Query q = em.createQuery("SELECT * FROM TIMESTEP WHERE time = '" + time + "'");
+        String query = "SELECT t FROM TimeStep t WHERE t.timestepTime = '" + time + "'";
+        TypedQuery q = em.createQuery(query, VehiclePosition.class);
+
         TimeStep ts = (TimeStep) q.getSingleResult();
         return ts;
     }
@@ -88,21 +92,35 @@ public class VerplaatsingSysteemDAOJPA implements VerplaatsingSysteemDAO
     @Override
     public Edge findEdge(String id)
     {
-        Edge ts = em.find(Edge.class, id);
-        return ts;
+        Edge edge = em.find(Edge.class, id);
+        return edge;
     }
 
     @Override
     public Lane findLane(String id)
     {
-        Lane ts = em.find(Lane.class, id);
-        return ts;
+        Lane lane = em.find(Lane.class, id);
+
+        return lane;
     }
 
     @Override
-    public VehiclePosition findVehiclePosition(String id)
+    public List<VehiclePosition> findVehiclePositions(String cartrackerId)
     {
-        VehiclePosition vehiclePosition = em.find(VehiclePosition.class, id);
-        return vehiclePosition;
+        String query = "SELECT v FROM VehiclePosition v WHERE v.carTrackerId = '" + cartrackerId + "'";
+        TypedQuery q = em.createQuery(query, VehiclePosition.class);
+        List<VehiclePosition> positions = q.getResultList();
+        System.out.println("RESULTLIST: " + q.getResultList());
+
+
+//        for (int i = 0; i < q.getResultList().size(); i++)
+//        {
+//            VehiclePosition vehiclePosition = (VehiclePosition) q.getResultList().get(i);
+//            System.out.println("VehiclePosition found with cartracker id = " + vehiclePosition.getCarTrackerId());
+//            positions.add(vehiclePosition);
+//        }
+
+
+        return positions;
     }
 }

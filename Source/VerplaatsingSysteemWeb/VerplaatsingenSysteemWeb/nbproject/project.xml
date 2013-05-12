@@ -13,10 +13,6 @@
             <explicit-platform explicit-source-supported="true"/>
             <web-module-libraries>
                 <library dirs="200">
-                    <file>${file.reference.VerplaatsingenSysteemWeb-lib}</file>
-                    <path-in-war>WEB-INF/classes</path-in-war>
-                </library>
-                <library dirs="200">
                     <file>${reference.RekeningRijdenDomainLibrary.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>

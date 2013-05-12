@@ -4,6 +4,7 @@
  */
 package verplaatsingensysteem.service;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -17,7 +18,7 @@ import verplaatsingensysteem.domain.*;
  *
  * @author Eagle
  */
-@Path("getInfo")
+@Path("/getInfo")
 @Stateless
 public class RestfulSenderService
 {
@@ -25,20 +26,30 @@ public class RestfulSenderService
     @Inject
     VerplaatsingSysteemService verplaatsingSysteemService;
 
+    @Path("test")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String test()
+    {
+        return "Hallo, dit is een test";
+    }
+    
+    
     @Path("getVehiclePosition/{cartrackerId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public VehiclePosition getVehiclePosition(@PathParam("cartrackerId") String cartrackerId)
+    public List<VehiclePosition> getVehiclePosition(@PathParam("cartrackerId") String cartrackerId)
     {
-        VehiclePosition vp = verplaatsingSysteemService.getVehiclePosition(cartrackerId);
-
-        if (vp != null)
+        System.out.println("CALLED: GetVehiclePositions");
+        List<VehiclePosition> positions = verplaatsingSysteemService.getVehiclePositions(cartrackerId);
+                System.out.println("LIST: " + positions);
+        if (positions != null)
         {
-            return vp;
+            return positions;
         }
         else
         {
-            throw new NullPointerException("VehiclePosition with cartrackerId " + cartrackerId + " cannot be found.");
+            throw new NullPointerException("VehiclePositions with cartrackerId " + cartrackerId + " cannot be found.");
         }
     }
     
@@ -86,6 +97,7 @@ public class RestfulSenderService
 
         if (timeStep != null)
         {
+            System.out.println(timeStep.getEdges());
             return timeStep;
         }
         else

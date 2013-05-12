@@ -4,6 +4,7 @@
  */
 package verplaatsingensysteem.service;
 
+import java.util.List;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -94,13 +95,13 @@ public class VerplaatsingSysteemService
         }
     }
 
-    public VehiclePosition getVehiclePosition(String cartrackerId)
+    public List<VehiclePosition> getVehiclePositions(String cartrackerId)
     {
 
         try
         {
-            VehiclePosition vehiclePosition = vpDAO.findVehiclePosition(cartrackerId);
-            return vehiclePosition;
+            List<VehiclePosition> positions = vpDAO.findVehiclePositions(cartrackerId);
+            return positions;
         } catch (Exception e)
         {
             return null;

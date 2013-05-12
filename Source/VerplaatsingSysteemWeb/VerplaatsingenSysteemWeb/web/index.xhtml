@@ -4,12 +4,16 @@ To change this template, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
     <head>
         <title>VerplaatsingenSysteem</title>
         <link rel="stylesheet" type="text/css" href="css/index.css"></link>
     </head>
     <body>
         <div id="log">LOG</div>
+        <h:dataTable value ="#{receiverBean.positions}" var="a">
+            <h:outputLabel value ="#{a.id}"/>
+        </h:dataTable>
     </body>
 </html>
