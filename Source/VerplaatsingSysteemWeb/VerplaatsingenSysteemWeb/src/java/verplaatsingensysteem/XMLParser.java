@@ -108,7 +108,6 @@ public class XMLParser extends DefaultHandler
         {
             currentEdge = new Edge(attributes.getValue("id"), currentTimeStep);
             //System.out.println("Starting new edge..." + currentEdge.getId());
-
         }
 
         if (elementName.equalsIgnoreCase("lane"))

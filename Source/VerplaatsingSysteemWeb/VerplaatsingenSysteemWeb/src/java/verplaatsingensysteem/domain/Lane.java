@@ -35,6 +35,7 @@ public class Lane implements Serializable
 
     public Lane()
     {
+        positions = new ArrayList<VehiclePosition>();
     }
 
     public Lane(String value, Edge parent)

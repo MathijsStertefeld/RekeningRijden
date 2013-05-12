@@ -17,7 +17,6 @@ import java.io.File;
  */
 public class Main
 {
-
     /**
      * @param args the command line arguments
      */
@@ -47,11 +46,10 @@ public class Main
             System.out.println("Test Getting...");
             Session s2 = service.path("resources").path("xml").path("get_session").get(Session.class);  
             
-            System.out.println(s2.getTimesteps());
-            
             System.out.println("Now I'm posting...");
             System.out.println("Method 1...");
             service.path("resources").path("xml").post(s);
+            System.out.println("Done. Check Glassfish output.");
         } catch (Exception e)
         {
             e.printStackTrace();
