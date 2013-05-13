@@ -12,7 +12,7 @@
     <class>administration.domain.Rate</class>
     <class>administration.domain.RegionRate</class>
     <class>administration.domain.SecurityGroup</class>
-    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
       <property name="eclipselink.ddl-generation" value="create-tables"/>
