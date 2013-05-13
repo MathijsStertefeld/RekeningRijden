@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -18,15 +19,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "SIMSESSION")
-@XmlRootElement(name="collection")
+@XmlRootElement(name = "collection")
 public class Session implements Serializable
 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Temporal(TemporalType.DATE)
     private Date sessionDate;
-   
     //@OneToMany(cascade= CascadeType.PERSIST,mappedBy="parentSession")
     @Transient
     private Collection<TimeStep> timesteps;
@@ -51,7 +52,7 @@ public class Session implements Serializable
         this.sessionDate = sessionDate;
     }
 
-    @XmlElement(name="timestep")
+    @XmlElement(name = "timestep")
     public Collection<TimeStep> getTimesteps()
     {
         return timesteps;
@@ -59,20 +60,22 @@ public class Session implements Serializable
 
     public TimeStep getTimeStep(double time)
     {
-        for(TimeStep ts : timesteps)
+        for (TimeStep ts : timesteps)
         {
-            if(ts.getTime() == time)
+            if (ts.getTime() == time)
             {
                 return ts;
             }
         }
         return null;
     }
+
     public void setTimesteps(Collection<TimeStep> timesteps)
     {
         this.timesteps = timesteps;
     }
 
+    @XmlTransient
     public long getId()
     {
         return id;
@@ -82,5 +85,4 @@ public class Session implements Serializable
     {
         this.id = id;
     }
-    
 }

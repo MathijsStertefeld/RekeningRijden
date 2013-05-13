@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.*;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -71,12 +72,13 @@ public class TimeStep implements Serializable
         edges.add(e);
     }
 
-    public long getId()
+    @XmlTransient
+    public Long getId()
     {
         return id;
     }
 
-    public void setId(long id)
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -91,10 +93,14 @@ public class TimeStep implements Serializable
 //    {
 //        return this.parentSession.getId();
 //    }
-    
     @XmlTransient
     public Session getParentSession()
     {
         return this.parentSession;
+    }
+
+    public void afterUnmarshal(Unmarshaller u, Object parent)
+    {
+        this.parentSession = (Session) parent;
     }
 }
