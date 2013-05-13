@@ -3,7 +3,6 @@ package administration.service;
 import administration.bean.LoginBean;
 import administration.dao.*;
 import administration.domain.*;
-import administration.security.PasswordHasher;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
