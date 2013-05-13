@@ -4,8 +4,6 @@
  */
 package verplaatsingensysteem.service;
 
-import com.google.common.collect.Iterables;
-import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -40,7 +38,6 @@ public class RestfulReceiverService
         return "Hello, this is a test. Restful connection is working, atleast.";
     }
 
-    //DEZE WERKT.
     @GET
     @Produces(MediaType.APPLICATION_XML)
     @Path("get_session")
@@ -51,9 +48,14 @@ public class RestfulReceiverService
         {
             //Werkt niet meteen. Bestand moet in glassfish folder. Zie exception output of vraag naar Leslie.
             XMLParser parser = new XMLParser("verplaatsing_19901218.xml");
+            System.out.println("Server: File found.");
+            System.out.println("Server: Starting XML to POJO.");
             s = parser.readMovementXML();
+            System.out.println("Server: Done. Succesfully parsed.");
+            System.out.println("Server: Test; parent session of timestep 1 is" + s.getTimeStep(1).getParentSession());
         } catch (Exception e)
         {
+            e.printStackTrace();
         }
         return s;
     }
@@ -91,13 +93,4 @@ public class RestfulReceiverService
 
         System.out.println("Done.");
     }
-    //Fuck deze
-//    @POST
-//    @Consumes(MediaType.APPLICATION_XML)
-//    @Path("alt")
-//    public SAXSource sendXML(SAXSource s)
-//    {
-//
-//        return s;
-//    }
 }

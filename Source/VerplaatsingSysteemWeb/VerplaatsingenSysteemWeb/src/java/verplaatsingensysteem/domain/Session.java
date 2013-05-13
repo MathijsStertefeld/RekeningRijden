@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -30,7 +29,6 @@ public class Session implements Serializable
    
     //@OneToMany(cascade= CascadeType.PERSIST,mappedBy="parentSession")
     @Transient
-
     private Collection<TimeStep> timesteps;
 
     public Session()
@@ -59,6 +57,17 @@ public class Session implements Serializable
         return timesteps;
     }
 
+    public TimeStep getTimeStep(double time)
+    {
+        for(TimeStep ts : timesteps)
+        {
+            if(ts.getTime() == time)
+            {
+                return ts;
+            }
+        }
+        return null;
+    }
     public void setTimesteps(Collection<TimeStep> timesteps)
     {
         this.timesteps = timesteps;
