@@ -23,6 +23,7 @@ import verplaatsingensysteem.domain.VehiclePosition;
 @Startup
 public class VerplaatsingSysteemService
 {
+
     @Inject
     private VerplaatsingSysteemDAO vpDAO;
 
@@ -52,7 +53,7 @@ public class VerplaatsingSysteemService
         } catch (Exception e)
         {
             System.err.println("TimeStep creating failed");
-            System.err.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -65,7 +66,7 @@ public class VerplaatsingSysteemService
         } catch (Exception e)
         {
             System.err.println("Edge creating failed");
-            System.err.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -74,11 +75,11 @@ public class VerplaatsingSysteemService
         try
         {
             vpDAO.createLane(lane);
-            
+
         } catch (Exception e)
         {
             System.err.println("Lane creating failed");
-            System.err.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -91,7 +92,7 @@ public class VerplaatsingSysteemService
         } catch (Exception e)
         {
             System.err.println("VehiclePosition creating failed");
-            System.err.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -104,8 +105,9 @@ public class VerplaatsingSysteemService
             return positions;
         } catch (Exception e)
         {
-            return null;
+            e.printStackTrace();
         }
+        return null;
     }
 
     public TimeStep getTimeStep(double time)
@@ -121,8 +123,9 @@ public class VerplaatsingSysteemService
             return timeStep;
         } catch (Exception e)
         {
-            return null;
+            e.printStackTrace();
         }
+        return null;
     }
 
     public Lane getLane(String id)
@@ -138,8 +141,9 @@ public class VerplaatsingSysteemService
             return lane;
         } catch (Exception e)
         {
-            return null;
+            e.printStackTrace();
         }
+        return null;
     }
 
     public Edge getEdge(String id)
@@ -155,7 +159,8 @@ public class VerplaatsingSysteemService
             return edge;
         } catch (Exception e)
         {
-            return null;
+            e.printStackTrace();
         }
+        return null;
     }
 }

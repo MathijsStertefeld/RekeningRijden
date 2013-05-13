@@ -8,6 +8,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -83,5 +84,28 @@ public class VehiclePosition implements Serializable
     public void setId(Long id)
     {
         this.id = id;
+    }
+
+    //@XmlAttribute(name = "parent_lane_id")
+//    public String getParentLaneId()
+//    {
+//        return parentLane.getId();
+//    }
+
+    @XmlTransient
+    public Lane getParentLane()
+    {
+        return parentLane;
+    }
+
+    //@XmlAttribute(name = "parent_timestep_id")
+//    public long getParentTimeStepId()
+//    {
+//        return parentTimeStep.getId();
+//    }
+    @XmlTransient
+    public TimeStep getParentTimeStep()
+    {
+        return parentTimeStep;
     }
 }
