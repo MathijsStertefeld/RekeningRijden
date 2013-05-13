@@ -8,6 +8,9 @@
     <h:head>
         
     </h:head>
+    <f:metadata>
+        <f:viewParam name="bsn" value="#{carBean.bsn}" />
+    </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
@@ -96,7 +99,7 @@
                         <p:column style="white-space:normal" headerText="Wijzigen">
                             <h:outputLink value="CarEditing.xhtml">
                                 <h:outputText value=" Wijzigen " />
-                                <f:param name="carTrackerId" value="#{car.carTrackerId}" />
+                                <f:param name="licensePlate" value="#{car.licensePlate}" />
                             </h:outputLink>
                         </p:column>
                         

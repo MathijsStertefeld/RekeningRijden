@@ -34,6 +34,11 @@ public class CarBean implements Serializable {
         return licensePlate;
     }
     
+    public Car getCar()
+    {
+        return car;
+    }
+    
     public void setLicensePlate(String s){
         licensePlate = s;
         for(Car c : cars)
@@ -56,5 +61,10 @@ public class CarBean implements Serializable {
         }
         
         service.editCar(car);
+    }
+    
+    public void edit()
+    {
+        
     }
 }

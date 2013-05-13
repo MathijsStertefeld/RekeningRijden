@@ -9,25 +9,25 @@
         
     </h:head>
     <f:metadata>
-        <f:viewParam name="carTrackerId" value="#{carBean.carTrackerId}" />
+        <f:viewParam name="licensePlate" value="#{carBean.licensePlate}" />
     </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
-                Wijzigen Cartrackers
+                Auto Wijzigen
             </ui:define>
             
             <ui:define name="TypeTitle">
-                 Administratie
+                 Gebruiker
             </ui:define>
             
             <ui:define name="SiteTypeSelection">
-                <li class="">                           
+                <li class="selected">                           
                     <a href="Login.xhtml">
                         Gebruiker
                     </a>
                 </li>		
-                <li class="selected">
+                <li class="">
                     <a href="Login.xhtml">
                         Administratie
                     </a>
@@ -37,13 +37,13 @@
             <ui:define name="Breadcrumbs">
                 <li>
                     <a href="Login.xhtml" title="Administratie">
-                        Administratie
+                        Gebruiker
                     </a>
                 </li>
 
                 <li>
                     <a href="CarOverview.xhtml" title="Cartrackers">
-                        Cartrackers
+                        Auto's
                     </a>
                 </li>
                 
@@ -56,18 +56,18 @@
             
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
+                    <a href="BillOverview.xhtml" class="">
+                        Facturen
+                    </a>          
+                </li>
+                <li class="categorylink">
                     <a href="CarOverview.xhtml" class="">
-                        Cartrackers
+                        Auto's
                     </a>          
                 </li>
                 <li class="categorylink">
                     <a href="SettingsOverview.xhtml" class="">
-                        Tarieven
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <a href="BillOverview.xhtml" class="">
-                        Facturen
+                        Gegevens
                     </a>          
                 </li>
                 <li class="categorylink">
@@ -80,22 +80,22 @@
             <ui:define name="SiteContent">
                 <h:form id="carEditForm">
                     <h:outputLabel for="carTrackerId" value="Cartracker ID: " /> <br/>              
-                    <h:inputText id="carTrackerId" value="#{carBean.carTrackerId}"  style="width: 250px" /> <br/>
+                    <h:inputText id="carTrackerId" value="#{carBean.car.carTrackerId}"  style="width: 250px" /> <br/>
 
                     <h:outputLabel for="ownerBsn" value="BSN eigenaar: " /> <br/>              
-                    <h:inputText id="ownerBsn" value="#{carBean.driverBsn}" style="width: 250px" disabled="true"/> <br/>
+                    <h:inputText id="ownerBsn" value="#{carBean.bsn}" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel for="licensePlate" value="Kenteken: " /> <br/>              
-                    <h:inputText id="licensePlate" value="#{carBean.licensePlate}" style="width: 250px" disabled="true"/> <br/>
+                    <h:inputText id="licensePlate" value="#{carBean.car.licensePlate}" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel for="brand" value="Merk: " /> <br/>              
-                    <h:inputText id="brand" value="#{carBean.brand}" style="width: 250px" disabled="true"/> <br/>
+                    <h:inputText id="brand" value="#{carBean.car.brand}" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel for="model" value="Model: " /> <br/>              
-                    <h:inputText id="model" value="#{carBean.model}" style="width: 250px" disabled="true" /> <br/>
+                    <h:inputText id="model" value="#{carBean.car.model}" style="width: 250px" disabled="true" /> <br/>
 
                     <h:outputLabel for="type" value="Type: " /> <br/>              
-                    <h:selectOneMenu id="type" value="#{carBean.type}" style="width: 250px" disabled="true">
+                    <h:selectOneMenu id="type" value="#{carBean.car.type}" style="width: 250px" disabled="true">
                         <f:selectItem itemValue="PASSENGER_CAR" itemLabel="Personenauto" />
                         <f:selectItem itemValue="VAN" itemLabel="Bedrijfsauto" />
                         <f:selectItem itemValue="AUTOBUS" itemLabel="Autobus" />
@@ -103,7 +103,7 @@
                     </h:selectOneMenu><br/>                    
                     
                     <h:outputLabel for="paintColor" value="Kleur: " /> <br/>              
-                    <h:selectOneMenu id="paintColor" value="#{carBean.paintColor}" style="width: 250px">
+                    <h:selectOneMenu id="paintColor" value="#{carBean.car.paintColor}" style="width: 250px">
                         <f:selectItem itemValue="VARIOUS" itemLabel="Diversen" />
                         <f:selectItem itemValue="ORANGE" itemLabel="Oranje" />
                         <f:selectItem itemValue="PINK" itemLabel="Roze" />
@@ -120,10 +120,10 @@
                     </h:selectOneMenu><br/>
 
                     <h:outputLabel for="mass" value="Massa: " /> <br/>              
-                    <h:inputText id="mass" value="#{carBean.mass}" style="width: 250px"/> <br/>
+                    <h:inputText id="mass" value="#{carBean.car.mass}" style="width: 250px"/> <br/>
                     
                     <h:outputLabel for="classification" value="Milieuclassificatie: " /> <br/>              
-                    <h:selectOneMenu id="classification" value="#{carBean.classification}" style="width: 250px">
+                    <h:selectOneMenu id="classification" value="#{carBean.car.classification}" style="width: 250px">
                         <f:selectItem itemValue="ZERO" itemLabel="0" />
                         <f:selectItem itemValue="ONE" itemLabel="1" />
                         <f:selectItem itemValue="TWO" itemLabel="2" />

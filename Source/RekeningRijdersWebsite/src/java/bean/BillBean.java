@@ -4,6 +4,7 @@ import administration.domain.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,8 +27,10 @@ public class BillBean implements Serializable {
     }
     
     public void setBsn(int i) {
+        System.err.println("Test" + i);
         bsn = i;
         bills = service.getBillsFromDriver(bsn);
+        System.err.println(bills.size());
     }
     
     public Long getBillID() {
@@ -44,6 +47,11 @@ public class BillBean implements Serializable {
                 bill = b;
             }
         }
+    }
+    
+    public Bill getBill()
+    {
+        return bill;
     }
       
     public Collection<Bill> getBills() {
@@ -67,4 +75,5 @@ public class BillBean implements Serializable {
         //if succesvol gelukt bij paypal
         //service.payBill(billID);
     }
+    
 }

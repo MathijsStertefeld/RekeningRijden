@@ -8,10 +8,13 @@
     <h:head>
         
     </h:head>
+    <f:metadata>
+        <f:viewParam name="bsn" value="#{carBean.bsn}" />
+    </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
-                Auto overzicht
+                Auto Overzicht
             </ui:define>
             
             <ui:define name="TypeTitle">
@@ -20,12 +23,12 @@
             
             <ui:define name="SiteTypeSelection">
                 <li class="selected">                           
-                    <a href="faces/Login.xhtml">
+                    <a href="Login.xhtml">
                         Gebruiker
                     </a>
                 </li>		
                 <li class="">
-                    <a href="faces/Login.xhtml">
+                    <a href="Login.xhtml">
                         Administratie
                     </a>
                 </li>
@@ -33,13 +36,13 @@
             
             <ui:define name="Breadcrumbs">
                 <li>
-                    <a href="faces/Login.xhtml" title="Administratie">
-                        Gebruiker
-                    </a>
+                    <a href="Login.xhtml" title="Gebruiker">
+                        Gebruiker 
+                   </a>
                 </li>
 
                 <li class="selected">
-                    <a href="faces/CarOverview.xhtml" title="Cartrackers">
+                    <a href="CarOverview.xhtml" title="Cartrackers">
                         Auto's
                     </a>
                 </li>
@@ -47,22 +50,22 @@
             
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
-                    <a href="faces/CarOverview.xhtml" class="">
+                    <a href="BillOverview.xhtml" class="">
                         Facturen
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="faces/RateOverview.xhtml" class="">
+                    <a href="CarOverview.xhtml" class="">
                         Auto's
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="faces/BillOverview.xhtml" class="">
+                    <a href="SettingsOverview.xhtml" class="">
                         Gegevens
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="faces/Login.xhtml" class="">
+                    <a href="Login.xhtml" class="">
                         Uitloggen
                     </a>          
                 </li>
@@ -96,7 +99,7 @@
                         <p:column style="white-space:normal" headerText="Wijzigen">
                             <h:outputLink value="CarEditing.xhtml">
                                 <h:outputText value=" Wijzigen " />
-                                <f:param name="carTrackerId" value="#{car.carTrackerId}" />
+                                <f:param name="licensePlate" value="#{car.licensePlate}" />
                             </h:outputLink>
                         </p:column>
                         

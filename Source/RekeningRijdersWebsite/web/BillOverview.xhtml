@@ -9,7 +9,7 @@
         
     </h:head>
     <f:metadata>
-        <f:viewParam name="id" value="#{billBean.id}" />
+        <f:viewParam name="bsn" value="#{billBean.bsn}" />
     </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -55,12 +55,12 @@
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="CarOverview.xhtml" class="">
+                    <a href="CarOverview.xhtml?bsn=#{billBean.bsn}" class="">
                         Auto's
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="SettingsOverview.xhtml" class="">
+                    <a href="SettingsOverview.xhtml?bsn=#{billBean.bsn}" class="">
                         Gegevens
                     </a>          
                 </li>
@@ -98,7 +98,7 @@
                         <p:column style="white-space:normal" headerText="Wijzigen">
                             <h:outputLink value="BillEditing.xhtml">
                                 <h:outputText value=" Wijzigen " />
-                                <f:param name="id" value="#{bill.id}" />
+                                <f:param name="billID" value="#{bill.id}" />
                             </h:outputLink>
                         </p:column>
                     </p:dataTable>

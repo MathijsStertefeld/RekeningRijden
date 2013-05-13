@@ -10,7 +10,7 @@
     </h:head>
     
     <f:metadata>
-        <f:viewParam name="name" value="#{settingsBean.bsn}" />
+        <f:viewParam name="bsn" value="#{settingsBean.bsn}" />
     </f:metadata>
     
     <h:body>
@@ -81,37 +81,37 @@
                     <p>
                         <strong>Voornaam</strong>
                         <br/>
-                        <h:outputText value="#{settingsBean.firstName}" />
+                        <h:outputText value="#{settingsBean.driver.firstName}" />
                     </p>
                     
                     <p>
                         <strong>Achternaam</strong>
                         <br/>
-                        <h:outputText value="#{settingsBean.lastName}" />
+                        <h:outputText value="#{settingsBean.driver.lastName}" />
                     </p>
                     
                     <p>
                         <strong>Woonplaats</strong>
                         <br/>
-                        <h:outputText value="#{settingsBean.residence}" />
+                        <h:outputText value="#{settingsBean.driver.residence}" />
                     </p>
                     
                     <p>
                         <strong>Adres</strong>
                         <br/>
-                        <h:outputText value="#{settingsBean.address}" />
+                        <h:outputText value="#{settingsBean.driver.address}" />
                     </p>
                     
                     <p>
                         <strong>Postcode</strong>
                         <br/>
-                        <h:outputText value="#{settingsBean.zipCode}" />
+                        <h:outputText value="#{settingsBean.driver.zipCode}" />
                     </p>
                     
                     <p>
                         <strong>Geboortedatum</strong>
                         <br/>
-                        <h:outputText value="#{settingsBean.dateOfBirth}" />
+                        <h:outputText value="#{settingsBean.driver.dateOfBirth}" />
                     </p>
                     
                     <br/>
@@ -121,24 +121,26 @@
                     <p>
                         <strong>Email Adres</strong>
                         <br/>
-                        <h:outputText value="#{settingsBean.email}" />
+                        <h:outputText value="#{settingsBean.driver.email}" />
                     </p>
                     
                     <p>
                         <strong>Voorkeurstaal</strong>
                         <br/>
-                        <h:outputText value="#{settingsBean.languageCode}" />
+                        <h:outputText value="#{settingsBean.driver.languageCode}" />
                     </p>
                     
-                    <p>
+                    <!--p>
                         <strong>Wachtwoord</strong>
                         <br/>
-                        <h:outputText value="#{settingsBean.password}" />
-                    </p>
+                        <h:outputText value="#{settingsBean.driver.password}" />
+                    </p-->
                     
                     <br/>
                     
-                    <h:commandButton action="SettingsEditing.xhtml" value="Opslaan" />
+                    <h:commandButton action="#{settingsBean.goToEditing()}" value=" Wijzigen ">
+                        <f:param name="billID" value="#{settingsEditing}" />
+                    </h:commandButton>
                     
                 </h:form>
             </ui:define>

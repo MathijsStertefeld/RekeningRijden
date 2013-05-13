@@ -9,7 +9,7 @@
         
     </h:head>
     <f:metadata>
-        <f:viewParam name="name" value="#{settingsBean.name}" />
+        <f:viewParam name="bsn" value="#{settingsBean.bsn}" />
     </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -84,37 +84,37 @@
                     <p>
                         <strong>Voornaam</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.firstName}" />
+                        <h:inputText value="#{settingsBean.driver.firstName}" />
                     </p>
                     
                     <p>
                         <strong>Achternaam</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.lastName}" />
+                        <h:inputText value="#{settingsBean.driver.lastName}" />
                     </p>
                     
                     <p>
                         <strong>Woonplaats</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.residence}" />
+                        <h:inputText value="#{settingsBean.driver.residence}" />
                     </p>
                     
                     <p>
                         <strong>Adres</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.address}" />
+                        <h:inputText value="#{settingsBean.driver.address}" />
                     </p>
                     
                     <p>
                         <strong>Postcode</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.zipCode}" />
+                        <h:inputText value="#{settingsBean.driver.zipCode}" />
                     </p>
                     
                     <p>
                         <strong>Geboortedatum</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.dateOfBirth}" />
+                        <h:inputText value="#{settingsBean.driver.dateOfBirth}" />
                     </p>
                     
                     <br/>
@@ -124,13 +124,13 @@
                     <p>
                         <strong>Email Adres</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.email}" />
+                        <h:inputText value="#{settingsBean.driver.email}" />
                     </p>
                     
                     <p>
                         <strong>Voorkeurstaal</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.languageCode}" />
+                        <h:inputText value="#{settingsBean.driver.languageCode}" />
                     </p>
                     
                     <p>

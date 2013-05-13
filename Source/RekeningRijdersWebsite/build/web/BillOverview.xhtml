@@ -8,6 +8,9 @@
     <h:head>
         
     </h:head>
+    <f:metadata>
+        <f:viewParam name="bsn" value="#{billBean.bsn}" />
+    </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
@@ -15,17 +18,17 @@
             </ui:define>
             
             <ui:define name="TypeTitle">
-                 Administratie
+                 Gebruiker
             </ui:define>
             
             <ui:define name="SiteTypeSelection">
-                <li class="">                           
-                    <a href="faces/Login.xhtml">
+                <li class="selected">                           
+                    <a href="Login.xhtml">
                         Gebruiker
                     </a>
                 </li>		
-                <li class="selected">
-                    <a href="faces/Login.xhtml">
+                <li class="">
+                    <a href="Login.xhtml">
                         Administratie
                     </a>
                 </li>
@@ -33,13 +36,13 @@
             
             <ui:define name="Breadcrumbs">
                 <li>
-                    <a href="faces/Login.xhtml" title="Administratie">
-                        Administratie
+                    <a href="Login.xhtml" title="Gebruiker">
+                        Gebruiker
                     </a>
                 </li>
 
                 <li class="selected">
-                    <a href="faces/BillOverview.xhtml" title="Facturen">
+                    <a href="BillOverview.xhtml" title="Facturen">
                         Facturen
                     </a>
                 </li>
@@ -47,22 +50,22 @@
             
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
-                    <a href="faces/CarOverview.xhtml" class="">
-                        Cartrackers
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <a href="faces/RateOverview.xhtml" class="">
-                        Tarieven
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <a href="faces/BillOverview.xhtml" class="">
+                    <a href="BillOverview.xhtml" class="">
                         Facturen
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="faces/Login.xhtml" class="">
+                    <a href="CarOverview.xhtml?bsn=#{billBean.bsn}" class="">
+                        Auto's
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="SettingsOverview.xhtml?bsn=#{billBean.bsn}" class="">
+                        Gegevens
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="Login.xhtml" class="">
                         Uitloggen
                     </a>          
                 </li>
@@ -95,7 +98,7 @@
                         <p:column style="white-space:normal" headerText="Wijzigen">
                             <h:outputLink value="BillEditing.xhtml">
                                 <h:outputText value=" Wijzigen " />
-                                <f:param name="id" value="#{bill.id}" />
+                                <f:param name="billID" value="#{bill.id}" />
                             </h:outputLink>
                         </p:column>
                     </p:dataTable>

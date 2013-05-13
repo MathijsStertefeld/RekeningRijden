@@ -1,9 +1,12 @@
 package bean;
 
 import administration.domain.Driver;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import service.RekeningrijdersService;
@@ -28,6 +31,11 @@ public class SettingsBean implements Serializable {
     private String zipCode;
     private Date dateOfBirth;
 
+    public Driver getDriver()
+    {
+        return driver;
+    }
+    
     public String getPassword() {
         return password;
     }
@@ -139,7 +147,12 @@ public class SettingsBean implements Serializable {
         return false;
     }
     
-    
+    public void goToEditing() throws IOException
+    {
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            
+            context.redirect("SettingsEditing.xhtml?bsn=" + this.bsn);
+    }
     
 //    public void editEmail(String s){
 //        
