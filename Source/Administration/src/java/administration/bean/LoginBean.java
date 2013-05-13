@@ -1,15 +1,17 @@
 package administration.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 @Named
@@ -34,16 +36,37 @@ public class LoginBean implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    private Principal getUserPrincipal() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+        
+        return request.getUserPrincipal();
+    }
+    
+    @PostConstruct
+    public void postConstruct() {
+        if (getUserPrincipal() != null) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("logout.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     public void login() {
         FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        ExternalContext externalContext = context.getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
 
         try {
             request.login(username, password);
-            context.getExternalContext().redirect("admin/admin.xhtml");
-        } catch (Exception e) {
-            context.addMessage(null, new FacesMessage("Login failed."));
+            externalContext.redirect("logout.xhtml");
+        } catch (IOException ex) {
+        } catch (ServletException ex) {
+            context.addMessage(null, new FacesMessage(ex.getMessage()));
         }
     }
 }

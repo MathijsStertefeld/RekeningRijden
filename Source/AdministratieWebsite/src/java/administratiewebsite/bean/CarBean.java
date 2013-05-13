@@ -1,9 +1,9 @@
 package administratiewebsite.bean;
 
-import administratiewebsite.domain.Car;
-import administratiewebsite.domain.CarType;
-import administratiewebsite.domain.Classification;
-import administratiewebsite.domain.PaintColor;
+import administration.domain.Car;
+import administration.domain.CarType;
+import administration.domain.Classification;
+import administration.domain.PaintColor;
 import administratiewebsite.service.CarService;
 import java.io.Serializable;
 import java.util.Collection;

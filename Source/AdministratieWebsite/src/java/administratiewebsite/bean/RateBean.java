@@ -1,6 +1,6 @@
 package administratiewebsite.bean;
 
-import administratiewebsite.domain.Rate;
+import administration.domain.Rate;
 import administratiewebsite.service.RateService;
 import java.io.Serializable;
 import java.util.Collection;

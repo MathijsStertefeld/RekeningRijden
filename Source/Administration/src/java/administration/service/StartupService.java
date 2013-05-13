@@ -1,14 +1,13 @@
 package administration.service;
 
-import administration.bean.LoginBean;
 import administration.dao.*;
 import administration.domain.*;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -27,24 +26,17 @@ public class StartupService implements Serializable {
 
     @PostConstruct
     public void postConstruct() {
-        SecurityGroup admin = new SecurityGroup("ADMIN");
-        SecurityGroup driver = new SecurityGroup("DRIVER");
-        SecurityGroup employee = new SecurityGroup("EMPLOYEE");
+        Employee e1 = new Employee("admin", hash("admin"));
+        Employee e2 = new Employee("henk", hash("henk"));
+        Employee e3 = new Employee("truus", hash("truus"));
         
-        Employee e1 = new Employee("admin", "admin", true);
-        Employee e2 = new Employee("Henk", "henk123", true);
-        Employee e3 = new Employee("Truus", "truus123", false);
-        
-        e1.getSecurityGroups().add(admin);
-        e1.getSecurityGroups().add(employee);
-        e1.getSecurityGroups().add(driver);
-        e2.getSecurityGroups().add(employee);
-        e3.getSecurityGroups().add(employee);
+        e1.getGroups().add(GroupName.ADMIN);
+        e2.getGroups().add(GroupName.RATE_EMPLOYEE);
+        e3.getGroups().add(GroupName.EMPLOYEE);
         
         employeeDAO.create(e1);
         employeeDAO.create(e2);
         employeeDAO.create(e3);
-        
         
         Driver d1 = new Driver(1111, "hans@hans.nl", "hans123", "en", "Hans",
                 "Hansen", "Eindhoven", "Hoofdstraat 1", "1234AA", new Date());
@@ -52,12 +44,10 @@ public class StartupService implements Serializable {
                 "Franken", "Eindhoven", "Hoofdstraat 2", "1234BB", new Date());
         Driver d3 = new Driver(3333, "tom@tom.nl", "tom123", "en", "Tom",
                 "Tommen", "Eindhoven", "Hoofdstraat 3", "1234CC", new Date());
-        Driver d4 = new Driver(4444, "sjaak@sjaak.nl", "sjaak123", "en", "Sjaak",
-                "Sjaken", "Eindhoven", "Hoofdstraat 4", "1234DD", new Date());
         
         d1.getBills().add(new Bill(1L, new Date(), new Date(), 1000, PaymentStatus.CANCELED));
-        d1.getBills().add(new Bill(2L, new Date(), new Date(), 1000, PaymentStatus.PAID));
-        d4.getBills().add(new Bill(3L, new Date(), new Date(), 1000, PaymentStatus.OPEN));
+        d2.getBills().add(new Bill(2L, new Date(), new Date(), 1000, PaymentStatus.PAID));
+        d3.getBills().add(new Bill(3L, new Date(), new Date(), 1000, PaymentStatus.OPEN));
         
         d1.getCars().add(new Car("AB-CD-12", "ABCD", CarType.AUTOBUS, PaintColor.BLACK, 1000,
                 Classification.EEV, "Suzuki", "Swift"));
@@ -69,6 +59,21 @@ public class StartupService implements Serializable {
         driverDAO.create(d1);
         driverDAO.create(d2);
         driverDAO.create(d3);
-        driverDAO.create(d4);
+    }
+    
+    private String hash(String text) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(text.getBytes("UTF-8"));
+            byte[] digest = md.digest();
+            BigInteger bi = new BigInteger(1, digest);
+            text = String.format("%0" + (digest.length << 1) + "X", bi);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(StartupService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(StartupService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return text;
     }
 }

@@ -1,6 +1,6 @@
 package administratiewebsite.service;
 
-import administratiewebsite.domain.Driver;
+import administration.domain.Driver;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import java.io.Serializable;

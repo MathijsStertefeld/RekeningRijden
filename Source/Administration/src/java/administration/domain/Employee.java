@@ -17,10 +17,12 @@ public class Employee implements Serializable {
     private String username;
     @Column(nullable = false)
     private String password;
-    @ManyToMany(cascade = {CascadeType.PERSIST})
-    @JoinTable(name = "EMPLOYEE_SECURITY_GROUP", schema = "ADMINISTRATION")
-    private Collection<SecurityGroup> securityGroups;
-    private Boolean privilege;
+    @ElementCollection(targetClass = GroupName.class)
+    @CollectionTable(name = "EMPLOYEE_GROUP", schema = "ADMINISTRATION", joinColumns = {
+        @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME")})
+    @Column(name = "GROUPNAME")
+    @Enumerated(EnumType.STRING)
+    private Collection<GroupName> groupNames;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -40,41 +42,32 @@ public class Employee implements Serializable {
         this.password = password;
     }
 
-    public Collection<SecurityGroup> getSecurityGroups() {
-        return securityGroups;
+    public Collection<GroupName> getGroups() {
+        return groupNames;
     }
 
-    public void setSecurityGroups(Collection<SecurityGroup> securityGroups) {
-        this.securityGroups = securityGroups;
-    }
-
-    public Boolean getPrivilege() {
-        return privilege;
-    }
-
-    public void setPrivilege(Boolean privilege) {
-        this.privilege = privilege;
+    public void setGroupNames(Collection<GroupName> groupNames) {
+        this.groupNames = groupNames;
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Employee() {
-        this("", "", false);
+        this("", "");
     }
 
-    public Employee(String username, String password, Boolean privilege) {
+    public Employee(String username, String password) {
         this.username = username;
         this.password = password;
-        this.privilege = privilege;
 
-        securityGroups = new ArrayList<SecurityGroup>();
+        groupNames = new ArrayList<GroupName>();
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Overrides">
     @Override
     public int hashCode() {
-        return privilege.hashCode();
+        return username.hashCode();
     }
 
     @Override

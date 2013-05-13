@@ -1,6 +1,6 @@
 package administratiewebsite.bean;
 
-import administratiewebsite.domain.Employee;
+import administration.domain.Employee;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -36,7 +36,7 @@ public class LoginBean implements Serializable {
     
     public ArrayList<Employee> getEmployees() {
         ArrayList<Employee> empColl = new ArrayList<Employee>();
-        empColl.add(new Employee("admin", "admin", true));
+        empColl.add(new Employee("admin", "admin"));
         return empColl;
     }
 

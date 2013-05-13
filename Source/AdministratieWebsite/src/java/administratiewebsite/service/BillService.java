@@ -1,6 +1,6 @@
 package administratiewebsite.service;
 
-import administratiewebsite.domain.Bill;
+import administration.domain.Bill;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import java.io.Serializable;

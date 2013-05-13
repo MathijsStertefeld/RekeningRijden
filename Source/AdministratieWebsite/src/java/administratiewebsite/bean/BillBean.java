@@ -1,7 +1,7 @@
 package administratiewebsite.bean;
 
-import administratiewebsite.domain.Bill;
-import administratiewebsite.domain.PaymentStatus;
+import administration.domain.Bill;
+import administration.domain.PaymentStatus;
 import administratiewebsite.service.BillService;
 import java.io.Serializable;
 import java.util.ArrayList;

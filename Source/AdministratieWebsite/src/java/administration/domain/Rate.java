@@ -4,15 +4,17 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity(name = "SecurityGroup")
-@Table(name = "SECURITY_GROUP", schema = "ADMINISTRATION")
+@Entity(name = "Rate")
+@Table(name = "RATE", schema = "ADMINISTRATION")
 @XmlRootElement
-public class SecurityGroup implements Serializable {
+public abstract class Rate implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
+    private double price;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -23,15 +25,24 @@ public class SecurityGroup implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public double getPrice() {
+        return price;
+    }
+    
+    public void setPrice(double price) {
+        this.price = price;
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
-    public SecurityGroup() {
-        this("");
+    public Rate() {
+        this("", 0);
     }
 
-    public SecurityGroup(String name) {
+    public Rate(String name, double price) {
         this.name = name;
+        this.price = price;
     }
     //</editor-fold>
 
@@ -43,12 +54,12 @@ public class SecurityGroup implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof SecurityGroup && hashCode() == obj.hashCode();
+        return obj instanceof Rate && hashCode() == obj.hashCode();
     }
 
     @Override
     public String toString() {
-        return "NewClass{" + "name=" + name + '}';
+        return "Rate{" + "name=" + name + '}';
     }
     //</editor-fold>
 }

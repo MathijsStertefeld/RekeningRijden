@@ -1,4 +1,4 @@
-package administratiewebsite.domain;
+package administration.domain;
 
 public enum PaymentStatus {
     UNKNOWN, OPEN, PAID, CANCELED;

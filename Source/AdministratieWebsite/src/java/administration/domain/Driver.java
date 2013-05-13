@@ -1,4 +1,4 @@
-package administratiewebsite.domain;
+package administration.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,9 +20,11 @@ public class Driver implements Serializable {
     private String email;
     @Column(nullable = false)
     private String password;
-    @ManyToMany(cascade = {CascadeType.PERSIST})
-    @JoinTable(name = "DRIVER_SECURITY_GROUP", schema = "ADMINISTRATION")
-    private Collection<SecurityGroup> securityGroups;
+    @ElementCollection
+    @JoinTable(name = "DRIVER_GROUP", schema = "ADMINISTRATION", joinColumns = @JoinColumn(name = "EMAIL"))
+    @Column(name = "groupName")
+    @Enumerated(EnumType.STRING)
+    private Collection<GroupName> groupNames;
     private String languageCode;
     private String firstName;
     private String lastName;
@@ -64,12 +66,12 @@ public class Driver implements Serializable {
         this.password = password;
     }
 
-    public Collection<SecurityGroup> getSecurityGroups() {
-        return securityGroups;
+    public Collection<GroupName> getGroupNames() {
+        return groupNames;
     }
 
-    public void setSecurityGroups(Collection<SecurityGroup> securityGroups) {
-        this.securityGroups = securityGroups;
+    public void setGroupNames(Collection<GroupName> groupNames) {
+        this.groupNames = groupNames;
     }
 
     public String getLanguageCode() {
@@ -177,7 +179,7 @@ public class Driver implements Serializable {
         this.zipCode = zipCode;
         this.dateOfBirth = dateOfBirth;
 
-        securityGroups = new ArrayList<SecurityGroup>();
+        groupNames = new ArrayList<GroupName>();
         bills = new ArrayList<Bill>();
         cars = new ArrayList<Car>();
     }
