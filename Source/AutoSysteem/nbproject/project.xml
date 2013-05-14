@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.j2ee.clientproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/car-project/1">
-            <name>TempAutoEJB</name>
+            <name>AutoSysteem</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <explicit-platform explicit-source-supported="true"/>
             <source-roots>
