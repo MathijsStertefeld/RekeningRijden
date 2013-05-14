@@ -103,12 +103,7 @@ public class BillBean implements Serializable {
         bills = billService.findAll();
     }
 
-    public void create() {
-        billService.create(bill);
-        bills = billService.findAll();
-    }
-
-    public void edit() {
+    public void save() {
         billService.edit(bill);
         bills = billService.findAll();
     }

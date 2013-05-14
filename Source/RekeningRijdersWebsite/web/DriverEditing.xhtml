@@ -8,9 +8,6 @@
     <h:head>
         
     </h:head>
-    <f:metadata>
-        <f:viewParam name="bsn" value="#{settingsBean.bsn}" />
-    </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
@@ -42,7 +39,7 @@
                 </li>
 
                 <li>
-                    <a href="SettingsOverview.xhtml" title="Gegevens">
+                    <a href="DriverOverview.xhtml" title="Gegevens">
                         Gegevens
                     </a>
                 </li>
@@ -66,7 +63,7 @@
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="SettingsOverview.xhtml" class="">
+                    <a href="DriverOverview.xhtml" class="">
                         Gegevens
                     </a>          
                 </li>
@@ -80,43 +77,43 @@
             </ui:define>
             
             <ui:define name="SiteContent">
-                <h:form id="settingsEditForm">                  
+                <h:form id="driverEditForm">                  
                     <h2>Persoons</h2>
                     
                     <p>
                         <strong>Voornaam</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.firstName}" />
+                        <h:inputText value="#{driverBean.driver.firstName}" />
                     </p>
                     
                     <p>
                         <strong>Achternaam</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.lastName}" />
+                        <h:inputText value="#{driverBean.driver.lastName}" />
                     </p>
                     
                     <p>
                         <strong>Woonplaats</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.residence}" />
+                        <h:inputText value="#{driverBean.driver.residence}" />
                     </p>
                     
                     <p>
                         <strong>Adres</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.address}" />
+                        <h:inputText value="#{driverBean.driver.address}" />
                     </p>
                     
                     <p>
                         <strong>Postcode</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.zipCode}" />
+                        <h:inputText value="#{driverBean.driver.zipCode}" />
                     </p>
                     
                     <p>
                         <strong>Geboortedatum</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.dateOfBirth}" />
+                        <h:inputText value="#{driverBean.driver.dateOfBirth}" />
                     </p>
                     
                     <br/>
@@ -126,13 +123,13 @@
                     <p>
                         <strong>Email Adres</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.email}" />
+                        <h:inputText value="#{driverBean.driver.email}" />
                     </p>
                     
                     <p>
                         <strong>Voorkeurstaal</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.languageCode}" />
+                        <h:inputText value="#{driverBean.driver.languageCode}" />
                     </p>
                     
                     <p>
@@ -152,8 +149,11 @@
                     </p>
                     
                     <br/>
-                    
-                    <h:commandButton value=" Opslaan " />
+                    <h:commandButton id="submit" value=" Opslaan " action="DriverOverview">
+                        <f:actionListener binding="#{driverBean.save()}" />
+                    </h:commandButton>
+                    &nbsp;
+                    <h:commandButton id="cancel" value=" Annuleren " action="DriverOverview" />
                 </h:form>
             </ui:define>
 

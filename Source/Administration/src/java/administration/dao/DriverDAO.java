@@ -13,19 +13,14 @@ public class DriverDAO extends AbstractDAO<Driver, Integer> {
         super(Driver.class);
     }
     
-    public Driver findDriverByEmail(String email)
-    {
-        String s = "SELECT u FROM Driver u WHERE u.email = '" + email + "'";
+    public Driver findDriverByEmail(String email) {
+        String s = "SELECT d FROM Driver d WHERE d.email = '" + email + "'";
         TypedQuery<Driver> query = em.createQuery(s, Driver.class);
         
-        //List<Driver> result = query.getResultList()
-        return query.getSingleResult();
-        
-//        if(result.isEmpty()){
-//            return null;
-//        }
-//        else{
-//            return result.get(0);
-//        }     
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 }

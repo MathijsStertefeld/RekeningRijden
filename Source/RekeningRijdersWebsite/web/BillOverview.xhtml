@@ -8,9 +8,6 @@
     <h:head>
         
     </h:head>
-    <f:metadata>
-        <f:viewParam name="bsn" value="#{billBean.bsn}" />
-    </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
@@ -55,12 +52,12 @@
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="CarOverview.xhtml?bsn=#{billBean.bsn}" class="">
+                    <a href="CarOverview.xhtml" class="">
                         Auto's
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="SettingsOverview.xhtml?bsn=#{billBean.bsn}" class="">
+                    <a href="DriverOverview.xhtml" class="">
                         Gegevens
                     </a>          
                 </li>

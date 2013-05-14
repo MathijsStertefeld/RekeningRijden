@@ -8,13 +8,10 @@
     <h:head>
         
     </h:head>
-    <f:metadata>
-        <f:viewParam name="bsn" value="#{settingsBean.bsn}" />
-    </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
-                Gegevens Wijzigen
+                Gegevens Overzicht
             </ui:define>
             
             <ui:define name="TypeTitle">
@@ -41,15 +38,9 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="SettingsOverview.xhtml" title="Gegevens">
-                        Gegevens
-                    </a>
-                </li>
-                
                 <li class="selected">
-                    <a href="" title="Wijzigen">
-                        Wijzigen
+                    <a href="DriverOverview.xhtml" title="Gegevens">
+                        Gegevens
                     </a>
                 </li>
             </ui:define>
@@ -66,7 +57,7 @@
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="SettingsOverview.xhtml" class="">
+                    <a href="DriverOverview.xhtml" class="">
                         Gegevens
                     </a>          
                 </li>
@@ -80,43 +71,44 @@
             </ui:define>
             
             <ui:define name="SiteContent">
-                <h:form id="settingsEditForm">                  
+                <h:form id="driverForm">
+                    
                     <h2>Persoons</h2>
                     
                     <p>
                         <strong>Voornaam</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.firstName}" />
+                        <h:outputText value="#{driverBean.driver.firstName}" />
                     </p>
                     
                     <p>
                         <strong>Achternaam</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.lastName}" />
+                        <h:outputText value="#{driverBean.driver.lastName}" />
                     </p>
                     
                     <p>
                         <strong>Woonplaats</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.residence}" />
+                        <h:outputText value="#{driverBean.driver.residence}" />
                     </p>
                     
                     <p>
                         <strong>Adres</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.address}" />
+                        <h:outputText value="#{driverBean.driver.address}" />
                     </p>
                     
                     <p>
                         <strong>Postcode</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.zipCode}" />
+                        <h:outputText value="#{driverBean.driver.zipCode}" />
                     </p>
                     
                     <p>
                         <strong>Geboortedatum</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.dateOfBirth}" />
+                        <h:outputText value="#{driverBean.driver.dateOfBirth}" />
                     </p>
                     
                     <br/>
@@ -126,34 +118,26 @@
                     <p>
                         <strong>Email Adres</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.email}" />
+                        <h:outputText value="#{driverBean.driver.email}" />
                     </p>
                     
                     <p>
                         <strong>Voorkeurstaal</strong>
                         <br/>
-                        <h:inputText value="#{settingsBean.driver.languageCode}" />
+                        <h:outputText value="#{driverBean.driver.languageCode}" />
                     </p>
                     
-                    <p>
-                        <strong>Oude Wachtwoord</strong>
+                    <!--p>
+                        <strong>Wachtwoord</strong>
                         <br/>
-                        <h:inputText />
-                        
-                        <br/>
-                        <strong>Nieuwe Wachtwoord</strong>
-                        <br/>
-                        <h:inputText />
-                        
-                        <br/>
-                        <strong>Herhalen Nieuwe Wachtwoord</strong>
-                        <br/>
-                        <h:inputText />
-                    </p>
+                        <h:outputText value="#{driverBean.driver.password}" />
+                    </p-->
                     
                     <br/>
                     
-                    <h:commandButton value=" Opslaan " />
+                    <h:outputLink value="DriverEditing.xhtml">
+                        <h:outputText value=" Wijzigen " />
+                    </h:outputLink>
                 </h:form>
             </ui:define>
 

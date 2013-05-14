@@ -130,12 +130,7 @@ public class CarBean implements Serializable {
         cars = carService.findAll();
     }
 
-    public void create() {
-        carService.create(car);
-        cars = carService.findAll();
-    }
-
-    public void edit() {
+    public void save() {
         carService.edit(car);
         cars = carService.findAll();
     }

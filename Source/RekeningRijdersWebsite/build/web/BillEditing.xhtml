@@ -9,7 +9,7 @@
         
     </h:head>
     <f:metadata>
-        <f:viewParam name="billID" value="#{billBean.billID}" />
+        <f:viewParam name="billID" value="#{billBean.billId}" />
     </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -66,7 +66,7 @@
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="SettingsOverview.xhtml" class="">
+                    <a href="DriverOverview.xhtml" class="">
                         Gegevens
                     </a>          
                 </li>
@@ -104,11 +104,13 @@
                         <f:selectItem itemValue="PAID" itemLabel="Betaald" />
                         <f:selectItem itemValue="CANCELED" itemLabel="Geannuleerd" />
                     </h:selectOneMenu><br/>
-
+                    
                     <br/>
-                    <h:commandButton id="submit" value=" Betalen " action="BillOverview.xhtml" />
+                    <h:commandButton id="submit" value=" Opslaan " action="BillOverview">
+                        <f:actionListener binding="#{billBean.save()}" />
+                    </h:commandButton>
                     &nbsp;
-                    <h:commandButton id="cancel" value=" Annuleren " onclick="history.go(-1); return false;" />
+                    <h:commandButton id="cancel" value=" Annuleren " action="BillOverview" />
                 </h:form>
             </ui:define>
 

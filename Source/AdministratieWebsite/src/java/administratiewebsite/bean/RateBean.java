@@ -52,12 +52,7 @@ public class RateBean implements Serializable {
         rates = rateService.findAll();
     }
 
-    public void create() {
-        rateService.create(rate);
-        rates = rateService.findAll();
-    }
-
-    public void edit() {
+    public void save() {
         rateService.edit(rate);
         rates = rateService.findAll();
     }

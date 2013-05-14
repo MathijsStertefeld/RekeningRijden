@@ -2,55 +2,44 @@ package bean;
 
 import administration.domain.*;
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import service.RekeningRijdersService;
 
 @Named
 @SessionScoped
 public class BillBean implements Serializable {
 
-    private Long billID;
-    private Bill bill;
-    private Collection<Bill> bills;
-    private int bsn;
-  
     @Inject
     RekeningRijdersService service;
-
-    public int getBsn(){
-        return bsn;
+    private Bill bill;
+    private Collection<Bill> bills;
+    
+    public Long getBillId() {
+        if (bill != null) {
+            return bill.getId();
+        } else {
+            return 0L;
+        }
     }
     
-    public void setBsn(int i) {
-        System.err.println("Test" + i);
-        bsn = i;
-        bills = service.getBillsFromDriver(bsn);
-        System.err.println(bills.size());
-    }
-    
-    public Long getBillID() {
-        return billID;
-    }
-    
-    public void setBillID(Long id){
-        this.billID = id;
-        
-        for(Bill b : bills)
-        {
-            if(b.getId() == id)
-            {
-                bill = b;
+    public void setBillId(Long id) {
+        for (Bill other : bills) {
+            if (id == other.getId()) {
+                bill = other;
             }
         }
     }
     
-    public Bill getBill()
-    {
+    public Bill getBill() {
         return bill;
     }
       
@@ -68,12 +57,33 @@ public class BillBean implements Serializable {
         return movements;
     }
     
-    public void payBill(Long billID)
-    {
+    private Principal getUserPrincipal() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+        
+        return request.getUserPrincipal();
+    }
+    
+    @PostConstruct
+    public void postConstruct() {
+        Principal userPrincipal = getUserPrincipal();
+        
+        if (userPrincipal != null) {
+            String email = userPrincipal.getName();
+            Driver driver = service.getDriverByEmail(email);
+            bills = driver.getBills();
+        }
+    }
+    
+    public void save() {
+        service.editBill(bill);
+    }
+    
+    public void payBill(Long billID) {
         //Ga naar externe payservice
         
         //if succesvol gelukt bij paypal
         //service.payBill(billID);
     }
-    
 }

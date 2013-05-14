@@ -1,15 +1,10 @@
 package bean;
 
-import administration.domain.Driver;
-import administration.domain.Employee;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -20,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import service.RekeningRijdersService;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class LoginBean implements Serializable {
 
     @Inject
@@ -59,8 +54,7 @@ public class LoginBean implements Serializable {
         
         if (userPrincipal != null) {
             try {
-                Driver driver = service.getDriverByEmail(userPrincipal.getName());
-                FacesContext.getCurrentInstance().getExternalContext().redirect("BillOverview.xhtml?bsn=" + driver.getBsn());
+                FacesContext.getCurrentInstance().getExternalContext().redirect("BillOverview.xhtml");
             } catch (IOException ex) {
             }
         }
@@ -72,9 +66,8 @@ public class LoginBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         
         try {
-            Driver driver = service.getDriverByEmail(email);
-            request.login(email, password);             
-            externalContext.redirect("BillOverview.xhtml?bsn=" + driver.getBsn());
+            request.login(email, password);
+            externalContext.redirect("BillOverview.xhtml");
         } catch (IOException ex) {
         } catch (ServletException ex) {
             context.addMessage(null, new FacesMessage(ex.getMessage()));
