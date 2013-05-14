@@ -33,7 +33,7 @@ public class Lane implements Serializable
     @Transient
     private Collection<VehiclePosition> positions;
     @Transient
-    @ManyToOne(cascade = CascadeType.MERGE)
+    //@ManyToOne(cascade = CascadeType.MERGE)
     private Edge parentEdge;
 
     public Lane()
@@ -79,10 +79,5 @@ public class Lane implements Serializable
     public Edge getParentEdge()
     {
         return parentEdge;
-    }
-
-    public void afterUnmarshal(Unmarshaller u, Object parent)
-    {
-        this.parentEdge = (Edge) parent;
     }
 }
