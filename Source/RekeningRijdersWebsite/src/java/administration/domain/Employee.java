@@ -17,9 +17,10 @@ public class Employee implements Serializable {
     private String username;
     @Column(nullable = false)
     private String password;
-    @ElementCollection
-    @JoinTable(name = "EMPLOYEE_GROUP", schema = "ADMINISTRATION", joinColumns = @JoinColumn(name = "USERNAME"))
-    @Column(name = "groupName")
+    @ElementCollection(targetClass = GroupName.class)
+    @CollectionTable(name = "EMPLOYEE_GROUP", schema = "ADMINISTRATION", joinColumns = {
+        @JoinColumn(name = "USERNAME", referencedColumnName= "USERNAME")})
+    @Column(name = "GROUPNAME")
     @Enumerated(EnumType.STRING)
     private Collection<GroupName> groupNames;
     //</editor-fold>

@@ -1,6 +1,5 @@
 package administration.dao;
 
-import administration.domain.Car;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.EntityManager;
@@ -27,6 +26,7 @@ public abstract class AbstractDAO<Entity extends Serializable, ID extends Serial
         if (entity != null && findAll().contains(entity)) {
             entity = em.merge(entity);
         }
+        
         return entity;
     }
 

@@ -20,9 +20,11 @@ public class Driver implements Serializable {
     private String email;
     @Column(nullable = false)
     private String password;
-    @ElementCollection
-    @JoinTable(name = "DRIVER_GROUP", schema = "ADMINISTRATION", joinColumns = @JoinColumn(name = "EMAIL"))
-    @Column(name = "groupName")
+    @ElementCollection(targetClass = GroupName.class)
+    @CollectionTable(name = "DRIVER_GROUP", schema = "ADMINISTRATION", joinColumns = {
+        @JoinColumn(name = "BSN", referencedColumnName = "BSN"),
+        @JoinColumn(name = "EMAIL", referencedColumnName = "EMAIL")})
+    @Column(name = "GROUPNAME")
     @Enumerated(EnumType.STRING)
     private Collection<GroupName> groupNames;
     private String languageCode;
