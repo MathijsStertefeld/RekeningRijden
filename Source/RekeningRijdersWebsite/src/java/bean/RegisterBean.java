@@ -10,7 +10,7 @@ import java.util.Date;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import service.RekeningrijdersService;
+import service.RekeningRijdersService;
 
 /**
  *
@@ -21,7 +21,7 @@ import service.RekeningrijdersService;
 public class RegisterBean implements Serializable{
     
     @Inject
-    RekeningrijdersService service;
+    RekeningRijdersService service;
     
     private int bsn;
     private String email;

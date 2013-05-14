@@ -46,10 +46,10 @@
     </security-role>
     <security-role>
         <description/>
-        <role-name>RATE_EMPLOYEE</role-name>
+        <role-name>EMPLOYEE</role-name>
     </security-role>
     <security-role>
         <description/>
-        <role-name>EMPLOYEE</role-name>
+        <role-name>RATE_EMPLOYEE</role-name>
     </security-role>
 </web-app>

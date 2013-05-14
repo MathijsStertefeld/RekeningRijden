@@ -20,13 +20,13 @@ public class Driver implements Serializable {
     private String email;
     @Column(nullable = false)
     private String password;
-    @ElementCollection(targetClass = GroupName.class)
+    @ElementCollection(targetClass = DriverGroup.class)
     @CollectionTable(name = "DRIVER_GROUP", schema = "ADMINISTRATION", joinColumns = {
         @JoinColumn(name = "BSN", referencedColumnName = "BSN"),
         @JoinColumn(name = "EMAIL", referencedColumnName = "EMAIL")})
     @Column(name = "GROUPNAME")
     @Enumerated(EnumType.STRING)
-    private Collection<GroupName> groupNames;
+    private Collection<DriverGroup> groups;
     private String languageCode;
     private String firstName;
     private String lastName;
@@ -68,12 +68,12 @@ public class Driver implements Serializable {
         this.password = password;
     }
 
-    public Collection<GroupName> getGroupNames() {
-        return groupNames;
+    public Collection<DriverGroup> getGroups() {
+        return groups;
     }
 
-    public void setGroupNames(Collection<GroupName> groupNames) {
-        this.groupNames = groupNames;
+    public void setGroups(Collection<DriverGroup> groups) {
+        this.groups = groups;
     }
 
     public String getLanguageCode() {
@@ -178,7 +178,7 @@ public class Driver implements Serializable {
         this.zipCode = zipCode;
         this.dateOfBirth = dateOfBirth;
 
-        groupNames = new ArrayList<GroupName>();
+        groups = new ArrayList<DriverGroup>();
         bills = new ArrayList<Bill>();
         cars = new ArrayList<Car>();
     }

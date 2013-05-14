@@ -1,11 +1,9 @@
 package administration.bean;
 
-import administration.domain.GroupName;
+import administration.domain.EmployeeGroup;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
@@ -32,7 +30,7 @@ public class LogoutBean implements Serializable {
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         
-        return request.isUserInRole(GroupName.ADMIN.toString());
+        return request.isUserInRole(EmployeeGroup.ADMIN.toString());
     }
 
     public Boolean getIsRateEmployee() {
@@ -40,7 +38,7 @@ public class LogoutBean implements Serializable {
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         
-        return request.isUserInRole(GroupName.RATE_EMPLOYEE.toString());
+        return request.isUserInRole(EmployeeGroup.RATE_EMPLOYEE.toString());
     }
 
     public Boolean getIsEmployee() {
@@ -48,7 +46,7 @@ public class LogoutBean implements Serializable {
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         
-        return request.isUserInRole(GroupName.EMPLOYEE.toString());
+        return request.isUserInRole(EmployeeGroup.EMPLOYEE.toString());
     }
     
     private Principal getUserPrincipal() {
@@ -65,7 +63,6 @@ public class LogoutBean implements Serializable {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
             } catch (IOException ex) {
-                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

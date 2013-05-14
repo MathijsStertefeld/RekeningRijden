@@ -13,11 +13,11 @@
     <group-name>ADMIN</group-name>
   </security-role-mapping>
   <security-role-mapping>
-    <role-name>RATE_EMPLOYEE</role-name>
-    <group-name>RATE_EMPLOYEE</group-name>
-  </security-role-mapping>
-  <security-role-mapping>
     <role-name>EMPLOYEE</role-name>
     <group-name>EMPLOYEE</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>RATE_EMPLOYEE</role-name>
+    <group-name>RATE_EMPLOYEE</group-name>
   </security-role-mapping>
 </glassfish-web-app>

@@ -17,12 +17,12 @@ public class Employee implements Serializable {
     private String username;
     @Column(nullable = false)
     private String password;
-    @ElementCollection(targetClass = GroupName.class)
+    @ElementCollection(targetClass = EmployeeGroup.class)
     @CollectionTable(name = "EMPLOYEE_GROUP", schema = "ADMINISTRATION", joinColumns = {
         @JoinColumn(name = "USERNAME", referencedColumnName= "USERNAME")})
     @Column(name = "GROUPNAME")
     @Enumerated(EnumType.STRING)
-    private Collection<GroupName> groupNames;
+    private Collection<EmployeeGroup> groups;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -42,12 +42,12 @@ public class Employee implements Serializable {
         this.password = password;
     }
 
-    public Collection<GroupName> getGroups() {
-        return groupNames;
+    public Collection<EmployeeGroup> getGroups() {
+        return groups;
     }
 
-    public void setGroupNames(Collection<GroupName> groupNames) {
-        this.groupNames = groupNames;
+    public void setGroups(Collection<EmployeeGroup> groups) {
+        this.groups = groups;
     }
     //</editor-fold>
 
@@ -60,7 +60,7 @@ public class Employee implements Serializable {
         this.username = username;
         this.password = password;
 
-        groupNames = new ArrayList<GroupName>();
+        groups = new ArrayList<EmployeeGroup>();
     }
     //</editor-fold>
 

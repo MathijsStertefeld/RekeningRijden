@@ -65,9 +65,11 @@
                     </a>          
                 </li>
                 <li class="categorylink">
-                    <a href="Login.xhtml" class="">
-                        Uitloggen
-                    </a>          
+                    <h:form>
+                        <h:commandLink action="#{logoutBean.logout()}">
+                            Uitloggen
+                        </h:commandLink>
+                    </h:form>
                 </li>
             </ui:define>
             

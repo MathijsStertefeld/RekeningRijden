@@ -6,7 +6,7 @@ import java.util.Collection;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import service.RekeningrijdersService;
+import service.RekeningRijdersService;
 
 @Named
 @SessionScoped
@@ -19,7 +19,7 @@ public class CarBean implements Serializable {
     private int bsn;
     
     @Inject
-    private RekeningrijdersService service;
+    private RekeningRijdersService service;
 
     public int getBsn(){
         return bsn;

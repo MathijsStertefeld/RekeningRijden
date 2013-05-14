@@ -9,14 +9,14 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import service.RekeningrijdersService;
+import service.RekeningRijdersService;
 
 @Named
 @SessionScoped
 public class SettingsBean implements Serializable {
 
     @Inject
-    private RekeningrijdersService service;
+    private RekeningRijdersService service;
     
     private int bsn;
     private Driver driver;

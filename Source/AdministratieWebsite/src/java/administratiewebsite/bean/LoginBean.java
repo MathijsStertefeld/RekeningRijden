@@ -1,18 +1,19 @@
 package administratiewebsite.bean;
 
-import administration.domain.Employee;
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.enterprise.context.SessionScoped;
+import java.security.Principal;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class LoginBean implements Serializable {
 
     String username;
@@ -34,28 +35,37 @@ public class LoginBean implements Serializable {
         this.password = password;
     }
     
-    public ArrayList<Employee> getEmployees() {
-        ArrayList<Employee> empColl = new ArrayList<Employee>();
-        empColl.add(new Employee("admin", "admin"));
-        return empColl;
+    private Principal getUserPrincipal() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+        
+        return request.getUserPrincipal();
+    }
+    
+    @PostConstruct
+    public void postConstruct() {
+        if (getUserPrincipal() != null) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("CarOverview.xhtml");
+            } catch (IOException ex) {
+            }
+        }
     }
 
     public void login() {
-        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) context.getRequest();
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+        
         try {
-            //request.login(username, password);
-
-            if (getEmployees().get(0).getName().equals(username)) {
-                if (getEmployees().get(0).getPassword().equals(password)) {
-                    username = "";
-                    password = "";                
-                    context.redirect("CarOverview.xhtml");
-                }
-            }
-            
-        } catch (Exception ex) {
-            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+            request.login(username, password);             
+            externalContext.redirect("CarOverview.xhtml");
+        } catch (IOException ex) {
+        } catch (ServletException ex) {
+            context.addMessage(null, new FacesMessage(ex.getMessage()));
         }
+        
+        password = "";
     }
 }

@@ -26,27 +26,11 @@ public class StartupService implements Serializable {
 
     @PostConstruct
     public void postConstruct() {
-        Employee e1 = new Employee("admin", hash("admin"));
-        Employee e2 = new Employee("henk", hash("henk"));
-        Employee e3 = new Employee("truus", hash("truus"));
-        
-        employeeDAO.create(e1);
-        employeeDAO.create(e2);
-        employeeDAO.create(e3);
-        
-        e1.getGroups().add(GroupName.ADMIN);
-        e2.getGroups().add(GroupName.RATE_EMPLOYEE);
-        e3.getGroups().add(GroupName.EMPLOYEE);
-        
-        employeeDAO.edit(e1);
-        employeeDAO.edit(e2);
-        employeeDAO.edit(e3);
-        
-        Driver d1 = new Driver(1111, "hans@hans.nl", "hans123", "en", "Hans",
+        Driver d1 = new Driver(1111, "hans@hans.nl", hash("hans123"), "en", "Hans",
                 "Hansen", "Eindhoven", "Hoofdstraat 1", "1234AA", new Date());
-        Driver d2 = new Driver(2222, "frank@frank.nl", "frank123", "en", "Frank",
+        Driver d2 = new Driver(2222, "frank@frank.nl", hash("frank123"), "en", "Frank",
                 "Franken", "Eindhoven", "Hoofdstraat 2", "1234BB", new Date());
-        Driver d3 = new Driver(3333, "tom@tom.nl", "tom123", "en", "Tom",
+        Driver d3 = new Driver(3333, "tom@tom.nl", hash("tom123"), "en", "Tom",
                 "Tommen", "Eindhoven", "Hoofdstraat 3", "1234CC", new Date());
         
         driverDAO.create(d1);
@@ -64,9 +48,29 @@ public class StartupService implements Serializable {
         d3.getCars().add(new Car("IJ-KL-56", "IJKL", CarType.AUTOBUS,
                 PaintColor.WHITE, 1200, Classification.EEV, "Volkswagen", "Golf"));
         
+        d1.getGroups().add(DriverGroup.ADMIN);
+        d2.getGroups().add(DriverGroup.JAM_DRIVER);
+        d3.getGroups().add(DriverGroup.DRIVER);
+        
         driverDAO.edit(d1);
         driverDAO.edit(d2);
         driverDAO.edit(d3);
+        
+        Employee e1 = new Employee("admin", hash("admin"));
+        Employee e2 = new Employee("henk", hash("henk"));
+        Employee e3 = new Employee("truus", hash("truus"));
+        
+        employeeDAO.create(e1);
+        employeeDAO.create(e2);
+        employeeDAO.create(e3);
+        
+        e1.getGroups().add(EmployeeGroup.ADMIN);
+        e2.getGroups().add(EmployeeGroup.RATE_EMPLOYEE);
+        e3.getGroups().add(EmployeeGroup.EMPLOYEE);
+        
+        employeeDAO.edit(e1);
+        employeeDAO.edit(e2);
+        employeeDAO.edit(e3);
     }
     
     private String hash(String text) {

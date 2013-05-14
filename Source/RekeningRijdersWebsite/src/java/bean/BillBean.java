@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import service.RekeningrijdersService;
+import service.RekeningRijdersService;
 
 @Named
 @SessionScoped
@@ -20,7 +20,7 @@ public class BillBean implements Serializable {
     private int bsn;
   
     @Inject
-    RekeningrijdersService service;
+    RekeningRijdersService service;
 
     public int getBsn(){
         return bsn;

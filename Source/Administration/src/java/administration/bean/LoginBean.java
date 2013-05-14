@@ -3,8 +3,6 @@ package administration.bean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -51,7 +49,6 @@ public class LoginBean implements Serializable {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("logout.xhtml");
             } catch (IOException ex) {
-                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

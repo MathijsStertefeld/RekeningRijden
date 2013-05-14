@@ -16,7 +16,7 @@ import javax.ws.rs.core.MediaType;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 @Stateless
-public class RekeningrijdersService implements Serializable {
+public class RekeningRijdersService implements Serializable {
 
     private WebResource service;
 
