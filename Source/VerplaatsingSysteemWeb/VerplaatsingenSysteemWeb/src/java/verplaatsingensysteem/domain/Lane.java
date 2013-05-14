@@ -8,10 +8,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.*;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,7 +32,8 @@ public class Lane implements Serializable
     // @OneToMany(cascade= CascadeType.PERSIST,mappedBy="parentLane")
     @Transient
     private Collection<VehiclePosition> positions;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @Transient
+    //@ManyToOne(cascade = CascadeType.MERGE)
     private Edge parentEdge;
 
     public Lane()
@@ -61,7 +64,7 @@ public class Lane implements Serializable
         this.lane_id = id;
     }
 
-    @XmlElement(name="vehicle")
+    @XmlElement(name = "vehicle")
     public Collection<VehiclePosition> getPositions()
     {
         return positions;
@@ -70,5 +73,11 @@ public class Lane implements Serializable
     public void setPositions(Collection<VehiclePosition> positions)
     {
         this.positions = positions;
+    }
+
+    @XmlTransient
+    public Edge getParentEdge()
+    {
+        return parentEdge;
     }
 }

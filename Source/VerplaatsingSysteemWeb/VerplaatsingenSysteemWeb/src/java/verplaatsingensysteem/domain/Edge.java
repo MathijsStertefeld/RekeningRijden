@@ -8,10 +8,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.*;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -22,20 +24,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Edge implements Serializable
 {
 
-   // @Id
-   // @GeneratedValue(strategy = GenerationType.AUTO)
-   // private long id;
-    
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.AUTO)
+    // private long id;
     @Id
-
     private String edge_id;
     //@OneToMany(cascade= CascadeType.PERSIST,mappedBy = "parentEdge")
-    
     @Transient
-
     private Collection<Lane> lanes;
 //    @ManyToOne(cascade = CascadeType.MERGE)
-//    private TimeStep parentTimeStep;
 
     public Edge()
     {
@@ -47,7 +44,8 @@ public class Edge implements Serializable
         lanes = new ArrayList<Lane>();
         //parentTimeStep = parent;
     }
-    @XmlAttribute(name="id")
+
+    @XmlAttribute(name = "id")
     public String getId()
     {
         return edge_id;
@@ -57,8 +55,8 @@ public class Edge implements Serializable
     {
         this.edge_id = id;
     }
-    
-    @XmlElement(name="lane")
+
+    @XmlElement(name = "lane")
     public Collection<Lane> getLanes()
     {
         return lanes;
