@@ -5,6 +5,7 @@
 package openstreetmaptest;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import org.openstreetmap.gui.CarGraphic;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
@@ -39,7 +41,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
     public Frame()
     {
         super("Autosysteem");
-        
+
         try
         {
             UIManager.setLookAndFeel(
@@ -55,16 +57,34 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         setResizable(false);
         setLayout(new BorderLayout());
 
+        // Add the map to the form and fill in settings
         addMap();
 
-        map.addMapMarker(new MapMarkerDot(51.4560332, 5.5380103));
-        map.addMapMarker(new MapMarkerDot(51.455726, 5.5326495));
+
+
+
+        // TEST
+        // Adding cars to the map.
+
+        map.addCarGraphic(new CarGraphic(51.4560332, 5.5380103, "t0"));
+        map.addCarGraphic(new CarGraphic(51.455726, 5.5326495, "t1"));
+        map.addCarGraphic(new CarGraphic(52, 5.5326495, "t2"));
+
+        // map.highlightCarGraphic("t1");
 
         Coordinate one = new Coordinate(51.4560332, 5.5380103);
         Coordinate two = new Coordinate(51.455726, 5.5326495);
 
         List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(one, two, two));
-        map.addMapPolygon(new MapPolygonImpl(route));
+        //map.addMapPolygon(new MapPolygonImpl(route));
+
+        // Fill the comboBox.
+        currentCarComboBox.removeAllItems();
+
+        for (CarGraphic c : map.getAllCarGraphics())
+        {
+            currentCarComboBox.addItem(c.getCarTrackerId());
+        }
 
         validate();
     }
@@ -84,7 +104,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         infoLabel = new javax.swing.JLabel();
         ownerLabel = new javax.swing.JLabel();
         numberOfCarsLabel = new javax.swing.JLabel();
-        CurrentCarComboBox = new javax.swing.JComboBox();
+        currentCarComboBox = new javax.swing.JComboBox();
         infoLabel2 = new javax.swing.JLabel();
         infoLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -118,7 +138,14 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 
         numberOfCarsLabel.setText("jLabel1");
 
-        CurrentCarComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        currentCarComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        currentCarComboBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                currentCarComboBoxActionPerformed(evt);
+            }
+        });
 
         infoLabel2.setText("Aantal auto's:");
 
@@ -147,7 +174,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(infoLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(CurrentCarComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(currentCarComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(infoLabel)
@@ -174,7 +201,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                     .addComponent(infoLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CurrentCarComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(currentCarComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(infoLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,6 +237,27 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void currentCarComboBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_currentCarComboBoxActionPerformed
+    {//GEN-HEADEREND:event_currentCarComboBoxActionPerformed
+        if (currentCarComboBox != null && currentCarComboBox.getSelectedItem() != null)
+        {
+            for (CarGraphic c : map.getAllCarGraphics())
+            {
+                if (((String) currentCarComboBox.getSelectedItem()).equals(c.getCarTrackerId()))
+                {
+                    c.highlight(Color.BLUE);
+                    map.repaint();
+                    // map.highlightCarGraphic((String) currentCarComboBox.getSelectedItem());
+                }
+                else
+                {
+                    c.highlight(Color.RED);
+                    map.repaint();
+                }
+            }
+        }
+    }//GEN-LAST:event_currentCarComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,7 +308,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox CurrentCarComboBox;
+    private javax.swing.JComboBox currentCarComboBox;
     private javax.swing.JLabel infoLabel;
     private javax.swing.JLabel infoLabel2;
     private javax.swing.JLabel infoLabel3;
@@ -308,14 +356,14 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         // Set the tile source:
         // Other options are: 
         // OsmTileSource.CycleMap(), new BingAerialTileSource(), new MapQuestOsmTileSource(), new MapQuestOpenAerialTileSource()
-        map.setTileSource(new OsmTileSource.Mapnik());     
-        
+        map.setTileSource(new OsmTileSource.Mapnik());
+
         // Set the tileloader
         map.setTileLoader(new OsmTileLoader(map));
 
         // Set the zoom controls to show on the map
         map.setZoomContolsVisible(true);
-       
+
         // Set the layout for the map panel
         mapPanel.setLayout(new BorderLayout());
 

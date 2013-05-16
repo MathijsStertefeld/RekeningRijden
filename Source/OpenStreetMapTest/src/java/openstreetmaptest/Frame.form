@@ -91,7 +91,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="infoLabel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="CurrentCarComboBox" min="-2" pref="90" max="-2" attributes="0"/>
+                          <Component id="currentCarComboBox" min="-2" pref="90" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -128,7 +128,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="CurrentCarComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="currentCarComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="infoLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -160,7 +160,7 @@
             <Property name="text" type="java.lang.String" value="jLabel1"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="CurrentCarComboBox">
+        <Component class="javax.swing.JComboBox" name="currentCarComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -171,6 +171,9 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="currentCarComboBoxActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="infoLabel2">
           <Properties>

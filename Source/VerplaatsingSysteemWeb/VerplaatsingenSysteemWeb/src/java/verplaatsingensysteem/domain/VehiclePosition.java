@@ -26,7 +26,7 @@ public class VehiclePosition implements Serializable
     private String carTrackerId;
     private double carPos;
     private double carSpeed;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Lane parentLane;
     //@ManyToOne(cascade = CascadeType.MERGE)
     @Transient
@@ -93,7 +93,6 @@ public class VehiclePosition implements Serializable
 //    {
 //        return parentLane.getId();
 //    }
-
     @XmlTransient
     public Lane getParentLane()
     {

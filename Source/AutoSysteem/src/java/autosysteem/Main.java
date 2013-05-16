@@ -24,20 +24,21 @@ public class Main
      */
     public static void main(String[] args)
     {
-        try
-        {
-            Simulation sim = new Simulation(1000,10);
-            sim.start();
-            sim.addCar(new Car("1241-4124"));
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        test1();
+//        try
+//        {
+//            Simulation sim = new Simulation(1000,10);
+//            sim.start();
+//            sim.addCar(new Car("1241-4124"));
+//        } catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
     }
 
     
     
-    public void test1()
+    public static void test1()
     {
         System.out.println("Starting webservice...");
         ClientConfig config = new DefaultClientConfig();

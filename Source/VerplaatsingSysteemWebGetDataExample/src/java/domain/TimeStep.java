@@ -8,10 +8,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.*;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -21,18 +22,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class TimeStep implements Serializable
 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
-    
     private double timestepTime;
-   // @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "parentTimeStep")
-    
     @Transient
-
     private Collection<Edge> edges;
-    
     @ManyToOne(cascade = CascadeType.MERGE)
     private Session parentSession;
 
@@ -48,7 +44,8 @@ public class TimeStep implements Serializable
         edges = new ArrayList<Edge>();
 
     }
-    @XmlAttribute(name="time")
+
+    @XmlAttribute(name = "time")
     public double getTime()
     {
         return timestepTime;
@@ -58,7 +55,8 @@ public class TimeStep implements Serializable
     {
         this.timestepTime = time;
     }
-    @XmlElement(name="edge")
+
+    @XmlElement(name = "edge")
     public Collection<Edge> getEdges()
     {
         return edges;
@@ -74,12 +72,13 @@ public class TimeStep implements Serializable
         edges.add(e);
     }
 
-    public long getId()
+    @XmlTransient
+    public Long getId()
     {
         return id;
     }
 
-    public void setId(long id)
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -87,5 +86,21 @@ public class TimeStep implements Serializable
     public void setParentSession(Session s)
     {
         this.parentSession = s;
+    }
+
+//    @XmlAttribute(name = "parent_id")
+//    public long getParentSessionId()
+//    {
+//        return this.parentSession.getId();
+//    }
+    @XmlTransient
+    public Session getParentSession()
+    {
+        return this.parentSession;
+    }
+
+    public void afterUnmarshal(Unmarshaller u, Object parent)
+    {
+        this.parentSession = (Session) parent;
     }
 }

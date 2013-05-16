@@ -6,8 +6,10 @@ package verplaatsingensysteem.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -24,9 +26,10 @@ public class VehiclePosition implements Serializable
     private String carTrackerId;
     private double carPos;
     private double carSpeed;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch=FetchType.EAGER)
     private Lane parentLane;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    //@ManyToOne(cascade = CascadeType.MERGE)
+    @Transient
     private TimeStep parentTimeStep;
 
     public VehiclePosition()
@@ -83,5 +86,33 @@ public class VehiclePosition implements Serializable
     public void setId(Long id)
     {
         this.id = id;
+    }
+
+//    @XmlAttribute(name = "parent_lane_id")
+//    public String getParentLaneId()
+//    {
+//        return parentLane.getId();
+//    }
+
+    @XmlTransient
+    public Lane getParentLane()
+    {
+        return parentLane;
+    }
+
+//    @XmlAttribute(name = "parent_timestep_id")
+//    public long getParentTimeStepId()
+//    {
+//        return parentTimeStep.getId();
+//    }
+    @XmlTransient
+    public TimeStep getParentTimeStep()
+    {
+        return parentTimeStep;
+    }
+
+    public void afterUnmarshal(Unmarshaller u, Object parent)
+    {
+        this.parentLane = (Lane) parent;
     }
 }

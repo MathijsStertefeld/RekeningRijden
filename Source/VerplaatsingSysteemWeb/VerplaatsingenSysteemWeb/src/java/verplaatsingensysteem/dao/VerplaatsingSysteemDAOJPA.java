@@ -113,11 +113,16 @@ public class VerplaatsingSysteemDAOJPA implements VerplaatsingSysteemDAO
         System.out.println("RESULTLIST: " + q.getResultList());
 
 
-//        for (int i = 0; i < q.getResultList().size(); i++)
+//        for (int i = 0; i < positions.size(); i++)
 //        {
-//            VehiclePosition vehiclePosition = (VehiclePosition) q.getResultList().get(i);
-//            System.out.println("VehiclePosition found with cartracker id = " + vehiclePosition.getCarTrackerId());
-//            positions.add(vehiclePosition);
+//            VehiclePosition vp = positions.get(i);
+//            
+//            String query1 = "SELECT v.laneId FROM VehiclePosition v WHERE v.carTrackerId = '" + vp.getCarTrackerId() + "' AND v.id = '" + vp.getId() + "'";
+//            TypedQuery q1 = em.createQuery(query1, String.class);
+//            String laneId = (String) q1.getSingleResult();
+//            String query2 = "SELECT l FROM Lane l WHERE l.laneId = '" + laneId +  "'";
+//            TypedQuery q2 = em.createQuery(query2, Lane.class);
+//            //vp.setParentLane(q2.getSingleResult());
 //        }
 
 

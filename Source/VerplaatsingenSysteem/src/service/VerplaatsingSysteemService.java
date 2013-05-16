@@ -5,7 +5,7 @@
 package service;
 
 import dao.VerplaatsingSysteemDAOJPA;
-import domain.*;
+import verplaatsingensysteem.domain.*;
 import javax.persistence.*;
 
 /**
