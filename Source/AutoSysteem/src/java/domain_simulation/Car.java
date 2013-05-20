@@ -12,7 +12,6 @@ import domain.VehiclePosition;
  */
 public class Car
 {
-
     private String carId;
     private VehiclePosition pos;
 

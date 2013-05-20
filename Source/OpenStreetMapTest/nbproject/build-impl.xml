@@ -825,19 +825,16 @@ exists or setup the property manually. For example like this:
         <!-- You can override this target in the ../build.xml file. -->
     </target>
     <target depends="compile" if="is.server.weblogic" name="library-inclusion-in-archive">
-        <basename file="${file.reference.JMapViewer.jar}" property="manifest.file.reference.JMapViewer.jar"/>
         <basename file="${file.reference.swingx-ws-1.0-sources.jar}" property="manifest.file.reference.swingx-ws-1.0-sources.jar"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Extension-List" value="jar-1 jar-2 "/>
-            <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.JMapViewer.jar}"/>
-            <attribute name="jar-2-Extension-Name" value="${manifest.file.reference.swingx-ws-1.0-sources.jar}"/>
+            <attribute name="Extension-List" value="jar-1 "/>
+            <attribute name="jar-1-Extension-Name" value="${manifest.file.reference.swingx-ws-1.0-sources.jar}"/>
         </manifest>
     </target>
     <target depends="compile" if="dist.ear.dir" name="library-inclusion-in-manifest">
-        <copyfiles files="${file.reference.JMapViewer.jar}" manifestproperty="manifest.file.reference.JMapViewer.jar" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.swingx-ws-1.0-sources.jar}" manifestproperty="manifest.file.reference.swingx-ws-1.0-sources.jar" todir="${dist.ear.dir}/lib"/>
         <manifest file="${build.ear.classes.dir}/META-INF/MANIFEST.MF" mode="update">
-            <attribute name="Class-Path" value="${manifest.file.reference.JMapViewer.jar} lib/${manifest.file.reference.JMapViewer.jar} ${manifest.file.reference.swingx-ws-1.0-sources.jar} lib/${manifest.file.reference.swingx-ws-1.0-sources.jar} "/>
+            <attribute name="Class-Path" value="${manifest.file.reference.swingx-ws-1.0-sources.jar} lib/${manifest.file.reference.swingx-ws-1.0-sources.jar} "/>
         </manifest>
     </target>
     <target name="-copy-meta-inf">

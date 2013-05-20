@@ -18,11 +18,11 @@ public class Simulation
     private TimeStepSimulator tsSim;
     private CarSimulator carSim;
     private Garage garage;
+    private boolean isRunning = false;
 
     public Simulation(long timestepInterval, long carInterval)
     {
         garage = new Garage();
-
         tsSim = new TimeStepSimulator(timestepInterval);
         carSim = new CarSimulator(carInterval);
         this.sessionDate = new Date();
@@ -30,12 +30,35 @@ public class Simulation
 
     public void start()
     {
+        isRunning = true;
         tsSim.start();
         carSim.start();
+    }
+
+    public void stop()
+    {
+        isRunning = false;
+        tsSim.stop();
+        carSim.stop();
     }
 
     public void addCar(Car c)
     {
         garage.addCar(c);
+    }
+
+    public Date getSessionDate()
+    {
+        return sessionDate;
+    }
+
+    public boolean isRunning()
+    {
+        return isRunning;
+    }
+    
+    public void changeTimestepInterval(long interval)
+    {
+        tsSim.changeInterval(interval);
     }
 }

@@ -20,6 +20,7 @@ public class TimeStepSimulator implements Runnable
     private long timestepInterval;
     private ArrayList<TimeStep> timesteps;
     private Thread t1;
+    private boolean stop = false;
 
     public TimeStepSimulator(long interval)
     {
@@ -36,6 +37,12 @@ public class TimeStepSimulator implements Runnable
     public void stop()
     {
         t1.interrupt();
+        //stop = true;
+    }
+
+    public void changeInterval(long interval)
+    {
+        this.timestepInterval = interval;
     }
 
     @Override
@@ -45,17 +52,25 @@ public class TimeStepSimulator implements Runnable
         {
             try
             {
-                double time = (double) timesteps.size();
-                TimeStep ts = new TimeStep(time);
-                timesteps.add(ts);
-                System.out.println("Timestep " + ts.getTime() + "");               
-                for (Car c : Garage.getCars())
-                {
-                    System.out.println("Car " + c.getCarId() +  " pos is " + c.getPos().getCarPos());
-                }
+
+                    double time = (double) timesteps.size();
+                    TimeStep ts = new TimeStep(time);
+                    timesteps.add(ts);
+                    System.out.println("Timestep " + ts.getTime() + "");
+                    for (Car c : Garage.getCars())
+                    {
+                        System.out.println("Car " + c.getCarId() + " pos is " + c.getPos().getCarPos());
+                    }
+
+                    System.out.println("\n");
+                    try{
+                    t1.sleep(timestepInterval);
+                    }
+                    catch(InterruptedException e)
+                    {
+                        return;
+                    }
                 
-                System.out.println("\n");
-                Thread.sleep(timestepInterval);
             } catch (Exception ex)
             {
                 ex.printStackTrace();

@@ -12,9 +12,10 @@ import domain_simulation.Car;
  */
 public class CarSimulator implements Runnable
 {
+
     private long interval;
     private Thread t1;
-
+    private boolean stop = false;
 
     public CarSimulator(long interval)
     {
@@ -29,7 +30,8 @@ public class CarSimulator implements Runnable
 
     public void stop()
     {
-        t1.interrupt();
+        stop = true;
+        //t1.interrupt();
     }
 
     @Override
@@ -39,12 +41,18 @@ public class CarSimulator implements Runnable
         {
             try
             {
+
                 for (Car c : Garage.getCars())
                 {
                     c.move(5);
                 }
-
-                Thread.sleep(interval);
+                try
+                {
+                    Thread.sleep(interval);
+                } catch (InterruptedException e)
+                {
+                    return;
+                }
             } catch (Exception ex)
             {
                 ex.printStackTrace();
