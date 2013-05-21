@@ -22,11 +22,11 @@ public class Frame extends javax.swing.JFrame
     public Frame()
     {
         initComponents();
-        
-        sim = new Simulation(1000, 10);
-        sim.start();
-        
-        
+
+//        sim = new Simulation(1000, 10);
+//        sim.start();
+
+
     }
 
     /**

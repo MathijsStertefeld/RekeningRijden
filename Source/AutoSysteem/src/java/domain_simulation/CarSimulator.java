@@ -20,18 +20,18 @@ public class CarSimulator implements Runnable
     public CarSimulator(long interval)
     {
         this.interval = interval;
-        t1 = new Thread(this);
     }
 
     public void start()
     {
+        t1 = new Thread(this);
         t1.start();
     }
 
     public void stop()
     {
-        stop = true;
-        //t1.interrupt();
+
+        t1.interrupt();
     }
 
     @Override
@@ -44,13 +44,16 @@ public class CarSimulator implements Runnable
 
                 for (Car c : Garage.getCars())
                 {
-                    c.move(5);
+
+                    //FULL CAR SIMULATION GOES HERE. AI???
+                    c.move(0.1, 0);
                 }
                 try
                 {
                     Thread.sleep(interval);
                 } catch (InterruptedException e)
                 {
+                    t1.join();
                     return;
                 }
             } catch (Exception ex)

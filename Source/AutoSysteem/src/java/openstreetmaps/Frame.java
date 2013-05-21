@@ -4,25 +4,21 @@
  */
 package openstreetmaps;
 
+import domain_simulation.Car;
 import domain_simulation.Simulation;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import openstreetmaps.org.openstreetmap.gui.CarGraphic;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.Coordinate;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.JMapViewer;
-import openstreetmaps.org.openstreetmap.gui.jmapviewer.MapMarkerDot;
-import openstreetmaps.org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.OsmTileLoader;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
-import openstreetmaps.org.openstreetmap.gui.jmapviewer.tilesources.OfflineOsmTileSource;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 
 /**
@@ -36,7 +32,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
     private double meterPerPixel;
     private double zoom;
     private Simulation sim;
-    
+
     /**
      * Creates new form Frame
      */
@@ -60,12 +56,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         // Add the map to the form and fill in settings
         addMap();
 
-        // TEST
-        // Adding cars to the map.
-        map.addCarGraphic(new CarGraphic(51.4560332, 5.5380103, "t0"));
-        map.addCarGraphic(new CarGraphic(51.455726, 5.5326495, "t1"));
-        map.addCarGraphic(new CarGraphic(52, 5.5326495, "t2"));
-
         // map.highlightCarGraphic("t1");
 
         Coordinate one = new Coordinate(51.4560332, 5.5380103);
@@ -77,14 +67,27 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         // Fill the comboBox.
         currentCarComboBox.removeAllItems();
 
+
+
         for (CarGraphic c : map.getAllCarGraphics())
         {
 
             currentCarComboBox.addItem(c.getCarTrackerId());
         }
 
-        sim = new Simulation(jsInterval.getValue(), 500);
 
+        //Simulation stuff happens here
+        sim = new Simulation(jsInterval.getValue(), 500,this);
+        for (Car c : sim.getGarage().getCars())
+        {
+            currentCarComboBox.addItem(c.getCarTrackerId());
+        }
+
+        // TEST
+        // Adding cars to the map.
+//        map.addCarGraphic(new CarGraphic(51.4560332, 5.5380103, "t0"));
+//        map.addCarGraphic(new CarGraphic(51.455726, 5.5326495, "t1"));
+//        map.addCarGraphic(new CarGraphic(52, 5.5326495, "t2"));
         validate();
     }
 
@@ -114,6 +117,11 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         jTextArea2 = new javax.swing.JTextArea();
         lbInterval = new javax.swing.JLabel();
         btStartSimulation = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        btAddCar = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(140, 218, 195));
@@ -212,11 +220,11 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                         .addContainerGap())))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbInterval)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jsInterval, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jsInterval, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btStartSimulation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -250,15 +258,39 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                 .addContainerGap())
         );
 
+        jLabel1.setText("Welkom.");
+
+        jMenu1.setText("Simulatie");
+
+        btAddCar.setText("Auto toevoegen...");
+        btAddCar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btAddCarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(btAddCar);
+
+        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mapPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mapPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -270,19 +302,36 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    /////TEMP
+    public JMapViewer getMap()
+    {
+        return map;
+    }
+    
+    public void setOutputText(String text)
+    {
+        this.jTextArea1.append(text);
+    }
+    /////TEMP
+    
     private void currentCarComboBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_currentCarComboBoxActionPerformed
     {//GEN-HEADEREND:event_currentCarComboBoxActionPerformed
         if (currentCarComboBox != null && currentCarComboBox.getSelectedItem() != null)
         {
-            for (CarGraphic c : map.getAllCarGraphics())
+            for (Car car : sim.getGarage().getCars())
             {
-                if (((String) currentCarComboBox.getSelectedItem()).equals(c.getCarTrackerId()))
+                CarGraphic c = car.getCarGraphic();
+                if (((String) currentCarComboBox.getSelectedItem()).equals(car.getCarTrackerId()))
                 {
                     c.highlight(Color.BLUE);
                     map.repaint();
@@ -318,6 +367,21 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         int seconds = jsInterval.getValue() / 1000;
         lbInterval.setText(String.valueOf(seconds));
     }//GEN-LAST:event_jsIntervalStateChanged
+
+    private void btAddCarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btAddCarActionPerformed
+    {//GEN-HEADEREND:event_btAddCarActionPerformed
+        Car c = new Car(JOptionPane.showInputDialog("Vul een cartracker-id in."));
+        sim.addCar(c);
+        map.addCarGraphic(c.getCarGraphic());
+
+        currentCarComboBox.removeAllItems();
+        for (Car c2 : sim.getGarage().getCars())
+        {
+            currentCarComboBox.addItem(c2.getCarTrackerId());
+        }
+
+        validate();
+    }//GEN-LAST:event_btAddCarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -364,11 +428,16 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem btAddCar;
     private javax.swing.JButton btStartSimulation;
     private javax.swing.JComboBox currentCarComboBox;
     private javax.swing.JLabel infoLabel;
     private javax.swing.JLabel infoLabel2;
     private javax.swing.JLabel infoLabel3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -386,7 +455,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
     {
         meterPerPixel = map.getMeterPerPixel();
         zoom = map.getZoom();
-
     }
 
     @Override

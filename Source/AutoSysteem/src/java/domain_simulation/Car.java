@@ -5,6 +5,7 @@
 package domain_simulation;
 
 import domain.VehiclePosition;
+import openstreetmaps.org.openstreetmap.gui.CarGraphic;
 
 /**
  *
@@ -12,23 +13,28 @@ import domain.VehiclePosition;
  */
 public class Car
 {
-    private String carId;
+
+    private String carTrackerId;
+    private double longitude;
+    private double latitude;
     private VehiclePosition pos;
+    private CarGraphic graphic;
 
     public Car(String idString)
     {
-        this.carId = idString;
+        graphic = new CarGraphic(carTrackerId);
+        this.carTrackerId = idString;
         pos = new VehiclePosition();
     }
 
-    public String getCarId()
+    public String getCarTrackerId()
     {
-        return carId;
+        return carTrackerId;
     }
 
-    public void setCarId(String carId)
+    public void setCarTrackerId(String carId)
     {
-        this.carId = carId;
+        this.carTrackerId = carId;
     }
 
     public VehiclePosition getPos()
@@ -41,8 +47,13 @@ public class Car
         this.pos = pos;
     }
 
-    public void move(long speed)
+    public CarGraphic getCarGraphic()
     {
-        this.pos.setCarPos(this.pos.getCarPos() + speed);
+        return graphic;
+    }
+
+    public void move(double lat, double lon)
+    {
+        this.graphic.move(lat, lon);
     }
 }

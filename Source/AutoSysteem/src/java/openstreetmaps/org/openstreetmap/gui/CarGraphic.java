@@ -22,6 +22,11 @@ public class CarGraphic implements MapMarker
     String carTrackerId;
     boolean highlighted = false;
 
+    public CarGraphic(String carTrackerId)
+    {
+        this(Color.RED, 51.4560332, 5.5380103, carTrackerId);
+    }
+
     public CarGraphic(double lat, double lon, String carTrackerId)
     {
         this(Color.RED, lat, lon, carTrackerId);
@@ -73,5 +78,11 @@ public class CarGraphic implements MapMarker
     public void highlight(Color color)
     {
         this.color = color;
+    }
+
+    public void move(double lat, double lon)
+    {
+        this.lat += lat;
+        this.lon += lon;
     }
 }
