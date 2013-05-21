@@ -63,6 +63,18 @@
                 </li>
                 <li class="categorylink">
                     <h:form>
+                        <h:outputLabel for="name" value="Name: " />
+                        <h:outputText id="name" value="#{logoutBean.name}" />
+                        <br/>
+                        <h:outputLabel for="admin" value="Is ADMIN? " />
+                        <h:outputText id="admin" value="#{logoutBean.isAdmin}" />
+                        <br/>
+                        <h:outputLabel for="rate_employee" value="Is JAM_DRIVER? " />
+                        <h:outputText id="rate_employee" value="#{logoutBean.isJamDriver}" />
+                        <br/>
+                        <h:outputLabel for="employee" value="Is DRIVER? " />
+                        <h:outputText id="employee" value="#{logoutBean.isDriver}" />
+                        <br/>
                         <h:commandLink action="#{logoutBean.logout()}">
                             Uitloggen
                         </h:commandLink>

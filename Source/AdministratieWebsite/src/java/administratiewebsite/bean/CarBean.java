@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -28,10 +30,20 @@ public class CarBean implements Serializable {
     public Car getCurrent() {
         return current;
     }
+    
+    public void redirectOverview() {
+       try {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().redirect("CarOverview.xhtml");
+            current = null;
+        } catch (IOException ex) {
+            Logger.getLogger(CarBean.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
 
     public void editCurrent() {
         service.edit(current);
-        current = null;
+        redirectOverview();
     }
 
     public void findAll() {

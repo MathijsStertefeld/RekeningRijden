@@ -135,11 +135,9 @@
                     </h:selectOneMenu><br/>
                     
                     <br/>
-                    <h:commandButton id="submit" value=" Opslaan " action="CarOverview">
-                        <f:actionListener binding="#{carBean.editCurrent()}" />
-                    </h:commandButton>
+                    <h:commandButton id="submit" value=" Opslaan " action="#{carBean.editCurrent()}" />
                     &nbsp;
-                    <h:commandButton id="cancel" value=" Annuleren " action="CarOverview" />
+                    <h:commandButton id="cancel" value=" Annuleren " action="#{carBean.redirectOverview()}" />
                 </h:form>
             </ui:define>
 

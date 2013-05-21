@@ -10,16 +10,4 @@
     <property name="Password" value="Administration"/>
   </jdbc-connection-pool>
   <jdbc-resource enabled="true" jndi-name="jdbc/administrationDS" object-type="user" pool-name="AdministrationPool" />
-  <security-role-mapping>
-      <role-name>ADMIN</role-name>
-      <group-name>ADMIN</group-name>
-  </security-role-mapping>
-  <security-role-mapping>
-      <role-name>EMPLOYEE</role-name>
-      <group-name>EMPLOYEE</group-name>
-  </security-role-mapping>
-  <security-role-mapping>
-      <role-name>RATE</role-name>
-      <group-name>RATE</group-name>
-  </security-role-mapping>
 </resources>

@@ -1,6 +1,6 @@
 package bean;
 
-import administration.domain.EmployeeGroup;
+import administration.domain.DriverGroup;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
@@ -30,23 +30,23 @@ public class LogoutBean implements Serializable {
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         
-        return request.isUserInRole(EmployeeGroup.ADMIN.toString());
+        return request.isUserInRole(DriverGroup.ADMIN.toString());
     }
 
-    public Boolean getIsRateEmployee() {
+    public Boolean getIsJamDriver() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         
-        return request.isUserInRole(EmployeeGroup.RATE_EMPLOYEE.toString());
+        return request.isUserInRole(DriverGroup.JAM_DRIVER.toString());
     }
 
-    public Boolean getIsEmployee() {
+    public Boolean getIsDriver() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         
-        return request.isUserInRole(EmployeeGroup.EMPLOYEE.toString());
+        return request.isUserInRole(DriverGroup.DRIVER.toString());
     }
     
     private Principal getUserPrincipal() {

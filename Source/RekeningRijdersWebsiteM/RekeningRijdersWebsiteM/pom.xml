@@ -12,35 +12,40 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
 
     <repositories>
         <repository>
-        <id>java.net-m2</id>
-        <name>java.net - Maven 2</name>
-        <url>https://repository.jboss.org/nexus/content/repositories/java.net-m2</url>
-      </repository>
+            <id>java.net-m2</id>
+            <name>java.net - Maven 2</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/java.net-m2</url>
+        </repository>
+        <repository>  
+            <id>prime-repo</id>  
+            <name>PrimeFaces Maven Repository</name>  
+            <url>http://repository.primefaces.org</url>  
+            <layout>default</layout>  
+        </repository>
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>1.9-ea04</version>
-            <type>jar</type>
-        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
             <scope>provided</scope>
         </dependency>
-        
         <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-bundle</artifactId>
-            <version>0.9-ea</version>
-      </dependency>
+            <version>1.17.1</version>
+        </dependency>
+        <dependency>  
+            <groupId>org.primefaces</groupId>  
+            <artifactId>primefaces</artifactId>  
+            <version>3.5</version>  
+        </dependency>
     </dependencies>
 
     <build>
@@ -92,5 +97,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
