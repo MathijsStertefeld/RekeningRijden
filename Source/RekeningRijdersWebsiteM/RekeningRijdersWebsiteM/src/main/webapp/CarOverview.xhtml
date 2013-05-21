@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        
+    </h:head>
+    <h:body>
+        <ui:composition template="Template.xhtml">
+            <ui:define name="PageTitle">
+                Auto Overzicht
+            </ui:define>
+            
+            <ui:define name="TypeTitle">
+                 Gebruiker
+            </ui:define>
+            
+            <ui:define name="SiteTypeSelection">
+                <li class="selected">                           
+                    <a href="Login.xhtml">
+                        Gebruiker
+                    </a>
+                </li>		
+                <li class="">
+                    <a href="http://localhost:8080/AdministratieWebsite/faces/Login.xhtml">
+                        Administratie
+                    </a>
+                </li>
+            </ui:define>
+            
+            <ui:define name="Breadcrumbs">
+                <li>
+                    <a href="Login.xhtml" title="Gebruiker">
+                        Gebruiker 
+                   </a>
+                </li>
+
+                <li class="selected">
+                    <a href="CarOverview.xhtml" title="Cartrackers">
+                        Auto's
+                    </a>
+                </li>
+            </ui:define>
+            
+            <ui:define name="SidebarLinks">
+                <li class="categorylink">
+                    <a href="BillOverview.xhtml" class="">
+                        Facturen
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="CarOverview.xhtml" class="">
+                        Auto's
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="DriverOverview.xhtml" class="">
+                        Gegevens
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <h:form>
+                        <h:commandLink action="#{logoutBean.logout()}">
+                            Uitloggen
+                        </h:commandLink>
+                    </h:form>
+                </li>
+            </ui:define>
+            
+            <ui:define name="SiteContent">
+                <h:form id="carForm">
+                    
+                    <p:dataTable id="dataTable" var="car" value="#{carBean.cars}"  tableStyle="table-layout:fixed;">    
+                        
+                        <p:column sortBy="#{car.carTrackerId}" style="white-space:normal" headerText="Cartracker ID">  
+                            <h:outputText value="#{car.carTrackerId}" />  
+                        </p:column>  
+
+                        <p:column sortBy="#{car.driverBsn}" style="white-space:normal" headerText="Eigenaar">  
+                            <h:outputText value="#{car.driverBsn}" />  
+                        </p:column>  
+
+                        <p:column sortBy="#{car.licensePlate}" style="white-space:normal" headerText="Kenteken">
+                            <h:outputText value="#{car.licensePlate}" />
+                        </p:column> 
+
+                        <p:column sortBy="#{car.brand}" style="white-space:normal" headerText="Merk">
+                            <h:outputText value="#{car.brand}" />
+                        </p:column>
+                       
+                       <p:column sortBy="#{car.model}" style="white-space:normal" headerText="Model">
+                            <h:outputText value="#{car.model}" />
+                        </p:column>
+                        
+                        <p:column style="white-space:normal" headerText="Wijzigen">
+                            <h:outputLink value="CarEditing.xhtml">
+                                <h:outputText value=" Wijzigen " />
+                                <f:param name="licensePlate" value="#{car.licensePlate}" />
+                            </h:outputLink>
+                        </p:column>
+                        
+                    </p:dataTable>
+                    
+                    <br/>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+
