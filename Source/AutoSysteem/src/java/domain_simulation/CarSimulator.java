@@ -12,23 +12,25 @@ import domain_simulation.Car;
  */
 public class CarSimulator implements Runnable
 {
+
     private long interval;
     private Thread t1;
-
+    private boolean stop = false;
 
     public CarSimulator(long interval)
     {
         this.interval = interval;
-        t1 = new Thread(this);
     }
 
     public void start()
     {
+        t1 = new Thread(this);
         t1.start();
     }
 
     public void stop()
     {
+
         t1.interrupt();
     }
 
@@ -39,12 +41,21 @@ public class CarSimulator implements Runnable
         {
             try
             {
+
                 for (Car c : Garage.getCars())
                 {
-                    c.move(5);
-                }
 
-                Thread.sleep(interval);
+                    //FULL CAR SIMULATION GOES HERE. AI???
+                    c.move(0.1, 0);
+                }
+                try
+                {
+                    Thread.sleep(interval);
+                } catch (InterruptedException e)
+                {
+                    t1.join();
+                    return;
+                }
             } catch (Exception ex)
             {
                 ex.printStackTrace();

@@ -9,10 +9,10 @@
     <class>domain.VehiclePosition</class>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/verplaatsing"/>
-      <property name="javax.persistence.jdbc.password" value="banaan"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.30.175:3306/Verplaatsing"/>
+      <property name="javax.persistence.jdbc.password" value="wachtwoord"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.user" value="admin"/>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
     </properties>
   </persistence-unit>

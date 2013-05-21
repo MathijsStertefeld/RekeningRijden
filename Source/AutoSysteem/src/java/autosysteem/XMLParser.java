@@ -4,6 +4,7 @@
  */
 package autosysteem;
 
+
 import domain.Edge;
 import domain.Lane;
 import domain.Session;
@@ -29,7 +30,6 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class XMLParser extends DefaultHandler
 {
-
     SAXParser parser;
     private File xmlToRead;
     private Session s;

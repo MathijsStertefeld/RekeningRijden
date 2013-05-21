@@ -33,9 +33,6 @@ public class Edge implements Serializable
     @Transient
     private Collection<Lane> lanes;
 //    @ManyToOne(cascade = CascadeType.MERGE)
-    @Transient
-    @XmlTransient
-    private TimeStep parentTimeStep;
 
     public Edge()
     {
@@ -73,16 +70,5 @@ public class Edge implements Serializable
     public void addLane(Lane l)
     {
         lanes.add(l);
-    }
-
-    public void afterUnmarshal(Unmarshaller u, Object parent)
-    {
-        this.parentTimeStep = (TimeStep) parent;
-    }
-
-    @XmlTransient
-    public TimeStep getParentTimeStep()
-    {
-        return parentTimeStep;
     }
 }

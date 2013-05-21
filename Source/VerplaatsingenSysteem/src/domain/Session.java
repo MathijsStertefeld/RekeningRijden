@@ -2,13 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain;
+package verplaatsingensysteem.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -16,14 +19,15 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "SIMSESSION")
+@XmlRootElement(name = "collection")
 public class Session implements Serializable
 {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Temporal(TemporalType.DATE)
     private Date sessionDate;
-   
     //@OneToMany(cascade= CascadeType.PERSIST,mappedBy="parentSession")
     @Transient
     private Collection<TimeStep> timesteps;
@@ -48,9 +52,22 @@ public class Session implements Serializable
         this.sessionDate = sessionDate;
     }
 
+    @XmlElement(name = "timestep")
     public Collection<TimeStep> getTimesteps()
     {
         return timesteps;
+    }
+
+    public TimeStep getTimeStep(double time)
+    {
+        for (TimeStep ts : timesteps)
+        {
+            if (ts.getTime() == time)
+            {
+                return ts;
+            }
+        }
+        return null;
     }
 
     public void setTimesteps(Collection<TimeStep> timesteps)
@@ -58,19 +75,14 @@ public class Session implements Serializable
         this.timesteps = timesteps;
     }
 
-    public Long getId()
+    @XmlTransient
+    public long getId()
     {
         return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
     }
 
     public void setId(long id)
     {
         this.id = id;
     }
-    
 }

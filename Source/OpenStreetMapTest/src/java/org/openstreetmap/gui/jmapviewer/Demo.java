@@ -1,7 +1,6 @@
 package org.openstreetmap.gui.jmapviewer;
 
 //License: GPL. Copyright 2008 by Jan Peter Stotz
-
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
@@ -11,6 +10,9 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -21,6 +23,7 @@ import javax.swing.JPanel;
 
 import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
 import org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileLoader;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
@@ -35,19 +38,18 @@ import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
  * @author Jan Peter Stotz
  *
  */
-public class Demo extends JFrame implements JMapViewerEventListener  {
+public class Demo extends JFrame implements JMapViewerEventListener
+{
 
     private static final long serialVersionUID = 1L;
-
     private JMapViewer map = null;
-
-    private JLabel zoomLabel=null;
-    private JLabel zoomValue=null;
-
-    private JLabel mperpLabelName=null;
+    private JLabel zoomLabel = null;
+    private JLabel zoomValue = null;
+    private JLabel mperpLabelName = null;
     private JLabel mperpLabelValue = null;
 
-    public Demo() {
+    public Demo()
+    {
         super("JMapViewer Demo");
         setSize(400, 400);
 
@@ -63,17 +65,17 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
 
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);;
         JPanel panel = new JPanel();
         JPanel panelTop = new JPanel();
         JPanel panelBottom = new JPanel();
         JPanel helpPanel = new JPanel();
 
-        mperpLabelName=new JLabel("Meters/Pixels: ");
-        mperpLabelValue=new JLabel(String.format("%s",map.getMeterPerPixel()));
+        mperpLabelName = new JLabel("Meters/Pixels: ");
+        mperpLabelValue = new JLabel(String.format("%s", map.getMeterPerPixel()));
 
-        zoomLabel=new JLabel("Zoom: ");
-        zoomValue=new JLabel(String.format("%s", map.getZoom()));
+        zoomLabel = new JLabel("Zoom: ");
+        zoomValue = new JLabel(String.format("%s", map.getZoom()));
 
         add(panel, BorderLayout.NORTH);
         add(helpPanel, BorderLayout.SOUTH);
@@ -84,28 +86,45 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
                 + "left double click or mouse wheel to zoom.");
         helpPanel.add(helpLabel);
         JButton button = new JButton("setDisplayToFitMapMarkers");
-        button.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
+        button.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
                 map.setDisplayToFitMapMarkers();
             }
         });
-        JComboBox tileSourceSelector = new JComboBox(new TileSource[] { new OsmTileSource.Mapnik(),
-                new OsmTileSource.CycleMap(), new BingAerialTileSource(), new MapQuestOsmTileSource(), new MapQuestOpenAerialTileSource() });
-        tileSourceSelector.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
+        JComboBox tileSourceSelector = new JComboBox(new TileSource[]
+                {
+                    new OsmTileSource.Mapnik(),
+                    new OsmTileSource.CycleMap(), new BingAerialTileSource(), new MapQuestOsmTileSource(), new MapQuestOpenAerialTileSource()
+                });
+        tileSourceSelector.addItemListener(new ItemListener()
+        {
+            public void itemStateChanged(ItemEvent e)
+            {
                 map.setTileSource((TileSource) e.getItem());
             }
         });
         JComboBox tileLoaderSelector;
-        try {
-            tileLoaderSelector = new JComboBox(new TileLoader[] { new OsmFileCacheTileLoader(map),
-                    new OsmTileLoader(map) });
-        } catch (IOException e) {
-            tileLoaderSelector = new JComboBox(new TileLoader[] { new OsmTileLoader(map) });
+        try
+        {
+            tileLoaderSelector = new JComboBox(new TileLoader[]
+                    {
+                        new OsmFileCacheTileLoader(map),
+                        new OsmTileLoader(map)
+                    });
         }
-        tileLoaderSelector.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
+        catch (IOException e)
+        {
+            tileLoaderSelector = new JComboBox(new TileLoader[]
+                    {
+                        new OsmTileLoader(map)
+                    });
+        }
+        tileLoaderSelector.addItemListener(new ItemListener()
+        {
+            public void itemStateChanged(ItemEvent e)
+            {
                 map.setTileLoader((TileLoader) e.getItem());
             }
         });
@@ -114,34 +133,39 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
         panelTop.add(tileLoaderSelector);
         final JCheckBox showMapMarker = new JCheckBox("Map markers visible");
         showMapMarker.setSelected(map.getMapMarkersVisible());
-        showMapMarker.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
+        showMapMarker.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
                 map.setMapMarkerVisible(showMapMarker.isSelected());
             }
         });
         panelBottom.add(showMapMarker);
         final JCheckBox showTileGrid = new JCheckBox("Tile grid visible");
         showTileGrid.setSelected(map.isTileGridVisible());
-        showTileGrid.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
+        showTileGrid.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
                 map.setTileGridVisible(showTileGrid.isSelected());
             }
         });
         panelBottom.add(showTileGrid);
         final JCheckBox showZoomControls = new JCheckBox("Show zoom controls");
         showZoomControls.setSelected(map.getZoomContolsVisible());
-        showZoomControls.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
+        showZoomControls.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
                 map.setZoomContolsVisible(showZoomControls.isSelected());
             }
         });
         panelBottom.add(showZoomControls);
         final JCheckBox scrollWrapEnabled = new JCheckBox("Scrollwrap enabled");
-        scrollWrapEnabled.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        scrollWrapEnabled.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
                 map.setScrollWrapEnabled(scrollWrapEnabled.isSelected());
             }
         });
@@ -156,31 +180,46 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
         add(map, BorderLayout.CENTER);
 
         //
-        map.addMapMarker(new MapMarkerDot(49.814284999, 8.642065999));
-        map.addMapMarker(new MapMarkerDot(49.91, 8.24));
-        map.addMapMarker(new MapMarkerDot(49.71, 8.64));
-        map.addMapMarker(new MapMarkerDot(48.71, -1));
-        map.addMapMarker(new MapMarkerDot(49.8588, 8.643));
+        map.addMapMarker(new MapMarkerDot(51.4560332, 5.5380103));
+        map.addMapMarker(new MapMarkerDot(51.455726, 5.5326495));
+        
+        Coordinate one = new Coordinate(51.4560332, 5.5380103);
+        Coordinate two = new Coordinate(51.455726, 5.5326495);
+        
+        List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(one, two, two));
+        map.addMapPolygon(new MapPolygonImpl(route));
+//        map.addMapMarker(new MapMarkerDot(49.91, 8.24));
+//        map.addMapMarker(new MapMarkerDot(49.71, 8.64));
+//        map.addMapMarker(new MapMarkerDot(48.71, -1));
+//        map.addMapMarker(new MapMarkerDot(49.8588, 8.643));
 
         // map.setDisplayPositionByLatLon(49.807, 8.6, 11);
         // map.setTileGridVisible(true);
-        
-        map.addMouseListener(new MouseAdapter() {
+
+        map.addMouseListener(new MouseAdapter()
+        {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
+            public void mouseClicked(MouseEvent e)
+            {
+                if (e.getButton() == MouseEvent.BUTTON1)
+                {
                     map.getAttribution().handleAttribution(e.getPoint(), true);
                 }
             }
         });
-        
-        map.addMouseMotionListener(new MouseAdapter() {
+
+        map.addMouseMotionListener(new MouseAdapter()
+        {
             @Override
-            public void mouseMoved(MouseEvent e) {
+            public void mouseMoved(MouseEvent e)
+            {
                 boolean cursorHand = map.getAttribution().handleAttributionCursor(e.getPoint());
-                if (cursorHand) {
+                if (cursorHand)
+                {
                     map.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                } else {
+                }
+                else
+                {
                     map.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
             }
@@ -190,26 +229,33 @@ public class Demo extends JFrame implements JMapViewerEventListener  {
     /**
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         // java.util.Properties systemProperties = System.getProperties();
         // systemProperties.setProperty("http.proxyHost", "localhost");
         // systemProperties.setProperty("http.proxyPort", "8008");
         new Demo().setVisible(true);
     }
 
-    private void updateZoomParameters() {
-        if (mperpLabelValue!=null)
-            mperpLabelValue.setText(String.format("%s",map.getMeterPerPixel()));
-        if (zoomValue!=null)
+    private void updateZoomParameters()
+    {
+        if (mperpLabelValue != null)
+        {
+            mperpLabelValue.setText(String.format("%s", map.getMeterPerPixel()));
+        }
+        if (zoomValue != null)
+        {
             zoomValue.setText(String.format("%s", map.getZoom()));
-    }
-
-    @Override
-    public void processCommand(JMVCommandEvent command) {
-        if (command.getCommand().equals(JMVCommandEvent.COMMAND.ZOOM) ||
-                command.getCommand().equals(JMVCommandEvent.COMMAND.MOVE)) {
-            updateZoomParameters();
         }
     }
 
+    @Override
+    public void processCommand(JMVCommandEvent command)
+    {
+        if (command.getCommand().equals(JMVCommandEvent.COMMAND.ZOOM)
+                || command.getCommand().equals(JMVCommandEvent.COMMAND.MOVE))
+        {
+            updateZoomParameters();
+        }
+    }
 }

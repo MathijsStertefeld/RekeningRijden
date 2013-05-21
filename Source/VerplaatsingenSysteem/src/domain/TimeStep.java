@@ -2,28 +2,33 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain;
+package verplaatsingensysteem.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.*;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Leslie Aerts
  */
 @Entity
+@XmlRootElement
 public class TimeStep implements Serializable
 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-   // @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "parentTimeStep")
+    private long id;
+    private double timestepTime;
     @Transient
     private Collection<Edge> edges;
-    private double timestepTime;
     @ManyToOne(cascade = CascadeType.MERGE)
     private Session parentSession;
 
@@ -40,6 +45,7 @@ public class TimeStep implements Serializable
 
     }
 
+    @XmlAttribute(name = "time")
     public double getTime()
     {
         return timestepTime;
@@ -50,6 +56,7 @@ public class TimeStep implements Serializable
         this.timestepTime = time;
     }
 
+    @XmlElement(name = "edge")
     public Collection<Edge> getEdges()
     {
         return edges;
@@ -65,6 +72,7 @@ public class TimeStep implements Serializable
         edges.add(e);
     }
 
+    @XmlTransient
     public Long getId()
     {
         return id;
@@ -78,5 +86,21 @@ public class TimeStep implements Serializable
     public void setParentSession(Session s)
     {
         this.parentSession = s;
+    }
+
+//    @XmlAttribute(name = "parent_id")
+//    public long getParentSessionId()
+//    {
+//        return this.parentSession.getId();
+//    }
+    @XmlTransient
+    public Session getParentSession()
+    {
+        return this.parentSession;
+    }
+
+    public void afterUnmarshal(Unmarshaller u, Object parent)
+    {
+        this.parentSession = (Session) parent;
     }
 }

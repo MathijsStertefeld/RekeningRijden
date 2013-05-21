@@ -1,7 +1,7 @@
 package org.openstreetmap.gui.jmapviewer;
 
 //License: GPL. Copyright 2008 by Jan Peter Stotz
-
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -20,6 +20,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
+import org.openstreetmap.gui.CarGraphic;
 
 import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
 import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent.COMMAND;
@@ -41,54 +42,51 @@ import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
  * @author Jan Peter Stotz
  *
  */
-public class JMapViewer extends JPanel implements TileLoaderListener {
+public class JMapViewer extends JPanel implements TileLoaderListener
+{
 
     private static final long serialVersionUID = 1L;
-
     /**
      * Vectors for clock-wise tile painting
      */
-    protected static final Point[] move = { new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1) };
-
+    protected static final Point[] move =
+    {
+        new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1)
+    };
     public static final int MAX_ZOOM = 22;
     public static final int MIN_ZOOM = 0;
-
     protected List<MapMarker> mapMarkerList;
     protected List<MapRectangle> mapRectangleList;
     protected List<MapPolygon> mapPolygonList;
-
+    protected List<CarGraphic> mapCarList;
     protected boolean mapMarkersVisible;
     protected boolean mapRectanglesVisible;
     protected boolean mapPolygonsVisible;
-
+    protected boolean mapCarsVisible;
     protected boolean tileGridVisible;
     protected boolean scrollWrapEnabled;
-
     protected TileController tileController;
-
     /**
      * x- and y-position of the center of this map-panel on the world map
      * denoted in screen pixel regarding the current zoom level.
      */
     protected Point center;
-
     /**
      * Current zoom level
      */
     protected int zoom;
-
     protected JSlider zoomSlider;
     protected JButton zoomInButton;
     protected JButton zoomOutButton;
-        
-    public static enum ZOOM_BUTTON_STYLE {
+
+    public static enum ZOOM_BUTTON_STYLE
+    {
+
         HORIZONTAL,
         VERTICAL
     }
     protected ZOOM_BUTTON_STYLE zoomButtonStyle;
-
     private TileSource tileSource;
-
     protected AttributionSupport attribution = new AttributionSupport();
 
     /**
@@ -98,12 +96,14 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * {@link MemoryTileCache} and the tile loader uses 4 parallel threads for
      * retrieving the tiles.
      */
-    public JMapViewer() {
+    public JMapViewer()
+    {
         this(new MemoryTileCache(), 8);
         new DefaultMapController(this);
     }
 
-    public JMapViewer(TileCache tileCache, int downloadThreadCount) {
+    public JMapViewer(TileCache tileCache, int downloadThreadCount)
+    {
         super();
         JobDispatcher.setMaxWorkers(downloadThreadCount);
         tileSource = new OsmTileSource.Mapnik();
@@ -111,9 +111,11 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
         mapMarkerList = new LinkedList<MapMarker>();
         mapPolygonList = new LinkedList<MapPolygon>();
         mapRectangleList = new LinkedList<MapRectangle>();
+        mapCarList = new LinkedList<CarGraphic>();
         mapMarkersVisible = true;
         mapRectanglesVisible = true;
         mapPolygonsVisible = true;
+        mapCarsVisible = true;
         tileGridVisible = false;
         setLayout(null);
         initializeZoomSlider();
@@ -124,54 +126,66 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
     }
 
     @Override
-    public String getToolTipText(MouseEvent event) {
+    public String getToolTipText(MouseEvent event)
+    {
         //        Point screenPoint = event.getLocationOnScreen();
         //        Coordinate c = getPosition(screenPoint);
         return super.getToolTipText(event);
     }
 
-    protected void initializeZoomSlider() {
+    protected void initializeZoomSlider()
+    {
         zoomSlider = new JSlider(MIN_ZOOM, tileController.getTileSource().getMaxZoom());
         zoomSlider.setOrientation(JSlider.VERTICAL);
         zoomSlider.setBounds(10, 10, 30, 150);
         zoomSlider.setOpaque(false);
-        zoomSlider.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
+        zoomSlider.addChangeListener(new ChangeListener()
+        {
+            public void stateChanged(ChangeEvent e)
+            {
                 setZoom(zoomSlider.getValue());
             }
         });
         zoomSlider.setFocusable(false);
         add(zoomSlider);
         int size = 18;
-        try {
+        try
+        {
             ImageIcon icon = new ImageIcon(JMapViewer.class.getResource("images/plus.png"));
             zoomInButton = new JButton(icon);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             zoomInButton = new JButton("+");
             zoomInButton.setFont(new Font("sansserif", Font.BOLD, 9));
             zoomInButton.setMargin(new Insets(0, 0, 0, 0));
         }
         zoomInButton.setBounds(4, 155, size, size);
-        zoomInButton.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
+        zoomInButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
                 zoomIn();
             }
         });
         zoomInButton.setFocusable(false);
         add(zoomInButton);
-        try {
+        try
+        {
             ImageIcon icon = new ImageIcon(JMapViewer.class.getResource("images/minus.png"));
             zoomOutButton = new JButton(icon);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             zoomOutButton = new JButton("-");
             zoomOutButton.setFont(new Font("sansserif", Font.BOLD, 9));
             zoomOutButton.setMargin(new Insets(0, 0, 0, 0));
         }
         zoomOutButton.setBounds(8 + size, 155, size, size);
-        zoomOutButton.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
+        zoomOutButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
                 zoomOut();
             }
         });
@@ -183,14 +197,12 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * Changes the map pane so that it is centered on the specified coordinate
      * at the given zoom level.
      *
-     * @param lat
-     *            latitude of the specified coordinate
-     * @param lon
-     *            longitude of the specified coordinate
-     * @param zoom
-     *            {@link #MIN_ZOOM} <= zoom level <= {@link #MAX_ZOOM}
+     * @param lat latitude of the specified coordinate
+     * @param lon longitude of the specified coordinate
+     * @param zoom {@link #MIN_ZOOM} <= zoom level <= {@link #MAX_ZOOM}
      */
-    public void setDisplayPositionByLatLon(double lat, double lon, int zoom) {
+    public void setDisplayPositionByLatLon(double lat, double lon, int zoom)
+    {
         setDisplayPositionByLatLon(new Point(getWidth() / 2, getHeight() / 2), lat, lon, zoom);
     }
 
@@ -199,30 +211,31 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * level is displayed on the map at the screen coordinate
      * <code>mapPoint</code>.
      *
-     * @param mapPoint
-     *            point on the map denoted in pixels where the coordinate should
-     *            be set
-     * @param lat
-     *            latitude of the specified coordinate
-     * @param lon
-     *            longitude of the specified coordinate
-     * @param zoom
-     *            {@link #MIN_ZOOM} <= zoom level <=
-     *            {@link TileSource#getMaxZoom()}
+     * @param mapPoint point on the map denoted in pixels where the coordinate
+     * should be set
+     * @param lat latitude of the specified coordinate
+     * @param lon longitude of the specified coordinate
+     * @param zoom {@link #MIN_ZOOM} <= zoom level <= {@link
+     * TileSource#getMaxZoom()}
      */
-    public void setDisplayPositionByLatLon(Point mapPoint, double lat, double lon, int zoom) {
+    public void setDisplayPositionByLatLon(Point mapPoint, double lat, double lon, int zoom)
+    {
         int x = OsmMercator.LonToX(lon, zoom);
         int y = OsmMercator.LatToY(lat, zoom);
         setDisplayPosition(mapPoint, x, y, zoom);
     }
 
-    public void setDisplayPosition(int x, int y, int zoom) {
+    public void setDisplayPosition(int x, int y, int zoom)
+    {
         setDisplayPosition(new Point(getWidth() / 2, getHeight() / 2), x, y, zoom);
     }
 
-    public void setDisplayPosition(Point mapPoint, int x, int y, int zoom) {
+    public void setDisplayPosition(Point mapPoint, int x, int y, int zoom)
+    {
         if (zoom > tileController.getTileSource().getMaxZoom() || zoom < MIN_ZOOM)
+        {
             return;
+        }
 
         // Get the plain tile number
         Point p = new Point();
@@ -230,35 +243,53 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
         p.y = y - mapPoint.y + getHeight() / 2;
         center = p;
         setIgnoreRepaint(true);
-        try {
+        try
+        {
             int oldZoom = this.zoom;
             this.zoom = zoom;
-            if (oldZoom != zoom) {
+            if (oldZoom != zoom)
+            {
                 zoomChanged(oldZoom);
             }
-            if (zoomSlider.getValue() != zoom) {
+            if (zoomSlider.getValue() != zoom)
+            {
                 zoomSlider.setValue(zoom);
             }
-        } finally {
+        }
+        finally
+        {
             setIgnoreRepaint(false);
             repaint();
         }
     }
 
     /**
-     * Sets the displayed map pane and zoom level so that all chosen map elements are
-     * visible.
+     * Sets the displayed map pane and zoom level so that all chosen map
+     * elements are visible.
      */
-    public void setDisplayToFitMapElements(boolean markers, boolean rectangles, boolean polygons) {
+    public void setDisplayToFitMapElements(boolean markers, boolean rectangles, boolean polygons, boolean cars)
+    {
         int nbElemToCheck = 0;
         if (markers && mapMarkerList != null)
+        {
             nbElemToCheck += mapMarkerList.size();
+        }
         if (rectangles && mapRectangleList != null)
+        {
             nbElemToCheck += mapRectangleList.size();
+        }
         if (polygons && mapPolygonList != null)
+        {
             nbElemToCheck += mapPolygonList.size();
+        }
+        if (cars && mapCarList != null)
+        {
+            nbElemToCheck += mapCarList.size();
+        }
         if (nbElemToCheck == 0)
+        {
             return;
+        }
 
         int x_min = Integer.MAX_VALUE;
         int y_min = Integer.MAX_VALUE;
@@ -266,8 +297,10 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
         int y_max = Integer.MIN_VALUE;
         int mapZoomMax = tileController.getTileSource().getMaxZoom();
 
-        if (markers) {
-            for (MapMarker marker : mapMarkerList) {
+        if (markers)
+        {
+            for (MapMarker marker : mapMarkerList)
+            {
                 int x = OsmMercator.LonToX(marker.getLon(), mapZoomMax);
                 int y = OsmMercator.LatToY(marker.getLat(), mapZoomMax);
                 x_max = Math.max(x_max, x);
@@ -277,8 +310,10 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
             }
         }
 
-        if (rectangles) {
-            for (MapRectangle rectangle : mapRectangleList) {
+        if (rectangles)
+        {
+            for (MapRectangle rectangle : mapRectangleList)
+            {
                 x_max = Math.max(x_max, OsmMercator.LonToX(rectangle.getBottomRight().getLon(), mapZoomMax));
                 y_max = Math.max(y_max, OsmMercator.LatToY(rectangle.getTopLeft().getLat(), mapZoomMax));
                 x_min = Math.min(x_min, OsmMercator.LonToX(rectangle.getTopLeft().getLon(), mapZoomMax));
@@ -286,9 +321,12 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
             }
         }
 
-        if (polygons) {
-            for (MapPolygon polygon : mapPolygonList) {
-                for (Coordinate c : polygon.getPoints()) {
+        if (polygons)
+        {
+            for (MapPolygon polygon : mapPolygonList)
+            {
+                for (Coordinate c : polygon.getPoints())
+                {
                     int x = OsmMercator.LonToX(c.getLon(), mapZoomMax);
                     int y = OsmMercator.LatToY(c.getLat(), mapZoomMax);
                     x_max = Math.max(x_max, x);
@@ -299,12 +337,27 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
             }
         }
 
+
+        if (cars)
+        {
+            for (CarGraphic carGraphic : mapCarList)
+            {
+                int x = OsmMercator.LonToX(carGraphic.getLon(), mapZoomMax);
+                int y = OsmMercator.LatToY(carGraphic.getLat(), mapZoomMax);
+                x_max = Math.max(x_max, x);
+                y_max = Math.max(y_max, y);
+                x_min = Math.min(x_min, x);
+                y_min = Math.min(y_min, y);
+            }
+        }
+
         int height = Math.max(0, getHeight());
         int width = Math.max(0, getWidth());
         int newZoom = mapZoomMax;
         int x = x_max - x_min;
         int y = y_max - y_min;
-        while (x > width || y > height) {
+        while (x > width || y > height)
+        {
             newZoom--;
             x >>= 1;
             y >>= 1;
@@ -317,42 +370,55 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
         setDisplayPosition(x, y, newZoom);
     }
 
-
     /**
      * Sets the displayed map pane and zoom level so that all map markers are
      * visible.
      */
-    public void setDisplayToFitMapMarkers() {
-        setDisplayToFitMapElements(true, false, false);
+    public void setDisplayToFitMapMarkers()
+    {
+        setDisplayToFitMapElements(true, false, false, false);
     }
 
     /**
      * Sets the displayed map pane and zoom level so that all map rectangles are
      * visible.
      */
-    public void setDisplayToFitMapRectangles() {
-        setDisplayToFitMapElements(false, true, false);
+    public void setDisplayToFitMapRectangles()
+    {
+        setDisplayToFitMapElements(false, true, false, false);
     }
 
     /**
      * Sets the displayed map pane and zoom level so that all map polygons are
      * visible.
      */
-    public void setDisplayToFitMapPolygons() {
-        setDisplayToFitMapElements(false, false, true);
+    public void setDisplayToFitMapPolygons()
+    {
+        setDisplayToFitMapElements(false, false, true, false);
+    }
+
+    /**
+     * Sets the displayed map pane and zoom level so that all cars are visible
+     * on the map.
+     */
+    public void setDisplayToFitCars()
+    {
+        setDisplayToFitMapElements(false, false, false, true);
     }
 
     /**
      * @return the center
      */
-    public Point getCenter() {
+    public Point getCenter()
+    {
         return center;
     }
 
     /**
      * @param center the center to set
      */
-    public void setCenter(Point center) {
+    public void setCenter(Point center)
+    {
         this.center = center;
     }
 
@@ -362,7 +428,8 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      *
      * @return latitude / longitude
      */
-    public Coordinate getPosition() {
+    public Coordinate getPosition()
+    {
         double lon = OsmMercator.XToLon(center.x, zoom);
         double lat = OsmMercator.YToLat(center.y, zoom);
         return new Coordinate(lat, lon);
@@ -372,12 +439,12 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * Converts the relative pixel coordinate (regarding the top left corner of
      * the displayed map) into a latitude / longitude coordinate
      *
-     * @param mapPoint
-     *            relative pixel coordinate regarding the top left corner of the
-     *            displayed map
+     * @param mapPoint relative pixel coordinate regarding the top left corner
+     * of the displayed map
      * @return latitude / longitude
      */
-    public Coordinate getPosition(Point mapPoint) {
+    public Coordinate getPosition(Point mapPoint)
+    {
         return getPosition(mapPoint.x, mapPoint.y);
     }
 
@@ -389,7 +456,8 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * @param mapPointY
      * @return latitude / longitude
      */
-    public Coordinate getPosition(int mapPointX, int mapPointY) {
+    public Coordinate getPosition(int mapPointX, int mapPointY)
+    {
         int x = center.x + mapPointX - getWidth() / 2;
         int y = center.y + mapPointY - getHeight() / 2;
         double lon = OsmMercator.XToLon(x, zoom);
@@ -404,16 +472,20 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * @param lon
      * @param checkOutside
      * @return point on the map or <code>null</code> if the point is not visible
-     *         and checkOutside set to <code>true</code>
+     * and checkOutside set to <code>true</code>
      */
-    public Point getMapPosition(double lat, double lon, boolean checkOutside) {
+    public Point getMapPosition(double lat, double lon, boolean checkOutside)
+    {
         int x = OsmMercator.LonToX(lon, zoom);
         int y = OsmMercator.LatToY(lat, zoom);
         x -= center.x - getWidth() / 2;
         y -= center.y - getHeight() / 2;
-        if (checkOutside) {
+        if (checkOutside)
+        {
             if (x < 0 || y < 0 || x > getWidth() || y > getHeight())
+            {
                 return null;
+            }
         }
         return new Point(x, y);
     }
@@ -425,7 +497,8 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * @param lon
      * @return point on the map or <code>null</code> if the point is not visible
      */
-    public Point getMapPosition(double lat, double lon) {
+    public Point getMapPosition(double lat, double lon)
+    {
         return getMapPosition(lat, lon, true);
     }
 
@@ -435,11 +508,16 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * @param coord
      * @return point on the map or <code>null</code> if the point is not visible
      */
-    public Point getMapPosition(Coordinate coord) {
+    public Point getMapPosition(Coordinate coord)
+    {
         if (coord != null)
+        {
             return getMapPosition(coord.getLat(), coord.getLon());
+        }
         else
+        {
             return null;
+        }
     }
 
     /**
@@ -447,13 +525,18 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      *
      * @param coord
      * @return point on the map or <code>null</code> if the point is not visible
-     *         and checkOutside set to <code>true</code>
+     * and checkOutside set to <code>true</code>
      */
-    public Point getMapPosition(Coordinate coord, boolean checkOutside) {
+    public Point getMapPosition(Coordinate coord, boolean checkOutside)
+    {
         if (coord != null)
+        {
             return getMapPosition(coord.getLat(), coord.getLon(), checkOutside);
+        }
         else
+        {
             return null;
+        }
     }
 
     /**
@@ -462,23 +545,25 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * @return the meter per pixel
      * @author Jason Huntley
      */
-    public double getMeterPerPixel() {
-        Point origin=new Point(5,5);
-        Point center=new Point(getWidth()/2, getHeight()/2);
+    public double getMeterPerPixel()
+    {
+        Point origin = new Point(5, 5);
+        Point center = new Point(getWidth() / 2, getHeight() / 2);
 
-        double pDistance=center.distance(origin);
+        double pDistance = center.distance(origin);
 
-        Coordinate originCoord=getPosition(origin);
-        Coordinate centerCoord=getPosition(center);
+        Coordinate originCoord = getPosition(origin);
+        Coordinate centerCoord = getPosition(center);
 
-        double mDistance=OsmMercator.getDistance(originCoord.getLat(), originCoord.getLon(),
+        double mDistance = OsmMercator.getDistance(originCoord.getLat(), originCoord.getLon(),
                 centerCoord.getLat(), centerCoord.getLon());
 
-        return mDistance/pDistance;
+        return mDistance / pDistance;
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g)
+    {
         super.paintComponent(g);
 
         int iMove = 0;
@@ -502,16 +587,25 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
         boolean start_left = diff_left < diff_right;
         boolean start_top = diff_top < diff_bottom;
 
-        if (start_top) {
-            if (start_left) {
+        if (start_top)
+        {
+            if (start_left)
+            {
                 iMove = 2;
-            } else {
+            }
+            else
+            {
                 iMove = 3;
             }
-        } else {
-            if (start_left) {
+        }
+        else
+        {
+            if (start_left)
+            {
                 iMove = 1;
-            } else {
+            }
+            else
+            {
                 iMove = 0;
             }
         } // calculate the visibility borders
@@ -519,33 +613,43 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
         int y_min = -tilesize;
         int x_max = getWidth();
         int y_max = getHeight();
-        
+
         // calculate the length of the grid (number of squares per edge)
         int gridLength = 1 << zoom;
 
         // paint the tiles in a spiral, starting from center of the map
         boolean painted = true;
         int x = 0;
-        while (painted) {
+        while (painted)
+        {
             painted = false;
-            for (int i = 0; i < 4; i++) {
-                if (i % 2 == 0) {
+            for (int i = 0; i < 4; i++)
+            {
+                if (i % 2 == 0)
+                {
                     x++;
                 }
-                for (int j = 0; j < x; j++) {
-                    if (x_min <= posx && posx <= x_max && y_min <= posy && posy <= y_max) {
+                for (int j = 0; j < x; j++)
+                {
+                    if (x_min <= posx && posx <= x_max && y_min <= posy && posy <= y_max)
+                    {
                         // tile is visible
                         Tile tile;
-                        if (scrollWrapEnabled) {
+                        if (scrollWrapEnabled)
+                        {
                             // in case tilex is out of bounds, grab the tile to use for wrapping
                             int tilexWrap = (((tilex % gridLength) + gridLength) % gridLength);
                             tile = tileController.getTile(tilexWrap, tiley, zoom);
-                        } else {
+                        }
+                        else
+                        {
                             tile = tileController.getTile(tilex, tiley, zoom);
                         }
-                        if (tile != null) {
+                        if (tile != null)
+                        {
                             tile.paint(g, posx, posy);
-                            if (tileGridVisible) {
+                            if (tileGridVisible)
+                            {
                                 g.drawRect(posx, posy, tilesize, tilesize);
                             }
                         }
@@ -562,35 +666,53 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
         }
         // outer border of the map
         int mapSize = tilesize << zoom;
-        if (scrollWrapEnabled) {
+        if (scrollWrapEnabled)
+        {
             g.drawLine(0, h2 - center.y, getWidth(), h2 - center.y);
             g.drawLine(0, h2 - center.y + mapSize, getWidth(), h2 - center.y + mapSize);
-        } else {
+        }
+        else
+        {
             g.drawRect(w2 - center.x, h2 - center.y, mapSize, mapSize);
         }
 
         // g.drawString("Tiles in cache: " + tileCache.getTileCount(), 50, 20);
 
         // keep x-coordinates from growing without bound if scroll-wrap is enabled
-        if (scrollWrapEnabled) {
+        if (scrollWrapEnabled)
+        {
             center.x = center.x % mapSize;
         }
-        
-        if (mapPolygonsVisible && mapPolygonList != null) {
-            for (MapPolygon polygon : mapPolygonList) {
+
+        if (mapPolygonsVisible && mapPolygonList != null)
+        {
+            for (MapPolygon polygon : mapPolygonList)
+            {
                 paintPolygon(g, polygon);
             }
         }
 
-        if (mapRectanglesVisible && mapRectangleList != null) {
-            for (MapRectangle rectangle : mapRectangleList) {
+        if (mapRectanglesVisible && mapRectangleList != null)
+        {
+            for (MapRectangle rectangle : mapRectangleList)
+            {
                 paintRectangle(g, rectangle);
             }
         }
 
-        if (mapMarkersVisible && mapMarkerList != null) {
-            for (MapMarker marker : mapMarkerList) {
+        if (mapMarkersVisible && mapMarkerList != null)
+        {
+            for (MapMarker marker : mapMarkerList)
+            {
                 paintMarker(g, marker);
+            }
+        }
+
+        if (mapCarsVisible && mapCarList != null)
+        {
+            for (CarGraphic car : mapCarList)
+            {
+                paintCar(g, car);
             }
         }
 
@@ -600,30 +722,74 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
     /**
      * Paint a single marker.
      */
-    protected void paintMarker(Graphics g, MapMarker marker) {
+    protected void paintMarker(Graphics g, MapMarker marker)
+    {
         Point p = getMapPosition(marker.getLat(), marker.getLon());
-        if (scrollWrapEnabled) {
+        if (scrollWrapEnabled)
+        {
             int tilesize = tileSource.getTileSize();
             int mapSize = tilesize << zoom;
-            if (p == null) {
+            if (p == null)
+            {
                 p = getMapPosition(marker.getLat(), marker.getLon(), false);
             }
             marker.paint(g, p);
             int xSave = p.x;
             int xWrap = xSave;
             // overscan of 15 allows up to 30-pixel markers to gracefully scroll off the edge of the panel
-            while ((xWrap -= mapSize) >= -15) {
+            while ((xWrap -= mapSize) >= -15)
+            {
                 p.x = xWrap;
                 marker.paint(g, p);
             }
             xWrap = xSave;
-            while ((xWrap += mapSize) <= getWidth() + 15) {
+            while ((xWrap += mapSize) <= getWidth() + 15)
+            {
                 p.x = xWrap;
                 marker.paint(g, p);
             }
-        } else {
-            if (p != null) {
+        }
+        else
+        {
+            if (p != null)
+            {
                 marker.paint(g, p);
+            }
+        }
+    }
+
+    protected void paintCar(Graphics g, CarGraphic car)
+    {
+        Point p = getMapPosition(car.getLat(), car.getLon());
+        if (scrollWrapEnabled)
+        {
+            int tilesize = tileSource.getTileSize();
+            int mapSize = tilesize << zoom;
+            if (p == null)
+            {
+                p = getMapPosition(car.getLat(), car.getLon(), false);
+            }
+            car.paint(g, p);
+            int xSave = p.x;
+            int xWrap = xSave;
+            // overscan of 15 allows up to 30-pixel markers to gracefully scroll off the edge of the panel
+            while ((xWrap -= mapSize) >= -15)
+            {
+                p.x = xWrap;
+                car.paint(g, p);
+            }
+            xWrap = xSave;
+            while ((xWrap += mapSize) <= getWidth() + 15)
+            {
+                p.x = xWrap;
+                car.paint(g, p);
+            }
+        }
+        else
+        {
+            if (p != null)
+            {
+                car.paint(g, p);
             }
         }
     }
@@ -631,22 +797,27 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
     /**
      * Paint a single rectangle.
      */
-    protected void paintRectangle(Graphics g, MapRectangle rectangle) {
+    protected void paintRectangle(Graphics g, MapRectangle rectangle)
+    {
         Coordinate topLeft = rectangle.getTopLeft();
         Coordinate bottomRight = rectangle.getBottomRight();
-        if (topLeft != null && bottomRight != null) {
+        if (topLeft != null && bottomRight != null)
+        {
             Point pTopLeft = getMapPosition(topLeft, false);
             Point pBottomRight = getMapPosition(bottomRight, false);
-            if (pTopLeft != null && pBottomRight != null) {
+            if (pTopLeft != null && pBottomRight != null)
+            {
                 rectangle.paint(g, pTopLeft, pBottomRight);
-                if (scrollWrapEnabled) {
+                if (scrollWrapEnabled)
+                {
                     int tilesize = tileSource.getTileSize();
                     int mapSize = tilesize << zoom;
                     int xTopLeftSave = pTopLeft.x;
                     int xTopLeftWrap = xTopLeftSave;
                     int xBottomRightSave = pBottomRight.x;
                     int xBottomRightWrap = xBottomRightSave;
-                    while ((xBottomRightWrap -= mapSize) >= 0) {
+                    while ((xBottomRightWrap -= mapSize) >= 0)
+                    {
                         xTopLeftWrap -= mapSize;
                         pTopLeft.x = xTopLeftWrap;
                         pBottomRight.x = xBottomRightWrap;
@@ -654,13 +825,14 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
                     }
                     xTopLeftWrap = xTopLeftSave;
                     xBottomRightWrap = xBottomRightSave;
-                    while ((xTopLeftWrap += mapSize) <= getWidth()) {
+                    while ((xTopLeftWrap += mapSize) <= getWidth())
+                    {
                         xBottomRightWrap += mapSize;
                         pTopLeft.x = xTopLeftWrap;
                         pBottomRight.x = xBottomRightWrap;
                         rectangle.paint(g, pTopLeft, pBottomRight);
                     }
-                    
+
                 }
             }
         }
@@ -669,27 +841,35 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
     /**
      * Paint a single polygon.
      */
-    protected void paintPolygon(Graphics g, MapPolygon polygon) {
+    protected void paintPolygon(Graphics g, MapPolygon polygon)
+    {
         List<Coordinate> coords = polygon.getPoints();
-        if (coords != null && coords.size() >= 3) {
+        if (coords != null && coords.size() >= 3)
+        {
             List<Point> points = new LinkedList<Point>();
-            for (Coordinate c : coords) {
+            for (Coordinate c : coords)
+            {
                 Point p = getMapPosition(c, false);
-                if (p == null) {
+                if (p == null)
+                {
                     return;
                 }
                 points.add(p);
             }
             polygon.paint(g, points);
-            if (scrollWrapEnabled) {
+            if (scrollWrapEnabled)
+            {
                 int tilesize = tileSource.getTileSize();
                 int mapSize = tilesize << zoom;
                 List<Point> pointsWrapped = new LinkedList<Point>(points);
                 boolean keepWrapping = true;
-                while (keepWrapping) {
-                    for (Point p : pointsWrapped) {
+                while (keepWrapping)
+                {
+                    for (Point p : pointsWrapped)
+                    {
                         p.x -= mapSize;
-                        if (p.x < 0) {
+                        if (p.x < 0)
+                        {
                             keepWrapping = false;
                         }
                     }
@@ -697,10 +877,13 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
                 }
                 pointsWrapped = new LinkedList<Point>(points);
                 keepWrapping = true;
-                while (keepWrapping) {
-                    for (Point p : pointsWrapped) {
+                while (keepWrapping)
+                {
+                    for (Point p : pointsWrapped)
+                    {
                         p.x += mapSize;
-                        if (p.x > getWidth()) {
+                        if (p.x > getWidth())
+                        {
                             keepWrapping = false;
                         }
                     }
@@ -713,12 +896,11 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
     /**
      * Moves the visible map pane.
      *
-     * @param x
-     *            horizontal movement in pixel.
-     * @param y
-     *            vertical movement in pixel
+     * @param x horizontal movement in pixel.
+     * @param y vertical movement in pixel
      */
-    public void moveMap(int x, int y) {
+    public void moveMap(int x, int y)
+    {
         tileController.cancelOutstandingJobs(); // Clear outstanding load
         center.x += x;
         center.y += y;
@@ -729,28 +911,32 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
     /**
      * @return the current zoom level
      */
-    public int getZoom() {
+    public int getZoom()
+    {
         return zoom;
     }
 
     /**
      * Increases the current zoom level by one
      */
-    public void zoomIn() {
+    public void zoomIn()
+    {
         setZoom(zoom + 1);
     }
 
     /**
      * Increases the current zoom level by one
      */
-    public void zoomIn(Point mapPoint) {
+    public void zoomIn(Point mapPoint)
+    {
         setZoom(zoom + 1, mapPoint);
     }
 
     /**
      * Decreases the current zoom level by one
      */
-    public void zoomOut() {
+    public void zoomOut()
+    {
         setZoom(zoom - 1);
     }
 
@@ -759,7 +945,8 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      *
      * @param mapPoint point to choose as center for new zoom level
      */
-    public void zoomOut(Point mapPoint) {
+    public void zoomOut(Point mapPoint)
+    {
         setZoom(zoom - 1, mapPoint);
     }
 
@@ -769,10 +956,13 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * @param zoom new zoom level
      * @param mapPoint point to choose as center for new zoom level
      */
-    public void setZoom(int zoom, Point mapPoint) {
+    public void setZoom(int zoom, Point mapPoint)
+    {
         if (zoom > tileController.getTileSource().getMaxZoom() || zoom < tileController.getTileSource().getMinZoom()
                 || zoom == this.zoom)
+        {
             return;
+        }
         Coordinate zoomPos = getPosition(mapPoint);
         tileController.cancelOutstandingJobs(); // Clearing outstanding load
         // requests
@@ -786,7 +976,8 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      *
      * @param zoom new zoom level
      */
-    public void setZoom(int zoom) {
+    public void setZoom(int zoom)
+    {
         setZoom(zoom, new Point(getWidth() / 2, getHeight() / 2));
     }
 
@@ -795,10 +986,10 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * derived implementations for adapting zoom dependent values. The new zoom
      * level can be obtained via {@link #getZoom()}.
      *
-     * @param oldZoom
-     *            the previous zoom level
+     * @param oldZoom the previous zoom level
      */
-    protected void zoomChanged(int oldZoom) {
+    protected void zoomChanged(int oldZoom)
+    {
         zoomSlider.setToolTipText("Zoom level " + zoom);
         zoomInButton.setToolTipText("Zoom to level " + (zoom + 1));
         zoomOutButton.setToolTipText("Zoom to level " + (zoom - 1));
@@ -806,16 +997,19 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
         zoomInButton.setEnabled(zoom < tileController.getTileSource().getMaxZoom());
     }
 
-    public boolean isTileGridVisible() {
+    public boolean isTileGridVisible()
+    {
         return tileGridVisible;
     }
 
-    public void setTileGridVisible(boolean tileGridVisible) {
+    public void setTileGridVisible(boolean tileGridVisible)
+    {
         this.tileGridVisible = tileGridVisible;
         repaint();
     }
 
-    public boolean getMapMarkersVisible() {
+    public boolean getMapMarkersVisible()
+    {
         return mapMarkersVisible;
     }
 
@@ -826,104 +1020,182 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * @see #addMapMarker(MapMarker)
      * @see #getMapMarkerList()
      */
-    public void setMapMarkerVisible(boolean mapMarkersVisible) {
+    public void setMapMarkerVisible(boolean mapMarkersVisible)
+    {
         this.mapMarkersVisible = mapMarkersVisible;
         repaint();
     }
 
-    public void setMapMarkerList(List<MapMarker> mapMarkerList) {
+    public void setCarsVisible(boolean mapCarsVisible)
+    {
+        this.mapCarsVisible = mapCarsVisible;
+        repaint();
+    }
+
+    public void setMapMarkerList(List<MapMarker> mapMarkerList)
+    {
         this.mapMarkerList = mapMarkerList;
         repaint();
     }
 
-    public List<MapMarker> getMapMarkerList() {
+    public List<MapMarker> getMapMarkerList()
+    {
         return mapMarkerList;
     }
 
-    public void setMapRectangleList(List<MapRectangle> mapRectangleList) {
+    public void setMapRectangleList(List<MapRectangle> mapRectangleList)
+    {
         this.mapRectangleList = mapRectangleList;
         repaint();
     }
 
-    public List<MapRectangle> getMapRectangleList() {
+    public List<MapRectangle> getMapRectangleList()
+    {
         return mapRectangleList;
     }
 
-    public void setMapPolygonList(List<MapPolygon> mapPolygonList) {
+    public void setMapPolygonList(List<MapPolygon> mapPolygonList)
+    {
         this.mapPolygonList = mapPolygonList;
         repaint();
     }
 
-    public List<MapPolygon> getMapPolygonList() {
+    public List<MapPolygon> getMapPolygonList()
+    {
         return mapPolygonList;
     }
 
-    public void addMapMarker(MapMarker marker) {
+    public void addMapMarker(MapMarker marker)
+    {
         mapMarkerList.add(marker);
         repaint();
     }
 
-    public void removeMapMarker(MapMarker marker) {
+    public void removeMapMarker(MapMarker marker)
+    {
         mapMarkerList.remove(marker);
         repaint();
     }
 
-    public void removeAllMapMarkers() {
+    public void removeAllMapMarkers()
+    {
         mapMarkerList.clear();
         repaint();
     }
 
-    public void addMapRectangle(MapRectangle rectangle) {
+    public void addCarGraphic(CarGraphic carGraphic)
+    {
+        mapCarList.add(carGraphic);
+        repaint();
+    }
+
+    public void removeCarGraphic(CarGraphic carGraphic)
+    {
+        mapCarList.remove(carGraphic);
+        repaint();
+    }
+
+    public void removeCarGraphic(String carTrackerId)
+    {
+        for (CarGraphic car : mapCarList)
+        {
+            if (car.getCarTrackerId().equals(carTrackerId))
+            {
+                mapCarList.remove(car);
+            }
+        }
+
+        repaint();
+    }
+
+    public void removeAllCarGraphics()
+    {
+        mapCarList.clear();
+        repaint();
+    }  
+
+    public CarGraphic getCarGraphic(String carTrackerId)
+    {
+        for (CarGraphic car : mapCarList)
+        {
+            if (car.getCarTrackerId().equals(carTrackerId))
+            {
+                return car;
+            }
+        }
+        return null;
+    }
+
+    public List<CarGraphic> getAllCarGraphics()
+    {
+        return mapCarList;
+    }
+
+    public void addMapRectangle(MapRectangle rectangle)
+    {
         mapRectangleList.add(rectangle);
         repaint();
     }
 
-    public void removeMapRectangle(MapRectangle rectangle) {
+    public void removeMapRectangle(MapRectangle rectangle)
+    {
         mapRectangleList.remove(rectangle);
         repaint();
     }
 
-    public void removeAllMapRectangles() {
+    public void removeAllMapRectangles()
+    {
         mapRectangleList.clear();
         repaint();
     }
 
-    public void addMapPolygon(MapPolygon polygon) {
+    public void addMapPolygon(MapPolygon polygon)
+    {
         mapPolygonList.add(polygon);
         repaint();
     }
 
-    public void removeMapPolygon(MapPolygon polygon) {
+    public void removeMapPolygon(MapPolygon polygon)
+    {
         mapPolygonList.remove(polygon);
         repaint();
     }
 
-    public void removeAllMapPolygons() {
+    public void removeAllMapPolygons()
+    {
         mapPolygonList.clear();
         repaint();
     }
 
-    public void setZoomContolsVisible(boolean visible) {
+    public void setZoomContolsVisible(boolean visible)
+    {
         zoomSlider.setVisible(visible);
         zoomInButton.setVisible(visible);
         zoomOutButton.setVisible(visible);
     }
 
-    public boolean getZoomContolsVisible() {
+    public boolean getZoomContolsVisible()
+    {
         return zoomSlider.isVisible();
     }
 
-    public void setTileSource(TileSource tileSource) {
+    public void setTileSource(TileSource tileSource)
+    {
         if (tileSource.getMaxZoom() > MAX_ZOOM)
+        {
             throw new RuntimeException("Maximum zoom level too high");
+        }
         if (tileSource.getMinZoom() < MIN_ZOOM)
+        {
             throw new RuntimeException("Minumim zoom level too low");
+        }
         this.tileSource = tileSource;
         tileController.setTileSource(tileSource);
         zoomSlider.setMinimum(tileSource.getMinZoom());
         zoomSlider.setMaximum(tileSource.getMaxZoom());
         tileController.cancelOutstandingJobs();
-        if (zoom > tileSource.getMaxZoom()) {
+        if (zoom > tileSource.getMaxZoom())
+        {
             setZoom(tileSource.getMaxZoom());
         }
 
@@ -931,11 +1203,13 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
         repaint();
     }
 
-    public void tileLoadingFinished(Tile tile, boolean success) {
+    public void tileLoadingFinished(Tile tile, boolean success)
+    {
         repaint();
     }
 
-    public boolean isMapRectanglesVisible() {
+    public boolean isMapRectanglesVisible()
+    {
         return mapRectanglesVisible;
     }
 
@@ -946,12 +1220,14 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * @see #addMapRectangle(MapRectangle)
      * @see #getMapRectangleList()
      */
-    public void setMapRectanglesVisible(boolean mapRectanglesVisible) {
+    public void setMapRectanglesVisible(boolean mapRectanglesVisible)
+    {
         this.mapRectanglesVisible = mapRectanglesVisible;
         repaint();
     }
 
-    public boolean isMapPolygonsVisible() {
+    public boolean isMapPolygonsVisible()
+    {
         return mapPolygonsVisible;
     }
 
@@ -962,30 +1238,37 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      * @see #addMapPolygon(MapPolygon)
      * @see #getMapPolygonList()
      */
-    public void setMapPolygonsVisible(boolean mapPolygonsVisible) {
+    public void setMapPolygonsVisible(boolean mapPolygonsVisible)
+    {
         this.mapPolygonsVisible = mapPolygonsVisible;
         repaint();
     }
-    
-    public boolean isScrollWrapEnabled() {
+
+    public boolean isScrollWrapEnabled()
+    {
         return scrollWrapEnabled;
     }
-    
-    public void setScrollWrapEnabled(boolean scrollWrapEnabled) {
+
+    public void setScrollWrapEnabled(boolean scrollWrapEnabled)
+    {
         this.scrollWrapEnabled = scrollWrapEnabled;
         repaint();
     }
-    
-    public ZOOM_BUTTON_STYLE getZoomButtonStyle() {
+
+    public ZOOM_BUTTON_STYLE getZoomButtonStyle()
+    {
         return zoomButtonStyle;
     }
-    
-    public void setZoomButtonStyle(ZOOM_BUTTON_STYLE style) {
+
+    public void setZoomButtonStyle(ZOOM_BUTTON_STYLE style)
+    {
         zoomButtonStyle = style;
-        if (zoomSlider == null || zoomInButton == null || zoomOutButton == null) {
+        if (zoomSlider == null || zoomInButton == null || zoomOutButton == null)
+        {
             return;
         }
-        switch (style) {
+        switch (style)
+        {
             case HORIZONTAL:
                 zoomSlider.setBounds(10, 10, 30, 150);
                 zoomInButton.setBounds(4, 155, 18, 18);
@@ -1005,39 +1288,45 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
         repaint();
     }
 
-    public TileController getTileController() {
+    public TileController getTileController()
+    {
         return tileController;
     }
-    
+
     /**
      * Return tile information caching class
+     *
      * @see TileLoaderListener#getTileCache()
      */
-    public TileCache getTileCache() {
+    public TileCache getTileCache()
+    {
         return tileController.getTileCache();
     }
 
-    public void setTileLoader(TileLoader loader) {
+    public void setTileLoader(TileLoader loader)
+    {
         tileController.setTileLoader(loader);
     }
 
-    public AttributionSupport getAttribution() {
+    public AttributionSupport getAttribution()
+    {
         return attribution;
     }
-
     protected EventListenerList listenerList = new EventListenerList();
 
     /**
      * @param listener listener to set
      */
-    public void addJMVListener(JMapViewerEventListener listener) {
+    public void addJMVListener(JMapViewerEventListener listener)
+    {
         listenerList.add(JMapViewerEventListener.class, listener);
     }
 
     /**
      * @param listener listener to remove
      */
-    public void removeJMVListener(JMapViewerEventListener listener) {
+    public void removeJMVListener(JMapViewerEventListener listener)
+    {
         listenerList.remove(JMapViewerEventListener.class, listener);
     }
 
@@ -1046,11 +1335,14 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
      *
      * @param event to dispatch
      */
-    void fireJMVEvent(JMVCommandEvent evt) {
+    void fireJMVEvent(JMVCommandEvent evt)
+    {
         Object[] listeners = listenerList.getListenerList();
-        for (int i=0; i<listeners.length; i+=2) {
-            if (listeners[i]==JMapViewerEventListener.class) {
-                ((JMapViewerEventListener)listeners[i+1]).processCommand(evt);
+        for (int i = 0; i < listeners.length; i += 2)
+        {
+            if (listeners[i] == JMapViewerEventListener.class)
+            {
+                ((JMapViewerEventListener) listeners[i + 1]).processCommand(evt);
             }
         }
     }
