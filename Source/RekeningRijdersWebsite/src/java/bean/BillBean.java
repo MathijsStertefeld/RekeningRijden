@@ -2,7 +2,6 @@ package bean;
 
 import administration.domain.*;
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
@@ -57,21 +56,24 @@ public class BillBean implements Serializable {
         return movements;
     }
     
-    private Principal getUserPrincipal() {
+    public Driver getLoggedInDriver() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         
-        return request.getUserPrincipal();
+        if (request.getUserPrincipal() != null) {
+            int bsn = Integer.parseInt(request.getUserPrincipal().getName());
+            return service.getDriverByBSN(bsn);
+        } else {
+            return null;
+        }
     }
     
     @PostConstruct
     public void postConstruct() {
-        Principal userPrincipal = getUserPrincipal();
+        Driver driver = getLoggedInDriver();
         
-        if (userPrincipal != null) {
-            String email = userPrincipal.getName();
-            Driver driver = service.getDriverByEmail(email);
+        if (driver != null) {
             bills = driver.getBills();
         }
     }

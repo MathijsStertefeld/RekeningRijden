@@ -1,65 +1,41 @@
 package bean;
 
-import administration.domain.DriverGroup;
+import administration.domain.Driver;
 import java.io.IOException;
 import java.io.Serializable;
-import java.security.Principal;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import service.RekeningRijdersService;
 
 @Named
 @RequestScoped
 public class LogoutBean implements Serializable {
     
-    public String getName() {
-        Principal userPrincipal = getUserPrincipal();
-        if (userPrincipal != null) {
-            return userPrincipal.getName();
-        } else {
-            return "";
-        }
-    }
-
-    public Boolean getIsAdmin() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        
-        return request.isUserInRole(DriverGroup.ADMIN.toString());
-    }
-
-    public Boolean getIsJamDriver() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        
-        return request.isUserInRole(DriverGroup.JAM_DRIVER.toString());
-    }
-
-    public Boolean getIsDriver() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        
-        return request.isUserInRole(DriverGroup.DRIVER.toString());
-    }
+    @Inject
+    RekeningRijdersService service;
     
-    private Principal getUserPrincipal() {
+    public Driver getLoggedInDriver() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         
-        return request.getUserPrincipal();
+        if (request.getUserPrincipal() != null) {
+            int bsn = Integer.parseInt(request.getUserPrincipal().getName());
+            return service.getDriverByBSN(bsn);
+        } else {
+            return null;
+        }
     }
     
     @PostConstruct
     public void postConstruct() {
-        if (getUserPrincipal() == null) {
+        if (getLoggedInDriver() == null) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("Login.xhtml");
             } catch (IOException ex) {

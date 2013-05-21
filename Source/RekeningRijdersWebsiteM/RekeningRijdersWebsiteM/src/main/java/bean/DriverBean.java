@@ -2,7 +2,6 @@ package bean;
 
 import administration.domain.Driver;
 import java.io.Serializable;
-import java.security.Principal;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -24,22 +23,22 @@ public class DriverBean implements Serializable {
         return driver;
     }
     
-    private Principal getUserPrincipal() {
+    public Driver getLoggedInDriver() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         
-        return request.getUserPrincipal();
+        if (request.getUserPrincipal() != null) {
+            int bsn = Integer.parseInt(request.getUserPrincipal().getName());
+            return service.getDriverByBSN(bsn);
+        } else {
+            return null;
+        }
     }
     
     @PostConstruct
     public void postConstruct() {
-        Principal userPrincipal = getUserPrincipal();
-        
-        if (userPrincipal != null) {
-            String email = userPrincipal.getName();
-            driver = service.getDriverByEmail(email);
-        }
+        driver = getLoggedInDriver();
     }
     
     public void save() {

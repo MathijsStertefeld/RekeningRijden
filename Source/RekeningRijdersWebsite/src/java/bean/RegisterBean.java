@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package bean;
 
 import administration.domain.Driver;
@@ -12,10 +8,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import service.RekeningRijdersService;
 
-/**
- *
- * @author Bas
- */
 @Named
 @SessionScoped
 public class RegisterBean implements Serializable{

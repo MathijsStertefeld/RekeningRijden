@@ -22,8 +22,7 @@ public class Driver implements Serializable {
     private String password;
     @ElementCollection(targetClass = DriverGroup.class)
     @CollectionTable(name = "DRIVER_GROUP", schema = "ADMINISTRATION", joinColumns = {
-        @JoinColumn(name = "BSN", referencedColumnName = "BSN"),
-        @JoinColumn(name = "EMAIL", referencedColumnName = "EMAIL")})
+        @JoinColumn(name = "BSN")})
     @Column(name = "GROUPNAME")
     @Enumerated(EnumType.STRING)
     private Collection<DriverGroup> groups;
@@ -35,10 +34,10 @@ public class Driver implements Serializable {
     private String zipCode;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateOfBirth;
-    @OneToMany(cascade={CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "DRIVER_BILL", schema = "ADMINISTRATION")
     private Collection<Bill> bills;
-    @OneToMany(cascade={CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "DRIVER_CAR", schema = "ADMINISTRATION")
     private Collection<Car> cars;
     //</editor-fold>
@@ -68,11 +67,11 @@ public class Driver implements Serializable {
         this.password = password;
     }
 
-    public Collection<DriverGroup> getDriverGroups() {
+    public Collection<DriverGroup> getGroups() {
         return groups;
     }
 
-    public void setDriverGroups(Collection<DriverGroup> groups) {
+    public void setGroups(Collection<DriverGroup> groups) {
         this.groups = groups;
     }
 
@@ -135,17 +134,14 @@ public class Driver implements Serializable {
     public Collection<Bill> getBills() {
         return bills;
     }
-    
-    public Bill getBill(int id)
-    {
-        for(Bill b : bills)
-        {
-            if(b.getId() == id)
-            {
+
+    public Bill getBill(int id) {
+        for (Bill b : bills) {
+            if (b.getId() == id) {
                 return b;
             }
         }
-        
+
         return null;
     }
 

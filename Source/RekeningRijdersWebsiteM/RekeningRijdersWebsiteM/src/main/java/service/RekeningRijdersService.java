@@ -38,27 +38,26 @@ public class RekeningRijdersService implements Serializable {
                 .accept(MediaType.APPLICATION_JSON).get(Driver.class);
         return driver;
     }
-    
-    public Driver getDriverByEmail(String email)
-    {
+
+    public Driver getDriverByEmail(String email) {
         Driver driver = service.path("resources").path("driver").path("email").path(email)
                 .accept(MediaType.APPLICATION_JSON).get(Driver.class);
-        
+
         return driver;
     }
 
     public void register(Driver driver) {
         service.path("resources").path("driver").post(Driver.class, driver);
     }
-   
+
     public void login() {
         throw new NotImplementedException();
     }
-    
+
     public void logout() {
         throw new NotImplementedException();
     }
-    
+
     public Collection<Bill> getBillsFromDriver(int bsn) {
         Driver driver = getDriverByBSN(bsn);
         return driver.getBills();
@@ -70,9 +69,8 @@ public class RekeningRijdersService implements Serializable {
 
         return bill;
     }
-    
-    public void editBill(Bill bill)
-    {
+
+    public void editBill(Bill bill) {
         service.path("resources").path("bill").accept(MediaType.APPLICATION_JSON).put(bill);
     }
 
