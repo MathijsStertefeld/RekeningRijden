@@ -3,6 +3,7 @@ package bean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
+import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -23,6 +24,10 @@ public class LoginBean implements Serializable {
     
     String email;
     String password;
+    String languageCode;
+    private String localisedString;
+    
+    private ResourceBundle localisedBundle;
 
     public String getEmail() {
         return email;
@@ -40,6 +45,28 @@ public class LoginBean implements Serializable {
         this.password = password;
     }
     
+    public String getLanguageCode() {
+        return languageCode;
+    }
+    
+    public void setLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
+        
+        if (languageCode.equals("nl"))
+        {
+            localisedBundle = ResourceBundle.getBundle("Language_nl");
+        }
+        else if (languageCode.equals("en"))
+        {
+            localisedBundle = ResourceBundle.getBundle("Language_en");
+        }
+    }
+    
+    public String getLocalisedString(String stringName)
+    {
+        return localisedBundle.getString("User");
+    }
+    
     private Principal getUserPrincipal() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
@@ -51,6 +78,8 @@ public class LoginBean implements Serializable {
     @PostConstruct
     public void postConstruct() {
         Principal userPrincipal = getUserPrincipal();
+        
+        setLanguageCode("nl");
         
         if (userPrincipal != null) {
             try {
