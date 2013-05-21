@@ -1,15 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        
-    </h:head>
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-        <f:viewParam name="name" value="#{rateBean.name}" />
+        <f:event type="preRenderView" listener="#{rateBean.findCurrent}" />
     </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -82,10 +79,10 @@
             <ui:define name="SiteContent">
                 <h:form id="carEditForm">                  
                     <h:outputLabel for="name" value="Naam: " /> <br/>              
-                    <h:inputText id="name" value="#{rateBean.name}" style="width: 250px" disabled="true"/> <br/>
+                    <h:inputText id="name" value="#{rateBean.current.name}" style="width: 250px" disabled="true"/> <br/>
                     
                     <h:outputLabel for="price" value="Tarief: " /> <br/>              
-                    <h:inputText id="price" value="#{rateBean.price}" style="width: 250px"/> <br/>
+                    <h:inputText id="price" value="#{rateBean.current.price}" style="width: 250px"/> <br/>
                     
                     <h:outputLabel for="roadType" value="Tarief type: " /> <br/>              
                     <h:selectOneMenu id="roadType" style="width: 250px">
@@ -124,7 +121,7 @@
                     
                     <br/>
                     <h:commandButton id="submit" value=" Opslaan " action="RateOverview">
-                        <f:actionListener binding="#{rateBean.save()}" />
+                        <f:actionListener binding="#{rateBean.editCurrent()}" />
                     </h:commandButton>
                     &nbsp;
                     <h:commandButton id="cancel" value=" Annuleren " action="RateOverview" />

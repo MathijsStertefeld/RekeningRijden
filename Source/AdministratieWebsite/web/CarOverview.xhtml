@@ -5,9 +5,9 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        
-    </h:head>
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{carBean.findAll}" />
+    </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
@@ -73,7 +73,7 @@
             <ui:define name="SiteContent">
                 <h:form id="carForm">
                     
-                    <p:dataTable id="dataTable" var="car" value="#{carBean.cars}"  tableStyle="table-layout:fixed;">    
+                    <p:dataTable id="dataTable" var="car" value="#{carBean.all}"  tableStyle="table-layout:fixed;">    
                         
                         <p:column sortBy="#{car.licensePlate}" style="white-space:normal" headerText="Kenteken">
                             <h:outputText value="#{car.licensePlate}" />
@@ -98,7 +98,7 @@
                         <p:column style="white-space:normal" headerText="Wijzigen">
                             <h:outputLink value="CarEditing.xhtml">
                                 <h:outputText value=" Wijzigen " />
-                                <f:param name="licensePlate" value="#{car.licensePlate}" />
+                                <f:param name="id" value="#{car.licensePlate}" />
                             </h:outputLink>
                         </p:column>
                         

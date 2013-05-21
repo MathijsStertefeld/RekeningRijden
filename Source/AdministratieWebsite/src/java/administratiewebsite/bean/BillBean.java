@@ -1,110 +1,60 @@
 package administratiewebsite.bean;
 
-import administration.domain.Bill;
-import administration.domain.PaymentStatus;
 import administratiewebsite.service.BillService;
+import administration.domain.Bill;
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import java.util.Map;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class BillBean implements Serializable {
 
     @Inject
-    private BillService billService;
-    private Bill bill;
-    private Collection<Bill> bills;
+    private BillService service;
+    private Collection<Bill> all;
+    private Bill current;
 
-    public Collection<Bill> getBills() {
-        return bills;
+    public Collection<Bill> getAll() {
+        return all;
     }
     
-    public Long getId() {
-        if (bill != null) {
-            return bill.getId();
-        }
-        return 0L;
+    public Bill getCurrent() {
+        return current;
+    }
+
+    public void editCurrent() {
+        service.edit(current);
+        current = null;
     }
     
-    public void setId(Long id) {
-        bill = billService.find(id);
+    public void findAll() {
+        all = service.findAll();
     }
-    
-    public int getDriverBsn() {
-        if (bill != null) {
-            return bill.getDriverBsn();
-        } else {
-            return 0;
-        }
-    }
-    
-    public Date getPeriodDate() {
-        if (bill != null) {
-            return bill.getPeriodDate();
-        } else {
-            return new Date();
-        }
-    }
-    
-    public Date getPaymentDate() {
-        if (bill != null) {
-            return bill.getPaymentDate();
-        } else {
-            return new Date();
-        }
-    }
-    
-    public void setPaymentDate(Date paymentDate) {
-        if (bill != null) {
-            bill.setPaymentDate(paymentDate);
-        }
-    }
-    
-    public double getPaymentAmount() {
-        if (bill != null) {
-            return bill.getPaymentAmount();
-        } else {
-            return 0;
-        }
-    }
-    
-    public PaymentStatus getPaymentStatus() {
-        if (bill != null) {
-            return bill.getPaymentStatus();
-        } else {
-            return PaymentStatus.UNKNOWN;
-        }
-    }
-    
-    public void setPaymentStatus(PaymentStatus paymentStatus) {
-        if (bill != null) {
-            bill.setPaymentStatus(paymentStatus);
-        }
-    }
-    
-    public Collection<Object> getMovements() {
-        ArrayList<Object> movements = new ArrayList<Object>();
+
+    public void findCurrent() {
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, String> requestParameterMap = context.getRequestParameterMap();
+
+        Long id = null;
         
-        if (bill != null) {
-            movements.addAll(bill.getMovements());
+        if (requestParameterMap.containsKey("id")) {
+            id = Long.parseLong(requestParameterMap.get("id"));
         }
         
-        return movements;
-    }
+        current = service.find(id);
 
-    @PostConstruct
-    public void postConstruct() {
-        bills = billService.findAll();
-    }
-
-    public void save() {
-        billService.edit(bill);
-        bills = billService.findAll();
+        if (current == null) {
+            try {
+                context.redirect("BillOverview.xhtml");
+            } catch (IOException ex) {
+            }
+        }
     }
 }

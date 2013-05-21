@@ -1,15 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        
-    </h:head>
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-        <f:viewParam name="licensePlate" value="#{carBean.licensePlate}" />
+        <f:event type="preRenderView" listener="#{carBean.findCurrent}" />
     </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -82,22 +79,22 @@
             <ui:define name="SiteContent">
                 <h:form id="carEditForm">
                     <h:outputLabel for="licensePlate" value="Kenteken: " /> <br/>              
-                    <h:inputText id="licensePlate" value="#{carBean.licensePlate}" style="width: 250px" disabled="true"/> <br/>
+                    <h:inputText id="licensePlate" value="#{carBean.current.licensePlate}" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel for="carTrackerId" value="Cartracker ID: " /> <br/>              
-                    <h:inputText id="carTrackerId" value="#{carBean.carTrackerId}"  style="width: 250px" /> <br/>
+                    <h:inputText id="carTrackerId" value="#{carBean.current.carTrackerId}"  style="width: 250px" /> <br/>
 
                     <h:outputLabel for="ownerBsn" value="BSN eigenaar: " /> <br/>              
-                    <h:inputText id="ownerBsn" value="#{carBean.driverBsn}" style="width: 250px" disabled="true"/> <br/>
+                    <h:inputText id="ownerBsn" value="#{carBean.current.driverBsn}" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel for="brand" value="Merk: " /> <br/>              
-                    <h:inputText id="brand" value="#{carBean.brand}" style="width: 250px" disabled="true"/> <br/>
+                    <h:inputText id="brand" value="#{carBean.current.brand}" style="width: 250px" disabled="true"/> <br/>
 
                     <h:outputLabel for="model" value="Model: " /> <br/>              
-                    <h:inputText id="model" value="#{carBean.model}" style="width: 250px" disabled="true" /> <br/>
+                    <h:inputText id="model" value="#{carBean.current.model}" style="width: 250px" disabled="true" /> <br/>
 
                     <h:outputLabel for="type" value="Type: " /> <br/>              
-                    <h:selectOneMenu id="type" value="#{carBean.type}" style="width: 250px" disabled="true">
+                    <h:selectOneMenu id="type" value="#{carBean.current.type}" style="width: 250px" disabled="true">
                         <f:selectItem itemValue="PASSENGER_CAR" itemLabel="Personenauto" />
                         <f:selectItem itemValue="VAN" itemLabel="Bedrijfsauto" />
                         <f:selectItem itemValue="AUTOBUS" itemLabel="Autobus" />
@@ -105,7 +102,7 @@
                     </h:selectOneMenu><br/>                    
                     
                     <h:outputLabel for="paintColor" value="Kleur: " /> <br/>              
-                    <h:selectOneMenu id="paintColor" value="#{carBean.paintColor}" style="width: 250px">
+                    <h:selectOneMenu id="paintColor" value="#{carBean.current.paintColor}" style="width: 250px">
                         <f:selectItem itemValue="VARIOUS" itemLabel="Diversen" />
                         <f:selectItem itemValue="ORANGE" itemLabel="Oranje" />
                         <f:selectItem itemValue="PINK" itemLabel="Roze" />
@@ -122,10 +119,10 @@
                     </h:selectOneMenu><br/>
 
                     <h:outputLabel for="mass" value="Massa: " /> <br/>              
-                    <h:inputText id="mass" value="#{carBean.mass}" style="width: 250px"/> <br/>
+                    <h:inputText id="mass" value="#{carBean.current.mass}" style="width: 250px"/> <br/>
                     
                     <h:outputLabel for="classification" value="Milieuclassificatie: " /> <br/>              
-                    <h:selectOneMenu id="classification" value="#{carBean.classification}" style="width: 250px">
+                    <h:selectOneMenu id="classification" value="#{carBean.current.classification}" style="width: 250px">
                         <f:selectItem itemValue="ZERO" itemLabel="0" />
                         <f:selectItem itemValue="ONE" itemLabel="1" />
                         <f:selectItem itemValue="TWO" itemLabel="2" />
@@ -139,7 +136,7 @@
                     
                     <br/>
                     <h:commandButton id="submit" value=" Opslaan " action="CarOverview">
-                        <f:actionListener binding="#{carBean.save()}" />
+                        <f:actionListener binding="#{carBean.editCurrent()}" />
                     </h:commandButton>
                     &nbsp;
                     <h:commandButton id="cancel" value=" Annuleren " action="CarOverview" />
