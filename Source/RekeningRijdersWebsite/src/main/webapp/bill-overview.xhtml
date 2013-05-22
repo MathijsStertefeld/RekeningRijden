@@ -31,7 +31,7 @@
             <ui:define name="SiteContent">
                 <h:form id="billForm">
                     
-                    <p:dataTable id="dataTable" var="bill" value="#{billBean.bills}" tableStyle="table-layout:fixed;">
+                    <p:dataTable id="dataTable" var="bill" value="#{billBean.all}" tableStyle="table-layout:fixed;">
                         <p:column sortBy="#{bill.id}" style="white-space:normal" headerText="#{msg.BO_BillID}">
                             <h:outputText value="#{bill.id}" />
                         </p:column>

@@ -1,8 +1,8 @@
 package com.marbl.administration.website.bean;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
-import com.marbl.administration.website.service.BillService;
 import com.marbl.administration.domain.Bill;
+import com.marbl.administration.website.service.BillService;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;

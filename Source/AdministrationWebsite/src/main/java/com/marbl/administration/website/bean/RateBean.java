@@ -1,8 +1,8 @@
 package com.marbl.administration.website.bean;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
-import com.marbl.administration.website.service.RateService;
 import com.marbl.administration.domain.Rate;
+import com.marbl.administration.website.service.RateService;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;

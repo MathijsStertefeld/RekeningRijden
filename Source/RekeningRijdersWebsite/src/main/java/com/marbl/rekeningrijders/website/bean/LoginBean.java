@@ -1,10 +1,11 @@
 package com.marbl.rekeningrijders.website.bean;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.Driver;
+import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -14,12 +15,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
+//</editor-fold>
 
 @Named
 @RequestScoped
 public class LoginBean implements Serializable {
 
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private RekeningRijdersService service;
     private String email;

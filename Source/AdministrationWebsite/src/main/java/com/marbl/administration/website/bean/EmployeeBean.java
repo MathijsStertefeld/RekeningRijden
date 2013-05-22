@@ -1,8 +1,8 @@
 package com.marbl.administration.website.bean;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
-import com.marbl.administration.website.service.EmployeeService;
 import com.marbl.administration.domain.Employee;
+import com.marbl.administration.website.service.EmployeeService;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;

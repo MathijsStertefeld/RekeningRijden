@@ -1,8 +1,9 @@
 package com.marbl.rekeningrijders.website.bean;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.*;
+import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -11,56 +12,59 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
+//</editor-fold>
 
 @Named
 @SessionScoped
 public class BillBean implements Serializable {
 
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
-    RekeningRijdersService service;
-    private Bill bill;
-    private Collection<Bill> bills;
-    
+    private RekeningRijdersService service;
+    private Collection<Bill> all;
+    private Bill current;
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public Long getBillId() {
-        if (bill != null) {
-            return bill.getId();
+        if (current != null) {
+            return current.getId();
         } else {
             return 0L;
         }
     }
-    
+
     public void setBillId(Long id) {
-        for (Bill other : bills) {
+        for (Bill other : all) {
             if (id == other.getId()) {
-                bill = other;
+                current = other;
             }
         }
     }
-    
-    public Bill getBill() {
-        return bill;
+
+    public Collection<Bill> getAll() {
+        return all;
     }
-      
-    public Collection<Bill> getBills() {
-        return bills;
+
+    public Bill getCurrent() {
+        return current;
     }
-    
+
     public Collection<Object> getMovements() {
-        ArrayList<Object> movements = new ArrayList<Object>();
-        
-        if (bill != null) {
-            movements.addAll(bill.getMovements());
+        if (current != null) {
+            return current.getMovements();
+        } else {
+            return null;
         }
-        
-        return movements;
     }
-    
-    public Driver getLoggedInDriver() {
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Methods">
+    public Driver findLoggedInDriver() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        
+
         if (request.getUserPrincipal() != null) {
             int bsn = Integer.parseInt(request.getUserPrincipal().getName());
             return service.findDriver(bsn);
@@ -68,24 +72,24 @@ public class BillBean implements Serializable {
             return null;
         }
     }
-    
+
     @PostConstruct
     public void postConstruct() {
-        Driver driver = getLoggedInDriver();
-        
+        Driver driver = findLoggedInDriver();
+
         if (driver != null) {
-            bills = driver.getBills();
+            all = driver.getBills();
         }
     }
-    
+
     public void save() {
-        service.editBill(bill);
+        service.editBill(current);
     }
-    
+
     public void payBill(Long billID) {
         //Ga naar externe payservice
-        
         //if succesvol gelukt bij paypal
         //service.payBill(billID);
     }
+    //</editor-fold>
 }

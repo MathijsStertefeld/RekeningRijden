@@ -31,7 +31,7 @@
             <ui:define name="SiteContent">
                 <h:form id="carForm">
                     
-                    <p:dataTable id="dataTable" var="car" value="#{carBean.cars}"  tableStyle="table-layout:fixed;">    
+                    <p:dataTable id="dataTable" var="car" value="#{carBean.all}"  tableStyle="table-layout:fixed;">    
                         
                         <p:column sortBy="#{car.carTrackerId}" style="white-space:normal" headerText="#{msg.CO_CarTrackerID}">  
                             <h:outputText value="#{car.carTrackerId}" />  

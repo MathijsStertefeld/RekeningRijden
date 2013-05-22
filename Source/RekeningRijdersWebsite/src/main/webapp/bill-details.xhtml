@@ -40,23 +40,23 @@
             <ui:define name="SiteContent">
                 <h:form id="billEditForm">
                     <strong><h:outputLabel for="id" value="#{msg.BE_BillID}: " /></strong> <br/>              
-                    <h:outputText id="id" value="#{billBean.bill.id}" style="width: 250px" disabled="true"/> <br/>
+                    <h:outputText id="id" value="#{billBean.current.id}" style="width: 250px" disabled="true"/> <br/>
 
                     <strong><h:outputLabel for="driverBsn" value="#{msg.BE_BSNOwner}: " /></strong> <br/>              
-                    <h:outputText id="driverBsn" value="#{billBean.bill.driverBsn}" style="width: 250px" disabled="true"/> <br/>
+                    <h:outputText id="driverBsn" value="#{billBean.current.driverBsn}" style="width: 250px" disabled="true"/> <br/>
 
                     <strong><h:outputLabel for="periodDate" value="#{msg.BE_TimePeriod}: " /></strong> <br/>              
-                    <h:outputText id="periodDate" value="#{billBean.bill.periodDate}" style="width: 250px" disabled="true"/> <br/>
+                    <h:outputText id="periodDate" value="#{billBean.current.periodDate}" style="width: 250px" disabled="true"/> <br/>
 
                     <strong><h:outputLabel for="paymentDate" value="#{msg.BE_PayDate}: " /></strong> <br/>              
-                    <h:outputText id="paymentDate" value="#{billBean.bill.paymentDate}" style="width: 250px" /> <br/>
+                    <h:outputText id="paymentDate" value="#{billBean.current.paymentDate}" style="width: 250px" /> <br/>
 
                     <strong><h:outputLabel for="paymentAmount" value="#{msg.BE_Total}: " /></strong> <br/>              
-                    <h:outputText id="paymentAmount" value="#{billBean.bill.paymentAmount}" style="width: 250px" disabled="true"/> <br/>
+                    <h:outputText id="paymentAmount" value="#{billBean.current.paymentAmount}" style="width: 250px" disabled="true"/> <br/>
 
                     <strong><h:outputLabel for="paymentStatus" value="#{msg.BE_PaymentStatus}: " /></strong> <br/>              
                     
-                    <h:selectOneMenu id="paymentStatus" value="#{billBean.bill.paymentStatus}" style="width: 250px" disabled="true">
+                    <h:selectOneMenu id="paymentStatus" value="#{billBean.current.paymentStatus}" style="width: 250px" disabled="true">
                         <f:selectItem itemValue="UNKNOWN" itemLabel="#{msg.BE_PaymentStatus_Unknown}" />
                         <f:selectItem itemValue="OPEN" itemLabel="#{msg.BE_PaymentStatus_Open}" />
                         <f:selectItem itemValue="PAID" itemLabel="#{msg.BE_PaymentStatus_Paid}" />
