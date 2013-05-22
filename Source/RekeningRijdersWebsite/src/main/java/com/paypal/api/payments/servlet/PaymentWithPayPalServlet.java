@@ -4,7 +4,7 @@
 // API used: /v1/payments/payment
 package com.paypal.api.payments.servlet;
 
-import administration.domain.Bill;
+import com.marbl.administration.domain.Bill;
 import com.paypal.api.payments.*;
 import com.paypal.api.payments.util.*;
 import com.paypal.core.rest.*;
@@ -17,8 +17,8 @@ import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.apache.log4j.Logger;
-import service.RekeningRijdersService;
-import util.GoogleConverter;
+import com.marbl.rekeningrijders.service.RekeningRijdersService;
+import com.marbl.rekeningrijders.util.GoogleConverter;
 
 /**
  * @author lvairamani
