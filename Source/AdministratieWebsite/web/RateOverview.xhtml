@@ -6,7 +6,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <f:metadata>
-        <f:event type="preRenderView" listener="#{rateBean.findAll}" />
+        <f:event type="preRenderView" listener="#{employeeBean.checkLogin()}" />
+        <f:event type="preRenderView" listener="#{rateBean.findAll()}" />
     </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
@@ -63,7 +64,7 @@
                 </li>
                 <li class="categorylink">
                     <h:form>
-                        <h:commandLink action="#{logoutBean.logout()}">
+                        <h:commandLink action="#{employeeBean.logout()}">
                             Uitloggen
                         </h:commandLink>
                     </h:form>
