@@ -21,8 +21,7 @@ import service.RekeningRijdersService;
 public class LoginBean implements Serializable {
 
     @Inject
-    RekeningRijdersService service;
-    
+    private RekeningRijdersService service;
     private String email;
     private String password;
     String languageCode;
@@ -109,6 +108,19 @@ public class LoginBean implements Serializable {
         }
         
         password = "";
+    }
+    
+    public void logout() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+
+        try {
+            request.logout();
+            externalContext.redirect("Login.xhtml");
+        } catch (IOException ex) {
+        } catch (ServletException ex) {
+        }
     }
     
     public void changeLanguageToNL()
