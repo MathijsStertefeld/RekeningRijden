@@ -16,10 +16,13 @@ import javax.swing.UIManager;
 import openstreetmaps.org.openstreetmap.gui.CarGraphic;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.Coordinate;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.JMapViewer;
+import openstreetmaps.org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.OsmTileLoader;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
+import openstreetmaps.org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
+import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 
 /**
  *
@@ -68,7 +71,12 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         currentCarComboBox.removeAllItems();
 
 
-
+        
+        for(Node n : Osmosis.getNodes())
+        {
+            map.addMapMarker(new MapMarkerDot(Color.yellow, n.getLatitude(), n.getLongitude()));
+        }
+        
         for (CarGraphic c : map.getAllCarGraphics())
         {
 
