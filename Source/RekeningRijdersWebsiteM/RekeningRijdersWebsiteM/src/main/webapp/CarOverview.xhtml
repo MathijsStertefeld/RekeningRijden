@@ -11,22 +11,22 @@
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
-                Auto Overzicht
+                #{msg.CO_CarOverview}
             </ui:define>
             
             <ui:define name="TypeTitle">
-                 Gebruiker
+                 #{msg.TE_User}
             </ui:define>
             
             <ui:define name="SiteTypeSelection">
                 <li class="selected">                           
                     <a href="Login.xhtml">
-                        Gebruiker
+                        #{msg.TE_User}
                     </a>
                 </li>		
                 <li class="">
                     <a href="http://localhost:8080/AdministratieWebsite/faces/Login.xhtml">
-                        Administratie
+                        #{msg.TE_Administration}
                     </a>
                 </li>
             </ui:define>
@@ -34,13 +34,13 @@
             <ui:define name="Breadcrumbs">
                 <li>
                     <a href="Login.xhtml" title="Gebruiker">
-                        Gebruiker 
+                        #{msg.TE_User}
                    </a>
                 </li>
 
                 <li class="selected">
                     <a href="CarOverview.xhtml" title="Cartrackers">
-                        Auto's
+                        #{msg.SB_Cars}
                     </a>
                 </li>
             </ui:define>
@@ -48,23 +48,23 @@
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
                     <a href="BillOverview.xhtml" class="">
-                        Facturen
+                        #{msg.SB_Bills}
                     </a>          
                 </li>
                 <li class="categorylink">
                     <a href="CarOverview.xhtml" class="">
-                        Auto's
+                        #{msg.SB_Cars}
                     </a>          
                 </li>
                 <li class="categorylink">
                     <a href="DriverOverview.xhtml" class="">
-                        Gegevens
+                        #{msg.SB_Profile}
                     </a>          
                 </li>
                 <li class="categorylink">
                     <h:form>
                         <h:commandLink action="#{logoutBean.logout()}">
-                            Uitloggen
+                            #{msg.SB_Logout}
                         </h:commandLink>
                     </h:form>
                 </li>
@@ -75,29 +75,29 @@
                     
                     <p:dataTable id="dataTable" var="car" value="#{carBean.cars}"  tableStyle="table-layout:fixed;">    
                         
-                        <p:column sortBy="#{car.carTrackerId}" style="white-space:normal" headerText="Cartracker ID">  
+                        <p:column sortBy="#{car.carTrackerId}" style="white-space:normal" headerText="#{msg.CO_CarTrackerID}">  
                             <h:outputText value="#{car.carTrackerId}" />  
                         </p:column>  
 
-                        <p:column sortBy="#{car.driverBsn}" style="white-space:normal" headerText="Eigenaar">  
+                        <p:column sortBy="#{car.driverBsn}" style="white-space:normal" headerText="#{msg.CO_BSNOwner}">  
                             <h:outputText value="#{car.driverBsn}" />  
                         </p:column>  
 
-                        <p:column sortBy="#{car.licensePlate}" style="white-space:normal" headerText="Kenteken">
+                        <p:column sortBy="#{car.licensePlate}" style="white-space:normal" headerText="#{msg.CO_LicensePlate}">
                             <h:outputText value="#{car.licensePlate}" />
                         </p:column> 
 
-                        <p:column sortBy="#{car.brand}" style="white-space:normal" headerText="Merk">
+                        <p:column sortBy="#{car.brand}" style="white-space:normal" headerText="#{msg.CO_Brand}">
                             <h:outputText value="#{car.brand}" />
                         </p:column>
                        
-                       <p:column sortBy="#{car.model}" style="white-space:normal" headerText="Model">
+                       <p:column sortBy="#{car.model}" style="white-space:normal" headerText="#{msg.CO_Model}">
                             <h:outputText value="#{car.model}" />
                         </p:column>
                         
-                        <p:column style="white-space:normal" headerText="Wijzigen">
+                        <p:column style="white-space:normal" headerText="#{msg.CO_Edit}">
                             <h:outputLink value="CarEditing.xhtml">
-                                <h:outputText value=" Wijzigen " />
+                                <h:outputText value=" #{msg.CO_Edit} " />
                                 <f:param name="licensePlate" value="#{car.licensePlate}" />
                             </h:outputLink>
                         </p:column>
@@ -111,4 +111,3 @@
         </ui:composition>
     </h:body>
 </html>
-

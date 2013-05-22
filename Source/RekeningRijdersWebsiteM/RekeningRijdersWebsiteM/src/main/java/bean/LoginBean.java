@@ -3,6 +3,7 @@ package bean;
 import administration.domain.Driver;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -23,8 +24,10 @@ public class LoginBean implements Serializable {
     private RekeningRijdersService service;
     private String email;
     private String password;
-    private String languageCode;
-    private ResourceBundle localisedBundle;
+    String languageCode;
+    
+    private Locale dutchLocale;
+    private Locale englishLocale;
 
     public String getEmail() {
         return email;
@@ -49,16 +52,14 @@ public class LoginBean implements Serializable {
     public void setLanguageCode(String languageCode) {
         this.languageCode = languageCode;
         
-        if (languageCode.equals("nl")) {
-            localisedBundle = ResourceBundle.getBundle("Language_nl");
+        if (languageCode.equals("nl"))
+        {
+            FacesContext.getCurrentInstance().getViewRoot().setLocale(dutchLocale);
         }
-        else if (languageCode.equals("en")) {
-            localisedBundle = ResourceBundle.getBundle("Language_en");
+        else if (languageCode.equals("en"))
+        {
+            FacesContext.getCurrentInstance().getViewRoot().setLocale(englishLocale);
         }
-    }
-    
-    public String getLocalisedString(String stringName) {
-        return localisedBundle.getString("User");
     }
     
     public Driver getLoggedInDriver() {
@@ -76,6 +77,9 @@ public class LoginBean implements Serializable {
     
     @PostConstruct
     public void postConstruct() {
+        
+        dutchLocale = new Locale.Builder().setLanguage("nl").build();
+        englishLocale = new Locale.Builder().setLanguage("en").build();
         setLanguageCode("nl");
         
         if (getLoggedInDriver() != null) {
@@ -117,5 +121,15 @@ public class LoginBean implements Serializable {
         } catch (IOException ex) {
         } catch (ServletException ex) {
         }
+    }
+    
+    public void changeLanguageToNL()
+    {
+        setLanguageCode("nl");
+    }
+    
+    public void changeLanguageToEN()
+    {
+        setLanguageCode("en");
     }
 }

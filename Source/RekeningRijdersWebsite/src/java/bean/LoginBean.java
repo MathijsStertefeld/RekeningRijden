@@ -1,8 +1,9 @@
 package bean;
 
-import administration.domain.Driver;
 import java.io.IOException;
 import java.io.Serializable;
+import java.security.Principal;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -22,10 +23,12 @@ public class LoginBean implements Serializable {
     @Inject
     RekeningRijdersService service;
     
-    private String email;
-    private String password;
-    private String languageCode;
-    private ResourceBundle localisedBundle;
+    String email;
+    String password;
+    String languageCode;
+    
+    private Locale dutchLocale;
+    private Locale englishLocale;
 
     public String getEmail() {
         return email;
@@ -50,36 +53,33 @@ public class LoginBean implements Serializable {
     public void setLanguageCode(String languageCode) {
         this.languageCode = languageCode;
         
-        if (languageCode.equals("nl")) {
-            localisedBundle = ResourceBundle.getBundle("Language_nl");
+        if (languageCode.equals("nl"))
+        {
+            FacesContext.getCurrentInstance().getViewRoot().setLocale(dutchLocale);
         }
-        else if (languageCode.equals("en")) {
-            localisedBundle = ResourceBundle.getBundle("Language_en");
+        else if (languageCode.equals("en"))
+        {
+            FacesContext.getCurrentInstance().getViewRoot().setLocale(englishLocale);
         }
     }
     
-    public String getLocalisedString(String stringName) {
-        return localisedBundle.getString("User");
-    }
-    
-    public Driver getLoggedInDriver() {
+    private Principal getUserPrincipal() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         
-        if (request.getUserPrincipal() != null) {
-            int bsn = Integer.parseInt(request.getUserPrincipal().getName());
-            return service.getDriverByBSN(bsn);
-        } else {
-            return null;
-        }
+        return request.getUserPrincipal();
     }
     
     @PostConstruct
     public void postConstruct() {
+        Principal userPrincipal = getUserPrincipal();
+        
+        dutchLocale = new Locale.Builder().setLanguage("nl").build();
+        englishLocale = new Locale.Builder().setLanguage("en").build();
         setLanguageCode("nl");
         
-        if (getLoggedInDriver() != null) {
+        if (userPrincipal != null) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("BillOverview.xhtml");
             } catch (IOException ex) {
@@ -91,19 +91,25 @@ public class LoginBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        Driver driver = service.getDriverByEmail(email);
         
-        if (driver != null) {
-            try {
-                String username = String.valueOf(driver.getBsn());
-                request.login(username, password);
-                externalContext.redirect("BillOverview.xhtml");
-            } catch (IOException ex) {
-            } catch (ServletException ex) {
-                context.addMessage(null, new FacesMessage(ex.getMessage()));
-            }
+        try {
+            request.login(email, password);
+            externalContext.redirect("BillOverview.xhtml");
+        } catch (IOException ex) {
+        } catch (ServletException ex) {
+            context.addMessage(null, new FacesMessage(ex.getMessage()));
         }
         
         password = "";
+    }
+    
+    public void changeLanguageToNL()
+    {
+        setLanguageCode("nl");
+    }
+    
+    public void changeLanguageToEN()
+    {
+        setLanguageCode("en");
     }
 }

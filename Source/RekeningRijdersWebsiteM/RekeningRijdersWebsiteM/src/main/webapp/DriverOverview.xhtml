@@ -11,22 +11,22 @@
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
-                Gegevens Overzicht
+                #{msg.DO_Profile}
             </ui:define>
             
             <ui:define name="TypeTitle">
-                 Gebruiker
+                 #{msg.TE_User}
             </ui:define>
             
             <ui:define name="SiteTypeSelection">
                 <li class="selected">                           
                     <a href="Login.xhtml">
-                        Gebruiker
+                        #{msg.TE_User}
                     </a>
                 </li>		
                 <li class="">
                     <a href="http://localhost:8080/AdministratieWebsite/faces/Login.xhtml">
-                        Administratie
+                        #{msg.TE_Administration}
                     </a>
                 </li>
             </ui:define>
@@ -34,13 +34,13 @@
             <ui:define name="Breadcrumbs">
                 <li>
                     <a href="Login.xhtml" title="Gebruiker">
-                        Gebruiker
+                        #{msg.TE_User}
                     </a>
                 </li>
 
                 <li class="selected">
                     <a href="DriverOverview.xhtml" title="Gegevens">
-                        Gegevens
+                        #{msg.SB_Profile}
                     </a>
                 </li>
             </ui:define>
@@ -48,23 +48,23 @@
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
                     <a href="BillOverview.xhtml" class="">
-                        Facturen
+                        #{msg.SB_Bills}
                     </a>          
                 </li>
                 <li class="categorylink">
                     <a href="CarOverview.xhtml" class="">
-                        Auto's
+                        #{msg.SB_Cars}
                     </a>          
                 </li>
                 <li class="categorylink">
                     <a href="DriverOverview.xhtml" class="">
-                        Gegevens
+                        #{msg.SB_Profile}
                     </a>          
                 </li>
                 <li class="categorylink">
                     <h:form>
                         <h:commandLink action="#{logoutBean.logout()}">
-                            Uitloggen
+                            #{msg.SB_Logout}
                         </h:commandLink>
                     </h:form>
                 </li>
@@ -73,56 +73,56 @@
             <ui:define name="SiteContent">
                 <h:form id="driverForm">
                     
-                    <h2>Persoons</h2>
+                    <h2>#{msg.DO_PersonalInformation}</h2>
                     
                     <p>
-                        <strong>Voornaam</strong>
+                        <strong>#{msg.DO_FirstName}</strong>
                         <br/>
                         <h:outputText value="#{driverBean.driver.firstName}" />
                     </p>
                     
                     <p>
-                        <strong>Achternaam</strong>
+                        <strong>#{msg.DO_LastName}</strong>
                         <br/>
                         <h:outputText value="#{driverBean.driver.lastName}" />
                     </p>
                     
                     <p>
-                        <strong>Woonplaats</strong>
+                        <strong>#{msg.DO_Residence}</strong>
                         <br/>
                         <h:outputText value="#{driverBean.driver.residence}" />
                     </p>
                     
                     <p>
-                        <strong>Adres</strong>
+                        <strong>#{msg.DO_Address}</strong>
                         <br/>
                         <h:outputText value="#{driverBean.driver.address}" />
                     </p>
                     
                     <p>
-                        <strong>Postcode</strong>
+                        <strong>#{msg.DO_ZipCode}</strong>
                         <br/>
                         <h:outputText value="#{driverBean.driver.zipCode}" />
                     </p>
                     
                     <p>
-                        <strong>Geboortedatum</strong>
+                        <strong>#{msg.DO_DateOfBirth}</strong>
                         <br/>
                         <h:outputText value="#{driverBean.driver.dateOfBirth}" />
                     </p>
                     
                     <br/>
                     
-                    <h2>Account</h2>
+                    <h2>#{msg.DO_AccountInformation}</h2>
                     
                     <p>
-                        <strong>Email Adres</strong>
+                        <strong>#{msg.DO_Email}</strong>
                         <br/>
                         <h:outputText value="#{driverBean.driver.email}" />
                     </p>
                     
                     <p>
-                        <strong>Voorkeurstaal</strong>
+                        <strong>#{msg.DO_PreferredLanguage}</strong>
                         <br/>
                         <h:outputText value="#{driverBean.driver.languageCode}" />
                     </p>
@@ -135,13 +135,11 @@
                     
                     <br/>
                     
-                    <h:outputLink value="DriverEditing.xhtml">
-                        <h:outputText value=" Wijzigen " />
-                    </h:outputLink>
+                    <h:commandButton id="submit" value=" #{msg.DO_Edit} " action="DriverEditing">
+                    </h:commandButton>
                 </h:form>
             </ui:define>
 
         </ui:composition>
     </h:body>
 </html>
-
