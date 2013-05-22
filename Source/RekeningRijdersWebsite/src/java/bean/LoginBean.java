@@ -3,6 +3,8 @@ package bean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -23,6 +25,10 @@ public class LoginBean implements Serializable {
     
     String email;
     String password;
+    String languageCode;
+    
+    private Locale dutchLocale;
+    private Locale englishLocale;
 
     public String getEmail() {
         return email;
@@ -40,6 +46,23 @@ public class LoginBean implements Serializable {
         this.password = password;
     }
     
+    public String getLanguageCode() {
+        return languageCode;
+    }
+    
+    public void setLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
+        
+        if (languageCode.equals("nl"))
+        {
+            FacesContext.getCurrentInstance().getViewRoot().setLocale(dutchLocale);
+        }
+        else if (languageCode.equals("en"))
+        {
+            FacesContext.getCurrentInstance().getViewRoot().setLocale(englishLocale);
+        }
+    }
+    
     private Principal getUserPrincipal() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
@@ -51,6 +74,10 @@ public class LoginBean implements Serializable {
     @PostConstruct
     public void postConstruct() {
         Principal userPrincipal = getUserPrincipal();
+        
+        dutchLocale = new Locale.Builder().setLanguage("nl").build();
+        englishLocale = new Locale.Builder().setLanguage("en").build();
+        setLanguageCode("nl");
         
         if (userPrincipal != null) {
             try {
@@ -74,5 +101,15 @@ public class LoginBean implements Serializable {
         }
         
         password = "";
+    }
+    
+    public void changeLanguageToNL()
+    {
+        setLanguageCode("nl");
+    }
+    
+    public void changeLanguageToEN()
+    {
+        setLanguageCode("en");
     }
 }

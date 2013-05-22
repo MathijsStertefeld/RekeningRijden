@@ -1,70 +1,70 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         
     </h:head>
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
-                Facturen Overzicht
+                #{msg.BO_BillOverview}
             </ui:define>
             
             <ui:define name="TypeTitle">
-                 Administratie
+                 #{msg.TE_User}
             </ui:define>
             
             <ui:define name="SiteTypeSelection">
-                <li class="">                           
+                <li class="selected">                           
                     <a href="Login.xhtml">
-                        Gebruiker
+                        #{msg.TE_User}
                     </a>
                 </li>		
-                <li class="selected">
-                    <a href="Login.xhtml">
-                        Administratie
+                <li class="">
+                    <a href="http://localhost:8080/AdministratieWebsite/">
+                        #{msg.TE_Administration}
                     </a>
                 </li>
             </ui:define>
             
             <ui:define name="Breadcrumbs">
                 <li>
-                    <a href="Login.xhtml" title="Administratie">
-                        Administratie
+                    <a href="Login.xhtml" title="Gebruiker">
+                        #{msg.TE_User}
                     </a>
                 </li>
 
                 <li class="selected">
                     <a href="BillOverview.xhtml" title="Facturen">
-                        Facturen
+                        #{msg.SB_Bills}
                     </a>
                 </li>
             </ui:define>
             
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
-                    <a href="CarOverview.xhtml" class="">
-                        Cartrackers
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <a href="RateOverview.xhtml" class="">
-                        Tarieven
-                    </a>          
-                </li>
-                <li class="categorylink">
                     <a href="BillOverview.xhtml" class="">
-                        Facturen
+                        #{msg.SB_Bills}
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="CarOverview.xhtml" class="">
+                        #{msg.SB_Cars}
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="DriverOverview.xhtml" class="">
+                        #{msg.SB_Profile}
                     </a>          
                 </li>
                 <li class="categorylink">
                     <h:form>
                         <h:commandLink action="#{logoutBean.logout()}">
-                            Uitloggen
+                            #{msg.SB_Logout}
                         </h:commandLink>
                     </h:form>
                 </li>
@@ -74,30 +74,30 @@
                 <h:form id="billForm">
                     
                     <p:dataTable id="dataTable" var="bill" value="#{billBean.bills}" tableStyle="table-layout:fixed;">
-                        <p:column sortBy="#{bill.id}" style="white-space:normal" headerText="Factuur ID">
+                        <p:column sortBy="#{bill.id}" style="white-space:normal" headerText="#{msg.BO_BillID}">
                             <h:outputText value="#{bill.id}" />
                         </p:column>
                         
-                        <p:column sortBy="#{bill.driverBsn}" style="white-space:normal" headerText="BSN">
+                        <p:column sortBy="#{bill.driverBsn}" style="white-space:normal" headerText="#{msg.BO_BSN}">
                             <h:outputText value="#{bill.driverBsn}" />
                         </p:column>
                         
-                        <p:column sortBy="#{bill.paymentAmount}}" style="white-space:normal" headerText="Totaal bedrag">  
+                        <p:column sortBy="#{bill.paymentAmount}}" style="white-space:normal" headerText="#{msg.BO_Total}">  
                             <h:outputText value="#{bill.paymentAmount}" />  
                         </p:column>  
 
-                        <p:column sortBy="#{bill.paymentDate}" style="white-space:normal" headerText="Betaal datum">  
+                        <p:column sortBy="#{bill.paymentDate}" style="white-space:normal" headerText="#{msg.BO_PayDate}">  
                             <h:outputText value="#{bill.paymentDate}" />  
                         </p:column>  
 
-                        <p:column sortBy="#{bill.paymentStatus}" style="white-space:normal" headerText="Betaal status">
+                        <p:column sortBy="#{bill.paymentStatus}" style="white-space:normal" headerText="#{msg.BO_paymentStatus}">
                             <h:outputText value="#{bill.paymentStatus}" />
                         </p:column>
                         
-                        <p:column style="white-space:normal" headerText="Wijzigen">
+                        <p:column style="white-space:normal" headerText="#{msg.BO_Edit}">
                             <h:outputLink value="BillEditing.xhtml">
-                                <h:outputText value=" Wijzigen " />
-                                <f:param name="id" value="#{bill.id}" />
+                                <h:outputText value=" #{msg.BO_Edit} " />
+                                <f:param name="billID" value="#{bill.id}" />
                             </h:outputLink>
                         </p:column>
                     </p:dataTable>
@@ -109,4 +109,3 @@
         </ui:composition>
     </h:body>
 </html>
-

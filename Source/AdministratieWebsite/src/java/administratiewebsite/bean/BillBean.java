@@ -1,110 +1,92 @@
 package administratiewebsite.bean;
 
-import administration.domain.Bill;
-import administration.domain.PaymentStatus;
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import administratiewebsite.service.BillService;
+import administration.domain.Bill;
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import javax.annotation.PostConstruct;
+import java.util.Map;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+//</editor-fold>
 
 @Named
 @SessionScoped
 public class BillBean implements Serializable {
 
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
-    private BillService billService;
-    private Bill bill;
-    private Collection<Bill> bills;
+    private BillService service;
+    private Collection<Bill> all;
+    private Bill current;
+    private int month;
+    private int year;
+    //</editor-fold>
 
-    public Collection<Bill> getBills() {
-        return bills;
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    public Collection<Bill> getAll() {
+        return all;
     }
-    
-    public Long getId() {
-        if (bill != null) {
-            return bill.getId();
+
+    public Bill getCurrent() {
+        return current;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Methods">
+    public void findAll() {
+        all = service.findAll();
+    }
+
+    public void findCurrent() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        Map<String, String> requestParameterMap = externalContext.getRequestParameterMap();
+
+        if (requestParameterMap.containsKey("id")) {
+            Long id = Long.parseLong(requestParameterMap.get("id"));
+            current = service.find(id);
         }
-        return 0L;
-    }
-    
-    public void setId(Long id) {
-        bill = billService.find(id);
-    }
-    
-    public int getDriverBsn() {
-        if (bill != null) {
-            return bill.getDriverBsn();
-        } else {
-            return 0;
-        }
-    }
-    
-    public Date getPeriodDate() {
-        if (bill != null) {
-            return bill.getPeriodDate();
-        } else {
-            return new Date();
-        }
-    }
-    
-    public Date getPaymentDate() {
-        if (bill != null) {
-            return bill.getPaymentDate();
-        } else {
-            return new Date();
-        }
-    }
-    
-    public void setPaymentDate(Date paymentDate) {
-        if (bill != null) {
-            bill.setPaymentDate(paymentDate);
-        }
-    }
-    
-    public double getPaymentAmount() {
-        if (bill != null) {
-            return bill.getPaymentAmount();
-        } else {
-            return 0;
+
+        if (current == null) {
+            showOverview();
         }
     }
-    
-    public PaymentStatus getPaymentStatus() {
-        if (bill != null) {
-            return bill.getPaymentStatus();
-        } else {
-            return PaymentStatus.UNKNOWN;
-        }
+
+    public void saveChanges() {
+        service.edit(current);
+        showOverview();
     }
-    
-    public void setPaymentStatus(PaymentStatus paymentStatus) {
-        if (bill != null) {
-            bill.setPaymentStatus(paymentStatus);
-        }
-    }
-    
-    public Collection<Object> getMovements() {
-        ArrayList<Object> movements = new ArrayList<Object>();
+
+    public void showOverview() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
         
-        if (bill != null) {
-            movements.addAll(bill.getMovements());
+        try {
+            externalContext.redirect("bill-overview.xhtml");
+            current = null;
+        } catch (IOException ex) {
         }
-        
-        return movements;
     }
-
-    @PostConstruct
-    public void postConstruct() {
-        bills = billService.findAll();
-    }
-
-    public void save() {
-        billService.edit(bill);
-        bills = billService.findAll();
-    }
+    //</editor-fold>
 }

@@ -22,8 +22,7 @@ public class Driver implements Serializable {
     private String password;
     @ElementCollection(targetClass = DriverGroup.class)
     @CollectionTable(name = "DRIVER_GROUP", schema = "ADMINISTRATION", joinColumns = {
-        @JoinColumn(name = "BSN", referencedColumnName = "BSN"),
-        @JoinColumn(name = "EMAIL", referencedColumnName = "EMAIL")})
+        @JoinColumn(name = "BSN")})
     @Column(name = "GROUPNAME")
     @Enumerated(EnumType.STRING)
     private Collection<DriverGroup> groups;

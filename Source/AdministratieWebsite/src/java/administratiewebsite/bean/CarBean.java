@@ -1,137 +1,74 @@
 package administratiewebsite.bean;
 
-import administration.domain.Car;
-import administration.domain.CarType;
-import administration.domain.Classification;
-import administration.domain.PaintColor;
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import administratiewebsite.service.CarService;
+import administration.domain.Car;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.annotation.PostConstruct;
+import java.util.Map;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+//</editor-fold>
 
 @Named
 @SessionScoped
 public class CarBean implements Serializable {
 
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
-    private CarService carService;
-    private Car car;
-    private Collection<Car> cars;
+    private CarService service;
+    private Collection<Car> all;
+    private Car current;
+    //</editor-fold>
 
-    public Collection<Car> getCars() {
-        return cars;
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
+    public Collection<Car> getAll() {
+        return all;
     }
-    
-    public String getLicensePlate() {
-        if (car != null) {
-            return car.getLicensePlate();
-        } else {
-            return "";
+
+    public Car getCurrent() {
+        return current;
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Methods">
+    public void findAll() {
+        all = service.findAll();
+    }
+
+    public void findCurrent() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        Map<String, String> requestParameterMap = externalContext.getRequestParameterMap();
+
+        if (requestParameterMap.containsKey("licensePlate")) {
+            String licensePlate = requestParameterMap.get("licensePlate");
+            current = service.find(licensePlate);
         }
-    }
-    
-    public void setLicensePlate(String licencePlate) {
-        car = carService.find(licencePlate);
-    }
-    
-    public String getCarTrackerId() {
-        if (car != null) {
-            return car.getCarTrackerId();
-        } else {
-            return "";
-        }
-    }
-    
-    public void setCarTrackerId(String carTrackerId) {
-        if (car != null) {
-            car.setCarTrackerId(carTrackerId);
-        }
-    }
-    
-    public int getDriverBsn() {
-        if (car != null) {
-            return car.getDriverBsn();
-        } else {
-            return 0;
-        }
-    }
-    
-    public String getBrand() {
-        if (car != null) {
-            return car.getBrand();
-        } else {
-            return "";
-        }
-    }
-    
-    public String getModel() {
-        if (car != null) {
-            return car.getModel();
-        } else {
-            return "";
-        }
-    }
-    
-    public CarType getType() {
-        if (car != null) {
-            return car.getType();
-        } else {
-            return CarType.UNKNOWN;
-        }
-    }
-    
-    public PaintColor getPaintColor() {
-        if (car != null) {
-            return car.getPaintColor();
-        } else {
-            return PaintColor.UNKNOWN;
-        }
-    }
-    
-    public void setPaintColor(PaintColor paintColor) {
-        if (car != null) {
-            car.setPaintColor(paintColor);
-        }
-    }
-    
-    public int getMass() {
-        if (car != null) {
-            return car.getMass();
-        } else {
-            return 0;
-        }
-    }
-    
-    public void setMass(int mass) {
-        if (car != null) {
-            car.setMass(mass);
-        }
-    }
-    
-    public Classification getClassification() {
-        if (car != null) {
-            return car.getClassification();
-        } else {
-            return Classification.UNKNOWN;
-        }
-    }
-    
-    public void setClassification(Classification classification) {
-        if (car != null) {
-            car.setClassification(classification);
+
+        if (current == null) {
+            showOverview();
         }
     }
 
-    @PostConstruct
-    public void postConstruct() {
-        cars = carService.findAll();
+    public void saveChanges() {
+        service.edit(current);
+        showOverview();
     }
 
-    public void save() {
-        carService.edit(car);
-        cars = carService.findAll();
+    public void showOverview() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        
+        try {
+            externalContext.redirect("car-overview.xhtml");
+            current = null;
+        } catch (IOException ex) {
+        }
     }
+    //</editor-fold>
 }

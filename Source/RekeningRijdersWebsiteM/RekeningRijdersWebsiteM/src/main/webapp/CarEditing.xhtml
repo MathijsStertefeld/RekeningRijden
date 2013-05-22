@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        
+    </h:head>
+    <f:metadata>
+        <f:viewParam name="licensePlate" value="#{carBean.licensePlate}" />
+    </f:metadata>
+    <h:body>
+        <ui:composition template="Template.xhtml">
+            <ui:define name="PageTitle">
+                #{msg.CE_EditCar}
+            </ui:define>
+            
+            <ui:define name="TypeTitle">
+                 #{msg.TE_User}
+            </ui:define>
+            
+            <ui:define name="SiteTypeSelection">
+                <li class="selected">                           
+                    <a href="Login.xhtml">
+                        #{msg.TE_User}
+                    </a>
+                </li>		
+                <li class="">
+                    <a href="http://localhost:8080/AdministratieWebsite/">
+                        #{msg.TE_Administration}
+                    </a>
+                </li>
+            </ui:define>
+            
+            <ui:define name="Breadcrumbs">
+                <li>
+                    <a href="Login.xhtml" title="Administratie">
+                        #{msg.TE_User}
+                    </a>
+                </li>
+
+                <li>
+                    <a href="CarOverview.xhtml" title="Cartrackers">
+                        #{msg.SB_Cars}
+                    </a>
+                </li>
+                
+                <li class="selected">
+                    <a href="" title="Wijzigen">
+                        #{msg.SB_View}
+                    </a>
+                </li>
+            </ui:define>
+            
+            <ui:define name="SidebarLinks">
+                <li class="categorylink">
+                    <a href="BillOverview.xhtml" class="">
+                        #{msg.SB_Bills}
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="CarOverview.xhtml" class="">
+                        #{msg.SB_Cars}
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="DriverOverview.xhtml" class="">
+                        #{msg.SB_Profile}
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <h:form>
+                        <h:commandLink action="#{logoutBean.logout()}">
+                            #{msg.SB_Logout}
+                        </h:commandLink>
+                    </h:form>
+                </li>
+            </ui:define>
+            
+            <ui:define name="SiteContent">
+                <h:form id="carEditForm">
+                    <h:outputLabel for="carTrackerId" value="#{msg.CE_CartrackerID}: " /> <br/>              
+                    <h:inputText id="carTrackerId" value="#{carBean.car.carTrackerId}"  style="width: 250px" /> <br/>
+
+                    <h:outputLabel for="ownerBsn" value="#{msg.CE_BSNOwner}: " /> <br/>              
+                    <h:inputText id="ownerBsn" value="#{carBean.car.driverBsn}" style="width: 250px" disabled="true"/> <br/>
+
+                    <h:outputLabel for="licensePlate" value="#{msg.CE_LicensePlate}: " /> <br/>              
+                    <h:inputText id="licensePlate" value="#{carBean.car.licensePlate}" style="width: 250px" disabled="true"/> <br/>
+
+                    <h:outputLabel for="brand" value="#{msg.CE_Brand}: " /> <br/>              
+                    <h:inputText id="brand" value="#{carBean.car.brand}" style="width: 250px" disabled="true"/> <br/>
+
+                    <h:outputLabel for="model" value="#{msg.CE_Model}: " /> <br/>              
+                    <h:inputText id="model" value="#{carBean.car.model}" style="width: 250px" disabled="true" /> <br/>
+
+                    <h:outputLabel for="type" value="#{msg.CE_Type}: " /> <br/>              
+                    <h:selectOneMenu id="type" value="#{carBean.car.type}" style="width: 250px" disabled="true">
+                        <f:selectItem itemValue="PASSENGER_CAR" itemLabel="#{msg.CE_Type_PassengerCar}" />
+                        <f:selectItem itemValue="VAN" itemLabel="#{msg.CE_Type_Van}" />
+                        <f:selectItem itemValue="AUTOBUS" itemLabel="#{msg.CE_Type_Autobus}" />
+                        <f:selectItem itemValue="TRUCK" itemLabel="#{msg.CE_Type_Truck}" />
+                    </h:selectOneMenu><br/>                    
+                    
+                    <h:outputLabel for="paintColor" value="#{msg.CE_Color}: " /> <br/>              
+                    <h:selectOneMenu id="paintColor" value="#{carBean.car.paintColor}" style="width: 250px">
+                        <f:selectItem itemValue="VARIOUS" itemLabel="#{msg.CE_Color_Various}" />
+                        <f:selectItem itemValue="ORANGE" itemLabel="#{msg.CE_Color_Orange}" />
+                        <f:selectItem itemValue="PINK" itemLabel="#{msg.CE_Color_Pink}" />
+                        <f:selectItem itemValue="RED" itemLabel="#{msg.CE_Color_Red}" />
+                        <f:selectItem itemValue="WHITE" itemLabel="#{msg.CE_Color_White}" />
+                        <f:selectItem itemValue="BLUE" itemLabel="#{msg.CE_Color_Blue}" />
+                        <f:selectItem itemValue="GREEN" itemLabel="#{msg.CE_Color_Green}" />
+                        <f:selectItem itemValue="YELLOW" itemLabel="#{msg.CE_Color_Yellow}" />
+                        <f:selectItem itemValue="GRAY" itemLabel="#{msg.CE_Color_Gray}" />
+                        <f:selectItem itemValue="BROWN" itemLabel="#{msg.CE_Color_Brown}" />
+                        <f:selectItem itemValue="CREAM" itemLabel="#{msg.CE_Color_Cream}" />
+                        <f:selectItem itemValue="PURPLE" itemLabel="#{msg.CE_Color_Purple}" />
+                        <f:selectItem itemValue="BLACK" itemLabel="#{msg.CE_Color_Black}" />
+                    </h:selectOneMenu><br/>
+
+                    <h:outputLabel for="mass" value="#{msg.CE_Mass}: " /> <br/>              
+                    <h:inputText id="mass" value="#{carBean.car.mass}" style="width: 250px"/> <br/>
+                    
+                    <h:outputLabel for="classification" value="#{msg.CE_Classification}: " /> <br/>              
+                    <h:selectOneMenu id="classification" value="#{carBean.car.classification}" style="width: 250px">
+                        <f:selectItem itemValue="ZERO" itemLabel="#{msg.CE_Classification_Zero}" />
+                        <f:selectItem itemValue="ONE" itemLabel="#{msg.CE_Classification_One}" />
+                        <f:selectItem itemValue="TWO" itemLabel="#{msg.CE_Classification_Two}" />
+                        <f:selectItem itemValue="THREE" itemLabel="#{msg.CE_Classification_Three}" />
+                        <f:selectItem itemValue="FOUR" itemLabel="#{msg.CE_Classification_Four}" />
+                        <f:selectItem itemValue="FIVE" itemLabel="#{msg.CE_Classification_Five}" />
+                        <f:selectItem itemValue="SIX" itemLabel="#{msg.CE_Classification_Six}" />
+                        <f:selectItem itemValue="EEV" itemLabel="#{msg.CE_Classification_EEV}" />
+                        <f:selectItem itemValue="R" itemLabel="#{msg.CE_Classification_R}" />
+                    </h:selectOneMenu><br/>
+                    
+                    <br/>
+                    <h:commandButton id="submit" value=" #{msg.CE_Save} " action="CarOverview">
+                        <f:actionListener binding="#{carBean.save()}" />
+                    </h:commandButton>
+                    &nbsp;
+                    <h:commandButton id="cancel" value=" #{msg.CE_Cancel} " action="CarOverview" />
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>

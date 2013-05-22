@@ -25,7 +25,7 @@
                     </a>
                 </li>		
                 <li class="">
-                    <a href="Login.xhtml">
+                    <a href="http://localhost:8080/AdministratieWebsite/faces/Login.xhtml">
                         Administratie
                     </a>
                 </li>
@@ -113,7 +113,8 @@
                     <p>
                         <strong>Geboortedatum</strong>
                         <br/>
-                        <h:inputText value="#{driverBean.driver.dateOfBirth}" />
+                        <p:calendar value="#{driverBean.driver.dateOfBirth}" id="popupCal" /> 
+                        <!--h:inputText value="#{driverBean.driver.dateOfBirth}" /-->
                     </p>
                     
                     <br/>

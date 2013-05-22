@@ -6,11 +6,13 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-    </h:head>
+    </h:head>  
     <h:body>
         <ui:composition template="Template.xhtml">
+            
             <ui:define name="PageTitle">
                 Login
+                #{msg.T_User}
             </ui:define>
             
             <ui:define name="TypeTitle">
@@ -24,7 +26,7 @@
                     </a>
                 </li>		
                 <li class="">
-                    <a href="Login.xhtml">
+                    <a href="http://localhost:8080/AdministratieWebsite/faces/Login.xhtml">
                         Administratie
                     </a>
                 </li>
@@ -54,16 +56,60 @@
             
             <ui:define name="SiteContent">
                 <h:form>
-                    <h:outputLabel  value="Gebruikersnaam: " />
-                    <br/>
-                    <h:inputText id="username" value="#{loginBean.email}"  style="width: 250px" />
-                    <br/>
-                    <h:outputLabel  value="Wachtwoord: " />
-                    <br/>
-                    <h:inputSecret id="password" value="#{loginBean.password}"  style="width: 250px" />
-                    <br/>
-                    <br/>
-                    <h:commandButton id="submit" value=" Log in " action="#{loginBean.login()}" />
+                    <div style="float: left">
+                        <h2>Inloggen</h2>
+                        <h:outputLabel  value="Email: " />
+                        <br/>
+                        <h:inputText id="email" value="#{loginBean.email}"  style="width: 250px" />
+                        <br/>
+                        <h:outputLabel  value="Wachtwoord: " />
+                        <br/>
+                        <h:inputSecret id="password" value="#{loginBean.password}"  style="width: 250px" />
+                        <br/>
+                        <br/>
+                        <h:commandButton id="submit" value=" Log in " action="#{loginBean.login()}" />
+                    </div>
+                    <div style="float: right; width: 50%">
+                        <h2>Registreren</h2>
+                        <h:outputLabel  value="BSN: " />
+                        <br/>
+                        <h:inputText id="registerBSN" value="#{registerBean.bsn}"  style="width: 250px" />
+                        <br/>
+                        <h:outputLabel  value="Email: " />
+                        <br/>
+                        <h:inputSecret id="registerEmail" value="#{registerBean.email}"  style="width: 250px" />
+                        <br/>
+                        <h:outputLabel  value="Wachtwoord: " />
+                        <br/>
+                        <h:inputText id="registerPassword" value="#{registerBean.password}"  style="width: 250px" />
+                        <br/>
+                        <h:outputLabel  value="Voornaam: " />
+                        <br/>
+                        <h:inputText id="registerFirstName" value="#{registerBean.firstName}"  style="width: 250px" />
+                        <br/>
+                        <h:outputLabel  value="Achternaam: " />
+                        <br/>
+                        <h:inputText id="registerLastName" value="#{registerBean.lastName}"  style="width: 250px" />
+                        <br/>
+                        <h:outputLabel  value="Woonplaats: " />
+                        <br/>
+                        <h:inputText id="registerResidence" value="#{registerBean.residence}"  style="width: 250px" />
+                        <br/>
+                        <h:outputLabel  value="Adres: " />
+                        <br/>
+                        <h:inputText id="registerAddress" value="#{registerBean.address}"  style="width: 250px" />
+                        <br/>
+                        <h:outputLabel  value="Postcode: " />
+                        <br/>             
+                        <h:inputText id="registerZipCode" value="#{registerBean.zipCode}"  style="width: 250px" />
+                        <br/>
+                        <h:outputLabel  value="Geboortedatum: " />
+                        <br/>              
+                        <p:calendar id="registerDateOfBirth" value="#{registerBean.dateOfBirth}" style="width: 250px" />
+                        <br/>
+                        <br/>
+                        <h:commandButton id="register" value=" Registreer " action="#{registerBean.register()}" />
+                    </div>
                 </h:form>
             </ui:define>
 
