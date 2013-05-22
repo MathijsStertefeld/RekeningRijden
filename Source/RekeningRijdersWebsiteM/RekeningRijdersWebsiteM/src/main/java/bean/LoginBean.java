@@ -98,7 +98,7 @@ public class LoginBean implements Serializable {
         
         if (driver != null) {
             System.err.println(driver.getActivated() + driver.getEmail());
-            if (true)
+            if (driver.getActivated() == true)
             {
                 try {
                     String username = String.valueOf(driver.getBsn());

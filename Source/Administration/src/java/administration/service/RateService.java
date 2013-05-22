@@ -17,8 +17,9 @@ public class RateService implements Serializable {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void create(Rate entity) {
+    public Rate create(Rate entity) {
         rateDAO.create(entity);
+        return entity;
     }
 
     @PUT

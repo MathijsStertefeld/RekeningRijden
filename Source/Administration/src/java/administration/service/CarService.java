@@ -17,8 +17,9 @@ public class CarService implements Serializable {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void create(Car car) {
+    public Car create(Car car) {
         carDAO.create(car);
+        return car;
     }
 
     @PUT

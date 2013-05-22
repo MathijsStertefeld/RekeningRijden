@@ -17,8 +17,9 @@ public class EmployeeService implements Serializable {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void create(Employee entity) {
+    public Employee create(Employee entity) {
         employeeDAO.create(entity);
+        return entity;
     }
 
     @PUT

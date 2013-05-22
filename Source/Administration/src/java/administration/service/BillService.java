@@ -17,8 +17,9 @@ public class BillService implements Serializable {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void create(Bill entity) {
+    public Bill create(Bill entity) {
         billDAO.create(entity);
+        return entity;
     }
 
     @PUT
