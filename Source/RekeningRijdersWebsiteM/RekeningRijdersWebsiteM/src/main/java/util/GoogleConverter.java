@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -31,27 +32,31 @@ public class GoogleConverter
         }
     }
     
-    public static void main(String[] args) throws Exception
-    {
-        String s = convertCurrency("EUR", "USD", "15,50");
-        System.out.println("Result: " + s);
+    //public static void main(String[] args) throws Exception
+    //{
+    //    String s = convertCurrency("EUR", "USD", "15,50");
+    //    System.out.println("Result: " + s);
+    //}
+      
+    public static String convert(String from, String to, String amount) throws MalformedURLException, IOException{
+        //Correct link: 
+        //http://www.google.com/ig/calculator?hl=en&q=1GBP=?USD
+        
+        String google = "http://www.google.com/ig/calculator?hl=en&q=";
+        String charset = "UTF-8";
+        
+        URL url = new URL(google + amount + from + "=?" + to);
+        Reader reader = new InputStreamReader(url.openStream(), charset);
+        Result result = new Gson().fromJson(reader, Result.class);
+        
+        String convertedResult = result.getRhs().split("\\s+")[0];
+        return convertedResult;
+        
     }
     
     public static String convertCurrency(String baseCurrency, String termCurrency, String amount) throws MalformedURLException, IOException
     {
-        //Correct link: 
-        //http://www.google.com/ig/calculator?hl=en&q=1GBP=?USD
-        
-        String _google = "http://www.google.com/ig/calculator?hl=en&q=";
-        String _charset = "UTF-8";
-             
-        URL _url = new URL(_google + amount + baseCurrency + "=?" + termCurrency);
-        Reader _reader = new InputStreamReader(_url.openStream(), _charset);
-        Result _result = new Gson().fromJson(_reader, Result.class);
-        
-        String _convertedAmount = _result.getRhs().split("\\s+")[0];
-        
-        return _convertedAmount;
+        return convert(baseCurrency, termCurrency, amount);
     }
     
     public static String convertEURtoUSD(String amount) throws MalformedURLException, IOException{
