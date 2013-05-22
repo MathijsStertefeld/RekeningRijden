@@ -55,7 +55,7 @@ public class EmployeeBean implements Serializable {
         
         if (loggedInEmployee == null) {
             try {
-                externalContext.redirect("login.xhtml");
+                externalContext.redirect(".");
             } catch (IOException ex) {
             }
         }
@@ -98,7 +98,7 @@ public class EmployeeBean implements Serializable {
             request.login(loginUsername, loginPassword);
             loginUsername = "";
             loginPassword = "";
-            externalContext.redirect("car-overview.xhtml");
+            externalContext.redirect(".");
         } catch (IOException ex) {
         } catch (ServletException ex) {
             facesContext.addMessage(null, new FacesMessage(ex.getMessage()));
@@ -112,7 +112,7 @@ public class EmployeeBean implements Serializable {
 
         try {
             request.logout();
-            externalContext.redirect("login.xhtml");
+            externalContext.redirect(".");
         } catch (IOException ex) {
         } catch (ServletException ex) {
         }

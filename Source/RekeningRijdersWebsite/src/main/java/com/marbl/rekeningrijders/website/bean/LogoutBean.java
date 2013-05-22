@@ -27,7 +27,7 @@ public class LogoutBean implements Serializable {
         
         if (request.getUserPrincipal() != null) {
             int bsn = Integer.parseInt(request.getUserPrincipal().getName());
-            return service.getDriverByBSN(bsn);
+            return service.findDriver(bsn);
         } else {
             return null;
         }
@@ -35,9 +35,12 @@ public class LogoutBean implements Serializable {
     
     @PostConstruct
     public void postConstruct() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
+        
         if (getLoggedInDriver() == null) {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("Login.xhtml");
+                externalContext.redirect(".");
             } catch (IOException ex) {
             }
         }
@@ -50,7 +53,7 @@ public class LogoutBean implements Serializable {
 
         try {
             request.logout();
-            externalContext.redirect("Login.xhtml");
+            externalContext.redirect(".");
         } catch (IOException ex) {
         } catch (ServletException ex) {
         }

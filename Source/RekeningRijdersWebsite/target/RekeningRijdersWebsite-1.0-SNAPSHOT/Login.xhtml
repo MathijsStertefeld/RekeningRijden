@@ -8,7 +8,7 @@
     <h:head>
     </h:head>  
     <h:body>
-        <ui:composition template="Template.xhtml">
+        <ui:composition template="template.xhtml">
             <f:loadBundle basename="Language_nl" var="msg" />
             <ui:define name="PageTitle">
                 #{msg.LO_Login}
@@ -24,7 +24,7 @@
                         #{msg.TE_User}
                     </a>
                 </li>		
-                <li class="">
+                <li>
                     <a href="http://localhost:8080/AdministrationWebsite/">
                         #{msg.TE_Administration}
                     </a>
@@ -33,13 +33,13 @@
             
             <ui:define name="Breadcrumbs">
                 <li>
-                    <a href="" title="Gebruiker">
+                    <a href=".">
                         #{msg.TE_User}
                     </a>
                 </li>
 
                 <li class="selected">
-                    <a href="" title="Inloggen">
+                    <a>
                         #{msg.LO_Login}
                     </a>
                 </li>
@@ -47,7 +47,7 @@
             
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
-                    <a href="Login.xhtml" class="">
+                    <a href="login.xhtml">
                         #{msg.LO_Login}
                     </a>          
                 </li>

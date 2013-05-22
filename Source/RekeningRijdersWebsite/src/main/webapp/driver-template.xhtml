@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{driverBean.checkLogin()}" />
+    </f:metadata>
+    
+    <body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="TypeTitle">
+                Rekening Rijders
+            </ui:define>
+            
+            <ui:define name="SidebarLinks">
+                <li class="categorylink">
+                    <a href="bill-overview.xhtml">
+                        #{msg.SB_Bills}
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="car-overview.xhtml">
+                        #{msg.SB_Cars}
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <a href="driver-overview.xhtml">
+                        #{msg.SB_Profile}
+                    </a>          
+                </li>
+                <li class="categorylink">
+                    <h:form>
+                        <h:commandLink action="#{logoutBean.logout()}">
+                            #{msg.SB_Logout}
+                        </h:commandLink>
+                    </h:form>
+                </li>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

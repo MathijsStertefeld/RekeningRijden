@@ -32,7 +32,7 @@ public class DriverBean implements Serializable {
         
         if (request.getUserPrincipal() != null) {
             int bsn = Integer.parseInt(request.getUserPrincipal().getName());
-            return service.getDriverByBSN(bsn);
+            return service.findDriver(bsn);
         } else {
             return null;
         }

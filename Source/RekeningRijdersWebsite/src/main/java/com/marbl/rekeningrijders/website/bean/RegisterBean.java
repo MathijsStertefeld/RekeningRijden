@@ -154,7 +154,7 @@ public class RegisterBean implements Serializable{
             message.setFrom(new InternetAddress("payment@RekeningRijders.no-ip.biz"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
             message.setSubject("Activatie Rekening Rijders");
-            message.setText("Klik op onderstaande link om uw account te activeren.\nhttp://localhost:8080/RekeningRijdersWebsiteM/faces/Activation.xhtml?bsn=" + bsn);
+            message.setText("Klik op onderstaande link om uw account te activeren.\nhttp://localhost:8080/RekeningRijdersWebsiteM/faces/activation.xhtml?bsn=" + bsn);
             
             Transport.send(message);
         }
@@ -166,7 +166,7 @@ public class RegisterBean implements Serializable{
     
         public void activateDriver()
     {
-        Driver driver = service.getDriverByBSN(bsn);
+        Driver driver = service.findDriver(bsn);
         driver.setActivated(true);
         service.editDriver(driver);
         
@@ -176,7 +176,7 @@ public class RegisterBean implements Serializable{
 
         try {
             request.logout();
-            externalContext.redirect("Login.xhtml");
+            externalContext.redirect(".");
         } catch (IOException ex) {
         } catch (ServletException ex) {
         }

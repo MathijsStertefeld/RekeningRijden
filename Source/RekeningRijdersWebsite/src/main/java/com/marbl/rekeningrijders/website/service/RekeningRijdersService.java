@@ -1,8 +1,6 @@
 package com.marbl.rekeningrijders.website.service;
 
-import com.marbl.administration.domain.Bill;
-import com.marbl.administration.domain.Car;
-import com.marbl.administration.domain.Driver;
+import com.marbl.administration.domain.*;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
@@ -18,34 +16,36 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.MediaType;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 @Stateless
 public class RekeningRijdersService implements Serializable {
 
     private WebResource service;
 
-    public void payBill(Long billID) {
-        Bill bill = getBill(billID);
-        bill.pay();
-        service.path("resources").path("bill").put(Bill.class, bill);
+    @PostConstruct
+    public void postConstruct() {
+        ClientConfig config = new DefaultClientConfig();
+        Client client = Client.create(config);
+        service = client.resource("http://localhost:8080/AdministrationBackend/");
     }
 
-    public void subscribeTrafficJamInfo() {
-        throw new NotImplementedException();
+    public void payBill(Long billID) {
+        Bill bill = findBill(billID);
+        bill.pay();
+        service.path("resources").path("bill").put(Bill.class, bill);
     }
 
     public void editDriver(Driver driver) {
         service.path("resources").path("driver").put(Driver.class, driver);
     }
 
-    public Driver getDriverByBSN(int bsn) {
+    public Driver findDriver(int bsn) {
         Driver driver = service.path("resources").path("driver").path(Integer.toString(bsn))
                 .accept(MediaType.APPLICATION_JSON).get(Driver.class);
         return driver;
     }
 
-    public Driver getDriverByEmail(String email) {
+    public Driver findDriverByEmail(String email) {
         Driver driver = service.path("resources").path("driver").path("email").path(email)
                 .accept(MediaType.APPLICATION_JSON).get(Driver.class);
 
@@ -56,21 +56,13 @@ public class RekeningRijdersService implements Serializable {
         service.path("resources").path("driver").post(Driver.class, driver);
     }
 
-    public void login() {
-        throw new NotImplementedException();
-    }
-
-    public void logout() {
-        throw new NotImplementedException();
-    }
-
-    public Collection<Bill> getBillsFromDriver(int bsn) {
-        Driver driver = getDriverByBSN(bsn);
+    public Collection<Bill> findBillsByBsn(int bsn) {
+        Driver driver = findDriver(bsn);
         return driver.getBills();
     }
 
-    public Bill getBill(Long billID) {
-        Bill bill = service.path("resources").path("bill").path(Long.toString(billID))
+    public Bill findBill(Long billId) {
+        Bill bill = service.path("resources").path("bill").path(Long.toString(billId))
                 .accept(MediaType.APPLICATION_JSON).get(Bill.class);
 
         return bill;
@@ -81,11 +73,11 @@ public class RekeningRijdersService implements Serializable {
     }
 
     public Collection<Car> getCarsFromDriver(int bsn) {
-        Driver driver = getDriverByBSN(bsn);
+        Driver driver = findDriver(bsn);
         return driver.getCars();
     }
 
-    public Car getCar(String licensePlate) {
+    public Car findCar(String licensePlate) {
         Car car = service.path("resources").path("car").path(licensePlate)
                 .accept(MediaType.APPLICATION_JSON).get(Car.class);
         return car;
@@ -93,13 +85,6 @@ public class RekeningRijdersService implements Serializable {
 
     public void editCar(Car car) {
         service.path("resources").path("car").put(Car.class, car);
-    }
-
-    @PostConstruct
-    public void postConstruct() {
-        ClientConfig config = new DefaultClientConfig();
-        Client client = Client.create(config);
-        service = client.resource("http://localhost:8080/AdministrationService/");
     }
     
     public String hash(String text) {

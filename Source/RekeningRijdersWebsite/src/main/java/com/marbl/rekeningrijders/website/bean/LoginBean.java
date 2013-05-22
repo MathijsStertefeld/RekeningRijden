@@ -24,8 +24,7 @@ public class LoginBean implements Serializable {
     private RekeningRijdersService service;
     private String email;
     private String password;
-    String languageCode;
-    
+    private String languageCode;
     private Locale dutchLocale;
     private Locale englishLocale;
 
@@ -44,47 +43,43 @@ public class LoginBean implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public String getLanguageCode() {
         return languageCode;
     }
-    
+
     public void setLanguageCode(String languageCode) {
         this.languageCode = languageCode;
-        
-        if (languageCode.equals("nl"))
-        {
+
+        if (languageCode.equals("nl")) {
             FacesContext.getCurrentInstance().getViewRoot().setLocale(dutchLocale);
-        }
-        else if (languageCode.equals("en"))
-        {
+        } else if (languageCode.equals("en")) {
             FacesContext.getCurrentInstance().getViewRoot().setLocale(englishLocale);
         }
     }
-    
+
     public Driver getLoggedInDriver() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        
+
         if (request.getUserPrincipal() != null) {
             int bsn = Integer.parseInt(request.getUserPrincipal().getName());
-            return service.getDriverByBSN(bsn);
+            return service.findDriver(bsn);
         } else {
             return null;
         }
     }
-    
+
     @PostConstruct
     public void postConstruct() {
-        
         dutchLocale = new Locale.Builder().setLanguage("nl").build();
         englishLocale = new Locale.Builder().setLanguage("en").build();
         setLanguageCode("nl");
-        
+
         if (getLoggedInDriver() != null) {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("BillOverview.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("driver-overview.xhtml");
             } catch (IOException ex) {
             }
         }
@@ -94,26 +89,25 @@ public class LoginBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        Driver driver = service.getDriverByEmail(email);
-        
+        Driver driver = service.findDriverByEmail(email);
+
         if (driver != null) {
             System.err.println(driver.getActivated() + driver.getEmail());
-            if (driver.getActivated() == true)
-            {
+            if (driver.getActivated() == true) {
                 try {
                     String username = String.valueOf(driver.getBsn());
                     request.login(username, password);
-                    externalContext.redirect("BillOverview.xhtml");
+                    externalContext.redirect(".");
                 } catch (IOException ex) {
                 } catch (ServletException ex) {
                     context.addMessage(null, new FacesMessage(ex.getMessage()));
                 }
             }
         }
-        
+
         password = "";
     }
-    
+
     public void logout() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
@@ -121,19 +115,17 @@ public class LoginBean implements Serializable {
 
         try {
             request.logout();
-            externalContext.redirect("Login.xhtml");
+            externalContext.redirect(".");
         } catch (IOException ex) {
         } catch (ServletException ex) {
         }
     }
-    
-    public void changeLanguageToNL()
-    {
+
+    public void changeLanguageToNL() {
         setLanguageCode("nl");
     }
-    
-    public void changeLanguageToEN()
-    {
+
+    public void changeLanguageToEN() {
         setLanguageCode("en");
     }
 }

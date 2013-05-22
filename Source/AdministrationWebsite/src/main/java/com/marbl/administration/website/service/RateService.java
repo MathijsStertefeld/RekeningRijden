@@ -17,7 +17,7 @@ public class RateService implements Serializable {
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        webResource = client.resource("http://localhost:8080/AdministrationService/");
+        webResource = client.resource("http://localhost:8080/AdministrationBackend/");
     }
 
     public void create(Rate rate) {

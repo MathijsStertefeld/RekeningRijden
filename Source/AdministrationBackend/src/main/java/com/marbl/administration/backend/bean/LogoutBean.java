@@ -61,7 +61,7 @@ public class LogoutBean implements Serializable {
     public void postConstruct() {
         if (getUserPrincipal() == null) {
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect(".");
             } catch (IOException ex) {
             }
         }
@@ -74,7 +74,7 @@ public class LogoutBean implements Serializable {
 
         try {
             request.logout();
-            externalContext.redirect("login.xhtml");
+            externalContext.redirect(".");
         } catch (IOException ex) {
         } catch (ServletException ex) {
         }
