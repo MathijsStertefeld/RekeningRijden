@@ -72,39 +72,63 @@
             </ui:define>
             
             <ui:define name="SiteContent">
+                
                 <h:form id="billForm">
-                    
                     <p:dataTable id="dataTable" var="bill" value="#{billBean.all}" tableStyle="table-layout:fixed;">
-                        <p:column sortBy="#{bill.id}" style="white-space:normal" headerText="Factuur ID">
-                            <h:outputText value="#{bill.id}" />
+                        <p:column sortBy="#{bill.id}" style="white-space:normal" headerText="Factuurnummer">
+                            <h:outputLink value="BillEditing.xhtml">
+                                <f:param name="id" value="#{bill.id}" />
+                                <h:outputText value="#{bill.id}" />
+                            </h:outputLink>
                         </p:column>
                         
-                        <p:column sortBy="#{bill.driverBsn}" style="white-space:normal" headerText="BSN">
+                        <p:column sortBy="#{bill.driverBsn}" style="white-space:normal" headerText="Eigenaar (BSN)">
                             <h:outputText value="#{bill.driverBsn}" />
                         </p:column>
                         
-                        <p:column sortBy="#{bill.paymentAmount}}" style="white-space:normal" headerText="Totaal bedrag">  
+                        <p:column sortBy="#{bill.paymentAmount}}" style="white-space:normal" headerText="Totaalbedrag">  
                             <h:outputText value="#{bill.paymentAmount}" />  
                         </p:column>  
 
-                        <p:column sortBy="#{bill.paymentDate}" style="white-space:normal" headerText="Betaal datum">  
+                        <p:column sortBy="#{bill.paymentDate}" style="white-space:normal" headerText="Betaaldatum">  
                             <h:outputText value="#{bill.paymentDate}" />  
                         </p:column>  
 
-                        <p:column sortBy="#{bill.paymentStatus}" style="white-space:normal" headerText="Betaal status">
+                        <p:column sortBy="#{bill.paymentStatus}" style="white-space:normal" headerText="Betaalstatus">
                             <h:outputText value="#{bill.paymentStatus}" />
                         </p:column>
-                        
-                        <p:column style="white-space:normal" headerText="Wijzigen">
-                            <h:outputLink value="BillEditing.xhtml">
-                                <h:outputText value=" Wijzigen " />
-                                <f:param name="id" value="#{bill.id}" />
-                            </h:outputLink>
-                        </p:column>
                     </p:dataTable>
-                    
-                    <br/>
                 </h:form>
+                
+                <h:form id="generateForm">
+                    <h:outputLabel for="month" value="Maand: " />
+                    <h:selectOneMenu id="month" value="#{billBean.month}">
+                        <f:selectItem itemValue="01" itemLabel="januari" />
+                        <f:selectItem itemValue="02" itemLabel="februari" />
+                        <f:selectItem itemValue="03" itemLabel="maart" />
+                        <f:selectItem itemValue="04" itemLabel="april" />
+                        <f:selectItem itemValue="05" itemLabel="mei" />
+                        <f:selectItem itemValue="06" itemLabel="juni" />
+                        <f:selectItem itemValue="07" itemLabel="juli" />
+                        <f:selectItem itemValue="08" itemLabel="augustus" />
+                        <f:selectItem itemValue="09" itemLabel="september" />
+                        <f:selectItem itemValue="10" itemLabel="oktober" />
+                        <f:selectItem itemValue="11" itemLabel="november" />
+                        <f:selectItem itemValue="12" itemLabel="december" />
+                    </h:selectOneMenu>
+                    
+                    <h:outputLabel for="year" value="Jaar: " />
+                    <h:selectOneMenu id="year" value="#{billBean.year}">
+                        <f:selectItem itemValue="2011" itemLabel="2011" />
+                        <f:selectItem itemValue="2012" itemLabel="2012" />
+                        <f:selectItem itemValue="2013" itemLabel="2013" />
+                        <f:selectItem itemValue="2014" itemLabel="2014" />
+                    </h:selectOneMenu>
+                    &nbsp;
+                    <h:commandButton id="submit" value=" Genereer facturen " />
+                </h:form>
+                
+                <br />
             </ui:define>
 
         </ui:composition>

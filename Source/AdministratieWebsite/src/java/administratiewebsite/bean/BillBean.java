@@ -23,6 +23,8 @@ public class BillBean implements Serializable {
     private BillService service;
     private Collection<Bill> all;
     private Bill current;
+    private int month;
+    private int year;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -32,6 +34,22 @@ public class BillBean implements Serializable {
 
     public Bill getCurrent() {
         return current;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
     //</editor-fold>
 
