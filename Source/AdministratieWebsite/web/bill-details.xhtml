@@ -6,41 +6,24 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-        <f:event type="preRenderView" listener="#{employeeBean.checkLogin()}" />
         <f:event type="preRenderView" listener="#{billBean.findCurrent()}" />
     </f:metadata>
+    
     <h:body>
-        <ui:composition template="Template.xhtml">
+        <ui:composition template="employee-template.xhtml">
             <ui:define name="PageTitle">
                 Wijzigen Facturen
             </ui:define>
             
-            <ui:define name="TypeTitle">
-                 Administratie
-            </ui:define>
-            
-            <ui:define name="SiteTypeSelection">
-                <li class="">                           
-                    <a href="Login.xhtml">
-                        Gebruiker
-                    </a>
-                </li>		
-                <li class="selected">
-                    <a href="Login.xhtml">
-                        Administratie
-                    </a>
-                </li>
-            </ui:define>
-            
             <ui:define name="Breadcrumbs">
                 <li>
-                    <a href="Login.xhtml" title="Administratie">
+                    <a href="login.xhtml" title="Administratie">
                         Administratie
                     </a>
                 </li>
 
                 <li>
-                    <a href="BillOverview.xhtml" title="Facturen">
+                    <a href="bill-overview.xhtml" title="Facturen">
                         Facturen
                     </a>
                 </li>
@@ -49,31 +32,6 @@
                     <a href="" title="Wijzigen">
                         Wijzigen
                     </a>
-                </li>
-            </ui:define>
-            
-            <ui:define name="SidebarLinks">
-                <li class="categorylink">
-                    <a href="CarOverview.xhtml" class="">
-                        Cartrackers
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <a href="RateOverview.xhtml" class="">
-                        Tarieven
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <a href="BillOverview.xhtml" class="">
-                        Facturen
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <h:form>
-                        <h:commandLink action="#{employeeBean.logout()}">
-                            Uitloggen
-                        </h:commandLink>
-                    </h:form>
                 </li>
             </ui:define>
             

@@ -9,7 +9,7 @@
         <f:event type="preRenderView" listener="#{employeeBean.checkLogout()}" />
     </f:metadata>
     <h:body>
-        <ui:composition template="Template.xhtml">
+        <ui:composition template="template.xhtml">
             <ui:define name="PageTitle">
                 Login
             </ui:define>
@@ -18,22 +18,9 @@
                  Administratie
             </ui:define>
             
-            <ui:define name="SiteTypeSelection">
-                <li class="">                           
-                    <a href="Login.xhtml">
-                        Gebruiker
-                    </a>
-                </li>		
-                <li class="selected">
-                    <a href="Login.xhtml">
-                        Administratie
-                    </a>
-                </li>
-            </ui:define>
-            
             <ui:define name="Breadcrumbs">
                 <li>
-                    <a href="" title="Administratie">
+                    <a href="login.xhtml" title="Administratie">
                         Administratie
                     </a>
                 </li>
@@ -47,7 +34,7 @@
             
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
-                    <a href="Login.xhtml" class="">
+                    <a href="login.xhtml">
                         Inloggen
                     </a>          
                 </li>
@@ -67,7 +54,6 @@
                     <h:commandButton id="submit" value=" Login " action="#{employeeBean.login()}" />
                 </h:form>
             </ui:define>
-
         </ui:composition>
     </h:body>
 </html>

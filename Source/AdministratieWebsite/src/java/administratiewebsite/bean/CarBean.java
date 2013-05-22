@@ -45,9 +45,9 @@ public class CarBean implements Serializable {
         ExternalContext externalContext = facesContext.getExternalContext();
         Map<String, String> requestParameterMap = externalContext.getRequestParameterMap();
 
-        if (requestParameterMap.containsKey("id")) {
-            String id = requestParameterMap.get("id");
-            current = service.find(id);
+        if (requestParameterMap.containsKey("licensePlate")) {
+            String licensePlate = requestParameterMap.get("licensePlate");
+            current = service.find(licensePlate);
         }
 
         if (current == null) {
@@ -65,7 +65,7 @@ public class CarBean implements Serializable {
         ExternalContext externalContext = facesContext.getExternalContext();
         
         try {
-            externalContext.redirect("CarOverview.xhtml");
+            externalContext.redirect("car-overview.xhtml");
             current = null;
         } catch (IOException ex) {
         }

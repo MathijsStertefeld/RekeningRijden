@@ -1,91 +1,48 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-        <f:event type="preRenderView" listener="#{employeeBean.checkLogin()}" />
         <f:event type="preRenderView" listener="#{billBean.findAll()}" />
     </f:metadata>
+    
     <h:body>
-        <ui:composition template="Template.xhtml">
+        <ui:composition template="employee-template.xhtml">
             <ui:define name="PageTitle">
                 Facturen Overzicht
             </ui:define>
-            
-            <ui:define name="TypeTitle">
-                 Administratie
-            </ui:define>
-            
-            <ui:define name="SiteTypeSelection">
-                <li class="">                           
-                    <a href="Login.xhtml">
-                        Gebruiker
-                    </a>
-                </li>		
-                <li class="selected">
-                    <a href="Login.xhtml">
-                        Administratie
-                    </a>
-                </li>
-            </ui:define>
-            
+
             <ui:define name="Breadcrumbs">
                 <li>
-                    <a href="Login.xhtml" title="Administratie">
+                    <a href="login.xhtml" title="Administratie">
                         Administratie
                     </a>
                 </li>
 
                 <li class="selected">
-                    <a href="BillOverview.xhtml" title="Facturen">
+                    <a href="" title="Facturen">
                         Facturen
                     </a>
                 </li>
             </ui:define>
-            
-            <ui:define name="SidebarLinks">
-                <li class="categorylink">
-                    <a href="CarOverview.xhtml" class="">
-                        Cartrackers
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <a href="RateOverview.xhtml" class="">
-                        Tarieven
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <a href="BillOverview.xhtml" class="">
-                        Facturen
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <h:form>
-                        <h:commandLink action="#{employeeBean.logout()}">
-                            Uitloggen
-                        </h:commandLink>
-                    </h:form>
-                </li>
-            </ui:define>
-            
+
             <ui:define name="SiteContent">
-                
                 <h:form id="billForm">
-                    <p:dataTable id="dataTable" var="bill" value="#{billBean.all}" tableStyle="table-layout:fixed;">
+                    <p:dataTable sortBy="#{bill.id}" id="dataTable" var="bill" value="#{billBean.all}" tableStyle="table-layout:fixed;">
                         <p:column sortBy="#{bill.id}" style="white-space:normal" headerText="Factuurnummer">
-                            <h:outputLink value="BillEditing.xhtml">
+                            <h:outputLink value="bill-details.xhtml">
                                 <f:param name="id" value="#{bill.id}" />
                                 <h:outputText value="#{bill.id}" />
                             </h:outputLink>
                         </p:column>
-                        
+
                         <p:column sortBy="#{bill.driverBsn}" style="white-space:normal" headerText="Eigenaar (BSN)">
                             <h:outputText value="#{bill.driverBsn}" />
                         </p:column>
-                        
+
                         <p:column sortBy="#{bill.paymentAmount}}" style="white-space:normal" headerText="Totaalbedrag">  
                             <h:outputText value="#{bill.paymentAmount}" />  
                         </p:column>  
@@ -99,7 +56,7 @@
                         </p:column>
                     </p:dataTable>
                 </h:form>
-                
+
                 <h:form id="generateForm">
                     <h:outputLabel for="month" value="Maand: " />
                     <h:selectOneMenu id="month" value="#{billBean.month}">
@@ -116,7 +73,7 @@
                         <f:selectItem itemValue="11" itemLabel="november" />
                         <f:selectItem itemValue="12" itemLabel="december" />
                     </h:selectOneMenu>
-                    
+
                     <h:outputLabel for="year" value="Jaar: " />
                     <h:selectOneMenu id="year" value="#{billBean.year}">
                         <f:selectItem itemValue="2011" itemLabel="2011" />
@@ -127,7 +84,7 @@
                     &nbsp;
                     <h:commandButton id="submit" value=" Genereer facturen " />
                 </h:form>
-                
+
                 <br />
             </ui:define>
 
