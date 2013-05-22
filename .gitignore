@@ -1,41 +1,19 @@
-/Source/AdministratieWebsite/build/
-/Source/AdministratieWebsite/dist/
-/Source/AdministratieWebsite/nbproject/
-/Source/AdministratieWebsite/nbproject/private/
-/Source/Administration/build/
-/Source/Administration/dist/
-/Source/Administration/nbproject/
-/Source/Administration/nbproject/private/
-/Source/RekeningRijdersWebsite/build/
-/Source/RekeningRijdersWebsite/dist/
-/Source/RekeningRijdersWebsite/nbproject/
-/Source/RekeningRijdersWebsite/nbproject/private/
-/Source/TempAutoEJB/build/
-/Source/TempAutoEJB/dist/
-/Source/TempAutoEJB/nbproject/
-/Source/TempAutoEJB/nbproject/private/
+/Source/AdministrationDomain/target/
+/Source/AdministrationService/target/
+/Source/AdministrationWebsite/target/
+/Source/RekeningRijdersWebsite/target/
+/Source/AutoSysteem/build/
+/Source/AutoSysteem/dist/
+/Source/AutoSysteem/nbproject/
+/Source/OpenStreetMapTest/build/
+/Source/OpenStreetMapTest/dist/
+/Source/OpenStreetMapTest/nbproject/
 /Source/VerplaatsingenSysteem/build/
 /Source/VerplaatsingenSysteem/dist/
 /Source/VerplaatsingenSysteem/nbproject/
-/Source/VerplaatsingenSysteem/nbproject/private/
-/Source/VerplaatsingSysteemWeb/build/
-/Source/VerplaatsingSysteemWeb/dist/
-/Source/VerplaatsingSysteemWeb/nbproject/
-/Source/VerplaatsingSysteemWeb/nbproject/private/
+/Source/VerplaatsingSysteemWeb/VerplaatsingenSysteemWeb/build/
+/Source/VerplaatsingSysteemWeb/VerplaatsingenSysteemWeb/dist/
+/Source/VerplaatsingSysteemWeb/VerplaatsingenSysteemWeb/nbproject/
 /Source/VerplaatsingSysteemWebGetDataExample/build/
 /Source/VerplaatsingSysteemWebGetDataExample/dist/
-/Source/VerplaatsingSysteemWebGetDataExample/private/
-/Source/VerplaatsingSysteemWebGetDataExample/nbproject/private/
-/Source/Website Template/build/
-/Source/Website Template/dist/
-/Source/Website Template/private/
-/Source/Website Template/nbproject/private/
-/Source/VerplaatsingSysteemWeb/VerplaatsingenSysteemWeb/build/
-/Source/VerplaatsingSysteemWeb/VerplaatsingenSysteemWeb/nbproject/private/
-/Source/RekeningRijdersWebsite/build/
-/Source/RekeningRijdersWebsite/build/web/
-/Source/RekeningRijdersWebsite/dist/
-/Source/RekeningRijdersWebsite/nbproject/
-/Source/OpenStreetMapTest/build/
-/Source/RekeningRijdersWebsiteM/RekeningRijdersWebsiteM/target/
-/Source/RekeningRijdersWebsiteM/RekeningRijdersWebsite/target/
+/Source/VerplaatsingSysteemWebGetDataExample/nbproject/
