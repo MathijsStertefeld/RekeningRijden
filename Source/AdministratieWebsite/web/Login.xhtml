@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-    </h:head>
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{employeeBean.checkLogout()}" />
+    </f:metadata>
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="PageTitle">
@@ -56,14 +57,14 @@
                 <h:form>
                     <h:outputLabel  value="Username: " />
                     <br/>
-                    <h:inputText id="username" value="#{loginBean.username}"  style="width: 250px" />
+                    <h:inputText id="username" value="#{employeeBean.loginUsername}"  style="width: 250px" />
                     <br/>
                     <h:outputLabel  value="Password: " />
                     <br/>
-                    <h:inputSecret id="password" value="#{loginBean.password}"  style="width: 250px" />
+                    <h:inputSecret id="password" value="#{employeeBean.loginPassword}"  style="width: 250px" />
                     <br/>
                     <br/>
-                    <h:commandButton id="submit" value=" Login " action="#{loginBean.login()}" />
+                    <h:commandButton id="submit" value=" Login " action="#{employeeBean.login()}" />
                 </h:form>
             </ui:define>
 
