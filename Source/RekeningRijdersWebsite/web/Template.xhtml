@@ -8,7 +8,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
         <title>
-            Rekening Rijders - 
+            #{msg.T_BillDrivers} - 
             <ui:insert name="TypeTitle">
                 Type title
             </ui:insert>
@@ -29,7 +29,7 @@
 		<div class="logo">       
                     <a href="" title="logo RDW - home"><img src="ResourceFiles/logo0000.png" alt="logo RDW - home" /></a>
 			<span id="ctl00_Logo_ctl01_SiteTitleLabel">
-                            Rekening Rijders
+                            #{msg.T_BillDrivers}
                             <ui:insert name="TypeTitle">
 				Gebruiker of Admin
                             </ui:insert>
@@ -62,7 +62,8 @@
 			<div class="print">
                             <a href="" rel="external" class="no-new-window-icon"> 
                                 <span />
-                                Print deze pagina
+                                <a href="javascript:window.print()">#{msg.T_PrintPage}</a>
+                                
                             </a>
 			</div>
 
@@ -113,10 +114,19 @@
                 <footer>
                     <div class="download">
                         <p>
-                            <!--Put language selection here-->				
-                            <img src="ResourceFiles/FlagDutch.png" width="50px"></img>
-                            <img src="ResourceFiles/FlagUKUSA.png" width="50px"></img>	
-                            <strong>  -  Gemaakt door MARBL</strong>
+                            <!--Put language selection here-->
+                            <h:form>
+                                <h:commandLink id="languageNL" action="#{loginBean.changeLanguageToNL()}">
+                                    <img src="ResourceFiles/FlagDutch.png" width="50px" />
+                                </h:commandLink>
+                                 <br/>
+                                <h:commandLink id="languageEN" action="#{loginBean.changeLanguageToEN()}">
+                                    <img src="ResourceFiles/FlagUKUSA.png" width="50px" />
+                                </h:commandLink>
+                                <br/>
+                                <strong>#{msg.T_MadeBy}</strong>
+                            </h:form>
+                            
 			</p>
                     </div>
 		</footer>
