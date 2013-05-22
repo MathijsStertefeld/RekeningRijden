@@ -7,7 +7,7 @@ import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class CurrencyConverter
+public class GoogleConverter
 {
     static class Result
     {
