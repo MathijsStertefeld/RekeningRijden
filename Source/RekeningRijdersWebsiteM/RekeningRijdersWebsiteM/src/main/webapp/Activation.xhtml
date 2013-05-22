@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <f:metadata>
+        <f:viewParam name="bsn" value="#{registerBean.bsn}" />        
+    </f:metadata>
+    <h:head>
+    </h:head>  
+    <h:body>
+        <ui:composition template="Template.xhtml">
+            <f:loadBundle basename="Language_nl" var="msg" />
+            <ui:define name="PageTitle">
+                #{msg.AC_Activate}
+            </ui:define>
+            
+            <ui:define name="TypeTitle">
+                 #{msg.TE_User}
+            </ui:define>
+            
+            <ui:define name="SiteTypeSelection">
+                <li class="selected">                           
+                    <a href="Login.xhtml">
+                        #{msg.TE_User}
+                    </a>
+                </li>		
+                <li class="">
+                    <a href="http://localhost:8080/AdministratieWebsite/faces/Login.xhtml">
+                        #{msg.TE_Administration}
+                    </a>
+                </li>
+            </ui:define>
+            
+            <ui:define name="Breadcrumbs">
+                <li>
+                    <a href="" title="Gebruiker">
+                        #{msg.TE_User}
+                    </a>
+                </li>
+
+                <li class="selected">
+                    <a href="" title="Inloggen">
+                        #{msg.AC_Activate}
+                    </a>
+                </li>
+            </ui:define>
+            
+            <ui:define name="SidebarLinks">
+                <li class="categorylink">
+                    <a href="Login.xhtml" class="">
+                        #{msg.LO_Login}
+                    </a>          
+                </li>
+            </ui:define>
+            
+            <ui:define name="SiteContent">
+                <h:form>
+                        <h2>#{msg.AC_Activate}</h2>`
+                        #{msg.AC_Description}
+                        <br/>
+                        <h:commandButton id="submit" value=" #{msg.AC_Activate} " action="#{registerBean.activateDriver()}" />
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>

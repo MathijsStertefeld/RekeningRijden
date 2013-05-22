@@ -27,11 +27,11 @@ public class StartupService implements Serializable {
     @PostConstruct
     public void postConstruct() {
         Driver d1 = new Driver(1111, "hans@hans.nl", hash("hans123"), "en", "Hans",
-                "Hansen", "Eindhoven", "Hoofdstraat 1", "1234AA", new Date());
+                "Hansen", "Eindhoven", "Hoofdstraat 1", "1234AA", new Date(), true);
         Driver d2 = new Driver(2222, "frank@frank.nl", hash("frank123"), "en", "Frank",
-                "Franken", "Eindhoven", "Hoofdstraat 2", "1234BB", new Date());
+                "Franken", "Eindhoven", "Hoofdstraat 2", "1234BB", new Date(), true);
         Driver d3 = new Driver(3333, "tom@tom.nl", hash("tom123"), "en", "Tom",
-                "Tommen", "Eindhoven", "Hoofdstraat 3", "1234CC", new Date());
+                "Tommen", "Eindhoven", "Hoofdstraat 3", "1234CC", new Date(), true);
         
         driverDAO.create(d1);
         driverDAO.create(d2);

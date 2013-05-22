@@ -40,6 +40,7 @@ public class Driver implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "DRIVER_CAR", schema = "ADMINISTRATION")
     private Collection<Car> cars;
+    private boolean activated;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -156,16 +157,25 @@ public class Driver implements Serializable {
     public void setCars(Collection<Car> cars) {
         this.cars = cars;
     }
+
+    public boolean getActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+    
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Driver() {
-        this(0, "", "", "", "", "", "", "", "", new Date());
+        this(0, "", "", "", "", "", "", "", "", new Date(), false);
     }
 
     public Driver(int bsn, String email, String Password,
             String languageCode, String firstName, String lastName,
-            String residence, String address, String zipCode, Date dateOfBirth) {
+            String residence, String address, String zipCode, Date dateOfBirth, boolean activated) {
         this.bsn = bsn;
         this.email = email;
         this.password = Password;
@@ -176,6 +186,7 @@ public class Driver implements Serializable {
         this.address = address;
         this.zipCode = zipCode;
         this.dateOfBirth = dateOfBirth;
+        this.activated = activated;
 
         groups = new ArrayList<DriverGroup>();
         bills = new ArrayList<Bill>();

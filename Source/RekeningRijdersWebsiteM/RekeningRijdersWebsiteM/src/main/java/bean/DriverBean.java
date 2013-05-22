@@ -1,6 +1,7 @@
 package bean;
 
 import administration.domain.Driver;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -8,6 +9,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import service.RekeningRijdersService;
 
@@ -43,5 +45,5 @@ public class DriverBean implements Serializable {
     
     public void save() {
         service.editDriver(driver);
-    }
+    } 
 }

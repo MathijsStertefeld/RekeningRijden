@@ -8,7 +8,13 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.MediaType;
@@ -94,5 +100,21 @@ public class RekeningRijdersService implements Serializable {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
         service = client.resource("http://localhost:8080/Administration/");
+    }
+    
+    public String hash(String text) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(text.getBytes("UTF-8"));
+            byte[] digest = md.digest();
+            BigInteger bi = new BigInteger(1, digest);
+            text = String.format("%0" + (digest.length << 1) + "X", bi);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(RekeningRijdersService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(RekeningRijdersService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return text;
     }
 }

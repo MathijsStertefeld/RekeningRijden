@@ -17,8 +17,9 @@ public class DriverService implements Serializable {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public void create(Driver entity) {
+    public Driver create(Driver entity) {
         driverDAO.create(entity);
+        return entity;
     }
 
     @PUT

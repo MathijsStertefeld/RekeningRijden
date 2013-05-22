@@ -97,13 +97,17 @@ public class LoginBean implements Serializable {
         Driver driver = service.getDriverByEmail(email);
         
         if (driver != null) {
-            try {
-                String username = String.valueOf(driver.getBsn());
-                request.login(username, password);
-                externalContext.redirect("BillOverview.xhtml");
-            } catch (IOException ex) {
-            } catch (ServletException ex) {
-                context.addMessage(null, new FacesMessage(ex.getMessage()));
+            System.err.println(driver.getActivated() + driver.getEmail());
+            if (true)
+            {
+                try {
+                    String username = String.valueOf(driver.getBsn());
+                    request.login(username, password);
+                    externalContext.redirect("BillOverview.xhtml");
+                } catch (IOException ex) {
+                } catch (ServletException ex) {
+                    context.addMessage(null, new FacesMessage(ex.getMessage()));
+                }
             }
         }
         
