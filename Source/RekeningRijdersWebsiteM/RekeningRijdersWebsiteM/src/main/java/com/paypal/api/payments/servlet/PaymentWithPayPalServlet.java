@@ -18,6 +18,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import org.apache.log4j.Logger;
 import service.RekeningRijdersService;
+import util.GoogleConverter;
 
 /**
  * @author lvairamani
@@ -103,9 +104,13 @@ public class PaymentWithPayPalServlet extends HttpServlet {
         } else {
             Long billID = Long.parseLong(req.getParameter("billID"));
             Bill bill = service.getBill(billID);
+            
+            //bill.getPaymentAmount();
+            String convertedAmountString = GoogleConverter.convertEURtoUSD(Double.toString(bill.getPaymentAmount()));
+            Double convertedAmount = Double.parseDouble(convertedAmountString);        
             DecimalFormat df = new DecimalFormat("#0.00");
-            String total = df.format(bill.getPaymentAmount());
-            System.out.println(total);
+            String total = df.format(convertedAmount);
+            //System.out.println(total);
             
             // ###AmountDetails
             // Let's you specify details of a payment amount.
