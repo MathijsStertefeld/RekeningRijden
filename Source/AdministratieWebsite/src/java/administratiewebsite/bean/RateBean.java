@@ -45,9 +45,9 @@ public class RateBean implements Serializable {
         ExternalContext externalContext = facesContext.getExternalContext();
         Map<String, String> requestParameterMap = externalContext.getRequestParameterMap();
 
-        if (requestParameterMap.containsKey("id")) {
-            String id = requestParameterMap.get("id");
-            current = service.find(id);
+        if (requestParameterMap.containsKey("name")) {
+            String name = requestParameterMap.get("name");
+            current = service.find(name);
         }
 
         if (current == null) {
@@ -65,7 +65,7 @@ public class RateBean implements Serializable {
         ExternalContext externalContext = facesContext.getExternalContext();
 
         try {
-            externalContext.redirect("CarOverview.xhtml");
+            externalContext.redirect("rate-overview.xhtml");
             current = null;
         } catch (IOException ex) {
         }

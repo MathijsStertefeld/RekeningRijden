@@ -1,33 +1,35 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      lang="nl">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
+        
         <title>
-            Rekening Rijders - 
-            <ui:insert name="TypeTitle">
-                Type title
-            </ui:insert>
-             - 
             <ui:insert name="PageTitle">
                 Page title
             </ui:insert>
+             - 
+            <ui:insert name="TypeTitle">
+                Type title
+            </ui:insert>
+             - Rekening Rijders
         </title>
         
         <link rel="shortcut icon" href="ResourceFiles/favicon0.ico" type="image/vnd.microsoft.icon" />
         <link rel="stylesheet" type="text/css" href="ResourceFiles/style.css" />
-        
     </h:head>
+    
     <h:body>
         <div id="s4-workspace" class="s4-pr s4-widecontentarea">
             <div class="container">
         
 		<div class="logo">       
-                    <a href="" title="logo RDW - home"><img src="ResourceFiles/logo0000.png" alt="logo RDW - home" /></a>
+                    <a href="login.xhtml" title="logo RDW - home"><img src="ResourceFiles/logo0000.png" alt="logo RDW - home" /></a>
 			<span id="ctl00_Logo_ctl01_SiteTitleLabel">
                             Rekening Rijders
                             <ui:insert name="TypeTitle">
@@ -40,9 +42,16 @@
                     <div id="zz1_TopNavigationMenuV4" class="s4-tn">
                         <div class="menu horizontal menu-horizontal">
                             <ul class="root static">
-                                <ui:insert name="SiteTypeSelection">
-                                    Selectie bar voor admin of gebruiker
-                                </ui:insert>
+                                <li>                           
+                                    <a href="http://localhost:8080/RekeningRijdersWebsiteM/">
+                                        Gebruiker
+                                    </a>
+                                </li>		
+                                <li class="selected">
+                                    <a href="http://localhost:8080/AdministratieWebsite/">
+                                        Administratie
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -90,7 +99,7 @@
                                 <ui:insert name="SidebarLinks">
                                     Links in the sidebar
                                     <li class="categorylink">
-                                        <a href="" class="">
+                                        <a href="">
                                             Linknaam
                                         </a>           
                                     </li>

@@ -83,7 +83,7 @@ public class BillBean implements Serializable {
         ExternalContext externalContext = facesContext.getExternalContext();
         
         try {
-            externalContext.redirect("BillOverview.xhtml");
+            externalContext.redirect("bill-overview.xhtml");
             current = null;
         } catch (IOException ex) {
         }
