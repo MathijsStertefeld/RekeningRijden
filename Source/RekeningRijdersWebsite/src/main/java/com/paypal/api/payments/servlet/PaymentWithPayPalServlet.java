@@ -107,7 +107,7 @@ public class PaymentWithPayPalServlet extends HttpServlet {
             
             //bill.getPaymentAmount();
             String convertedAmountString = GoogleConverter.convertEURtoUSD(Double.toString(bill.getPaymentAmount()));
-            Double convertedAmount = Double.parseDouble(convertedAmountString);        
+            Double convertedAmount = Double.parseDouble(convertedAmountString); 
             DecimalFormat df = new DecimalFormat("#0.00");
             String total = df.format(convertedAmount);
             //System.out.println(total);
@@ -134,8 +134,8 @@ public class PaymentWithPayPalServlet extends HttpServlet {
             // a `Payee` and `Amount` types
             Transaction transaction = new Transaction();
             transaction.setAmount(amount);
-            transaction
-                    .setDescription("This is the payment transaction description.");
+            //transaction.setDescription("This is the payment transaction description.");
+            transaction.setDescription("Bill ID: " + bill.getId());
 
             // The Payment creation API requires a list of
             // Transaction; add the created `Transaction`
@@ -193,5 +193,6 @@ public class PaymentWithPayPalServlet extends HttpServlet {
         }
         req.setAttribute("request", Payment.getLastRequest());
         req.getRequestDispatcher("response.jsp").forward(req, resp);
+        //req.getRequestDispatcher(req.getParameter("redirectURL"));
     }
 }
