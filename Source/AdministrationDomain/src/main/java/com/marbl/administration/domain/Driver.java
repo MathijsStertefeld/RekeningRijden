@@ -1,11 +1,13 @@
 package com.marbl.administration.domain;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+//</editor-fold>
 
 @Entity
 @XmlRootElement
@@ -24,23 +26,13 @@ public class Driver implements Serializable {
     private String zipCode;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateOfBirth;
-    @ElementCollection
-    @CollectionTable(name = "DRIVER_BILL")
-    private Collection<Long> billIds;
-    @ElementCollection
-    @CollectionTable(name = "DRIVER_CAR_HISTORY")
-    private Collection<String> carHistory;
-    @ElementCollection
-    @CollectionTable(name = "DRIVER_CAR")
-    private Collection<String> carTrackerIds;
+    private boolean activated;
     @ElementCollection
     @CollectionTable(name = "DRIVER_GROUP", joinColumns = {
         @JoinColumn(name = "BSN")})
     @Column(name = "GROUPNAME")
     @Enumerated(EnumType.STRING)
     private Collection<DriverGroup> groups;
-    
-    private boolean activated;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -132,30 +124,6 @@ public class Driver implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Collection<Long> getBillIds() {
-        return billIds;
-    }
-
-    public void setBillIds(Collection<Long> billIds) {
-        this.billIds = billIds;
-    }
-
-    public Collection<String> getCarHistory() {
-        return carHistory;
-    }
-
-    public void setCarHistory(Collection<String> carHistory) {
-        this.carHistory = carHistory;
-    }
-
-    public Collection<String> getCarTrackerIds() {
-        return carTrackerIds;
-    }
-
-    public void setCarTrackerIds(Collection<String> carTrackerIds) {
-        this.carTrackerIds = carTrackerIds;
-    }
-
     public boolean getActivated() {
         return activated;
     }
@@ -168,12 +136,12 @@ public class Driver implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Driver() {
-        this(0, "", "", "", "", "", "", "", "", new Date(), false);
+        this(0, "", "", "", "", "", "", "", "", new Date(), false, DriverGroup.ADMIN);
     }
 
-    public Driver(int bsn, String email, String Password,
-            String languageCode, String firstName, String lastName,
-            String residence, String address, String zipCode, Date dateOfBirth, boolean activated) {
+    public Driver(int bsn, String email, String Password, String languageCode,
+            String firstName, String lastName, String residence, String address,
+            String zipCode, Date dateOfBirth, boolean activated, DriverGroup group) {
         this.bsn = bsn;
         this.email = email;
         this.password = Password;
@@ -185,15 +153,12 @@ public class Driver implements Serializable {
         this.zipCode = zipCode;
         this.dateOfBirth = dateOfBirth;
         this.activated = activated;
-
-        billIds = new ArrayList<>();
-        carHistory = new ArrayList<>();
-        carTrackerIds = new ArrayList<>();
-        groups = new ArrayList<>();
+        this.groups = new ArrayList<>();
+        this.groups.add(group);
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Overrides">
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     @Override
     public int hashCode() {
         return bsn;

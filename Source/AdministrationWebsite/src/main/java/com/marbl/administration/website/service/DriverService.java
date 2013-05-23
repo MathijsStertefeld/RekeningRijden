@@ -20,31 +20,15 @@ public class DriverService implements Serializable {
         webResource = client.resource("http://localhost:8080/AdministrationBackend/");
     }
 
-    public void create(Driver driver) {
-        webResource.path("resources").path("driver").post(Driver.class, driver);
-    }
-
     public Driver edit(Driver driver) {
-        return webResource.path("resources").path("driver").put(Driver.class, driver);
+        return webResource.path("resources").path("drivers").put(Driver.class, driver);
     }
 
-    public void remove(int bsn) {
-        webResource.path("resources").path("driver").path(Integer.toString(bsn)).delete();
-    }
-
-    public Driver find(int bsn) {
-        return webResource.path("resources").path("driver").path(Integer.toString(bsn)).get(Driver.class);
+    public Driver find(Integer bsn) {
+        return webResource.path("resources").path("drivers").path(bsn.toString()).get(Driver.class);
     }
 
     public Collection<Driver> findAll() {
-        return webResource.path("resources").path("driver").get(new GenericType<Collection<Driver>>() { });
-    }
-
-    public Collection<Driver> findRange(Integer from, Integer to) {
-        return webResource.path("resources").path("driver").path(from.toString()).path(to.toString()).get(new GenericType<Collection<Driver>>() { });
-    }
-
-    public int count() {
-        return Integer.parseInt(webResource.path("resources").path("driver").path("count").get(String.class));
+        return webResource.path("resources").path("drivers").get(new GenericType<Collection<Driver>>() { });
     }
 }

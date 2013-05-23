@@ -2,6 +2,8 @@ package com.marbl.rekeningrijders.website.bean;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.Driver;
+import com.marbl.administration.domain.DriverGroup;
+import com.marbl.administration.domain.utils.Hasher;
 import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
 import java.io.IOException;
 import java.io.Serializable;
@@ -126,7 +128,10 @@ public class RegisterBean implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public void register() {
-        Driver newDriver = new Driver(bsn, email, service.hash(password), languageCode, firstName, lastName, residence, address, zipCode, dateOfBirth, false);
+        Hasher hasher = new Hasher("SHA-256", "UTF-8");
+        Driver newDriver = new Driver(bsn, email, hasher.hash(password),
+                languageCode, firstName, lastName, residence, address,
+                zipCode, dateOfBirth, false, DriverGroup.DRIVER);
         service.register(newDriver);
         sendMail();
     }
@@ -175,8 +180,7 @@ public class RegisterBean implements Serializable {
         try {
             request.logout();
             externalContext.redirect(".");
-        } catch (IOException ex) {
-        } catch (ServletException ex) {
+        } catch (IOException | ServletException ex) {
         }
     }
     //</editor-fold>

@@ -1,57 +1,74 @@
 package com.marbl.administration.backend.service;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.backend.dao.BillDAO;
 import com.marbl.administration.domain.Bill;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+//</editor-fold>
 
 @Stateless
-@Path("/bill")
+@Path("/bills")
 public class BillService implements Serializable {
 
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private BillDAO billDAO;
+    //</editor-fold>
 
     @POST
-    @Consumes({"application/xml", "application/json"})
-    public Bill create(Bill entity) {
-        billDAO.create(entity);
-        return entity;
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response create(Bill bill) {
+        billDAO.create(bill);
+        return Response.ok().build();
     }
 
     @PUT
-    @Consumes({"application/xml", "application/json"})
-    public Bill edit(Bill entity) {
-        return billDAO.edit(entity);
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Bill edit(Bill bill) {
+        return billDAO.edit(bill);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
+    public Response remove(@PathParam("id") Long id) {
         billDAO.remove(billDAO.find(id));
+        return Response.ok().build();
     }
 
     @GET
     @Path("{id}")
-    @Produces({"application/xml", "application/json"})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Bill find(@PathParam("id") Long id) {
         return billDAO.find(id);
     }
 
     @GET
-    @Produces({"application/xml", "application/json"})
-    public Collection<Bill> findAll() {
-        return billDAO.findAll();
-    }
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Collection<Bill> findAll(
+            @QueryParam("carTrackerId") String carTrackerId,
+            @QueryParam("driverBsn") Integer driverBsn,
+            @QueryParam("id") Long id) {
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
-    public Collection<Bill> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return billDAO.findRange(new int[]{from, to});
+        Collection<Bill> bills = new ArrayList<>();
+
+        for (Bill bill : billDAO.findAll()) {
+            if (true
+                    && (carTrackerId == null || carTrackerId.equals(bill.getCarTrackerId()))
+                    && (driverBsn == null || driverBsn == bill.getDriverBsn())
+                    && (id == null || id == bill.getId())) {
+                bills.add(bill);
+            }
+        }
+
+        return bills;
     }
 
     @GET

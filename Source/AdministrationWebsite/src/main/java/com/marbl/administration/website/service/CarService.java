@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.ws.rs.core.MediaType;
 
 @Stateless
 public class CarService implements Serializable {
@@ -20,31 +21,18 @@ public class CarService implements Serializable {
         webResource = client.resource("http://localhost:8080/AdministrationBackend/");
     }
 
-    public void create(Car car) {
-        webResource.path("resources").path("car").post(Car.class, car);
-    }
-
     public Car edit(Car car) {
-        return webResource.path("resources").path("car").put(Car.class, car);
-    }
-
-    public void remove(String carTrackerId) {
-        webResource.path("resources").path("car").path(carTrackerId).delete();
+        return webResource.path("resources").path("cars")
+                .accept(MediaType.APPLICATION_JSON).put(Car.class, car);
     }
 
     public Car find(String carTrackerId) {
-        return webResource.path("resources").path("car").path(carTrackerId).get(Car.class);
+        return webResource.path("resources").path("cars").path(carTrackerId)
+                .accept(MediaType.APPLICATION_JSON).get(Car.class);
     }
 
     public Collection<Car> findAll() {
-        return webResource.path("resources").path("car").get(new GenericType<Collection<Car>>() { });
-    }
-
-    public Collection<Car> findRange(Integer from, Integer to) {
-        return webResource.path("resources").path("car").path(from.toString()).path(to.toString()).get(new GenericType<Collection<Car>>() { });
-    }
-
-    public int count() {
-        return Integer.parseInt(webResource.path("resources").path("car").path("count").get(String.class));
+        return webResource.path("resources").path("cars")
+                .accept(MediaType.APPLICATION_JSON).get(new GenericType<Collection<Car>>() { });
     }
 }

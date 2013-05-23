@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.ws.rs.core.MediaType;
 
 @Stateless
 public class BillService implements Serializable {
@@ -20,31 +21,19 @@ public class BillService implements Serializable {
         webResource = client.resource("http://localhost:8080/AdministrationBackend/");
     }
 
-    public void create(Bill bill) {
-        webResource.path("resources").path("bill").post(Bill.class, bill);
-    }
-
     public Bill edit(Bill bill) {
-        return webResource.path("resources").path("bill").put(Bill.class, bill);
-    }
-
-    public void remove(Long id) {
-        webResource.path("resources").path("bill").path(id.toString()).delete();
+        return webResource.path("resources").path("bills")
+                .accept(MediaType.APPLICATION_JSON).put(Bill.class, bill);
     }
 
     public Bill find(Long id) {
-        return webResource.path("resources").path("bill").path(id.toString()).get(Bill.class);
+        return webResource.path("resources").path("bills").path(id.toString())
+                .accept(MediaType.APPLICATION_JSON).get(Bill.class);
     }
 
     public Collection<Bill> findAll() {
-        return webResource.path("resources").path("bill").get(new GenericType<Collection<Bill>>() { });
-    }
-
-    public Collection<Bill> findRange(Integer from, Integer to) {
-        return webResource.path("resources").path("bill").path(from.toString()).path(to.toString()).get(new GenericType<Collection<Bill>>() { });
-    }
-
-    public int count() {
-        return Integer.parseInt(webResource.path("resources").path("bill").path("count").get(String.class));
+        return webResource.path("resources").path("bills")
+                .accept(MediaType.APPLICATION_JSON).get(new GenericType<Collection<Bill>>() {
+        });
     }
 }

@@ -1,10 +1,12 @@
 package com.marbl.administration.domain;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+//</editor-fold>
 
 @Entity
 @XmlRootElement
@@ -50,18 +52,18 @@ public class Employee implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Employee() {
-        this("", "");
+        this("", "", EmployeeGroup.ADMIN);
     }
 
-    public Employee(String username, String password) {
+    public Employee(String username, String password, EmployeeGroup group) {
         this.username = username;
         this.password = password;
-
-        groups = new ArrayList<EmployeeGroup>();
+        this.groups = new ArrayList<>();
+        this.groups.add(group);
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Overrides">
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     @Override
     public int hashCode() {
         return username.hashCode();

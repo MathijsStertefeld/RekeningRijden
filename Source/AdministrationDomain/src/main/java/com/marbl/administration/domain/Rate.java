@@ -1,8 +1,10 @@
 package com.marbl.administration.domain;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+//</editor-fold>
 
 @Entity
 @XmlRootElement
@@ -43,7 +45,7 @@ public abstract class Rate implements Serializable {
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Overrides">
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     @Override
     public int hashCode() {
         return name.hashCode();

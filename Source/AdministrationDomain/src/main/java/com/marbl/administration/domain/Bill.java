@@ -1,11 +1,13 @@
 package com.marbl.administration.domain;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+//</editor-fold>
 
 @Entity
 @XmlRootElement
@@ -14,14 +16,14 @@ public class Bill implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
     private Long id;
-    private String carTrackerId;
-    private int driverBsn;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date periodDate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date paymentDate;
     private double paymentAmount;
     private PaymentStatus paymentStatus;
+    private int driverBsn;
+    private String carTrackerId;
     private Collection<Object> movements;
     //</editor-fold>
 
@@ -93,21 +95,23 @@ public class Bill implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Bill() {
-        this(0L, new Date(), new Date(), 0, PaymentStatus.UNKNOWN);
+        this(0L, new Date(), new Date(), 0, PaymentStatus.UNKNOWN, 0, "");
     }
 
-    public Bill(Long id, Date periodDate, Date paymentDate, double paymentAmount, PaymentStatus paymentStatus) {
+    public Bill(Long id, Date periodDate, Date paymentDate, double paymentAmount,
+            PaymentStatus paymentStatus, int driverBsn, String carTrackerId) {
         this.id = id;
         this.periodDate = periodDate;
         this.paymentDate = paymentDate;
         this.paymentAmount = paymentAmount;
         this.paymentStatus = paymentStatus;
-
-        movements = new ArrayList<>();
+        this.driverBsn = driverBsn;
+        this.carTrackerId = carTrackerId;
+        this.movements = new ArrayList<>();
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Overrides">
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     @Override
     public int hashCode() {
         return id.hashCode();
@@ -123,9 +127,4 @@ public class Bill implements Serializable {
         return "Bill{" + "id=" + id + '}';
     }
     //</editor-fold>
-    
-    public void pay() {
-        this.paymentStatus = PaymentStatus.PAID;
-        this.paymentDate = new Date();
-    }
 }

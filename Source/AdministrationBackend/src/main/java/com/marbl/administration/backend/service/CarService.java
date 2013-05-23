@@ -1,57 +1,74 @@
 package com.marbl.administration.backend.service;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.backend.dao.CarDAO;
 import com.marbl.administration.domain.Car;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+//</editor-fold>
 
 @Stateless
-@Path("/car")
+@Path("/cars")
 public class CarService implements Serializable {
 
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private CarDAO carDAO;
+    //</editor-fold>
 
     @POST
-    @Consumes({"application/xml", "application/json"})
-    public Car create(Car entity) {
-        carDAO.create(entity);
-        return entity;
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response create(Car car) {
+        carDAO.create(car);
+        return Response.ok().build();
     }
 
     @PUT
-    @Consumes({"application/xml", "application/json"})
-    public Car edit(Car entity) {
-        return carDAO.edit(entity);
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Car edit(Car car) {
+        return carDAO.edit(car);
     }
 
     @DELETE
     @Path("{carTrackerId}")
-    public void remove(@PathParam("carTrackerId") String carTrackerId) {
+    public Response remove(@PathParam("carTrackerId") String carTrackerId) {
         carDAO.remove(carDAO.find(carTrackerId));
+        return Response.ok().build();
     }
 
     @GET
     @Path("{carTrackerId}")
-    @Produces({"application/xml", "application/json"})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Car find(@PathParam("carTrackerId") String carTrackerId) {
         return carDAO.find(carTrackerId);
     }
 
     @GET
-    @Produces({"application/xml", "application/json"})
-    public Collection<Car> findAll() {
-        return carDAO.findAll();
-    }
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Collection<Car> findAll(
+            @QueryParam("carTrackerId") String carTrackerId,
+            @QueryParam("driverBsn") Integer driverBsn,
+            @QueryParam("licensePlate") String licensePlate) {
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
-    public Collection<Car> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return carDAO.findRange(new int[]{from, to});
+        Collection<Car> cars = new ArrayList<>();
+
+        for (Car car : carDAO.findAll()) {
+            if (true
+                    && (carTrackerId == null || carTrackerId.equals(car.getCarTrackerId()))
+                    && (driverBsn == null || driverBsn == car.getDriverBsn())
+                    && (licensePlate == null || licensePlate.equals(car.getLicensePlate()))) {
+                cars.add(car);
+            }
+        }
+
+        return cars;
     }
 
     @GET

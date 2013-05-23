@@ -1,22 +1,20 @@
 package com.marbl.rekeningrijders.website.service;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.*;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.MediaType;
+//</editor-fold>
 
 @Stateless
 public class RekeningRijdersService implements Serializable {
@@ -32,70 +30,63 @@ public class RekeningRijdersService implements Serializable {
 
     public void payBill(Long billId) {
         Bill bill = findBill(billId);
-        bill.pay();
-        service.path("resources").path("bill").put(Bill.class, bill);
+        bill.setPaymentDate(new Date());
+        bill.setPaymentStatus(PaymentStatus.PAID);
+        service.path("resources").path("bills").put(Bill.class, bill);
     }
 
     public void editDriver(Driver driver) {
-        service.path("resources").path("driver").put(Driver.class, driver);
+        service.path("resources").path("drivers")
+                .accept(MediaType.APPLICATION_JSON).put(Driver.class, driver);
     }
 
-    public Driver findDriver(int bsn) {
-        Driver driver = service.path("resources").path("driver").path(Integer.toString(bsn))
-                .accept(MediaType.APPLICATION_JSON).get(Driver.class);
+    public Driver findDriver(Integer bsn) {
+        Driver driver = service.path("resources").path("drivers")
+                .path(Integer.toString(bsn)).accept(MediaType.APPLICATION_JSON)
+                .get(Driver.class);
         return driver;
     }
 
     public Driver findDriverByEmail(String email) {
-        Driver driver = service.path("resources").path("driver").path("email").path(email)
-                .accept(MediaType.APPLICATION_JSON).get(Driver.class);
+        Driver driver = new ArrayList<>(service.path("resources")
+                .path("drivers").queryParam("email", email)
+                .accept(MediaType.APPLICATION_JSON)
+                .get(new GenericType<Collection<Driver>>() { })).get(0);
 
         return driver;
     }
 
     public void register(Driver driver) {
-        service.path("resources").path("driver").post(Driver.class, driver);
+        service.path("resources").path("drivers").post(Driver.class, driver);
     }
 
-    public Collection<Bill> findBillsByBsn(int bsn) {
-        Driver driver = findDriver(bsn);
-        ArrayList<Bill> bills = new ArrayList<Bill>();
-        
-        for (Long id : driver.getBillIds()) {
-            Bill bill = findBill(id);
-            
-            if (bill != null) {
-                bills.add(bill);
-            }
-        }
-        
-        return bills;
+    public Collection<Bill> findBillsByBsn(Integer bsn) {
+        return service.path("resources").path("bills")
+                .queryParam("driverBsn", bsn.toString())
+                .accept(MediaType.APPLICATION_JSON)
+                .get(new GenericType<Collection<Bill>>() {
+        });
     }
 
     public Bill findBill(Long id) {
-        Bill bill = service.path("resources").path("bill").path(Long.toString(id))
-                .accept(MediaType.APPLICATION_JSON).get(Bill.class);
+        Bill bill = service.path("resources").path("bill")
+                .path(Long.toString(id)).accept(MediaType.APPLICATION_JSON)
+                .get(Bill.class);
 
         return bill;
     }
 
     public void editBill(Bill bill) {
-        service.path("resources").path("bill").accept(MediaType.APPLICATION_JSON).put(bill);
+        service.path("resources").path("bill")
+                .accept(MediaType.APPLICATION_JSON).put(bill);
     }
 
-    public Collection<Car> findCarsByBsn(int bsn) {
-        Driver driver = findDriver(bsn);
-        ArrayList<Car> cars = new ArrayList<Car>();
-        
-        for (String carTrackerId : driver.getCarTrackerIds()) {
-            Car car = findCar(carTrackerId);
-            
-            if (car != null) {
-                cars.add(car);
-            }
-        }
-        
-        return cars;
+    public Collection<Car> findCarsByBsn(Integer bsn) {
+        return service.path("resources").path("cars")
+                .queryParam("driverBsn", bsn.toString())
+                .accept(MediaType.APPLICATION_JSON)
+                .get(new GenericType<Collection<Car>>() {
+        });
     }
 
     public Car findCar(String carTrackerId) {
@@ -106,21 +97,5 @@ public class RekeningRijdersService implements Serializable {
 
     public void editCar(Car car) {
         service.path("resources").path("car").put(Car.class, car);
-    }
-    
-    public String hash(String text) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(text.getBytes("UTF-8"));
-            byte[] digest = md.digest();
-            BigInteger bi = new BigInteger(1, digest);
-            text = String.format("%0" + (digest.length << 1) + "X", bi);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(RekeningRijdersService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(RekeningRijdersService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return text;
     }
 }

@@ -20,31 +20,15 @@ public class RateService implements Serializable {
         webResource = client.resource("http://localhost:8080/AdministrationBackend/");
     }
 
-    public void create(Rate rate) {
-        webResource.path("resources").path("rate").post(Rate.class, rate);
-    }
-
     public Rate edit(Rate rate) {
-        return webResource.path("resources").path("rate").put(Rate.class, rate);
-    }
-
-    public void remove(String name) {
-        webResource.path("resources").path("rate").path(name).delete();
+        return webResource.path("resources").path("rates").put(Rate.class, rate);
     }
 
     public Rate find(String name) {
-        return webResource.path("resources").path("rate").path(name).get(Rate.class);
+        return webResource.path("resources").path("rates").path(name).get(Rate.class);
     }
 
     public Collection<Rate> findAll() {
-        return webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { });
-    }
-
-    public Collection<Rate> findRange(Integer from, Integer to) {
-        return webResource.path("resources").path("rate").path(from.toString()).path(to.toString()).get(new GenericType<Collection<Rate>>() { });
-    }
-
-    public int count() {
-        return Integer.parseInt(webResource.path("resources").path("rate").path("count").get(String.class));
+        return webResource.path("resources").path("rates").get(new GenericType<Collection<Rate>>() { });
     }
 }
