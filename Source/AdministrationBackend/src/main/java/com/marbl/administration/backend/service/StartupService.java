@@ -9,8 +9,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -34,24 +32,24 @@ public class StartupService implements Serializable {
     @PostConstruct
     public void postConstruct() {
         //<editor-fold defaultstate="collapsed" desc="Bills">
-        ArrayList<Bill> bills = new ArrayList<Bill>();
-        bills.add(new Bill(1L, new Date(), new Date(), 1000, PaymentStatus.CANCELED));
-        bills.add(new Bill(2L, new Date(), new Date(), 1000, PaymentStatus.PAID));
-        bills.add(new Bill(3L, new Date(), new Date(), 1000, PaymentStatus.OPEN));
+        ArrayList<Bill> bills = new ArrayList<>();
+        bills.add(new Bill(1L, new Date(), new Date(), 100, PaymentStatus.CANCELED));
+        bills.add(new Bill(2L, new Date(), new Date(), 100, PaymentStatus.PAID));
+        bills.add(new Bill(3L, new Date(), new Date(), 100, PaymentStatus.OPEN));
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Cars">
-        ArrayList<Car> cars = new ArrayList<Car>();
-        cars.add(new Car("AB-CD-12", "ABCD", CarType.AUTOBUS,
+        ArrayList<Car> cars = new ArrayList<>();
+        cars.add(new Car("t0", "AB-CD-12", CarType.AUTOBUS,
                 PaintColor.BLACK, 1000, Classification.EEV, "Suzuki", "Swift"));
-        cars.add(new Car("EF-GH-34", "EFGH", CarType.AUTOBUS,
+        cars.add(new Car("t1", "EF-GH-34", CarType.AUTOBUS,
                 PaintColor.RED, 800, Classification.EEV, "Fiat", "Panda"));
-        cars.add(new Car("IJ-KL-56", "IJKL", CarType.AUTOBUS,
+        cars.add(new Car("t2", "IJ-KL-56", CarType.AUTOBUS,
                 PaintColor.WHITE, 1200, Classification.EEV, "Volkswagen", "Golf"));
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Drivers">
-        ArrayList<Driver> drivers = new ArrayList<Driver>();
+        ArrayList<Driver> drivers = new ArrayList<>();
         drivers.add(new Driver(1111, "hans@hans.nl", hash("hans123"), "en", "Hans",
                 "Hansen", "Eindhoven", "Hoofdstraat 1", "1234AA", new Date(), true));
         drivers.add(new Driver(2222, "frank@frank.nl", hash("frank123"), "en", "Frank",
@@ -61,7 +59,7 @@ public class StartupService implements Serializable {
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Employee">
-        ArrayList<Employee> employees = new ArrayList<Employee>();
+        ArrayList<Employee> employees = new ArrayList<>();
         employees.add(new Employee("admin", hash("admin")));
         employees.add(new Employee("henk", hash("henk")));
         employees.add(new Employee("truus", hash("truus")));
@@ -93,6 +91,10 @@ public class StartupService implements Serializable {
         addCarToDriver(drivers.get(0), cars.get(0));
         addCarToDriver(drivers.get(1), cars.get(1));
         addCarToDriver(drivers.get(2), cars.get(2));
+        
+        addCarToBill(bills.get(0), cars.get(0));
+        addCarToBill(bills.get(1), cars.get(1));
+        addCarToBill(bills.get(2), cars.get(2));
 
         addGroupToDriver(drivers.get(0), DriverGroup.ADMIN);
         addGroupToDriver(drivers.get(1), DriverGroup.JAM_DRIVER);
@@ -128,7 +130,7 @@ public class StartupService implements Serializable {
     }
     
     public void addCarToDriver(Driver driver, Car car) {
-        driver.getCarLicensePlates().add(car.getLicensePlate());
+        driver.getCarTrackerIds().add(car.getCarTrackerId());
         
         if (car.getDriverBsn() != 0) {
             car.getDriverHistory().add(car.getDriverBsn());
@@ -139,6 +141,10 @@ public class StartupService implements Serializable {
         }
         
         car.setDriverBsn(driver.getBsn());
+    }
+    
+    public void addCarToBill(Bill bill, Car car) {
+        bill.setCarTrackerId(car.getCarTrackerId());
     }
     
     public void addGroupToDriver(Driver driver, DriverGroup group) {
@@ -156,10 +162,7 @@ public class StartupService implements Serializable {
             byte[] digest = md.digest();
             BigInteger bi = new BigInteger(1, digest);
             text = String.format("%0" + (digest.length << 1) + "X", bi);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(StartupService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(StartupService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
         }
 
         return text;

@@ -29,16 +29,16 @@ public class CarService implements Serializable {
     }
 
     @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") String licensePlate) {
-        carDAO.remove(carDAO.find(licensePlate));
+    @Path("{carTrackerId}")
+    public void remove(@PathParam("carTrackerId") String carTrackerId) {
+        carDAO.remove(carDAO.find(carTrackerId));
     }
 
     @GET
-    @Path("{id}")
+    @Path("{carTrackerId}")
     @Produces({"application/xml", "application/json"})
-    public Car find(@PathParam("id") String licensePlate) {
-        return carDAO.find(licensePlate);
+    public Car find(@PathParam("carTrackerId") String carTrackerId) {
+        return carDAO.find(carTrackerId);
     }
 
     @GET

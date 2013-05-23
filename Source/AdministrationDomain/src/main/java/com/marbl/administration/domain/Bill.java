@@ -14,7 +14,7 @@ public class Bill implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
     private Long id;
-    private String carLicensePlate;
+    private String carTrackerId;
     private int driverBsn;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date periodDate;
@@ -34,12 +34,12 @@ public class Bill implements Serializable {
         this.id = id;
     }
     
-    public String getCarLicensePlate() {
-        return carLicensePlate;
+    public String getCarTrackerId() {
+        return carTrackerId;
     }
     
-    public void setCarLicensePlate(String carLicensePlate) {
-        this.carLicensePlate = carLicensePlate;
+    public void setCarTrackerId(String carTrackerId) {
+        this.carTrackerId = carTrackerId;
     }
 
     public int getDriverBsn() {
@@ -103,7 +103,7 @@ public class Bill implements Serializable {
         this.paymentAmount = paymentAmount;
         this.paymentStatus = paymentStatus;
 
-        movements = new ArrayList<Object>();
+        movements = new ArrayList<>();
     }
     //</editor-fold>
 

@@ -12,8 +12,8 @@ public class Car implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
-    private String licensePlate;
     private String carTrackerId;
+    private String licensePlate;
     private int driverBsn;
     @ElementCollection
     @CollectionTable(name = "CAR_DRIVER_HISTORY")
@@ -27,20 +27,20 @@ public class Car implements Serializable {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public String getLicensePlate() {
-        return licensePlate;
-    }
-
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
-    }
-
     public String getCarTrackerId() {
         return carTrackerId;
     }
 
     public void setCarTrackerId(String carTrackerId) {
         this.carTrackerId = carTrackerId;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
     }
 
     public int getDriverBsn() {
@@ -114,10 +114,10 @@ public class Car implements Serializable {
                 Classification.UNKNOWN, "", "");
     }
 
-    public Car(String licensePlate, String carTrackerId, CarType type, PaintColor paintColor, int mass,
+    public Car(String carTrackerId, String licensePlate, CarType type, PaintColor paintColor, int mass,
             Classification classification, String brand, String model) {
-        this.licensePlate = licensePlate;
         this.carTrackerId = carTrackerId;
+        this.licensePlate = licensePlate;
         this.type = type;
         this.paintColor = paintColor;
         this.mass = mass;
@@ -125,14 +125,14 @@ public class Car implements Serializable {
         this.brand = brand;
         this.model = model;
         
-        driverHistory = new ArrayList<Integer>();
+        driverHistory = new ArrayList<>();
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Overrides">
     @Override
     public int hashCode() {
-        return licensePlate.hashCode();
+        return carTrackerId.hashCode();
     }
 
     @Override
@@ -142,7 +142,7 @@ public class Car implements Serializable {
 
     @Override
     public String toString() {
-        return "Car{" + "licensePlate=" + licensePlate + '}';
+        return "Car{" + "carTrackerId=" + carTrackerId + '}';
     }
     //</editor-fold>
 }

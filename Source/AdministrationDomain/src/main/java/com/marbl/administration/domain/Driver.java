@@ -32,7 +32,7 @@ public class Driver implements Serializable {
     private Collection<String> carHistory;
     @ElementCollection
     @CollectionTable(name = "DRIVER_CAR")
-    private Collection<String> carLicensePlates;
+    private Collection<String> carTrackerIds;
     @ElementCollection
     @CollectionTable(name = "DRIVER_GROUP", joinColumns = {
         @JoinColumn(name = "BSN")})
@@ -148,12 +148,12 @@ public class Driver implements Serializable {
         this.carHistory = carHistory;
     }
 
-    public Collection<String> getCarLicensePlates() {
-        return carLicensePlates;
+    public Collection<String> getCarTrackerIds() {
+        return carTrackerIds;
     }
 
-    public void setCarLicensePlates(Collection<String> carLicensePlates) {
-        this.carLicensePlates = carLicensePlates;
+    public void setCarTrackerIds(Collection<String> carTrackerIds) {
+        this.carTrackerIds = carTrackerIds;
     }
 
     public boolean getActivated() {
@@ -186,10 +186,10 @@ public class Driver implements Serializable {
         this.dateOfBirth = dateOfBirth;
         this.activated = activated;
 
-        billIds = new ArrayList<Long>();
-        carHistory = new ArrayList<String>();
-        carLicensePlates = new ArrayList<String>();
-        groups = new ArrayList<DriverGroup>();
+        billIds = new ArrayList<>();
+        carHistory = new ArrayList<>();
+        carTrackerIds = new ArrayList<>();
+        groups = new ArrayList<>();
     }
     //</editor-fold>
 

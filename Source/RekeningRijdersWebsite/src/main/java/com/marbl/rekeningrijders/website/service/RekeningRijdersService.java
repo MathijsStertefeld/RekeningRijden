@@ -87,7 +87,7 @@ public class RekeningRijdersService implements Serializable {
         Driver driver = findDriver(bsn);
         ArrayList<Car> cars = new ArrayList<Car>();
         
-        for (String licensePlate : driver.getCarLicensePlates()) {
+        for (String licensePlate : driver.getCarTrackerIds()) {
             Car car = findCar(licensePlate);
             
             if (car != null) {
