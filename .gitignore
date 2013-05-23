@@ -1,21 +1,22 @@
-/Source/AdministrationDomain/target/
-/Source/AdministrationService/target/
-/Source/AdministrationWebsite/target/
-/Source/RekeningRijdersWebsite/target/
-/Source/AutoSysteem/build/
-/Source/AutoSysteem/dist/
-/Source/AutoSysteem/nbproject/
-/Source/OpenStreetMapTest/build/
-/Source/OpenStreetMapTest/dist/
-/Source/OpenStreetMapTest/nbproject/
-/Source/VerplaatsingenSysteem/build/
-/Source/VerplaatsingenSysteem/dist/
-/Source/VerplaatsingenSysteem/nbproject/
-/Source/VerplaatsingSysteemWeb/VerplaatsingenSysteemWeb/build/
-/Source/VerplaatsingSysteemWeb/VerplaatsingenSysteemWeb/dist/
-/Source/VerplaatsingSysteemWeb/VerplaatsingenSysteemWeb/nbproject/
-/Source/VerplaatsingSysteemWebGetDataExample/build/
-/Source/VerplaatsingSysteemWebGetDataExample/dist/
-/Source/VerplaatsingSysteemWebGetDataExample/nbproject/
-/Source/AdministrationBackend/target/
-/Source/RekeningRijdersWebsite/nbproject/
+# NetBeans specific #
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Class Files #
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Maven specific #
+.classpath
+.project
+.settings/
+target/

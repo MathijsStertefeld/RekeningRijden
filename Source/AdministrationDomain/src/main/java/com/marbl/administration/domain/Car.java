@@ -1,6 +1,8 @@
 package com.marbl.administration.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -10,12 +12,12 @@ public class Car implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
-    @Column(nullable = false)
-    private String licensePlate;
-    @Column(nullable = false)
     private String carTrackerId;
-    @Column(nullable = false)
+    private String licensePlate;
     private int driverBsn;
+    @ElementCollection
+    @CollectionTable(name = "CAR_DRIVER_HISTORY")
+    private Collection<Integer> driverHistory;
     private String brand;
     private String model;
     private CarType type;
@@ -25,14 +27,6 @@ public class Car implements Serializable {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public String getLicensePlate() {
-        return licensePlate;
-    }
-
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
-    }
-
     public String getCarTrackerId() {
         return carTrackerId;
     }
@@ -41,12 +35,28 @@ public class Car implements Serializable {
         this.carTrackerId = carTrackerId;
     }
 
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
     public int getDriverBsn() {
         return driverBsn;
     }
 
     public void setDriverBsn(int driverBsn) {
         this.driverBsn = driverBsn;
+    }
+    
+    public Collection<Integer> getDriverHistory() {
+        return driverHistory;
+    }
+    
+    public void setDriverHistory(Collection<Integer> driverHistory) {
+        this.driverHistory = driverHistory;
     }
 
     public String getBrand() {
@@ -104,23 +114,25 @@ public class Car implements Serializable {
                 Classification.UNKNOWN, "", "");
     }
 
-    public Car(String licensePlate, String carTrackerId, CarType type, PaintColor paintColor, int mass,
+    public Car(String carTrackerId, String licensePlate, CarType type, PaintColor paintColor, int mass,
             Classification classification, String brand, String model) {
-        this.licensePlate = licensePlate;
         this.carTrackerId = carTrackerId;
+        this.licensePlate = licensePlate;
         this.type = type;
         this.paintColor = paintColor;
         this.mass = mass;
         this.classification = classification;
         this.brand = brand;
         this.model = model;
+        
+        driverHistory = new ArrayList<>();
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Overrides">
     @Override
     public int hashCode() {
-        return licensePlate.hashCode();
+        return carTrackerId.hashCode();
     }
 
     @Override
@@ -130,7 +142,7 @@ public class Car implements Serializable {
 
     @Override
     public String toString() {
-        return "Car{" + "licensePlate=" + licensePlate + '}';
+        return "Car{" + "carTrackerId=" + carTrackerId + '}';
     }
     //</editor-fold>
 }

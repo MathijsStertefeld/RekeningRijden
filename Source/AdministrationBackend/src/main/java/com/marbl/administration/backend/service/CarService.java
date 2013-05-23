@@ -17,28 +17,28 @@ public class CarService implements Serializable {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public Car create(Car car) {
-        carDAO.create(car);
-        return car;
+    public Car create(Car entity) {
+        carDAO.create(entity);
+        return entity;
     }
 
     @PUT
     @Consumes({"application/xml", "application/json"})
-    public Car edit(Car car) {
-        return carDAO.edit(car);
+    public Car edit(Car entity) {
+        return carDAO.edit(entity);
     }
 
     @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") String licensePlate) {
-        carDAO.remove(carDAO.find(licensePlate));
+    @Path("{carTrackerId}")
+    public void remove(@PathParam("carTrackerId") String carTrackerId) {
+        carDAO.remove(carDAO.find(carTrackerId));
     }
 
     @GET
-    @Path("{id}")
+    @Path("{carTrackerId}")
     @Produces({"application/xml", "application/json"})
-    public Car find(@PathParam("id") String licensePlate) {
-        return carDAO.find(licensePlate);
+    public Car find(@PathParam("carTrackerId") String carTrackerId) {
+        return carDAO.find(carTrackerId);
     }
 
     @GET
