@@ -6,10 +6,9 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <f:metadata>
-        <f:viewParam name="bsn" value="#{registerBean.bsn}" />        
+        <f:viewParam name="bsn" value="#{registerBean.bsn}" />
     </f:metadata>
-    <h:head>
-    </h:head>  
+    
     <h:body>
         <ui:composition template="template.xhtml">
             <f:loadBundle basename="Language_nl" var="msg" />
@@ -22,7 +21,7 @@
             </ui:define>
             
             <ui:define name="SiteTypeSelection">
-                <li class="selected">                           
+                <li class="selected">
                     <a href="http://localhost:8080/RekeningRijdersWebsite">
                         #{msg.TE_User}
                     </a>
@@ -52,7 +51,7 @@
                 <li class="categorylink">
                     <a href="login.xhtml">
                         #{msg.LO_Login}
-                    </a>          
+                    </a>
                 </li>
             </ui:define>
             

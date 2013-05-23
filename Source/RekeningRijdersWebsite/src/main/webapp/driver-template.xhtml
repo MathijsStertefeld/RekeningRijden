@@ -17,23 +17,23 @@
             
             <ui:define name="SidebarLinks">
                 <li class="categorylink">
+                    <a href="driver-overview.xhtml">
+                        #{msg.SB_Profile}
+                    </a>
+                </li>
+                <li class="categorylink">
                     <a href="bill-overview.xhtml">
                         #{msg.SB_Bills}
-                    </a>          
+                    </a>
                 </li>
                 <li class="categorylink">
                     <a href="car-overview.xhtml">
                         #{msg.SB_Cars}
-                    </a>          
-                </li>
-                <li class="categorylink">
-                    <a href="driver-overview.xhtml">
-                        #{msg.SB_Profile}
-                    </a>          
+                    </a>
                 </li>
                 <li class="categorylink">
                     <h:form>
-                        <h:commandLink action="#{logoutBean.logout()}">
+                        <h:commandLink action="#{driverBean.logout()}">
                             #{msg.SB_Logout}
                         </h:commandLink>
                     </h:form>

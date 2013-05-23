@@ -102,8 +102,8 @@ public class PaymentWithPayPalServlet extends HttpServlet {
                 req.setAttribute("error", e.getMessage());
             }
         } else {
-            Long billID = Long.parseLong(req.getParameter("billID"));
-            Bill bill = service.findBill(billID);
+            Long billId = Long.parseLong(req.getParameter("billID"));
+            Bill bill = service.findBill(billId);
             
             //bill.getPaymentAmount();
             String convertedAmountString = GoogleConverter.convertEURtoUSD(Double.toString(bill.getPaymentAmount()));

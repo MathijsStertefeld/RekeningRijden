@@ -5,9 +5,10 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
+    <f:metadata>
         
-    </h:head>
+    </f:metadata>
+    
     <h:body>
         <ui:composition template="driver-template.xhtml">
             <ui:define name="PageTitle">
@@ -35,7 +36,7 @@
             </ui:define>
             
             <ui:define name="SiteContent">
-                <h:form id="driverEditForm">                  
+                <h:form id="driverEditForm">
                     <h2>#{msg.DO_PersonalInformation}</h2>
                     
                     <p>
@@ -71,7 +72,7 @@
                     <p>
                         <strong>#{msg.DO_DateOfBirth}</strong>
                         <br/>
-                        <p:calendar value="#{driverBean.loggedInDriver.dateOfBirth}" id="popupCal" /> 
+                        <p:calendar value="#{driverBean.loggedInDriver.dateOfBirth}" id="popupCal" />
                         <!--h:inputText value="#{driverBean.loggedInDriver.dateOfBirth}" /-->
                     </p>
                     

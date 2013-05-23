@@ -168,8 +168,8 @@ public class RegisterBean implements Serializable {
         driver.setActivated(true);
         service.editDriver(driver);
 
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
 
         try {

@@ -5,8 +5,10 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
-    </h:head>  
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{driverBean.checkLogout()}" />
+    </f:metadata>
+    
     <h:body>
         <ui:composition template="template.xhtml">
             <f:loadBundle basename="Language_nl" var="msg" />
@@ -19,7 +21,7 @@
             </ui:define>
             
             <ui:define name="SiteTypeSelection">
-                <li class="selected">                           
+                <li class="selected">
                     <a href="http://localhost:8080/RekeningRijdersWebsite">
                         #{msg.TE_User}
                     </a>
@@ -49,7 +51,7 @@
                 <li class="categorylink">
                     <a href="login.xhtml">
                         #{msg.LO_Login}
-                    </a>          
+                    </a>
                 </li>
             </ui:define>
             
@@ -59,14 +61,14 @@
                         <h2>#{msg.LO_Login}</h2>
                         <h:outputLabel  value="#{msg.LO_Email}: " />
                         <br/>
-                        <h:inputText id="email" value="#{loginBean.email}"  style="width: 250px" />
+                        <h:inputText id="email" value="#{driverBean.loginEmail}"  style="width: 250px" />
                         <br/>
                         <h:outputLabel  value="#{msg.LO_Password}: " />
                         <br/>
-                        <h:inputSecret id="password" value="#{loginBean.password}"  style="width: 250px" />
+                        <h:inputSecret id="password" value="#{driverBean.loginPassword}"  style="width: 250px" />
                         <br/>
                         <br/>
-                        <h:commandButton id="submit" value=" #{msg.LO_Log_In} " action="#{loginBean.login()}" />
+                        <h:commandButton id="submit" value=" #{msg.LO_Log_In} " action="#{driverBean.login()}" />
                     </div>
                     <div style="float: right; width: 50%">
                         <h2>#{msg.LO_Register}</h2>
@@ -99,11 +101,11 @@
                         <h:inputText id="registerAddress" value="#{registerBean.address}"  style="width: 250px" />
                         <br/>
                         <h:outputLabel  value="#{msg.LO_ZipCode}: " />
-                        <br/>             
+                        <br />
                         <h:inputText id="registerZipCode" value="#{registerBean.zipCode}"  style="width: 250px" />
                         <br/>
                         <h:outputLabel  value="#{msg.LO_DateOfBirth}: " />
-                        <br/>              
+                        <br />
                         <p:calendar id="registerDateOfBirth" value="#{registerBean.dateOfBirth}" style="width: 250px" />
                         <br/>
                         <br/>

@@ -37,26 +37,26 @@
             
             <ui:define name="SiteContent">
                 <h:form id="billEditForm">
-                    <h:outputLabel for="id" value="Bill ID: " /> <br/>              
-                    <h:inputText id="id" value="#{billBean.current.id}" style="width: 250px" disabled="true"/> <br/>
+                    <h:outputLabel for="id" value="Bill ID: " /><br />
+                    <h:inputText id="id" value="#{billBean.current.id}" style="width: 250px" disabled="true"/><br/>
 
-                    <h:outputLabel for="driverBsn" value="BSN eigenaar: " /> <br/>              
-                    <h:inputText id="driverBsn" value="#{billBean.current.driverBsn}" style="width: 250px" disabled="true"/> <br/>
+                    <h:outputLabel for="driverBsn" value="BSN eigenaar: " /><br />
+                    <h:inputText id="driverBsn" value="#{billBean.current.driverBsn}" style="width: 250px" disabled="true"/><br/>
 
-                    <h:outputLabel for="periodDate" value="Periode: " /> <br/>              
+                    <h:outputLabel for="periodDate" value="Periode: " /><br />
                     <h:inputText id="periodDate" value="#{billBean.current.periodDate}" style="width: 250px" disabled="true">
                         <f:convertDateTime pattern="d/M/yyyy" />
-                    </h:inputText> <br/>
+                    </h:inputText><br/>
 
-                    <h:outputLabel for="paymentDate" value="Betaal datum: " /> <br/>              
+                    <h:outputLabel for="paymentDate" value="Betaal datum: " /><br />
                     <h:inputText id="paymentDate" value="#{billBean.current.paymentDate}" style="width: 250px">
                         <f:convertDateTime pattern="d/M/yyyy" />
-                    </h:inputText> <br/>
+                    </h:inputText><br/>
 
-                    <h:outputLabel for="paymentAmount" value="Totaalbedrag: " /> <br/>              
-                    <h:inputText id="paymentAmount" value="#{billBean.current.paymentAmount}" style="width: 250px" disabled="true"/> <br/>
+                    <h:outputLabel for="paymentAmount" value="Totaalbedrag: " /><br />
+                    <h:inputText id="paymentAmount" value="#{billBean.current.paymentAmount}" style="width: 250px" disabled="true"/><br/>
 
-                    <h:outputLabel for="paymentStatus" value="Betaalstatus: " /> <br/>              
+                    <h:outputLabel for="paymentStatus" value="Betaalstatus: " /><br />
                     <h:selectOneMenu id="paymentStatus" value="#{billBean.current.paymentStatus}" style="width: 250px">
                         <f:selectItem itemValue="OPEN" itemLabel="Onbetaald" />
                         <f:selectItem itemValue="PAID" itemLabel="Betaald" />

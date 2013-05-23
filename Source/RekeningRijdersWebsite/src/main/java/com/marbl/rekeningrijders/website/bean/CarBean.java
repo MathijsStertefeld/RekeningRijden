@@ -53,8 +53,8 @@ public class CarBean implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public Driver findLoggedInDriver() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
 
         if (request.getUserPrincipal() != null) {

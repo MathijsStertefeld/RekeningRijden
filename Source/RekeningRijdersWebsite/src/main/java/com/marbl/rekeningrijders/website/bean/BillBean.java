@@ -61,8 +61,8 @@ public class BillBean implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public Driver findLoggedInDriver() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
 
         if (request.getUserPrincipal() != null) {
@@ -86,10 +86,10 @@ public class BillBean implements Serializable {
         service.editBill(current);
     }
 
-    public void payBill(Long billID) {
+    public void payBill(Long billId) {
         //Ga naar externe payservice
         //if succesvol gelukt bij paypal
-        //service.payBill(billID);
+        //service.payBill(billId);
     }
     //</editor-fold>
 }

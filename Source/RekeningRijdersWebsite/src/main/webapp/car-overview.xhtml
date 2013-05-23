@@ -5,9 +5,10 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
+    <f:metadata>
         
-    </h:head>
+    </f:metadata>
+    
     <h:body>
         <ui:composition template="driver-template.xhtml">
             <ui:define name="PageTitle">
@@ -31,19 +32,22 @@
             <ui:define name="SiteContent">
                 <h:form id="carForm">
                     
-                    <p:dataTable id="dataTable" var="car" value="#{carBean.all}"  tableStyle="table-layout:fixed;">    
+                    <p:dataTable id="dataTable" var="car" value="#{carBean.all}"  tableStyle="table-layout:fixed;">
                         
-                        <p:column sortBy="#{car.carTrackerId}" style="white-space:normal" headerText="#{msg.CO_CarTrackerID}">  
-                            <h:outputText value="#{car.carTrackerId}" />  
-                        </p:column>  
+                        <p:column sortBy="#{car.carTrackerId}" style="white-space:normal" headerText="#{msg.CO_CarTrackerID}">
+                            <h:outputLink value="car-details.xhtml">
+                                <f:param name="licensePlate" value="#{car.licensePlate}" />
+                                <h:outputText value="#{car.carTrackerId}" />
+                            </h:outputLink>
+                        </p:column>
 
-                        <p:column sortBy="#{car.driverBsn}" style="white-space:normal" headerText="#{msg.CO_BSNOwner}">  
-                            <h:outputText value="#{car.driverBsn}" />  
-                        </p:column>  
+                        <p:column sortBy="#{car.driverBsn}" style="white-space:normal" headerText="#{msg.CO_BSNOwner}">
+                            <h:outputText value="#{car.driverBsn}" />
+                        </p:column>
 
                         <p:column sortBy="#{car.licensePlate}" style="white-space:normal" headerText="#{msg.CO_LicensePlate}">
                             <h:outputText value="#{car.licensePlate}" />
-                        </p:column> 
+                        </p:column>
 
                         <p:column sortBy="#{car.brand}" style="white-space:normal" headerText="#{msg.CO_Brand}">
                             <h:outputText value="#{car.brand}" />
@@ -51,13 +55,6 @@
                        
                        <p:column sortBy="#{car.model}" style="white-space:normal" headerText="#{msg.CO_Model}">
                             <h:outputText value="#{car.model}" />
-                        </p:column>
-                        
-                        <p:column style="white-space:normal" headerText="#{msg.CO_Edit}">
-                            <h:outputLink value="car-details.xhtml">
-                                <h:outputText value=" #{msg.CO_Edit} " />
-                                <f:param name="licensePlate" value="#{car.licensePlate}" />
-                            </h:outputLink>
                         </p:column>
                         
                     </p:dataTable>

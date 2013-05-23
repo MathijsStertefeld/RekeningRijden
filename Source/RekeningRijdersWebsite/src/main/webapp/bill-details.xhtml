@@ -5,12 +5,10 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
-        
-    </h:head>
     <f:metadata>
-        <f:viewParam name="billID" value="#{billBean.billId}" />
+        <f:viewParam name="billId" value="#{billBean.billId}" />
     </f:metadata>
+    
     <h:body>
         <ui:composition template="driver-template.xhtml">
             <ui:define name="PageTitle">
@@ -39,22 +37,22 @@
             
             <ui:define name="SiteContent">
                 <h:form id="billEditForm">
-                    <strong><h:outputLabel for="id" value="#{msg.BE_BillID}: " /></strong> <br/>              
-                    <h:outputText id="id" value="#{billBean.current.id}" style="width: 250px" disabled="true"/> <br/>
+                    <strong><h:outputLabel for="id" value="#{msg.BE_BillID}: " /></strong><br />
+                    <h:outputText id="id" value="#{billBean.current.id}" style="width: 250px" disabled="true"/><br/>
 
-                    <strong><h:outputLabel for="driverBsn" value="#{msg.BE_BSNOwner}: " /></strong> <br/>              
-                    <h:outputText id="driverBsn" value="#{billBean.current.driverBsn}" style="width: 250px" disabled="true"/> <br/>
+                    <strong><h:outputLabel for="driverBsn" value="#{msg.BE_BSNOwner}: " /></strong><br />
+                    <h:outputText id="driverBsn" value="#{billBean.current.driverBsn}" style="width: 250px" disabled="true"/><br/>
 
-                    <strong><h:outputLabel for="periodDate" value="#{msg.BE_TimePeriod}: " /></strong> <br/>              
-                    <h:outputText id="periodDate" value="#{billBean.current.periodDate}" style="width: 250px" disabled="true"/> <br/>
+                    <strong><h:outputLabel for="periodDate" value="#{msg.BE_TimePeriod}: " /></strong><br />
+                    <h:outputText id="periodDate" value="#{billBean.current.periodDate}" style="width: 250px" disabled="true"/><br/>
 
-                    <strong><h:outputLabel for="paymentDate" value="#{msg.BE_PayDate}: " /></strong> <br/>              
-                    <h:outputText id="paymentDate" value="#{billBean.current.paymentDate}" style="width: 250px" /> <br/>
+                    <strong><h:outputLabel for="paymentDate" value="#{msg.BE_PayDate}: " /></strong><br />
+                    <h:outputText id="paymentDate" value="#{billBean.current.paymentDate}" style="width: 250px" /><br/>
 
-                    <strong><h:outputLabel for="paymentAmount" value="#{msg.BE_Total}: " /></strong> <br/>              
-                    <h:outputText id="paymentAmount" value="#{billBean.current.paymentAmount}" style="width: 250px" disabled="true"/> <br/>
+                    <strong><h:outputLabel for="paymentAmount" value="#{msg.BE_Total}: " /></strong><br />
+                    <h:outputText id="paymentAmount" value="#{billBean.current.paymentAmount}" style="width: 250px" disabled="true"/><br/>
 
-                    <strong><h:outputLabel for="paymentStatus" value="#{msg.BE_PaymentStatus}: " /></strong> <br/>              
+                    <strong><h:outputLabel for="paymentStatus" value="#{msg.BE_PaymentStatus}: " /></strong><br />
                     
                     <h:selectOneMenu id="paymentStatus" value="#{billBean.current.paymentStatus}" style="width: 250px" disabled="true">
                         <f:selectItem itemValue="UNKNOWN" itemLabel="#{msg.BE_PaymentStatus_Unknown}" />

@@ -29,8 +29,8 @@ public class RekeningRijdersService implements Serializable {
         service = client.resource("http://localhost:8080/AdministrationBackend/");
     }
 
-    public void payBill(Long billID) {
-        Bill bill = findBill(billID);
+    public void payBill(Long billId) {
+        Bill bill = findBill(billId);
         bill.pay();
         service.path("resources").path("bill").put(Bill.class, bill);
     }

@@ -21,11 +21,11 @@
             <name>java.net - Maven 2</name>
             <url>https://repository.jboss.org/nexus/content/repositories/java.net-m2</url>
         </repository>
-        <repository>  
-            <id>prime-repo</id>  
-            <name>PrimeFaces Maven Repository</name>  
-            <url>http://repository.primefaces.org</url>  
-            <layout>default</layout>  
+        <repository>
+            <id>prime-repo</id>
+            <name>PrimeFaces Maven Repository</name>
+            <url>http://repository.primefaces.org</url>
+            <layout>default</layout>
         </repository>
     </repositories>
 
@@ -46,10 +46,10 @@
             <artifactId>jersey-bundle</artifactId>
             <version>1.17.1</version>
         </dependency>
-        <dependency>  
-            <groupId>org.primefaces</groupId>  
-            <artifactId>primefaces</artifactId>  
-            <version>3.5</version>  
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>3.5</version>
         </dependency>
         
         <dependency>

@@ -36,8 +36,8 @@ public class LoginBean implements Serializable {
     }
     
     private Principal getUserPrincipal() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         
         return request.getUserPrincipal();
@@ -54,8 +54,8 @@ public class LoginBean implements Serializable {
     }
 
     public void login() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
 
         try {
@@ -63,7 +63,7 @@ public class LoginBean implements Serializable {
             externalContext.redirect("logout.xhtml");
         } catch (IOException ex) {
         } catch (ServletException ex) {
-            context.addMessage(null, new FacesMessage(ex.getMessage()));
+            facesContext.addMessage(null, new FacesMessage(ex.getMessage()));
         }
     }
 }
