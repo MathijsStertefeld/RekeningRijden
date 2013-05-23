@@ -32,11 +32,10 @@
             <ui:define name="SiteContent">
                 <h:form id="carForm">
                     
-                    <p:dataTable id="dataTable" var="car" value="#{carBean.all}"  tableStyle="table-layout:fixed;">
-                        
+                    <p:dataTable sortBy="#{car.carTrackerId}" id="dataTable" var="car" value="#{carBean.all}"  tableStyle="table-layout:fixed;">
                         <p:column sortBy="#{car.carTrackerId}" style="white-space:normal" headerText="#{msg.CO_CarTrackerID}">
                             <h:outputLink value="car-details.xhtml">
-                                <f:param name="licensePlate" value="#{car.licensePlate}" />
+                                <f:param name="carTrackerId" value="#{car.carTrackerId}" />
                                 <h:outputText value="#{car.carTrackerId}" />
                             </h:outputLink>
                         </p:column>

@@ -37,17 +37,17 @@
             
             <ui:define name="SiteContent">
                 <h:form id="carEditForm">
-                    <h:outputLabel for="licensePlate" value="Kenteken: " /><br />
-                    <h:inputText id="licensePlate" value="#{carBean.current.licensePlate}" style="width: 250px" disabled="true"/><br/>
-
                     <h:outputLabel for="carTrackerId" value="Cartracker ID: " /><br />
-                    <h:inputText id="carTrackerId" value="#{carBean.current.carTrackerId}"  style="width: 250px" /><br/>
+                    <h:inputText id="carTrackerId" value="#{carBean.current.carTrackerId}"  style="width: 250px" disabled="true" /><br/>
+
+                    <h:outputLabel for="licensePlate" value="Kenteken: " /><br />
+                    <h:inputText id="licensePlate" value="#{carBean.current.licensePlate}" style="width: 250px" /><br/>
 
                     <h:outputLabel for="ownerBsn" value="BSN eigenaar: " /><br />
-                    <h:inputText id="ownerBsn" value="#{carBean.current.driverBsn}" style="width: 250px" disabled="true"/><br/>
+                    <h:inputText id="ownerBsn" value="#{carBean.current.driverBsn}" style="width: 250px" disabled="true" /><br/>
 
                     <h:outputLabel for="brand" value="Merk: " /><br />
-                    <h:inputText id="brand" value="#{carBean.current.brand}" style="width: 250px" disabled="true"/><br/>
+                    <h:inputText id="brand" value="#{carBean.current.brand}" style="width: 250px" disabled="true" /><br/>
 
                     <h:outputLabel for="model" value="Model: " /><br />
                     <h:inputText id="model" value="#{carBean.current.model}" style="width: 250px" disabled="true" /><br/>
@@ -78,7 +78,7 @@
                     </h:selectOneMenu><br/>
 
                     <h:outputLabel for="mass" value="Massa: " /><br />
-                    <h:inputText id="mass" value="#{carBean.current.mass}" style="width: 250px"/><br/>
+                    <h:inputText id="mass" value="#{carBean.current.mass}" style="width: 250px" /><br/>
                     
                     <h:outputLabel for="classification" value="Milieuclassificatie: " /><br />
                     <h:selectOneMenu id="classification" value="#{carBean.current.classification}" style="width: 250px">

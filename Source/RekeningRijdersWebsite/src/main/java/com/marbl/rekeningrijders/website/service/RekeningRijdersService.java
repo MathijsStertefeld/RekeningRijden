@@ -87,8 +87,8 @@ public class RekeningRijdersService implements Serializable {
         Driver driver = findDriver(bsn);
         ArrayList<Car> cars = new ArrayList<Car>();
         
-        for (String licensePlate : driver.getCarTrackerIds()) {
-            Car car = findCar(licensePlate);
+        for (String carTrackerId : driver.getCarTrackerIds()) {
+            Car car = findCar(carTrackerId);
             
             if (car != null) {
                 cars.add(car);
@@ -98,8 +98,8 @@ public class RekeningRijdersService implements Serializable {
         return cars;
     }
 
-    public Car findCar(String licensePlate) {
-        Car car = service.path("resources").path("car").path(licensePlate)
+    public Car findCar(String carTrackerId) {
+        Car car = service.path("resources").path("car").path(carTrackerId)
                 .accept(MediaType.APPLICATION_JSON).get(Car.class);
         return car;
     }

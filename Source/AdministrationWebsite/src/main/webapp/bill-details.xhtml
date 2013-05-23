@@ -38,10 +38,10 @@
             <ui:define name="SiteContent">
                 <h:form id="billEditForm">
                     <h:outputLabel for="id" value="Bill ID: " /><br />
-                    <h:inputText id="id" value="#{billBean.current.id}" style="width: 250px" disabled="true"/><br/>
+                    <h:inputText id="id" value="#{billBean.current.id}" style="width: 250px" disabled="true" /><br/>
 
                     <h:outputLabel for="driverBsn" value="BSN eigenaar: " /><br />
-                    <h:inputText id="driverBsn" value="#{billBean.current.driverBsn}" style="width: 250px" disabled="true"/><br/>
+                    <h:inputText id="driverBsn" value="#{billBean.current.driverBsn}" style="width: 250px" disabled="true" /><br/>
 
                     <h:outputLabel for="periodDate" value="Periode: " /><br />
                     <h:inputText id="periodDate" value="#{billBean.current.periodDate}" style="width: 250px" disabled="true">
@@ -54,7 +54,7 @@
                     </h:inputText><br/>
 
                     <h:outputLabel for="paymentAmount" value="Totaalbedrag: " /><br />
-                    <h:inputText id="paymentAmount" value="#{billBean.current.paymentAmount}" style="width: 250px" disabled="true"/><br/>
+                    <h:inputText id="paymentAmount" value="#{billBean.current.paymentAmount}" style="width: 250px" disabled="true" /><br/>
 
                     <h:outputLabel for="paymentStatus" value="Betaalstatus: " /><br />
                     <h:selectOneMenu id="paymentStatus" value="#{billBean.current.paymentStatus}" style="width: 250px">

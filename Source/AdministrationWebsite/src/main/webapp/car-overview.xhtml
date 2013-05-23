@@ -31,16 +31,16 @@
 
             <ui:define name="SiteContent">
                 <h:form id="carForm">
-                    <p:dataTable sortBy="#{car.licensePlate}" id="dataTable" var="car" value="#{carBean.all}"  tableStyle="table-layout:fixed;">
-                        <p:column sortBy="#{car.licensePlate}" style="white-space:normal" headerText="Kenteken">
+                    <p:dataTable sortBy="#{car.carTrackerId}" id="dataTable" var="car" value="#{carBean.all}"  tableStyle="table-layout:fixed;">
+                        <p:column sortBy="#{car.carTrackerId}" style="white-space:normal" headerText="Cartracker ID">
                             <h:outputLink value="car-details.xhtml">
-                                <f:param name="licensePlate" value="#{car.licensePlate}" />
-                                <h:outputText value="#{car.licensePlate}" />
+                                <f:param name="carTrackerId" value="#{car.carTrackerId}" />
+                                <h:outputText value="#{car.carTrackerId}" />
                             </h:outputLink>
                         </p:column>
 
-                        <p:column sortBy="#{car.carTrackerId}" style="white-space:normal" headerText="Cartracker ID">
-                            <h:outputText value="#{car.carTrackerId}" />
+                        <p:column sortBy="#{car.licensePlate}" style="white-space:normal" headerText="Kenteken">
+                            <h:outputText value="#{car.licensePlate}" />
                         </p:column>
 
                         <p:column sortBy="#{car.driverBsn}" style="white-space:normal" headerText="Eigenaar">

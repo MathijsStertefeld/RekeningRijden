@@ -45,9 +45,9 @@ public class CarBean implements Serializable {
         ExternalContext externalContext = facesContext.getExternalContext();
         Map<String, String> requestParameterMap = externalContext.getRequestParameterMap();
 
-        if (requestParameterMap.containsKey("licensePlate")) {
-            String licensePlate = requestParameterMap.get("licensePlate");
-            current = service.find(licensePlate);
+        if (requestParameterMap.containsKey("carTrackerId")) {
+            String carTrackerId = requestParameterMap.get("carTrackerId");
+            current = service.find(carTrackerId);
         }
 
         if (current == null) {

@@ -28,12 +28,12 @@ public class CarService implements Serializable {
         return webResource.path("resources").path("car").put(Car.class, car);
     }
 
-    public void remove(String licensePlate) {
-        webResource.path("resources").path("car").path(licensePlate).delete();
+    public void remove(String carTrackerId) {
+        webResource.path("resources").path("car").path(carTrackerId).delete();
     }
 
-    public Car find(String licensePlate) {
-        return webResource.path("resources").path("car").path(licensePlate).get(Car.class);
+    public Car find(String carTrackerId) {
+        return webResource.path("resources").path("car").path(carTrackerId).get(Car.class);
     }
 
     public Collection<Car> findAll() {
