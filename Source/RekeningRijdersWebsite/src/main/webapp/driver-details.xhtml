@@ -109,11 +109,9 @@
                     </p>
                     
                     <br/>
-                    <h:commandButton id="submit" value=" #{msg.DE_Save} " action="driver-overview">
-                        <f:actionListener binding="#{driverBean.save()}" />
-                    </h:commandButton>
+                    <h:commandButton id="submit" value=" #{msg.DE_Save} " action="#{driverBean.saveChanges()}" />
                     &nbsp;
-                    <h:commandButton id="cancel" value=" #{msg.DE_Cancel} " action="driver-overview" />
+                    <h:commandButton id="cancel" value=" #{msg.DE_Cancel} " action="#{driverBean.showOverview()}" />
                 </h:form>
             </ui:define>
 

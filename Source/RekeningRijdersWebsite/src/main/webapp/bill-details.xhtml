@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-        <f:viewParam name="billId" value="#{billBean.billId}" />
+        <f:event type="preRenderView" listener="#{billBean.findCurrent()}" />
     </f:metadata>
     
     <h:body>
@@ -62,11 +62,9 @@
                     </h:selectOneMenu><br/>
                     
                     <br/>
-                    <h:commandButton id="submit" value=" #{msg.BE_Save} " action="bill-overview">
-                        <f:actionListener binding="#{billBean.save()}" />
-                    </h:commandButton>
+                    <h:commandButton id="submit" value=" #{msg.BE_Save} " action="#{billBean.saveChanges()}" />
                     &nbsp;
-                    <h:commandButton id="cancel" value=" #{msg.BE_Cancel} " action="bill-overview" />
+                    <h:commandButton id="cancel" value=" #{msg.BE_Cancel} " action="#{billBean.showOverview()}" />
                 </h:form>
             </ui:define>
 

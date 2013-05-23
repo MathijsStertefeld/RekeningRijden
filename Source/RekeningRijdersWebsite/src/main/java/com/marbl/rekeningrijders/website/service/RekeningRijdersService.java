@@ -72,7 +72,7 @@ public class RekeningRijdersService implements Serializable {
         service.path("resources").path("bill").accept(MediaType.APPLICATION_JSON).put(bill);
     }
 
-    public Collection<Car> getCarsFromDriver(int bsn) {
+    public Collection<Car> findCarsByBsn(int bsn) {
         Driver driver = findDriver(bsn);
         return driver.getCars();
     }

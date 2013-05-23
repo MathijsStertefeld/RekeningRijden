@@ -3,9 +3,10 @@ package com.marbl.rekeningrijders.website.bean;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.*;
 import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.annotation.PostConstruct;
+import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -23,25 +24,11 @@ public class BillBean implements Serializable {
     private RekeningRijdersService service;
     private Collection<Bill> all;
     private Bill current;
+    @Inject
+    private DriverBean driverBean;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public Long getBillId() {
-        if (current != null) {
-            return current.getId();
-        } else {
-            return 0L;
-        }
-    }
-
-    public void setBillId(Long id) {
-        for (Bill other : all) {
-            if (id == other.getId()) {
-                current = other;
-            }
-        }
-    }
-
     public Collection<Bill> getAll() {
         return all;
     }
@@ -60,6 +47,25 @@ public class BillBean implements Serializable {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
+    public void findAll() {
+        all = service.findBillsByBsn(driverBean.getLoggedInDriver().getBsn());
+    }
+
+    public void findCurrent() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        Map<String, String> requestParameterMap = externalContext.getRequestParameterMap();
+
+        if (requestParameterMap.containsKey("id")) {
+            Long id = Long.parseLong(requestParameterMap.get("id"));
+            current = service.findBill(id);
+        }
+
+        if (current == null) {
+            showOverview();
+        }
+    }
+    
     public Driver findLoggedInDriver() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
@@ -73,23 +79,20 @@ public class BillBean implements Serializable {
         }
     }
 
-    @PostConstruct
-    public void postConstruct() {
-        Driver driver = findLoggedInDriver();
-
-        if (driver != null) {
-            all = driver.getBills();
-        }
-    }
-
-    public void save() {
+    public void saveChanges() {
         service.editBill(current);
+        showOverview();
     }
 
-    public void payBill(Long billId) {
-        //Ga naar externe payservice
-        //if succesvol gelukt bij paypal
-        //service.payBill(billId);
+    public void showOverview() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        
+        try {
+            externalContext.redirect("bill-overview.xhtml");
+            current = null;
+        } catch (IOException ex) {
+        }
     }
     //</editor-fold>
 }

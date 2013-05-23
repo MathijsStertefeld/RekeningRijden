@@ -6,7 +6,6 @@ import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -127,8 +126,19 @@ public class DriverBean implements Serializable {
         }
     }
 
-    public void save() {
+    public void saveChanges() {
         service.editDriver(loggedInDriver);
+        showOverview();
+    }
+
+    public void showOverview() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        
+        try {
+            externalContext.redirect("driver-overview.xhtml");
+        } catch (IOException ex) {
+        }
     }
     //</editor-fold>
 }

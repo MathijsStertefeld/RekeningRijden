@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <f:metadata>
-        <f:viewParam name="licensePlate" value="#{carBean.licensePlate}" />
+        <f:event type="preRenderView" listener="#{carBean.findCurrent()}" />
     </f:metadata>
     
     <h:body>
@@ -94,11 +94,9 @@
                     </h:selectOneMenu><br/>
                     
                     <br/>
-                    <h:commandButton id="submit" value=" #{msg.CE_Save} " action="car-overview">
-                        <f:actionListener binding="#{carBean.save()}" />
-                    </h:commandButton>
+                    <h:commandButton id="submit" value=" #{msg.CE_Save} " action="#{carBean.saveChanges}" />
                     &nbsp;
-                    <h:commandButton id="cancel" value=" #{msg.CE_Cancel} " action="car-overview" />
+                    <h:commandButton id="cancel" value=" #{msg.CE_Cancel} " action="#{carBean.showOverview()}" />
                 </h:form>
             </ui:define>
 

@@ -3,9 +3,10 @@ package com.marbl.rekeningrijders.website.bean;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.*;
 import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.annotation.PostConstruct;
+import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -23,25 +24,11 @@ public class CarBean implements Serializable {
     private RekeningRijdersService service;
     private Collection<Car> all;
     private Car current;
+    @Inject
+    private DriverBean driverBean;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public String getLicensePlate() {
-        if (current != null) {
-            return current.getLicensePlate();
-        } else {
-            return "";
-        }
-    }
-
-    public void setLicensePlate(String licensePlate) {
-        for (Car other : all) {
-            if (licensePlate.equals(other.getLicensePlate())) {
-                current = other;
-            }
-        }
-    }
-
     public Collection<Car> getAll() {
         return all;
     }
@@ -52,6 +39,25 @@ public class CarBean implements Serializable {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
+    public void findAll() {
+        all = service.findCarsByBsn(driverBean.getLoggedInDriver().getBsn());
+    }
+
+    public void findCurrent() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        Map<String, String> requestParameterMap = externalContext.getRequestParameterMap();
+
+        if (requestParameterMap.containsKey("licensePlate")) {
+            String licensePlate = requestParameterMap.get("licensePlate");
+            current = service.findCar(licensePlate);
+        }
+
+        if (current == null) {
+            showOverview();
+        }
+    }
+    
     public Driver findLoggedInDriver() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
@@ -65,17 +71,20 @@ public class CarBean implements Serializable {
         }
     }
 
-    @PostConstruct
-    public void postConstruct() {
-        Driver driver = findLoggedInDriver();
-
-        if (driver != null) {
-            all = driver.getCars();
-        }
+    public void saveChanges() {
+        service.editCar(current);
+        showOverview();
     }
 
-    public void save() {
-        service.editCar(current);
+    public void showOverview() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        
+        try {
+            externalContext.redirect("car-overview.xhtml");
+            current = null;
+        } catch (IOException ex) {
+        }
     }
     //</editor-fold>
 }
