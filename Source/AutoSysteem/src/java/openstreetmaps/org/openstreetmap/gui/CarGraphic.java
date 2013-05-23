@@ -24,10 +24,11 @@ public class CarGraphic implements MapMarker
 
     public CarGraphic(String carTrackerId)
     {
+        //Default placeholder position
         this(Color.RED, 51.4560332, 5.5380103, carTrackerId);
     }
 
-    public CarGraphic(double lat, double lon, String carTrackerId)
+    public CarGraphic(String carTrackerId, double lat, double lon)
     {
         this(Color.RED, lat, lon, carTrackerId);
     }
@@ -84,5 +85,11 @@ public class CarGraphic implements MapMarker
     {
         this.lat += lat;
         this.lon += lon;
+    }
+
+    public void place(double lat, double lon)
+    {
+        this.lat = lat;
+        this.lon = lon;
     }
 }

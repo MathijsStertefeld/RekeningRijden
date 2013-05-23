@@ -8,6 +8,7 @@ import domain_simulation.Car;
 import java.util.ArrayList;
 import java.util.Date;
 import openstreetmaps.Frame;
+import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 
 /**
  *
@@ -15,14 +16,13 @@ import openstreetmaps.Frame;
  */
 public class Simulation implements Runnable
 {
-
     private long timestepInterval;
     private ArrayList<TimeStep> timesteps;
     private Thread t1;
     private Date sessionDate;
     //private TimeStepSimulator tsSim;
     private CarSimulator carSim;
-    private Garage garage;
+    private CarHolder garage;
     private boolean isRunning = false;
     private Frame tempframe;
 
@@ -30,8 +30,7 @@ public class Simulation implements Runnable
     {
         this.timestepInterval = timestepInterval;
         timesteps = new ArrayList<TimeStep>();
-        garage = new Garage();
-        //tsSim = new TimeStepSimulator(timestepInterval);
+        garage = new CarHolder();
         carSim = new CarSimulator(carInterval);
         this.sessionDate = new Date();
 
@@ -43,7 +42,6 @@ public class Simulation implements Runnable
         t1 = new Thread(this);
         isRunning = true;
         t1.start();
-        //tsSim.start();
         carSim.start();
     }
 
@@ -54,12 +52,12 @@ public class Simulation implements Runnable
         carSim.stop();
     }
 
-    public void addCar(Car c)
+    public void addCar(Car c,ArrayList<Node> route)
     {
-        garage.addCar(c);
+        garage.addCar(c, route);
     }
 
-    public Garage getGarage()
+    public CarHolder getGarage()
     {
         return garage;
     }
@@ -91,7 +89,7 @@ public class Simulation implements Runnable
                 TimeStep ts = new TimeStep(time);
                 timesteps.add(ts);
                 tempframe.setOutputText("Timestep " + ts.getTime() + "\n");
-                for (Car c : Garage.getCars())
+                for (Car c : CarHolder.getCars())
                 {
                     tempframe.getMap().repaint();
                     //HIER MOET IK IETS RETURNEN ZODAT HET ER UIT KOMT
