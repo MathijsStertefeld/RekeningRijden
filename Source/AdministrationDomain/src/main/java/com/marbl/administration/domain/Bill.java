@@ -13,9 +13,7 @@ public class Bill implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
-    @Column(nullable = false)
     private Long id;
-    @Column(nullable = false)
     private String carLicensePlate;
     private int driverBsn;
     @Temporal(javax.persistence.TemporalType.DATE)

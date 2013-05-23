@@ -12,9 +12,7 @@ public class Employee implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
-    @Column(nullable = false)
     private String username;
-    @Column(nullable = false)
     private String password;
     @ElementCollection
     @CollectionTable(name = "EMPLOYEE_GROUP", joinColumns = {

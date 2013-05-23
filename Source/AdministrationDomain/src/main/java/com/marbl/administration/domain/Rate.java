@@ -10,9 +10,7 @@ public abstract class Rate implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
-    @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
     private double price;
     //</editor-fold>
 

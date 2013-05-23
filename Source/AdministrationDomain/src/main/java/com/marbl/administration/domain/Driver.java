@@ -13,11 +13,8 @@ public class Driver implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
-    @Column(nullable = false, unique = true)
     private int bsn;
-    @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
     private String password;
     private String languageCode;
     private String firstName;

@@ -12,11 +12,8 @@ public class Car implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
-    @Column(nullable = false)
     private String licensePlate;
-    @Column(nullable = false)
     private String carTrackerId;
-    @Column(nullable = false)
     private int driverBsn;
     @ElementCollection
     @CollectionTable(name = "CAR_DRIVER_HISTORY")
