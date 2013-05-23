@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -48,7 +47,7 @@ public class GoogleConverter
         URL url = new URL(google + amount + from + "=?" + to);
         Reader reader = new InputStreamReader(url.openStream(), charset);
         Result result = new Gson().fromJson(reader, Result.class);
-        
+
         String convertedResult = result.getRhs().split("\\s+")[0];
         return convertedResult;
         
@@ -56,7 +55,7 @@ public class GoogleConverter
     
     public static String convertCurrency(String baseCurrency, String termCurrency, String amount) throws MalformedURLException, IOException
     {
-        return convert(baseCurrency, termCurrency, amount);
+       return convert(baseCurrency, termCurrency, amount);        
     }
     
     public static String convertEURtoUSD(String amount) throws MalformedURLException, IOException{

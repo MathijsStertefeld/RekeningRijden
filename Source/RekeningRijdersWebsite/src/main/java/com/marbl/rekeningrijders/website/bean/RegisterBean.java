@@ -155,7 +155,7 @@ public class RegisterBean implements Serializable {
             message.setFrom(new InternetAddress("payment@RekeningRijders.no-ip.biz"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
             message.setSubject("Activatie Rekening Rijders");
-            message.setText("Klik op onderstaande link om uw account te activeren.\nhttp://localhost:8080/RekeningRijdersWebsiteM/activation.xhtml?bsn=" + bsn);
+            message.setText("Klik op onderstaande link om uw account te activeren.\nhttp://localhost:8080/RekeningRijdersWebsiteM/faces/activation.xhtml?bsn=" + bsn);
 
             Transport.send(message);
         } catch (MessagingException e) {

@@ -12,9 +12,11 @@ public class Employee implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
-    @ElementCollection
+    @ElementCollection(targetClass = EmployeeGroup.class)
     @CollectionTable(name = "EMPLOYEE_GROUP", joinColumns = {
         @JoinColumn(name = "USERNAME")})
     @Column(name = "GROUPNAME")
@@ -74,7 +76,7 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "Employee{" + "username=" + username + '}';
+        return "Employee{" + "name=" + username + '}';
     }
     //</editor-fold>
 }

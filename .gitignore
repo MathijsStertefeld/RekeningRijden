@@ -1,5 +1,5 @@
-/Source/AdministrationBackend/target/
 /Source/AdministrationDomain/target/
+/Source/AdministrationService/target/
 /Source/AdministrationWebsite/target/
 /Source/RekeningRijdersWebsite/target/
 /Source/AutoSysteem/build/
@@ -17,3 +17,5 @@
 /Source/VerplaatsingSysteemWebGetDataExample/build/
 /Source/VerplaatsingSysteemWebGetDataExample/dist/
 /Source/VerplaatsingSysteemWebGetDataExample/nbproject/
+/Source/AdministrationBackend/target/
+/Source/RekeningRijdersWebsite/nbproject/
