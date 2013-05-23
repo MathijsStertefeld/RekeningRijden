@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,11 +59,21 @@ public class RekeningRijdersService implements Serializable {
 
     public Collection<Bill> findBillsByBsn(int bsn) {
         Driver driver = findDriver(bsn);
-        return driver.getBills();
+        ArrayList<Bill> bills = new ArrayList<Bill>();
+        
+        for (Long id : driver.getBillIds()) {
+            Bill bill = findBill(id);
+            
+            if (bill != null) {
+                bills.add(bill);
+            }
+        }
+        
+        return bills;
     }
 
-    public Bill findBill(Long billId) {
-        Bill bill = service.path("resources").path("bill").path(Long.toString(billId))
+    public Bill findBill(Long id) {
+        Bill bill = service.path("resources").path("bill").path(Long.toString(id))
                 .accept(MediaType.APPLICATION_JSON).get(Bill.class);
 
         return bill;
@@ -74,7 +85,17 @@ public class RekeningRijdersService implements Serializable {
 
     public Collection<Car> findCarsByBsn(int bsn) {
         Driver driver = findDriver(bsn);
-        return driver.getCars();
+        ArrayList<Car> cars = new ArrayList<Car>();
+        
+        for (String licensePlate : driver.getCarLicensePlates()) {
+            Car car = findCar(licensePlate);
+            
+            if (car != null) {
+                cars.add(car);
+            }
+        }
+        
+        return cars;
     }
 
     public Car findCar(String licensePlate) {

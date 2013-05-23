@@ -1,6 +1,8 @@
 package com.marbl.administration.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -16,6 +18,9 @@ public class Car implements Serializable {
     private String carTrackerId;
     @Column(nullable = false)
     private int driverBsn;
+    @ElementCollection
+    @CollectionTable(name = "CAR_DRIVER_HISTORY")
+    private Collection<Integer> driverHistory;
     private String brand;
     private String model;
     private CarType type;
@@ -47,6 +52,14 @@ public class Car implements Serializable {
 
     public void setDriverBsn(int driverBsn) {
         this.driverBsn = driverBsn;
+    }
+    
+    public Collection<Integer> getDriverHistory() {
+        return driverHistory;
+    }
+    
+    public void setDriverHistory(Collection<Integer> driverHistory) {
+        this.driverHistory = driverHistory;
     }
 
     public String getBrand() {
@@ -114,6 +127,8 @@ public class Car implements Serializable {
         this.classification = classification;
         this.brand = brand;
         this.model = model;
+        
+        driverHistory = new ArrayList<Integer>();
     }
     //</editor-fold>
 

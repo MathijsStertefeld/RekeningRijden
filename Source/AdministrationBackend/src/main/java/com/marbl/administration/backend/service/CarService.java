@@ -17,15 +17,15 @@ public class CarService implements Serializable {
 
     @POST
     @Consumes({"application/xml", "application/json"})
-    public Car create(Car car) {
-        carDAO.create(car);
-        return car;
+    public Car create(Car entity) {
+        carDAO.create(entity);
+        return entity;
     }
 
     @PUT
     @Consumes({"application/xml", "application/json"})
-    public Car edit(Car car) {
-        return carDAO.edit(car);
+    public Car edit(Car entity) {
+        return carDAO.edit(entity);
     }
 
     @DELETE

@@ -13,18 +13,12 @@ public class Driver implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private int bsn;
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
     private String password;
-    @ElementCollection(targetClass = DriverGroup.class)
-    @CollectionTable(name = "DRIVER_GROUP", joinColumns = {
-        @JoinColumn(name = "BSN")})
-    @Column(name = "GROUPNAME")
-    @Enumerated(EnumType.STRING)
-    private Collection<DriverGroup> groups;
     private String languageCode;
     private String firstName;
     private String lastName;
@@ -33,10 +27,22 @@ public class Driver implements Serializable {
     private String zipCode;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateOfBirth;
-    @OneToMany(cascade = {CascadeType.ALL})
-    private Collection<Bill> bills;
-    @OneToMany(cascade = {CascadeType.ALL})
-    private Collection<Car> cars;
+    @ElementCollection
+    @CollectionTable(name = "DRIVER_BILL")
+    private Collection<Long> billIds;
+    @ElementCollection
+    @CollectionTable(name = "DRIVER_CAR_HISTORY")
+    private Collection<String> carHistory;
+    @ElementCollection
+    @CollectionTable(name = "DRIVER_CAR")
+    private Collection<String> carLicensePlates;
+    @ElementCollection
+    @CollectionTable(name = "DRIVER_GROUP", joinColumns = {
+        @JoinColumn(name = "BSN")})
+    @Column(name = "GROUPNAME")
+    @Enumerated(EnumType.STRING)
+    private Collection<DriverGroup> groups;
+    
     private boolean activated;
     //</editor-fold>
 
@@ -129,30 +135,28 @@ public class Driver implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Collection<Bill> getBills() {
-        return bills;
+    public Collection<Long> getBillIds() {
+        return billIds;
     }
 
-    public Bill getBill(int id) {
-        for (Bill b : bills) {
-            if (b.getId() == id) {
-                return b;
-            }
-        }
-
-        return null;
+    public void setBillIds(Collection<Long> billIds) {
+        this.billIds = billIds;
     }
 
-    public void setBills(Collection<Bill> bills) {
-        this.bills = bills;
+    public Collection<String> getCarHistory() {
+        return carHistory;
     }
 
-    public Collection<Car> getCars() {
-        return cars;
+    public void setCarHistory(Collection<String> carHistory) {
+        this.carHistory = carHistory;
     }
 
-    public void setCars(Collection<Car> cars) {
-        this.cars = cars;
+    public Collection<String> getCarLicensePlates() {
+        return carLicensePlates;
+    }
+
+    public void setCarLicensePlates(Collection<String> carLicensePlates) {
+        this.carLicensePlates = carLicensePlates;
     }
 
     public boolean getActivated() {
@@ -185,9 +189,10 @@ public class Driver implements Serializable {
         this.dateOfBirth = dateOfBirth;
         this.activated = activated;
 
+        billIds = new ArrayList<Long>();
+        carHistory = new ArrayList<String>();
+        carLicensePlates = new ArrayList<String>();
         groups = new ArrayList<DriverGroup>();
-        bills = new ArrayList<Bill>();
-        cars = new ArrayList<Car>();
     }
     //</editor-fold>
 

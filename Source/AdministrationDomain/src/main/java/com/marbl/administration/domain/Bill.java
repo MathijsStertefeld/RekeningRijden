@@ -16,6 +16,7 @@ public class Bill implements Serializable {
     @Column(nullable = false)
     private Long id;
     @Column(nullable = false)
+    private String carLicensePlate;
     private int driverBsn;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date periodDate;
@@ -33,6 +34,14 @@ public class Bill implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public String getCarLicensePlate() {
+        return carLicensePlate;
+    }
+    
+    public void setCarLicensePlate(String carLicensePlate) {
+        this.carLicensePlate = carLicensePlate;
     }
 
     public int getDriverBsn() {
@@ -113,12 +122,11 @@ public class Bill implements Serializable {
 
     @Override
     public String toString() {
-        return "Bill{" + "number=" + id + '}';
+        return "Bill{" + "id=" + id + '}';
     }
     //</editor-fold>
     
-    public void pay()
-    {
+    public void pay() {
         this.paymentStatus = PaymentStatus.PAID;
         this.paymentDate = new Date();
     }
