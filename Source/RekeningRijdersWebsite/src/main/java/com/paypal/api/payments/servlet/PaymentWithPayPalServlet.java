@@ -19,6 +19,9 @@ import javax.servlet.http.*;
 import org.apache.log4j.Logger;
 import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
 import com.marbl.rekeningrijders.util.GoogleConverter;
+import java.util.logging.Level;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author lvairamani
@@ -26,10 +29,9 @@ import com.marbl.rekeningrijders.util.GoogleConverter;
  */
 @Stateless
 public class PaymentWithPayPalServlet extends HttpServlet {
-    
+
     @Inject
     private RekeningRijdersService service;
-
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger
             .getLogger(PaymentWithPayPalServlet.class);
@@ -101,17 +103,60 @@ public class PaymentWithPayPalServlet extends HttpServlet {
             } catch (PayPalRESTException e) {
                 req.setAttribute("error", e.getMessage());
             }
+
+            //set paymentstatus  bill
+            //System.out.println(Payment.getLastResponse());
+
+            String responseBillID = "";
+            String saleState = "";
+            try {
+                // JSONParser parser = new JSONParser();
+                JSONObject fullJSON = new JSONObject(Payment.getLastResponse());
+                JSONArray transactionArray = fullJSON.getJSONArray("transactions");
+                JSONObject transactionObject = transactionArray.getJSONObject(0);
+                responseBillID = (String) transactionObject.getString("description");
+                responseBillID = responseBillID.replace("BillID=", "");
+                
+                JSONArray relatedResourcesArray = transactionObject.getJSONArray("related_resources");
+                JSONObject relatedResourceObject = relatedResourcesArray.getJSONObject(0);
+                System.out.println("object3: " + relatedResourceObject);
+                JSONObject saleObject = relatedResourceObject.getJSONObject("sale");  
+                saleState = saleObject.getString("state");
+
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(PaymentWithPayPalServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            
+            if(saleState.equals("completed"))
+            {
+                //set paymentstatus on bill
+                
+                Bill bill = service.findBill(Long.parseLong(responseBillID));
+                System.out.println("BILL TEST: " + bill.getId() + " Amount: " + bill.getPaymentAmount());
+            }
+            else
+                System.out.println("STATE ELSE = " + saleState);
+            
+            
+            //req.setAttribute("request", Payment.getLastRequest());
+            //req.getRequestDispatcher("response.jsp").forward(req, resp);
+            
+            resp.sendRedirect("bill-details.xhtml?billID=" + responseBillID);
+            //resp.sendRedirect("login.xhtml");
         } else {
             Long billId = Long.parseLong(req.getParameter("billID"));
             Bill bill = service.findBill(billId);
-            
+
             //bill.getPaymentAmount();
             String convertedAmountString = GoogleConverter.convertEURtoUSD(Double.toString(bill.getPaymentAmount()));
-            Double convertedAmount = Double.parseDouble(convertedAmountString);        
+            Double convertedAmount = Double.parseDouble(convertedAmountString);
             DecimalFormat df = new DecimalFormat("#0.00");
             String total = df.format(convertedAmount);
+            total = total.replace(',', '.');
+            System.out.println("TOTAL: " + total);
             //System.out.println(total);
-            
+
             // ###AmountDetails
             // Let's you specify details of a payment amount.
             AmountDetails amountDetails = new AmountDetails();
@@ -135,7 +180,7 @@ public class PaymentWithPayPalServlet extends HttpServlet {
             Transaction transaction = new Transaction();
             transaction.setAmount(amount);
             transaction
-                    .setDescription("This is the payment transaction description.");
+                    .setDescription("BillID=" + bill.getId());
 
             // The Payment creation API requires a list of
             // Transaction; add the created `Transaction`
@@ -190,8 +235,10 @@ public class PaymentWithPayPalServlet extends HttpServlet {
             } catch (PayPalRESTException e) {
                 req.setAttribute("error", e.getMessage());
             }
+
+            req.setAttribute("request", Payment.getLastRequest());
+            //req.getRequestDispatcher("response.jsp").forward(req, resp);
+            resp.sendRedirect((String) req.getAttribute("redirectURL"));
         }
-        req.setAttribute("request", Payment.getLastRequest());
-        req.getRequestDispatcher("response.jsp").forward(req, resp);
     }
 }
