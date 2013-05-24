@@ -2,31 +2,22 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package openstreetmaps;
+package autosysteem;
 
-import com.graphhopper.GHRequest;
-import com.graphhopper.GHResponse;
-import com.graphhopper.GraphHopper;
-import com.graphhopper.GraphHopperAPI;
-import com.graphhopper.util.PointList;
 import domain_simulation.Car;
+import domain_simulation.Osmosis;
 import domain_simulation.Simulation;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import openstreetmaps.org.openstreetmap.gui.CarGraphic;
-import openstreetmaps.org.openstreetmap.gui.jmapviewer.Coordinate;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.JMapViewer;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.MapMarkerDot;
-import openstreetmaps.org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.OsmTileLoader;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
-import openstreetmaps.org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 
@@ -52,15 +43,12 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         try
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
 
         initComponents();
-
-        //setResizable(false);
         setLayout(new BorderLayout());
 
         // Add the map to the form and fill in settings
@@ -68,38 +56,22 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 
         // map.highlightCarGraphic("t1");
 
-        Coordinate one = new Coordinate(51.4560332, 5.5380103);
-        Coordinate two = new Coordinate(51.455726, 5.5326495);
-        
-        List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(one, two));
+//        Coordinate one = new Coordinate(51.4560332, 5.5380103);
+//        Coordinate two = new Coordinate(51.455726, 5.5326495);
+//        List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(one, two, two));
         //map.addMapPolygon(new MapPolygonImpl(route));
 
         // Fill the comboBox.
         currentCarComboBox.removeAllItems();
 
-        MapPolygonImpl m = new MapPolygonImpl(route);
-        map.addMapPolygon(m);
-        System.out.println("DEBUG");
-
-
-        // openstreetmaps.org.openstreetmap.gui.jmapviewer.
-//        for(Node n : Osmosis.getNodes())
-//        {
-//            map.addMapMarker(new MapMarkerDot(Color.yellow, n.getLatitude(), n.getLongitude()));
-//        }
-
-        Osmosis.init();
-        // Osmosis.getMaxSpeedForWay(Osmosis.getWays().get(15));
-
         for (CarGraphic c : map.getAllCarGraphics())
         {
-
             currentCarComboBox.addItem(c.getCarTrackerId());
         }
 
 
         //Simulation stuff happens here
-        sim = new Simulation(jsInterval.getValue(), 500, this);
+        sim = new Simulation(jsInterval.getValue(), 1000, this);
         for (Car c : sim.getGarage().getCars())
         {
             currentCarComboBox.addItem(c.getCarTrackerId());
@@ -110,7 +82,34 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 //        map.addCarGraphic(new CarGraphic(51.4560332, 5.5380103, "t0"));
 //        map.addCarGraphic(new CarGraphic(51.455726, 5.5326495, "t1"));
 //        map.addCarGraphic(new CarGraphic(52, 5.5326495, "t2"));
-        validate();
+
+        if (Osmosis.init())
+        {
+            final ArrayList<Node> nodes = Osmosis.plotPath(10);
+            System.out.println(nodes.size());
+
+            Thread t = new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    for (Node n : nodes)
+                    {
+                        //map.addMapMarker(new MapMarkerDot(Color.yellow, n.getLatitude(), n.getLongitude()));
+//                    try
+//                    {
+//                        System.out.println(nodes.indexOf(n));
+//                        //Thread.sleep(1000);
+//                    } catch (InterruptedException ex)
+//                    {
+//                        Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+                    }
+                }
+            });
+            t.start();
+            validate();
+        }
     }
 
     /**
@@ -143,7 +142,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btAddCar = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(140, 218, 195));
@@ -295,7 +293,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         jMenu1.add(btAddCar);
 
         jMenuBar1.add(jMenu1);
-        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -356,8 +353,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                     c.highlight(Color.BLUE);
                     map.repaint();
                     // map.highlightCarGraphic((String) currentCarComboBox.getSelectedItem());
-                }
-                else
+                } else
                 {
                     c.highlight(Color.RED);
                     map.repaint();
@@ -374,8 +370,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             {
                 sim.start();
                 btStartSimulation.setText("Stop Simulatie");
-            }
-            else
+            } else
             {
                 sim.stop();
                 btStartSimulation.setText("Start Simulatie");
@@ -392,17 +387,46 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 
     private void btAddCarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btAddCarActionPerformed
     {//GEN-HEADEREND:event_btAddCarActionPerformed
-        Car c = new Car(JOptionPane.showInputDialog("Vul een cartracker-id in."));
-        sim.addCar(c);
-        map.addCarGraphic(c.getCarGraphic());
+        ArrayList<Node> route = Osmosis.plotPath(10);
 
-        currentCarComboBox.removeAllItems();
-        for (Car c2 : sim.getGarage().getCars())
+
+        for (Node n : route)
         {
-            currentCarComboBox.addItem(c2.getCarTrackerId());
+            map.addMapMarker(new MapMarkerDot(Color.yellow, n.getLatitude(), n.getLongitude()));
+//                    try
+//                    {
+//                        System.out.println(nodes.indexOf(n));
+//                        //Thread.sleep(1000);
+//                    } catch (InterruptedException ex)
+//                    {
+//                        Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
         }
 
-        validate();
+        String result = JOptionPane.showInputDialog("Vul een cartracker-id in.");
+
+        Car c = null;
+        System.out.println(result);
+
+        if (result != null)
+        {
+            if (result.length() != 0)
+            {
+                c = new Car(result, route);
+                sim.addCar(c, route);
+                map.addCarGraphic(c.getCarGraphic());
+
+                currentCarComboBox.removeAllItems();
+                for (Car c2 : sim.getGarage().getCars())
+                {
+                    currentCarComboBox.addItem(c2.getCarTrackerId());
+                }
+                validate();
+            } else
+            {
+                JOptionPane.showMessageDialog(null, "Geen geldig cartracker-id ingevuld.");
+            }
+        }
     }//GEN-LAST:event_btAddCarActionPerformed
 
     /**
@@ -425,20 +449,16 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                     break;
                 }
             }
-        }
-        catch (ClassNotFoundException ex)
+        } catch (ClassNotFoundException ex)
         {
             java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (InstantiationException ex)
+        } catch (InstantiationException ex)
         {
             java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (IllegalAccessException ex)
+        } catch (IllegalAccessException ex)
         {
             java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (javax.swing.UnsupportedLookAndFeelException ex)
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
         {
             java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -462,7 +482,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
     private javax.swing.JLabel infoLabel3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

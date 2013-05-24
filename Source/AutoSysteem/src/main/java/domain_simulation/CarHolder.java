@@ -4,19 +4,19 @@
  */
 package domain_simulation;
 
-import domain_simulation.Car;
 import java.util.ArrayList;
+import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 
 /**
  *
  * @author Leslie Aerts
  */
-public class Garage
+public class CarHolder
 {
 
     private static ArrayList<Car> cars = new ArrayList<Car>();
 
-    public Garage()
+    public CarHolder()
     {
         cars = new ArrayList<Car>();
     }
@@ -31,8 +31,9 @@ public class Garage
         this.cars = cars;
     }
 
-    public void addCar(Car c)
+    public void addCar(Car c, ArrayList<Node> route)
     {
+        c.setRoute(route);
         cars.add(c);
     }
 }

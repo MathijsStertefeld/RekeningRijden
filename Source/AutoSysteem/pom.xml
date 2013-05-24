@@ -46,15 +46,11 @@
             <version>1.0.1.Final</version>
         </dependency>
         <dependency>
-            <groupId>com.graphhopper</groupId>
-            <artifactId>graphhopper</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-bundle</artifactId>
+            <version>1.17.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.graphhopper</groupId>
-            <artifactId>graphhopper-tools</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-
+            
+            
     </dependencies>
 </project>
