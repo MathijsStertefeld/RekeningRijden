@@ -5,14 +5,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-public class CityRate extends Rate {
+public class VehicleRate extends Rate {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
-    public CityRate() {
+    public VehicleRate() {
         this("", 0);
     }
 
-    public CityRate(String name, double price) {
+    public VehicleRate(String name, double price) {
         super(name, price);
     }
     //</editor-fold>
@@ -25,12 +25,12 @@ public class CityRate extends Rate {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof CityRate && hashCode() == obj.hashCode();
+        return obj instanceof VehicleRate && hashCode() == obj.hashCode();
     }
 
     @Override
     public String toString() {
-        return "CityRate{" + "name=" + super.getName() + '}';
+        return "VehicleRate{" + "name=" + super.getName() + '}';
     }
     //</editor-fold>
 }

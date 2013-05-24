@@ -1,12 +1,18 @@
 package com.marbl.administration.website.bean;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
+import com.marbl.administration.domain.HighwayRate;
+import com.marbl.administration.domain.MassRate;
 import com.marbl.administration.domain.Rate;
+import com.marbl.administration.domain.RegionRate;
+import com.marbl.administration.domain.CityRate;
+import com.marbl.administration.domain.VehicleRate;
 import com.marbl.administration.website.service.RateService;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -21,13 +27,37 @@ public class RateBean implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private RateService service;
-    private Collection<Rate> all;
+    private Collection<HighwayRate> highwayRates;
+    private Collection<RegionRate> regionRates;
+    private Collection<CityRate> cityRates;
+    private Collection<VehicleRate> vehicleRates;
+    private MassRate massRate;
     private Rate current;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public Collection<Rate> getAll() {
-        return all;
+    public Collection<HighwayRate> getHighwayRates() {
+        return highwayRates;
+    }
+    
+    public Collection<RegionRate> getRegionRates() {
+        return regionRates;
+    }
+    
+    public Collection<CityRate> getCityRates() {
+        return cityRates;
+    }
+    
+    public Collection<VehicleRate> getVehicleRates() {
+        return vehicleRates;
+    }
+    
+    public MassRate getMassRate() {
+        return massRate;
+    }
+    
+    public void setMassRate(MassRate massRate) {
+        this.massRate = massRate;
     }
 
     public Rate getCurrent() {
@@ -37,7 +67,11 @@ public class RateBean implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public void findAll() {
-        all = service.findAll();
+        highwayRates = service.findAllHighwayRates();
+        regionRates = service.findAllRegionRates();
+        cityRates = service.findAllCityRates();
+        vehicleRates = service.findAllVehicleRates();
+        massRate = service.findMassRate();
     }
 
     public void findCurrent() {

@@ -1,9 +1,7 @@
 package com.marbl.administration.domain;
 
-//<editor-fold defaultstate="collapsed" desc="Imports">
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
-//</editor-fold>
 
 @Entity
 @XmlRootElement
@@ -34,7 +32,7 @@ public class HighwayRate extends Rate {
     }
     //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Methods">
+    //<editor-fold defaultstate="collapsed" desc="Overrides">
     @Override
     public int hashCode() {
         return super.hashCode();

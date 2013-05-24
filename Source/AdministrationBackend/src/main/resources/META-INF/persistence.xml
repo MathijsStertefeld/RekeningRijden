@@ -10,6 +10,9 @@
     <class>com.marbl.administration.domain.Employee</class>
     <class>com.marbl.administration.domain.HighwayRate</class>
     <class>com.marbl.administration.domain.Rate</class>
+    <class>com.marbl.administration.domain.MassRate</class>
+    <class>com.marbl.administration.domain.CityRate</class>
+    <class>com.marbl.administration.domain.VehicleRate</class>
     <class>com.marbl.administration.domain.RegionRate</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
