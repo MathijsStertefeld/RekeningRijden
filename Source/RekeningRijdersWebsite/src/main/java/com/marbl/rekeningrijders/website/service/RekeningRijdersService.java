@@ -69,7 +69,7 @@ public class RekeningRijdersService implements Serializable {
     }
 
     public Bill findBill(Long id) {
-        Bill bill = service.path("resources").path("bill")
+        Bill bill = service.path("resources").path("bills")
                 .path(Long.toString(id)).accept(MediaType.APPLICATION_JSON)
                 .get(Bill.class);
 
@@ -77,7 +77,7 @@ public class RekeningRijdersService implements Serializable {
     }
 
     public void editBill(Bill bill) {
-        service.path("resources").path("bill")
+        service.path("resources").path("bills")
                 .accept(MediaType.APPLICATION_JSON).put(bill);
     }
 
@@ -90,12 +90,12 @@ public class RekeningRijdersService implements Serializable {
     }
 
     public Car findCar(String carTrackerId) {
-        Car car = service.path("resources").path("car").path(carTrackerId)
+        Car car = service.path("resources").path("cars").path(carTrackerId)
                 .accept(MediaType.APPLICATION_JSON).get(Car.class);
         return car;
     }
 
     public void editCar(Car car) {
-        service.path("resources").path("car").put(Car.class, car);
+        service.path("resources").path("cars").put(Car.class, car);
     }
 }
