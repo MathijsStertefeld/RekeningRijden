@@ -5,6 +5,7 @@
 package com.paypal.api.payments.servlet;
 
 import com.marbl.administration.domain.Bill;
+import com.marbl.administration.domain.PaymentStatus;
 import com.paypal.api.payments.*;
 import com.paypal.api.payments.util.*;
 import com.paypal.core.rest.*;
@@ -134,6 +135,7 @@ public class PaymentWithPayPalServlet extends HttpServlet {
                 
                 Bill bill = service.findBill(Long.parseLong(responseBillID));
                 System.out.println("BILL TEST: " + bill.getId() + " Amount: " + bill.getPaymentAmount());
+                service.payBill(Long.parseLong(responseBillID));
             }
             else
                 System.out.println("STATE ELSE = " + saleState);
@@ -145,8 +147,21 @@ public class PaymentWithPayPalServlet extends HttpServlet {
             resp.sendRedirect("bill-details.xhtml?billID=" + responseBillID);
             //resp.sendRedirect("login.xhtml");
         } else {
+            
+            if(req.getParameter("cancelPaypalBillID") != null)
+            {
+                resp.sendRedirect("bill-details.xhtml?billID=" + req.getParameter("cancelPaypalBillID"));
+                return;
+            }
+            
             Long billId = Long.parseLong(req.getParameter("billID"));
             Bill bill = service.findBill(billId);
+            
+            //if(bill.getPaymentStatus() == PaymentStatus.PAID || bill.getPaymentStatus() == PaymentStatus.CANCELED)
+            //{
+            //    resp.sendRedirect("bill-overview.xhtml");
+            //    return;
+            //}
 
             //bill.getPaymentAmount();
             String convertedAmountString = GoogleConverter.convertEURtoUSD(Double.toString(bill.getPaymentAmount()));
@@ -208,7 +223,7 @@ public class PaymentWithPayPalServlet extends HttpServlet {
             String guid = UUID.randomUUID().toString().replaceAll("-", "");
             redirectUrls.setCancelUrl(req.getScheme() + "://"
                     + req.getServerName() + ":" + req.getServerPort()
-                    + req.getContextPath() + "/paymentwithpaypal?guid=" + guid);
+                    + req.getContextPath() + "/paymentwithpaypal?cancelPaypalBillID=" + bill.getId() + "?guid=" + guid);
             redirectUrls.setReturnUrl(req.getScheme() + "://"
                     + req.getServerName() + ":" + req.getServerPort()
                     + req.getContextPath() + "/paymentwithpaypal?guid=" + guid);
