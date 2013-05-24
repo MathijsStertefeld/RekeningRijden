@@ -18,7 +18,6 @@ public class Driver implements Serializable {
     private int bsn;
     private String email;
     private String password;
-    private String languageCode;
     private String firstName;
     private String lastName;
     private String residence;
@@ -66,14 +65,6 @@ public class Driver implements Serializable {
 
     public void setGroups(Collection<DriverGroup> groups) {
         this.groups = groups;
-    }
-
-    public String getLanguageCode() {
-        return languageCode;
-    }
-
-    public void setLanguageCode(String languageCode) {
-        this.languageCode = languageCode;
     }
 
     public String getFirstName() {
@@ -136,16 +127,15 @@ public class Driver implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Driver() {
-        this(0, "", "", "", "", "", "", "", "", new Date(), false, DriverGroup.ADMIN);
+        this(0, "", "", "", "", "", "", "", new Date(), false, DriverGroup.ADMIN);
     }
 
-    public Driver(int bsn, String email, String Password, String languageCode,
-            String firstName, String lastName, String residence, String address,
-            String zipCode, Date dateOfBirth, boolean activated, DriverGroup group) {
+    public Driver(int bsn, String email, String Password, String firstName,
+            String lastName, String residence, String address, String zipCode,
+            Date dateOfBirth, boolean activated, DriverGroup group) {
         this.bsn = bsn;
         this.email = email;
         this.password = Password;
-        this.languageCode = languageCode;
         this.firstName = firstName;
         this.lastName = lastName;
         this.residence = residence;

@@ -35,7 +35,6 @@ public class RegisterBean implements Serializable {
     private int bsn;
     private String email;
     private String password;
-    private String languageCode;
     private String firstName;
     private String lastName;
     private String residence;
@@ -67,14 +66,6 @@ public class RegisterBean implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getLanguageCode() {
-        return languageCode;
-    }
-
-    public void setLanguageCode(String languageCode) {
-        this.languageCode = languageCode;
     }
 
     public String getFirstName() {
@@ -130,7 +121,7 @@ public class RegisterBean implements Serializable {
     public void register() {
         Hasher hasher = new Hasher("SHA-256", "UTF-8");
         Driver newDriver = new Driver(bsn, email, hasher.hash(password),
-                languageCode, firstName, lastName, residence, address,
+                firstName, lastName, residence, address,
                 zipCode, dateOfBirth, false, DriverGroup.DRIVER);
         service.register(newDriver);
         sendMail();

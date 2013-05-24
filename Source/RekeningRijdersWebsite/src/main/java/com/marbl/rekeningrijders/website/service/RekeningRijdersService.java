@@ -19,49 +19,53 @@ import javax.ws.rs.core.MediaType;
 @Stateless
 public class RekeningRijdersService implements Serializable {
 
-    private WebResource service;
+    private WebResource resource;
 
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        service = client.resource("http://localhost:8080/AdministrationBackend/");
+        resource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/");
     }
 
     public void payBill(Long billId) {
         Bill bill = findBill(billId);
         bill.setPaymentDate(new Date());
         bill.setPaymentStatus(PaymentStatus.PAID);
-        service.path("resources").path("bills").put(Bill.class, bill);
+        resource.path("bills").put(Bill.class, bill);
     }
 
     public void editDriver(Driver driver) {
-        service.path("resources").path("drivers")
+        resource.path("drivers")
                 .accept(MediaType.APPLICATION_JSON).put(Driver.class, driver);
     }
 
     public Driver findDriver(Integer bsn) {
-        Driver driver = service.path("resources").path("drivers")
+        Driver driver = resource.path("drivers")
                 .path(Integer.toString(bsn)).accept(MediaType.APPLICATION_JSON)
                 .get(Driver.class);
         return driver;
     }
 
     public Driver findDriverByEmail(String email) {
-        Driver driver = new ArrayList<>(service.path("resources")
+        ArrayList<Driver> drivers = new ArrayList<>(resource
                 .path("drivers").queryParam("email", email)
                 .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<Collection<Driver>>() { })).get(0);
+                .get(new GenericType<Collection<Driver>>() { }));
 
-        return driver;
+        if (drivers.size() > 0) {
+            return drivers.get(0);
+        } else {
+            return null;
+        }
     }
 
     public void register(Driver driver) {
-        service.path("resources").path("drivers").post(Driver.class, driver);
+        resource.path("drivers").post(Driver.class, driver);
     }
 
     public Collection<Bill> findBillsByBsn(Integer bsn) {
-        return service.path("resources").path("bills")
+        return resource.path("bills")
                 .queryParam("driverBsn", bsn.toString())
                 .accept(MediaType.APPLICATION_JSON)
                 .get(new GenericType<Collection<Bill>>() {
@@ -69,7 +73,7 @@ public class RekeningRijdersService implements Serializable {
     }
 
     public Bill findBill(Long id) {
-        Bill bill = service.path("resources").path("bills")
+        Bill bill = resource.path("bills")
                 .path(Long.toString(id)).accept(MediaType.APPLICATION_JSON)
                 .get(Bill.class);
 
@@ -77,12 +81,12 @@ public class RekeningRijdersService implements Serializable {
     }
 
     public void editBill(Bill bill) {
-        service.path("resources").path("bills")
+        resource.path("bills")
                 .accept(MediaType.APPLICATION_JSON).put(bill);
     }
 
     public Collection<Car> findCarsByBsn(Integer bsn) {
-        return service.path("resources").path("cars")
+        return resource.path("cars")
                 .queryParam("driverBsn", bsn.toString())
                 .accept(MediaType.APPLICATION_JSON)
                 .get(new GenericType<Collection<Car>>() {
@@ -90,12 +94,12 @@ public class RekeningRijdersService implements Serializable {
     }
 
     public Car findCar(String carTrackerId) {
-        Car car = service.path("resources").path("cars").path(carTrackerId)
+        Car car = resource.path("cars").path(carTrackerId)
                 .accept(MediaType.APPLICATION_JSON).get(Car.class);
         return car;
     }
 
     public void editCar(Car car) {
-        service.path("resources").path("cars").put(Car.class, car);
+        resource.path("cars").put(Car.class, car);
     }
 }

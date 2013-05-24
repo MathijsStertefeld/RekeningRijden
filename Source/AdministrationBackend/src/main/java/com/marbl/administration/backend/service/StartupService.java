@@ -50,13 +50,13 @@ public class StartupService implements Serializable {
         ArrayList<Driver> drivers = new ArrayList<>();
         
         drivers.add(new Driver(1111, "hans@hans.nl", hasher.hash("hans123"),
-                "en", "Hans", "Hansen", "Eindhoven", "Hoofdstraat 1",
+                "Hans", "Hansen", "Eindhoven", "Hoofdstraat 1",
                 "1234AA", new Date(), true, DriverGroup.ADMIN));
         drivers.add(new Driver(2222, "frank@frank.nl", hasher.hash("frank123"),
-                "en", "Frank", "Franken", "Eindhoven", "Hoofdstraat 2",
+                "Frank", "Franken", "Eindhoven", "Hoofdstraat 2",
                 "1234BB", new Date(), true, DriverGroup.DRIVER));
         drivers.add(new Driver(3333, "tom@tom.nl", hasher.hash("tom123"),
-                "en", "Tom", "Tommen", "Eindhoven", "Hoofdstraat 3",
+                "Tom", "Tommen", "Eindhoven", "Hoofdstraat 3",
                 "1234CC", new Date(), true, DriverGroup.JAM_DRIVER));
         
         for (int i = 0; i < drivers.size(); i++) {

@@ -12,7 +12,7 @@
     <h:body>
         <ui:composition template="driver-template.xhtml">
             <ui:define name="PageTitle">
-                #{msg.CO_car-overview}
+                #{msg.CO_CarOverview}
             </ui:define>
             
             <ui:define name="Breadcrumbs">
@@ -40,7 +40,7 @@
                             </h:outputLink>
                         </p:column>
 
-                        <p:column sortBy="#{car.driverBsn}" style="white-space:normal" headerText="#{msg.CO_BSNOwner}">
+                        <p:column sortBy="#{car.driverBsn}" style="white-space:normal" headerText="#{msg.CO_BSN}">
                             <h:outputText value="#{car.driverBsn}" />
                         </p:column>
 
