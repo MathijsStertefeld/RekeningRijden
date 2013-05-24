@@ -57,9 +57,31 @@ public class CarSimulator implements Runnable
             {
                 for (Car c : CarHolder.getCars())
                 {
-                    GeoPosition newPos = Navigation.navigate(c.getRoute().getRoute().get(0), c.getRoute().getRoute().get(1), 1);
-                    c.place(newPos.getLongitude(), newPos.getLatitude());
-                    //c.progress();
+                    
+                    //WHILE distance to target < speed/step
+                    //  speed(remainingDistance) = speed/step - distance to target
+                    //  route.increaseTargetIndex
+                    //  
+                    double carSpeed = 0.1;
+                    double remainingDistance = carSpeed; //amount of movement
+                    double distanceToTarget = WorldMath.DistanceInKM(c.getPosition(), c.getRoute().getTargetNodePosition());
+                       
+                    while(distanceToTarget < remainingDistance)
+                    {
+                        remainingDistance = remainingDistance - distanceToTarget;
+                        c.setPosition(c.getRoute().getTargetNodePosition());
+                        c.getRoute().increaseTargetIndex();
+                        distanceToTarget = WorldMath.DistanceInKM(c.getPosition(), c.getRoute().getTargetNodePosition());
+                    }
+                    
+                    System.out.println("PrePos: " + c.getPosition().getLatitudeInDegrees() + " - " + c.getPosition().getLongitudeInDegrees());
+                    System.out.println("TargetNodePos: " + c.getRoute().getTargetNodePosition().getLatitudeInDegrees() + " - " + c.getRoute().getTargetNodePosition().getLongitudeInDegrees());
+                    double bearing = WorldMath.AngleToInRadians(c.getPosition(), c.getRoute().getTargetNodePosition());
+                                                                                                           ///Was speed hieronder                 
+                    GeoPosition newPosition = WorldMath.NewPositionWithAngleAndDistance(c.getPosition(), remainingDistance, bearing);
+                    System.out.println("new Position: " + newPosition.getLatitudeInDegrees() + " - " + newPosition.getLongitudeInDegrees());
+                    c.setPosition(newPosition);
+                    System.out.println(" ");
                 }
 
                 try

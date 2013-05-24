@@ -4,6 +4,7 @@
  */
 package openstreetmaps.org.openstreetmap.gui;
 
+import domain_simulation.GeoPosition;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -53,7 +54,7 @@ public class CarGraphic implements MapMarker
     {
         return lon;
     }
-
+    
     public String getCarTrackerId()
     {
         return carTrackerId;

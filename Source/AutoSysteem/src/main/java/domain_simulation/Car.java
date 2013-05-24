@@ -17,7 +17,7 @@ public class Car
 {
 
     private String carTrackerId;
-    private VehiclePosition pos;
+    //private VehiclePosition pos;
     private CarGraphic graphic;
     private Route route;
 
@@ -26,8 +26,9 @@ public class Car
         this.route = new Route(routeNodes);
         Node n = this.route.getRoute().get(0);
         graphic = new CarGraphic(carTrackerId, n.getLatitude(), n.getLongitude());
+        System.out.println("StartPos: " + graphic.getLat() + " - " + graphic.getLon());
         this.carTrackerId = idString;
-        pos = new VehiclePosition();
+        //pos = new VehiclePosition();
     }
 
     public String getCarTrackerId()
@@ -40,15 +41,25 @@ public class Car
         this.carTrackerId = carId;
     }
 
-    public VehiclePosition getPos()
+//    public VehiclePosition getPos()
+//    {
+//        return pos;
+//    }
+    
+    public GeoPosition getPosition()
     {
-        return pos;
+        return new GeoPosition(graphic.getLat(), graphic.getLon());
+    }
+    
+    public void setPosition(GeoPosition newPos)
+    {
+        graphic.place(newPos.getLatitudeInDegrees(), newPos.getLongitudeInDegrees());
     }
 
-    public void setPos(VehiclePosition pos)
-    {
-        this.pos = pos;
-    }
+    //public void setPos(VehiclePosition pos)
+    //{
+    //    this.pos = pos;
+    //}
 
     public CarGraphic getCarGraphic()
     {
@@ -80,14 +91,14 @@ public class Car
      * @param lat
      * @param lon 
      */
-    public void move(double lat, double lon)
-    {
-        this.graphic.move(lat, lon);
-    }
+    //public void move(double lat, double lon)
+    //{
+    //    this.graphic.move(lat, lon);
+    //}
     
 //    public void progress()
 //    {
-//        int progress = this.route.getProgress();
+//        int progress = this.route.getTargetIndex();
 //        double distance = 0;
 //        GeoPosition newPos = null;
 //        Node fromNode = null;
@@ -109,7 +120,7 @@ public class Car
 //            System.out.println(distance);
 //            if (distance <= 1)
 //            {
-//                this.route.setProgress(progress + 1);
+//                this.route.setTargetIndex(progress + 1);
 //            }
 //        }
 //    }
