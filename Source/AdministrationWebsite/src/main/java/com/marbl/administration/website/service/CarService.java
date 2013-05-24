@@ -18,21 +18,18 @@ public class CarService implements Serializable {
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        webResource = client.resource("http://localhost:8080/AdministrationBackend/");
+        webResource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/");
     }
 
     public Car edit(Car car) {
-        return webResource.path("resources").path("cars")
-                .accept(MediaType.APPLICATION_JSON).put(Car.class, car);
+        return webResource.path("cars").accept(MediaType.APPLICATION_JSON).put(Car.class, car);
     }
 
     public Car find(String carTrackerId) {
-        return webResource.path("resources").path("cars").path(carTrackerId)
-                .accept(MediaType.APPLICATION_JSON).get(Car.class);
+        return webResource.path("cars").path(carTrackerId).accept(MediaType.APPLICATION_JSON).get(Car.class);
     }
 
     public Collection<Car> findAll() {
-        return webResource.path("resources").path("cars")
-                .accept(MediaType.APPLICATION_JSON).get(new GenericType<Collection<Car>>() { });
+        return webResource.path("cars").accept(MediaType.APPLICATION_JSON).get(new GenericType<Collection<Car>>() { });
     }
 }

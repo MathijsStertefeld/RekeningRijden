@@ -17,18 +17,18 @@ public class RateService implements Serializable {
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        webResource = client.resource("http://localhost:8080/AdministrationBackend/");
+        webResource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/");
     }
 
     public Rate edit(Rate rate) {
-        return webResource.path("resources").path("rates").put(Rate.class, rate);
+        return webResource.path("rates").put(Rate.class, rate);
     }
 
     public Rate find(String name) {
-        return webResource.path("resources").path("rates").path(name).get(Rate.class);
+        return webResource.path("rates").path(name).get(Rate.class);
     }
 
     public Collection<Rate> findAll() {
-        return webResource.path("resources").path("rates").get(new GenericType<Collection<Rate>>() { });
+        return webResource.path("rates").get(new GenericType<Collection<Rate>>() { });
     }
 }
