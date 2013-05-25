@@ -2,7 +2,7 @@ package com.marbl.administration.domain;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
@@ -15,7 +15,7 @@ public class Driver implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
-    private int bsn;
+    private Integer bsn;
     private String email;
     private String password;
     private String firstName;
@@ -25,46 +25,22 @@ public class Driver implements Serializable {
     private String zipCode;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateOfBirth;
-    private boolean activated;
     @ElementCollection
     @CollectionTable(name = "DRIVER_GROUP", joinColumns = {
         @JoinColumn(name = "BSN")})
     @Column(name = "GROUPNAME")
     @Enumerated(EnumType.STRING)
     private Collection<DriverGroup> groups;
+    private Boolean activated;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public int getBsn() {
+    public Integer getBsn() {
         return bsn;
     }
 
-    public void setBsn(int bsn) {
+    public void setBsn(Integer bsn) {
         this.bsn = bsn;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Collection<DriverGroup> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(Collection<DriverGroup> groups) {
-        this.groups = groups;
     }
 
     public String getFirstName() {
@@ -81,6 +57,22 @@ public class Driver implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getResidence() {
@@ -115,24 +107,33 @@ public class Driver implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public boolean getActivated() {
+    public Collection<DriverGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Collection<DriverGroup> groups) {
+        this.groups = groups;
+    }
+
+    public Boolean getActivated() {
         return activated;
     }
 
-    public void setActivated(boolean activated) {
+    public void setActivated(Boolean activated) {
         this.activated = activated;
     }
-    
-    //</editor-fold>
 
+    //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Driver() {
-        this(0, "", "", "", "", "", "", "", new Date(), false, DriverGroup.ADMIN);
+        this(900000000, "", "", "", "", "", "", "", new Date(),
+                Arrays.asList(DriverGroup.DRIVER), false);
     }
 
-    public Driver(int bsn, String email, String Password, String firstName,
-            String lastName, String residence, String address, String zipCode,
-            Date dateOfBirth, boolean activated, DriverGroup group) {
+    public Driver(Integer bsn, String firstName, String lastName, String email,
+            String Password, String residence, String address, String zipCode,
+            Date dateOfBirth, Collection<DriverGroup> groups, Boolean activated) {
         this.bsn = bsn;
         this.email = email;
         this.password = Password;
@@ -142,9 +143,8 @@ public class Driver implements Serializable {
         this.address = address;
         this.zipCode = zipCode;
         this.dateOfBirth = dateOfBirth;
+        this.groups = groups;
         this.activated = activated;
-        this.groups = new ArrayList<>();
-        this.groups.add(group);
     }
     //</editor-fold>
 

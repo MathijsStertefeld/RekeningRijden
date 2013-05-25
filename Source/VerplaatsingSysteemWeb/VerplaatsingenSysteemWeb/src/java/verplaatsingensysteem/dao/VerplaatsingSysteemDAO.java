@@ -4,9 +4,11 @@
  */
 package verplaatsingensysteem.dao;
 
+import java.util.Date;
 import java.util.List;
 import verplaatsingensysteem.domain.Edge;
 import verplaatsingensysteem.domain.Lane;
+import verplaatsingensysteem.domain.Movement;
 import verplaatsingensysteem.domain.Session;
 import verplaatsingensysteem.domain.TimeStep;
 import verplaatsingensysteem.domain.VehiclePosition;
@@ -36,4 +38,12 @@ public interface VerplaatsingSysteemDAO
     void createVehiclePosition(VehiclePosition vehiclePosition);
     
     List<VehiclePosition> findVehiclePositions(String cartrackerId) ;
+    
+    void createMovement(Movement movement);
+
+    Movement findMovement(long id);
+    
+    List<Movement> findAllMovements();
+   
+    
 }
