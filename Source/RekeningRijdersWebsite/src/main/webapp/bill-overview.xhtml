@@ -35,7 +35,7 @@
                     <p:dataTable sortBy="#{bill.id}" id="dataTable" var="bill" value="#{billBean.all}" tableStyle="table-layout:fixed;">
                         <p:column sortBy="#{bill.id}" style="white-space:normal" headerText="#{msg.BO_BillID}">
                             <h:outputLink value="bill-details.xhtml">
-                                <f:param name="billId" value="#{bill.id}" />
+                                <f:param name="id" value="#{bill.id}" />
                                 <h:outputText value="#{bill.id}" />
                             </h:outputLink>
                         </p:column>
