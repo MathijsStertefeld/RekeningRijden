@@ -4,7 +4,7 @@
  */
 package domain_simulation;
 
-import domain_simulation.Car;
+import domain_simulation.Vehicle;
 import java.util.ArrayList;
 import java.util.Date;
 import autosysteem.Frame;
@@ -52,7 +52,7 @@ public class Simulation implements Runnable
         carSim.stop();
     }
 
-    public void addCar(Car c,ArrayList<Node> route)
+    public void addCar(Vehicle c,ArrayList<Node> route)
     {
         garage.addCar(c, route);
     }
@@ -89,7 +89,7 @@ public class Simulation implements Runnable
                 TimeStep ts = new TimeStep(time);
                 timesteps.add(ts);
                 tempframe.setOutputText("Timestep " + ts.getTime() + "\n");
-                for (Car c : CarHolder.getCars())
+                for (Vehicle c : CarHolder.getCars())
                 {
                     tempframe.getMap().repaint();
                     //HIER MOET IK IETS RETURNEN ZODAT HET ER UIT KOMT

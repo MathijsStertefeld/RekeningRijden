@@ -13,21 +13,24 @@ import org.openstreetmap.osmosis.core.domain.v0_6.Way;
  *
  * @author Leslie Aerts
  */
-public class Car
+public class Vehicle
 {
 
     private String carTrackerId;
+    private double carSpeed;
     //private VehiclePosition pos;
     private CarGraphic graphic;
     private Route route;
 
-    public Car(String idString, ArrayList<Node> routeNodes)
+    public Vehicle(String idString, ArrayList<Node> routeNodes, double carSpeed)
     {
+        this.carTrackerId = idString;
         this.route = new Route(routeNodes);
         Node n = this.route.getRoute().get(0);
         graphic = new CarGraphic(carTrackerId, n.getLatitude(), n.getLongitude());
-        System.out.println("StartPos: " + graphic.getLat() + " - " + graphic.getLon());
-        this.carTrackerId = idString;
+        this.carSpeed = carSpeed;
+        //System.out.println("StartPos: " + graphic.getLat() + " - " + graphic.getLon());
+        
         //pos = new VehiclePosition();
     }
 
@@ -41,10 +44,17 @@ public class Car
         this.carTrackerId = carId;
     }
 
-//    public VehiclePosition getPos()
-//    {
-//        return pos;
-//    }
+    public double getCarSpeed()
+    {
+        return carSpeed;
+    }
+
+    public void setCarSpeed(double carSpeed)
+    {
+        this.carSpeed = carSpeed;
+    }
+    
+    
     
     public GeoPosition getPosition()
     {
@@ -129,7 +139,7 @@ public class Car
 
 //
 //    // (tonode - from node) * currentpos /  distance = % van edge  + fromnode
-//    private GeoPosition NewPositionWithAngleAndDistance(Car curPos, double distance, double bearing)
+//    private GeoPosition NewPositionWithAngleAndDistance(Vehicle curPos, double distance, double bearing)
 //    {
 //        double radLat = deg2rad(curPos.getCarGraphic().getLat());
 //        double radLon = deg2rad(curPos.getCarGraphic().getLon());

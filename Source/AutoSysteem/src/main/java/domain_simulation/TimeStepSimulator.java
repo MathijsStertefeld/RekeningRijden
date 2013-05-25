@@ -4,7 +4,7 @@
  */
 package domain_simulation;
 
-import domain_simulation.Car;
+import domain_simulation.Vehicle;
 import domain_simulation.TimeStep;
 import java.util.ArrayList;
 import java.util.logging.Level;

@@ -14,7 +14,7 @@ import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 public class Route
 {
 
-    private int targetNodeIndex; 
+    private int targetNodeIndex;
     private ArrayList<Node> route;
 
     public Route(ArrayList<Node> route)
@@ -32,17 +32,18 @@ public class Route
     //{
     //    this.targetNodeIndex = progress;
     //}
-    
     public void increaseTargetIndex()
     {
-        this.targetNodeIndex++;
+        if (targetNodeIndex < this.route.size() - 1)
+        {
+            this.targetNodeIndex++;
+        }
     }
-    
+
     //public void increaseTargetIndexBy(int i)
     //{
     //    this.targetNodeIndex += i;
     //}
-    
     public ArrayList<Node> getRoute()
     {
         return route;
@@ -51,14 +52,15 @@ public class Route
     public void setRoute(ArrayList<Node> route)
     {
         this.route = route;
-    }   
-    
+    }
+
     public GeoPosition getTargetNodePosition()
     {
         return new GeoPosition(route.get(targetNodeIndex).getLatitude(), route.get(targetNodeIndex).getLongitude());
     }
-    
-    public GeoPosition getNodePositionFromIndex(int i){
+
+    public GeoPosition getNodePositionFromIndex(int i)
+    {
         return new GeoPosition(route.get(i).getLatitude(), route.get(i).getLongitude());
     }
 }

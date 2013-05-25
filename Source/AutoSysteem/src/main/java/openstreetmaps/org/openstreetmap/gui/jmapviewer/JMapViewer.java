@@ -1,15 +1,19 @@
 package openstreetmaps.org.openstreetmap.gui.jmapviewer;
 
 //License: GPL. Copyright 2008 by Jan Peter Stotz
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,6 +37,7 @@ import openstreetmaps.org.openstreetmap.gui.jmapviewer.interfaces.TileLoader;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.interfaces.TileLoaderListener;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
+import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 
 /**
  *
@@ -153,8 +158,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener
         {
             ImageIcon icon = new ImageIcon(JMapViewer.class.getResource("images/plus.png"));
             zoomInButton = new JButton(icon);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             zoomInButton = new JButton("+");
             zoomInButton.setFont(new Font("sansserif", Font.BOLD, 9));
@@ -174,8 +178,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener
         {
             ImageIcon icon = new ImageIcon(JMapViewer.class.getResource("images/minus.png"));
             zoomOutButton = new JButton(icon);
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             zoomOutButton = new JButton("-");
             zoomOutButton.setFont(new Font("sansserif", Font.BOLD, 9));
@@ -255,8 +258,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener
             {
                 zoomSlider.setValue(zoom);
             }
-        }
-        finally
+        } finally
         {
             setIgnoreRepaint(false);
             repaint();
@@ -513,8 +515,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener
         if (coord != null)
         {
             return getMapPosition(coord.getLat(), coord.getLon());
-        }
-        else
+        } else
         {
             return null;
         }
@@ -532,8 +533,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener
         if (coord != null)
         {
             return getMapPosition(coord.getLat(), coord.getLon(), checkOutside);
-        }
-        else
+        } else
         {
             return null;
         }
@@ -592,19 +592,16 @@ public class JMapViewer extends JPanel implements TileLoaderListener
             if (start_left)
             {
                 iMove = 2;
-            }
-            else
+            } else
             {
                 iMove = 3;
             }
-        }
-        else
+        } else
         {
             if (start_left)
             {
                 iMove = 1;
-            }
-            else
+            } else
             {
                 iMove = 0;
             }
@@ -640,8 +637,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener
                             // in case tilex is out of bounds, grab the tile to use for wrapping
                             int tilexWrap = (((tilex % gridLength) + gridLength) % gridLength);
                             tile = tileController.getTile(tilexWrap, tiley, zoom);
-                        }
-                        else
+                        } else
                         {
                             tile = tileController.getTile(tilex, tiley, zoom);
                         }
@@ -670,8 +666,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener
         {
             g.drawLine(0, h2 - center.y, getWidth(), h2 - center.y);
             g.drawLine(0, h2 - center.y + mapSize, getWidth(), h2 - center.y + mapSize);
-        }
-        else
+        } else
         {
             g.drawRect(w2 - center.x, h2 - center.y, mapSize, mapSize);
         }
@@ -748,8 +743,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener
                 p.x = xWrap;
                 marker.paint(g, p);
             }
-        }
-        else
+        } else
         {
             if (p != null)
             {
@@ -784,8 +778,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener
                 p.x = xWrap;
                 car.paint(g, p);
             }
-        }
-        else
+        } else
         {
             if (p != null)
             {
@@ -1112,7 +1105,7 @@ public class JMapViewer extends JPanel implements TileLoaderListener
     {
         mapCarList.clear();
         repaint();
-    }  
+    }
 
     public CarGraphic getCarGraphic(String carTrackerId)
     {
@@ -1129,6 +1122,20 @@ public class JMapViewer extends JPanel implements TileLoaderListener
     public List<CarGraphic> getAllCarGraphics()
     {
         return mapCarList;
+    }
+
+    public void drawRoute(ArrayList<Node> route)
+    {
+        for (int i = 0; i < route.size(); i++)
+        {
+            if (i < route.size()-1)
+            {
+                Coordinate c1 = new Coordinate(route.get(i).getLatitude(), route.get(i).getLongitude());
+                Coordinate c2 = new Coordinate(route.get(i + 1).getLatitude(), route.get(i + 1).getLongitude());
+                List<Coordinate> line = new ArrayList<Coordinate>(Arrays.asList(c1, c2, c2));
+                this.addMapPolygon(new MapPolygonImpl(line,Color.YELLOW,new BasicStroke(4)));
+            }
+        }
     }
 
     public void addMapRectangle(MapRectangle rectangle)

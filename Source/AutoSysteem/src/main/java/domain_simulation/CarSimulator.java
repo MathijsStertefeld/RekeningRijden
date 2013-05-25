@@ -4,7 +4,7 @@
  */
 package domain_simulation;
 
-import domain_simulation.Car;
+import domain_simulation.Vehicle;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 
 /**
@@ -55,14 +55,14 @@ public class CarSimulator implements Runnable
         {
             try
             {
-                for (Car c : CarHolder.getCars())
-                {
-                    
+                for (Vehicle c : CarHolder.getCars())
+                {                    
                     //WHILE distance to target < speed/step
                     //  speed(remainingDistance) = speed/step - distance to target
                     //  route.increaseTargetIndex
                     //  
-                    double carSpeed = 0.1;
+                    
+                    double carSpeed = c.getCarSpeed();
                     double remainingDistance = carSpeed; //amount of movement
                     double distanceToTarget = WorldMath.DistanceInKM(c.getPosition(), c.getRoute().getTargetNodePosition());
                        
@@ -74,14 +74,14 @@ public class CarSimulator implements Runnable
                         distanceToTarget = WorldMath.DistanceInKM(c.getPosition(), c.getRoute().getTargetNodePosition());
                     }
                     
-                    System.out.println("PrePos: " + c.getPosition().getLatitudeInDegrees() + " - " + c.getPosition().getLongitudeInDegrees());
-                    System.out.println("TargetNodePos: " + c.getRoute().getTargetNodePosition().getLatitudeInDegrees() + " - " + c.getRoute().getTargetNodePosition().getLongitudeInDegrees());
+                   //System.out.println("PrePos: " + c.getPosition().getLatitudeInDegrees() + " - " + c.getPosition().getLongitudeInDegrees());
+                    //System.out.println("TargetNodePos: " + c.getRoute().getTargetNodePosition().getLatitudeInDegrees() + " - " + c.getRoute().getTargetNodePosition().getLongitudeInDegrees());
                     double bearing = WorldMath.AngleToInRadians(c.getPosition(), c.getRoute().getTargetNodePosition());
                                                                                                            ///Was speed hieronder                 
                     GeoPosition newPosition = WorldMath.NewPositionWithAngleAndDistance(c.getPosition(), remainingDistance, bearing);
-                    System.out.println("new Position: " + newPosition.getLatitudeInDegrees() + " - " + newPosition.getLongitudeInDegrees());
+                    //System.out.println("new Position: " + newPosition.getLatitudeInDegrees() + " - " + newPosition.getLongitudeInDegrees());
                     c.setPosition(newPosition);
-                    System.out.println(" ");
+                    //System.out.println(" ");
                 }
 
                 try

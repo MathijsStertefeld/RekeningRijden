@@ -10,7 +10,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import domain_simulation.Simulation;
 import domain.Session;
-import domain_simulation.Car;
+import domain_simulation.Vehicle;
 
 
 /**
@@ -29,7 +29,7 @@ public class Main
 ////        {
 ////            Simulation sim = new Simulation(1000,10);
 ////            sim.start();
-////            sim.addCar(new Car("1241-4124"));
+////            sim.addCar(new Vehicle("1241-4124"));
 ////        } catch (Exception e)
 ////        {
 ////            e.printStackTrace();
