@@ -63,8 +63,8 @@ public class StartupService implements Serializable {
 
         //<editor-fold defaultstate="collapsed" desc="Cars">
         CarGenerator carGenerator = new CarGenerator(drivers,
-                new String[] {"Suzuki", "Fiat", "Volkswagen"},
-                new String[] {"Swift", "Panda", "Golf"});
+                new String[] {"Ford", "Suzuki", "Fiat", "Volkswagen"},
+                new String[] {"Mustang", "Swift", "Panda", "Golf"});
 
         Car[] cars = carGenerator.generate(drivers.length * 3 / 2);
 
