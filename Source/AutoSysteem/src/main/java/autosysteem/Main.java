@@ -8,8 +8,8 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-import domain_simulation.Simulation;
-import domain.Session;
+import domain_simulation.Session;
+import domain_simulation.Simulator;
 import domain_simulation.Vehicle;
 
 
@@ -38,17 +38,16 @@ public class Main
     
     public static void test1()
     {
-        System.out.println("Starting webservice...");
-        ClientConfig config = new DefaultClientConfig();
-        Client client = Client.create(config);
-        WebResource service = client.resource("http://localhost:8080/VerplaatsingSysteemWeb/");
-
-        System.out.println("Getting Session from server...");
-        Session s2 = service.path("resources").path("xml").path("get_session").get(Session.class);
-        System.out.println("Session get. " + s2);
-        System.out.println("I have all my child info. " + s2.getTimeStep(1).getParentSession());
-        System.out.println("Sending session back from client to server...");
-        service.path("resources").path("xml").post(s2);
-        System.out.println("Done. Check Glassfish output.");
+//        System.out.println("Starting webservice...");
+//        ClientConfig config = new DefaultClientConfig();
+//        Client client = Client.create(config);
+//        WebResource service = client.resource("http://localhost:8080/VerplaatsingSysteemWeb/");
+//        service.path("resources").path("xml").post(sess);
+//        System.out.println("Getting Session from server...");
+//        Session s2 = service.path("resources").path("xml").path("get_session").get(Session.class);
+//        System.out.println("Session get. " + s2);
+//        System.out.println("Sending session back from client to server...");
+//
+//        System.out.println("Done. Check Glassfish output.");
     }
 }

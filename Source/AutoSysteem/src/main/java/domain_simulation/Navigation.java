@@ -12,35 +12,42 @@ import org.openstreetmap.osmosis.core.domain.v0_6.Node;
  */
 public class Navigation
 {
-
     private static final double Earth_Radius = 6371;
+
+    public static double getCarSpeedCalc(double km)
+    {
+        double sp = 0;
+        km /= 3600;
+        sp = km / 2;
+        return sp;
+    }
 
     public static GeoPosition navigate(Node from, Node to, double distance)
     {
         double startLat = deg2rad(from.getLatitude());
         double startLon = deg2rad(from.getLongitude());
-        
+
         //in KM
         double distanceToTravel = distance;
-        
+
         //double maxDistance = getDistance(from.getLatitude(), from.getLongitude(), to.getLatitude(), to.getLongitude(), 'M');
 
         double bearing = getBearing(from, to);
 
-        double newLat = Math.asin(Math.sin(startLat) * Math.cos(distanceToTravel/Earth_Radius) 
-                + Math.cos(startLat) * Math.sin(distanceToTravel/Earth_Radius) * Math.cos(bearing));
-                
-                //        var lat2 = Math.asin(Math.sin(lat1) * Math.cos(d / R)
-                //                + Math.cos(lat1) * Math.sin(d / R) * Math.cos(brng));
-        
-        double newLon = startLon + Math.atan2(Math.sin(bearing) * Math.sin(distanceToTravel/Earth_Radius) * Math.cos(startLat),
-                Math.cos(distanceToTravel/Earth_Radius) - Math.sin(startLat) * Math.sin(newLat));
-        
-                //        var lon2 = lon1 + Math.atan2(Math.sin(brng) * Math.sin(d / R) * Math.cos(lat1),
-                //                Math.cos(d / R) - Math.sin(lat1) * Math.sin(lat2));
+        double newLat = Math.asin(Math.sin(startLat) * Math.cos(distanceToTravel / Earth_Radius)
+                + Math.cos(startLat) * Math.sin(distanceToTravel / Earth_Radius) * Math.cos(bearing));
+
+        //        var lat2 = Math.asin(Math.sin(lat1) * Math.cos(d / R)
+        //                + Math.cos(lat1) * Math.sin(d / R) * Math.cos(brng));
+
+        double newLon = startLon + Math.atan2(Math.sin(bearing) * Math.sin(distanceToTravel / Earth_Radius) * Math.cos(startLat),
+                Math.cos(distanceToTravel / Earth_Radius) - Math.sin(startLat) * Math.sin(newLat));
+
+        //        var lon2 = lon1 + Math.atan2(Math.sin(brng) * Math.sin(d / R) * Math.cos(lat1),
+        //                Math.cos(d / R) - Math.sin(lat1) * Math.sin(lat2));
 
         GeoPosition nextPoint = new GeoPosition(rad2deg(newLat), rad2deg(newLon));
-        
+
         return nextPoint;
     }
 

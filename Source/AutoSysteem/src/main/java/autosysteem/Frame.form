@@ -129,7 +129,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="46" max="32767" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
                                           <Component id="lbInterval" min="-2" pref="18" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jsInterval" min="-2" pref="192" max="-2" attributes="0"/>
@@ -161,12 +161,21 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="infoLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="currentCarComboBox" min="-2" pref="90" max="-2" attributes="0"/>
+                                  <Component id="currentCarComboBox" min="-2" pref="148" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="lbCurrentCarSpeed" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -190,7 +199,13 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="cbShowRoute" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lbCurrentCarSpeed" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="12" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="btStartSimulation" min="-2" max="-2" attributes="0"/>
@@ -284,7 +299,7 @@
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Mongolian Baiti" size="13" style="0"/>
+                  <Font name="Calibri" size="12" style="0"/>
                 </Property>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
@@ -319,7 +334,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="fitToScreenBtn">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fit to screen"/>
+            <Property name="text" type="java.lang.String" value="Aanpassen aan scherm"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fitToScreenBtnActionPerformed"/>
@@ -327,11 +342,26 @@
         </Component>
         <Component class="javax.swing.JButton" name="logOutBtn">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Log out"/>
+            <Property name="text" type="java.lang.String" value="Uitloggen"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logOutBtnActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lbCurrentCarSpeed">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Huidige snelheid:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel5">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="km/u"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

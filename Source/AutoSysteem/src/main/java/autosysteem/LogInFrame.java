@@ -9,6 +9,10 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import services.AdministrationService;
 
 /**
@@ -17,7 +21,7 @@ import services.AdministrationService;
  */
 public class LogInFrame extends javax.swing.JFrame
 {
-    
+
     WebResource resource;
     AdministrationService adminService;
 
@@ -27,10 +31,17 @@ public class LogInFrame extends javax.swing.JFrame
     public LogInFrame()
     {
         super("Log in...");
-        
+
         adminService = new AdministrationService();
-        
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex)
+        {
+            Logger.getLogger(LogInFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -134,30 +145,29 @@ public class LogInFrame extends javax.swing.JFrame
         String userName = userNameField.getText();
         char[] passWordChar = passwordField.getPassword();
         String password = "";
-        
+
         for (int i = 0; i < passWordChar.length; i++)
         {
             password += passWordChar[i];
         }
-        
+
         System.out.println("Username " + userName + " / Password " + password);
         Driver driver = adminService.getDriver(userName, password);
-        
+
         if (driver != null)
         {
-            
+
             Frame frame = new Frame();
             frame.setVisible(true);
             frame.setDriver(driver);
             this.dispose();
-        }
-        else
+        } else
         {
             errorLabel.setText("Incorrect password or email!");
         }
-        
+
     }//GEN-LAST:event_logInBtnActionPerformed
-    
+
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_passwordFieldActionPerformed
     {//GEN-HEADEREND:event_passwordFieldActionPerformed
         // TODO add your handling code here:
@@ -188,20 +198,16 @@ public class LogInFrame extends javax.swing.JFrame
                     break;
                 }
             }
-        }
-        catch (ClassNotFoundException ex)
+        } catch (ClassNotFoundException ex)
         {
             java.util.logging.Logger.getLogger(LogInFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (InstantiationException ex)
+        } catch (InstantiationException ex)
         {
             java.util.logging.Logger.getLogger(LogInFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (IllegalAccessException ex)
+        } catch (IllegalAccessException ex)
         {
             java.util.logging.Logger.getLogger(LogInFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (javax.swing.UnsupportedLookAndFeelException ex)
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
         {
             java.util.logging.Logger.getLogger(LogInFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }

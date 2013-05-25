@@ -4,7 +4,6 @@
  */
 package domain_simulation;
 
-import domain.Edge;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,10 +68,99 @@ public class Osmosis
         return null;
     }
 
+    public static Way getWayFromNode(Node n)
+    {
+        for (Way w : ways)
+        {
+            for (WayNode wn : w.getWayNodes())
+            {
+                if (wn.getNodeId() == n.getId())
+                {
+                    return w;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static void parseFile(File f)
+    {
+        File file = f;// the input file
+
+        Sink sinkImplementation = new Sink()
+        {
+            public void process(EntityContainer entityContainer)
+            {
+                Entity entity = entityContainer.getEntity();
+                if (entity instanceof Node)
+                {
+                    Node node = (Node) entity;
+                    nodes.add(node);
+
+                } else
+                {
+                    if (entity instanceof Way)
+                    {
+                        Way way = (Way) entity;
+                        ways.add(way);
+                    } else
+                    {
+                        if (entity instanceof Relation)
+                        {
+                            Relation relation = (Relation) entity;
+                            relations.add(relation);
+                        }
+                    }
+                }
+            }
+
+            public void release()
+            {
+            }
+
+            public void complete()
+            {
+            }
+
+            @Override
+            public void initialize(Map<String, Object> map)
+            {
+                // throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
+
+        //boolean pbf = false;
+        CompressionMethod compression = CompressionMethod.None;
+
+        RunnableSource reader;
+
+
+        reader = new XmlReader(file, false, compression);
+
+
+        reader.setSink(sinkImplementation);
+
+        Thread readerThread = new Thread(reader);
+        readerThread.start();
+
+        while (readerThread.isAlive())
+        {
+            try
+            {
+                readerThread.join();
+            } catch (InterruptedException e)
+            {
+                /* do nothing */
+            }
+        }
+
+
+    }
+
     public static ArrayList<Node> plotPath(int amountOfWays)
     {
         ArrayList<Node> routeNodes = new ArrayList<Node>();
-        ArrayList<Way> remainingWays = ways;
+        ArrayList<Way> remainingWays = new ArrayList<Way>(ways);
         Way currentWay = null;
         long startNodeId = 0;
 
@@ -133,97 +221,6 @@ public class Osmosis
         }
         //Now you have the currentway, find the node IN the waynodes.
         return routeNodes;
-    }
-
-    public static void parseFile(File f)
-    {
-        File file = f;// the input file
-
-        Sink sinkImplementation = new Sink()
-        {
-            public void process(EntityContainer entityContainer)
-            {
-                Entity entity = entityContainer.getEntity();
-                if (entity instanceof Node)
-                {
-                    Node node = (Node) entity;
-                    nodes.add(node);
-
-                } else
-                {
-                    if (entity instanceof Way)
-                    {
-                        Way way = (Way) entity;
-                        ways.add(way);
-                    } else
-                    {
-                        if (entity instanceof Relation)
-                        {
-                            Relation relation = (Relation) entity;
-                            relations.add(relation);
-                        }
-                    }
-                }
-            }
-
-            public void release()
-            {
-            }
-
-            public void complete()
-            {
-            }
-
-            @Override
-            public void initialize(Map<String, Object> map)
-            {
-                // throw new UnsupportedOperationException("Not supported yet.");
-            }
-        };
-
-        //boolean pbf = false;
-        CompressionMethod compression = CompressionMethod.None;
-
-//        if (file.getName().endsWith(".pbf"))
-//        {
-//            pbf = true;
-//        } else
-//        {
-//            if (file.getName().endsWith(".gz"))
-//            {
-//                compression = CompressionMethod.GZip;
-//            } else
-//            {
-//                if (file.getName().endsWith(".bz2"))
-//                {
-//                    compression = CompressionMethod.BZip2;
-//                }
-//            }
-//        }
-
-        RunnableSource reader;
-
-
-        reader = new XmlReader(file, false, compression);
-
-
-        reader.setSink(sinkImplementation);
-
-        Thread readerThread = new Thread(reader);
-        readerThread.start();
-
-        while (readerThread.isAlive())
-        {
-            try
-            {
-                readerThread.join();
-            } catch (InterruptedException e)
-            {
-                /* do nothing */
-            }
-        }
-
-
     }
 
     /**

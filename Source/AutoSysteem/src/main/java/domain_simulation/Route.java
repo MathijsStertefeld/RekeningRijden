@@ -27,11 +27,7 @@ public class Route
     {
         return targetNodeIndex;
     }
-
-    //public void setTargetIndex(int progress)
-    //{
-    //    this.targetNodeIndex = progress;
-    //}
+    
     public void increaseTargetIndex()
     {
         if (targetNodeIndex < this.route.size() - 1)
@@ -40,10 +36,6 @@ public class Route
         }
     }
 
-    //public void increaseTargetIndexBy(int i)
-    //{
-    //    this.targetNodeIndex += i;
-    //}
     public ArrayList<Node> getRoute()
     {
         return route;
