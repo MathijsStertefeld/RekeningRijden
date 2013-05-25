@@ -4,6 +4,7 @@
  */
 package verplaatsingensysteem.service;
 
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -104,5 +105,5 @@ public class RestfulSenderService
         {
             throw new NullPointerException("Timestep with time " + time + " cannot be found.");
         }
-    }
+    } 
 }

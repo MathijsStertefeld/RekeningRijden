@@ -4,6 +4,7 @@
  */
 package verplaatsingensysteem.dao;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -12,6 +13,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import verplaatsingensysteem.domain.Edge;
 import verplaatsingensysteem.domain.Lane;
+import verplaatsingensysteem.domain.Movement;
 import verplaatsingensysteem.domain.Session;
 import verplaatsingensysteem.domain.TimeStep;
 import verplaatsingensysteem.domain.VehiclePosition;
@@ -110,22 +112,34 @@ public class VerplaatsingSysteemDAOJPA implements VerplaatsingSysteemDAO
         String query = "SELECT v FROM VehiclePosition v WHERE v.carTrackerId = '" + cartrackerId + "'";
         TypedQuery q = em.createQuery(query, VehiclePosition.class);
         List<VehiclePosition> positions = q.getResultList();
-        System.out.println("RESULTLIST: " + q.getResultList());
-
-
-//        for (int i = 0; i < positions.size(); i++)
-//        {
-//            VehiclePosition vp = positions.get(i);
-//            
-//            String query1 = "SELECT v.laneId FROM VehiclePosition v WHERE v.carTrackerId = '" + vp.getCarTrackerId() + "' AND v.id = '" + vp.getId() + "'";
-//            TypedQuery q1 = em.createQuery(query1, String.class);
-//            String laneId = (String) q1.getSingleResult();
-//            String query2 = "SELECT l FROM Lane l WHERE l.laneId = '" + laneId +  "'";
-//            TypedQuery q2 = em.createQuery(query2, Lane.class);
-//            //vp.setParentLane(q2.getSingleResult());
-//        }
-
+        // System.out.println("RESULTLIST: " + q.getResultList());
 
         return positions;
+    }
+
+    @Override
+    public void createMovement(Movement movement)
+    {
+        if (findMovement(movement.getId()) == null)
+        {
+            em.persist(movement);
+        }
+    }
+
+    @Override
+    public Movement findMovement(long id)
+    {
+        Movement m = em.find(Movement.class, id);
+        return m;
+    }
+
+    @Override
+    public List<Movement> findAllMovements()
+    {
+        String query = "SELECT m FROM Movement";
+        TypedQuery q = em.createQuery(query, Movement.class);
+        List<Movement> movements = q.getResultList();
+
+        return movements;
     }
 }

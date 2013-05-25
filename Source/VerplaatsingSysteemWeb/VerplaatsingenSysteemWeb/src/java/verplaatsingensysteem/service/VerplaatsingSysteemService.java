@@ -4,6 +4,8 @@
  */
 package verplaatsingensysteem.service;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
@@ -11,6 +13,7 @@ import javax.inject.Inject;
 import verplaatsingensysteem.dao.VerplaatsingSysteemDAO;
 import verplaatsingensysteem.domain.Edge;
 import verplaatsingensysteem.domain.Lane;
+import verplaatsingensysteem.domain.Movement;
 import verplaatsingensysteem.domain.Session;
 import verplaatsingensysteem.domain.TimeStep;
 import verplaatsingensysteem.domain.VehiclePosition;
@@ -37,7 +40,8 @@ public class VerplaatsingSysteemService
         {
             vpDAO.createSession(session);
 
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.err.println("Session creating failed");
             System.err.println(e);
@@ -50,7 +54,8 @@ public class VerplaatsingSysteemService
         {
             vpDAO.createTimeStep(timeStep);
 
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.err.println("TimeStep creating failed");
             e.printStackTrace();
@@ -63,7 +68,8 @@ public class VerplaatsingSysteemService
         try
         {
             vpDAO.createEdge(edge);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.err.println("Edge creating failed");
             e.printStackTrace();
@@ -76,7 +82,8 @@ public class VerplaatsingSysteemService
         {
             vpDAO.createLane(lane);
 
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.err.println("Lane creating failed");
             e.printStackTrace();
@@ -89,7 +96,8 @@ public class VerplaatsingSysteemService
         {
             vpDAO.createVehiclePosition(vehiclePosition);
 
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.err.println("VehiclePosition creating failed");
             e.printStackTrace();
@@ -103,7 +111,8 @@ public class VerplaatsingSysteemService
         {
             List<VehiclePosition> positions = vpDAO.findVehiclePositions(cartrackerId);
             return positions;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -121,7 +130,8 @@ public class VerplaatsingSysteemService
             TimeStep timeStep = vpDAO.findTimeStep(time);
 
             return timeStep;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -139,7 +149,8 @@ public class VerplaatsingSysteemService
             Lane lane = vpDAO.findLane(id);
 
             return lane;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -157,10 +168,31 @@ public class VerplaatsingSysteemService
             Edge edge = vpDAO.findEdge(id);
 
             return edge;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void createMovement(Movement movement)
+    {
+        try
+        {
+            vpDAO.createMovement(movement);
+
+        }
+        catch (Exception e)
+        {
+            System.err.println("Movement creating failed");
+            e.printStackTrace();
+        }
+    }
+
+    public List<Movement> findAllMovements()
+    {
+        List<Movement> movements = vpDAO.findAllMovements();
+        return movements;
     }
 }
