@@ -1,11 +1,6 @@
 package com.marbl.administration.website.service;
 
-import com.marbl.administration.domain.CityRate;
-import com.marbl.administration.domain.HighwayRate;
-import com.marbl.administration.domain.MassRate;
 import com.marbl.administration.domain.Rate;
-import com.marbl.administration.domain.RegionRate;
-import com.marbl.administration.domain.VehicleRate;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import java.io.Serializable;
@@ -46,21 +41,21 @@ public class RateService implements Serializable {
         return webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { });
     }
     
-    public Collection<HighwayRate> findAllHighwayRates()
+    public Collection<Rate> findAllHighwayRates()
     {
-        Collection<HighwayRate> rates = new ArrayList<>();
+        Collection<Rate> rates = new ArrayList<>();
         for (Rate r : webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { }))
         {
-            if (r.getClass() == HighwayRate.class) {
-                rates.add((HighwayRate)r);
+            if (r.getClass() == Rate.class) {
+                rates.add((Rate)r);
             }
         }
         return rates;
     }
     
-    public Collection<CityRate> findAllCityRates()
+    public Collection<Rate> findAllCityRates()
     {
-        Collection<CityRate> rates = new ArrayList<>();
+        Collection<Rate> rates = new ArrayList<>();
         for (Rate r : webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { }))
         {
             if (r.getClass() == CityRate.class) {
