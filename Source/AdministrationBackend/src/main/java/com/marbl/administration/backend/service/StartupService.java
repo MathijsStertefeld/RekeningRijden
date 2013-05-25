@@ -2,10 +2,11 @@ package com.marbl.administration.backend.service;
 
 import com.marbl.administration.backend.dao.*;
 import com.marbl.administration.domain.*;
-import com.marbl.administration.domain.utils.Hasher;
+import com.marbl.administration.domain.utils.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -25,10 +26,15 @@ public class StartupService implements Serializable {
     private EmployeeDAO employeeDAO;
     @Inject
     private RateDAO rateDAO;
+    private int testBsn;
+    private Hasher hasher;
+    private Random random;
 
     @PostConstruct
     public void postConstruct() {
-        Hasher hasher = new Hasher("SHA-256", "UTF-8");
+        hasher = new Hasher("SHA-256", "UTF-8");
+        testBsn = 900000000;
+        random = new Random();
 
         //<editor-fold defaultstate="collapsed" desc="Employees">
         ArrayList<Employee> employees = new ArrayList<>();
@@ -45,15 +51,9 @@ public class StartupService implements Serializable {
         //<editor-fold defaultstate="collapsed" desc="Drivers">
         ArrayList<Driver> drivers = new ArrayList<>();
 
-        drivers.add(new Driver(1111, "hans@hans.nl", hasher.hash("hans123"),
-                "Hans", "Hansen", "Eindhoven", "Hoofdstraat 1",
-                "1234AA", new Date(), true, DriverGroup.ADMIN));
-        drivers.add(new Driver(2222, "frank@frank.nl", hasher.hash("frank123"),
-                "Frank", "Franken", "Eindhoven", "Hoofdstraat 2",
-                "1234BB", new Date(), true, DriverGroup.DRIVER));
-        drivers.add(new Driver(3333, "tom@tom.nl", hasher.hash("tom123"),
-                "Tom", "Tommen", "Eindhoven", "Hoofdstraat 3",
-                "1234CC", new Date(), true, DriverGroup.JAM_DRIVER));
+        drivers.add(generateDriver("Hans", DriverGroup.ADMIN));
+        drivers.add(generateDriver("Frank", DriverGroup.DRIVER));
+        drivers.add(generateDriver("Tom", DriverGroup.DRIVER));
 
         for (int i = 0; i < drivers.size(); i++) {
             driverDAO.create(drivers.get(i));
@@ -63,15 +63,18 @@ public class StartupService implements Serializable {
         //<editor-fold defaultstate="collapsed" desc="Cars">
         ArrayList<Car> cars = new ArrayList<>();
 
-        cars.add(new Car("t0", "AB-CD-12", CarType.AUTOBUS,
-                PaintColor.BLACK, 1000, Classification.EEV,
+        cars.add(new Car("t0", "AB-CD-12", CarType.PASSENGER_CAR,
+                PaintColor.BLACK, 1000, Classification.ZERO,
                 "Suzuki", "Swift", drivers.get(0).getBsn()));
-        cars.add(new Car("t1", "EF-GH-34", CarType.AUTOBUS,
-                PaintColor.RED, 800, Classification.EEV,
-                "Fiat", "Panda", drivers.get(1).getBsn()));
-        cars.add(new Car("t2", "IJ-KL-56", CarType.AUTOBUS,
-                PaintColor.WHITE, 1200, Classification.EEV,
-                "Volkswagen", "Golf", drivers.get(2).getBsn()));
+        cars.add(new Car("t1", "EF-GH-34", CarType.PASSENGER_CAR,
+                PaintColor.RED, 800, Classification.ONE,
+                "Fiat", "Panda", drivers.get(0).getBsn()));
+        cars.add(new Car("t2", "IJ-KL-56", CarType.PASSENGER_CAR,
+                PaintColor.GRAY, 1200, Classification.TWO,
+                "Volkswagen", "Golf", drivers.get(1).getBsn()));
+        cars.add(new Car("t3", "MN-OP-78", CarType.AUTOBUS,
+                PaintColor.WHITE, 1200, Classification.THREE,
+                "Mitsubishi", "VAN", drivers.get(2).getBsn()));
 
         for (int i = 0; i < cars.size(); i++) {
             carDAO.create(cars.get(i));
@@ -92,10 +95,10 @@ public class StartupService implements Serializable {
             billDAO.create(bills.get(i));
         }
         //</editor-fold>
-        
+
         //<editor-fold defaultstate="collapsed" desc="CityRates">
         ArrayList<CityRate> cityRates = new ArrayList<>();
-        
+
         cityRates.add(new CityRate("Den Bosch", 0.12f));
         cityRates.add(new CityRate("Eindhoven", 0.10f));
         cityRates.add(new CityRate("Tilburg", 0.10f));
@@ -107,20 +110,20 @@ public class StartupService implements Serializable {
 
         //<editor-fold defaultstate="collapsed" desc="HighwayRates">
         ArrayList<HighwayRate> highwayRates = new ArrayList<>();
-        
+
         highwayRates.add(new HighwayRate("A2", new double[]{0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.10, 0.10, 0.10, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.10, 0.10, 0.10, 0.04, 0.04, 0.04, 0.04}));
         highwayRates.add(new HighwayRate("A50", new double[]{0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.08, 0.08, 0.08, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.08, 0.08, 0.08, 0.02, 0.02, 0.02, 0.02}));
         highwayRates.add(new HighwayRate("A67", new double[]{0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.08, 0.08, 0.08, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.08, 0.08, 0.08, 0.02, 0.02, 0.02, 0.02}));
         highwayRates.add(new HighwayRate("A270", new double[]{0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02}));
-        
+
         for (int i = 0; i < highwayRates.size(); i++) {
             rateDAO.create(highwayRates.get(i));
         }
         //</editor-fold>
-        
+
         //<editor-fold defaultstate="collapsed" desc="RegionRates">
         ArrayList<RegionRate> regionRates = new ArrayList<>();
-        
+
         regionRates.add(new RegionRate("Regio Den Bosch", 0.05f));
         regionRates.add(new RegionRate("Regio Eindhoven", 0.05f));
         regionRates.add(new RegionRate("Regio Helmond", 0.02f));
@@ -131,15 +134,32 @@ public class StartupService implements Serializable {
             rateDAO.create(regionRates.get(i));
         }
         //</editor-fold>
-        
+
         //<editor-fold defaultstate="collapsed" desc="VehicleRates">
         ArrayList<VehicleRate> vehicleRates = new ArrayList<>();
-        
+
         vehicleRates.add(new VehicleRate("Autobus", 0.2f));
 
         for (int i = 0; i < vehicleRates.size(); i++) {
             rateDAO.create(vehicleRates.get(i));
         }
         //</editor-fold>
+    }
+
+    private Driver generateDriver(String name, DriverGroup group) {
+        String lower = name.toLowerCase();
+        String upper = name.substring(0, 1).toUpperCase() + name.substring(1);
+
+        int bsn = testBsn++;
+        String email = lower + "@marbl.com";
+        String password = hasher.hash(lower + "123");
+        String firstName = upper;
+        String lastName = "van der " + upper;
+        String residence = new String[]{"Den Bosch", "Eindhoven", "Weert"}[bsn % 3];
+        String address = new String[]{"Hoofdstraat ", "Dorpstraat "}[bsn % 2] + bsn % 900000000;
+        String zipCode = new String[]{"1234AB", "2345BC", "3456CD", "4567DE", "5678EF", "6789FG"}[bsn % 6];
+        Date dateOfBirth = new Date();
+
+        return new Driver(bsn, email, password, firstName, lastName, residence, address, zipCode, dateOfBirth, true, group);
     }
 }
