@@ -65,9 +65,8 @@ public class RekeningRijdersService implements Serializable {
         Hasher hasher = new Hasher("SHA-256", "UTF-8");
         password = hasher.hash(password);
         
-        return resource.path("drivers").path("login")
-                .queryParam("email", email).queryParam("password", password)
-                .accept(MediaType.APPLICATION_JSON).post(Driver.class);
+        return resource.path("drivers").path("login").queryParam("email", email)
+                .queryParam("password", password).get(Driver.class);
     }
 
     public void register(Driver driver) {

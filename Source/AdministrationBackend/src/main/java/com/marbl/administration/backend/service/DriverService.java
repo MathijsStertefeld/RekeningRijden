@@ -82,7 +82,7 @@ public class DriverService implements Serializable {
         return String.valueOf(driverDAO.count());
     }
     
-    @POST
+    @GET
     @Path("login")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Driver login(String email, String password) {
