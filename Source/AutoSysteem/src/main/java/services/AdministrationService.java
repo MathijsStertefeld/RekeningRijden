@@ -10,6 +10,7 @@ import com.marbl.administration.domain.utils.Hasher;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import com.sun.jersey.api.json.JSONConfiguration;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.ws.rs.core.MediaType;
 
@@ -29,17 +30,27 @@ public class AdministrationService {
         wr = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/");
     }
 
-    public Collection<Car> getCarsFromUser(Driver driver) {
-        Collection<Car> cars;
-        
+    public ArrayList<Car> getCarsFromUser(Driver driver) {
+        ArrayList<Car> cars;
         String bsn = Integer.toString(driver.getBSN());
-
-        cars = wr.path("cars")
+ 
+        ClientResponse cr = wr.path("cars")
                 .queryParam("driverBSN", bsn)
                 .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<Collection<Car>>() {
-        });
-
+                .get(ClientResponse.class);
+       
+        GenericType<ArrayList<Car>> gt = new GenericType<ArrayList<Car>>() {
+        };
+       
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                cars = cr.getEntity(gt);
+                break;
+            default:
+                cars = new ArrayList();
+                break;
+        }
+ 
         return cars;
     }
 

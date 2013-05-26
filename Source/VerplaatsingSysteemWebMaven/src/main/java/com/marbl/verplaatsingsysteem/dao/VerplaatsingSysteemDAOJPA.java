@@ -80,7 +80,7 @@ public class VerplaatsingSysteemDAOJPA implements VerplaatsingSysteemDAO
     @Override
     public TimeStep findTimeStep(double time)
     {
-        String query = "SELECT t FROM TimeStep t WHERE t.timestepTime = '" + time + "'";
+        String query = "SELECT t FROM TimeStep t WHERE t.time = '" + time + "'";
         TypedQuery q = em.createQuery(query, TimeStep.class);
 
         TimeStep ts = (TimeStep) q.getSingleResult();
