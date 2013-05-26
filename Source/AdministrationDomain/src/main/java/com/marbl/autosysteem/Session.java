@@ -27,6 +27,11 @@ public class Session
         this.timesteps = timesteps;
     }
 
+    public Session()
+    {
+        this.timesteps = timesteps;
+    }
+
     @XmlAttribute(name = "date")
     public Date getDate()
     {
