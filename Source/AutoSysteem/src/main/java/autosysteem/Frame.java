@@ -6,8 +6,14 @@ package autosysteem;
 
 import com.marbl.administration.domain.Car;
 import com.marbl.administration.domain.Driver;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import domain_simulation.CarHolder;
 import domain_simulation.Osmosis;
-import domain_simulation.Simulation;
+import domain_simulation.Session;
+import domain_simulation.Simulator;
 import domain_simulation.Vehicle;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.text.DefaultCaret;
 import openstreetmaps.org.openstreetmap.gui.CarGraphic;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.JMapViewer;
 import openstreetmaps.org.openstreetmap.gui.jmapviewer.OsmTileLoader;
@@ -39,7 +46,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
     private JMapViewer map;
     private double meterPerPixel;
     private double zoom;
-    private Simulation sim;
+    private Simulator sim;
     private Driver loggedInDriver;
     private AdministrationService adminService;
 
@@ -49,30 +56,18 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
     public Frame()
     {
         super("Autosysteem");
-
         adminService = new AdministrationService();
-        
         try
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
-
-        initComponents();
         setLayout(new BorderLayout());
-
+        initComponents();
         // Add the map to the form and fill in settings
         addMap();
-
-        // map.highlightCarGraphic("t1");
-
-//        Coordinate one = new Coordinate(51.4560332, 5.5380103);
-//        Coordinate two = new Coordinate(51.455726, 5.5326495);
-//        List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(one, two, two));
-        //map.addMapPolygon(new MapPolygonImpl(route));
 
         // Fill the comboBox.
         currentCarComboBox.removeAllItems();
@@ -82,9 +77,15 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             currentCarComboBox.addItem(c.getCarTrackerId());
         }
 
+        //FOR TESTING PURPOSES
+        if (loggedInDriver == null)
+        {
+            loggedInDriver = adminService.getDriver("leslie.aerts@marbl.com", "leslie123");
+            setDriver(loggedInDriver);
+        }
 
-        //Simulation stuff happens here
-        sim = new Simulation(jsInterval.getValue(), CAR_SIMULATION_STEP, this);
+        //Simulation happens here
+        sim = new Simulator(jsInterval.getValue(), CAR_SIMULATION_STEP, this);
         for (Vehicle c : sim.getGarage().getCars())
         {
             currentCarComboBox.addItem(c.getCarTrackerId());
@@ -94,13 +95,10 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         {
             validate();
         }
-        
-        //FOR TESTING PURPOSES
-        if (loggedInDriver == null)
-        {
-            loggedInDriver = adminService.getDriver("hans@hans.nl", "hans123");
-            setDriver(loggedInDriver);
-        }
+
+        //Autoscrolls output pane
+        DefaultCaret caret = (DefaultCaret) outputPane.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     }
 
     /**
@@ -131,6 +129,9 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         cbShowRoute = new javax.swing.JCheckBox();
         fitToScreenBtn = new javax.swing.JButton();
         logOutBtn = new javax.swing.JButton();
+        lbCurrentCarSpeed = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -187,7 +188,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 
         outputPane.setEditable(false);
         outputPane.setColumns(20);
-        outputPane.setFont(new java.awt.Font("Mongolian Baiti", 0, 13)); // NOI18N
+        outputPane.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         outputPane.setRows(5);
         jScrollPane1.setViewportView(outputPane);
 
@@ -213,7 +214,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             }
         });
 
-        fitToScreenBtn.setText("Fit to screen");
+        fitToScreenBtn.setText("Aanpassen aan scherm");
         fitToScreenBtn.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -222,7 +223,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             }
         });
 
-        logOutBtn.setText("Log out");
+        logOutBtn.setText("Uitloggen");
         logOutBtn.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -230,6 +231,12 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                 logOutBtnActionPerformed(evt);
             }
         });
+
+        lbCurrentCarSpeed.setText("0");
+
+        jLabel4.setText("Huidige snelheid:");
+
+        jLabel5.setText("km/u");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -246,7 +253,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(lbInterval, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jsInterval, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -270,8 +277,16 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(infoLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(currentCarComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(currentCarComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbCurrentCarSpeed)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,7 +305,12 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                     .addComponent(infoLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbShowRoute)
-                .addGap(14, 14, 14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbCurrentCarSpeed)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addGap(74, 74, 74)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btStartSimulation)
@@ -387,58 +407,41 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         // Add carStrings in format: "Volkswagen Beetle (AA-11-BB)"
         for (Car c : cars)
         {
-            carStrings.add(c.getBrand() + " " + c.getModel() + " (" + c.getLicensePlate() + ")");
+            carStrings.add(c.getLicensePlate());
+//            carStrings.add(c.getBrand() + " " + c.getModel() + " (" + c.getLicensePlate() + ")");
         }
+        String chosenCarString = (String) JOptionPane.showInputDialog(this, "Selecteer een auto.", "Auto selectie", JOptionPane.QUESTION_MESSAGE, null, carStrings.toArray(), carStrings.get(0));
 
-        String chosenCar = (String) JOptionPane.showInputDialog(this, "Selecteer een auto.", "Auto selectie", JOptionPane.QUESTION_MESSAGE, null, carStrings.toArray(), carStrings.get(0));
-        
         // Create a car object.
-        Car car = null;
+        Car selectedCar = null;
         for (Car c : cars)
         {
-            String carString = c.getBrand() + " " + c.getModel() + " (" + c.getLicensePlate() + ")";
-            if (carString.equals(chosenCar))
+            //String carString = c.getBrand() + " " + c.getModel() + " (" + c.getLicensePlate() + ")";
+            if (c.getLicensePlate().equals(chosenCarString))
             {
-                car = c;
+                selectedCar = c;
             }
         }
 
         // Add the license plate to the currentCarComboBox
-        if (car != null)
+        if (selectedCar != null)
         {
-            currentCarComboBox.addItem(car.getLicensePlate());
+            currentCarComboBox.addItem(selectedCar.getLicensePlate());
         }
 
-        int routeAmount = Integer.parseInt(JOptionPane.showInputDialog(null, "Hoeveel wegen moet de route van deze auto bevatten?"));
+        String routeAmountString = JOptionPane.showInputDialog(null, "Hoeveel wegen moet de route van deze auto bevatten?");
+
+        int routeAmount = Integer.parseInt(routeAmountString);
 
         //TODO: AFVANGEN
         ArrayList<Node> route = Osmosis.plotPath(routeAmount);
 
-        //TODO: AFVANGEN
-        for (Node n : route)
-        {
-            // map.addMapMarker(new MapMarkerDot(Color.yellow, n.getLatitude(), n.getLongitude()));
-        }
+        Vehicle v = new Vehicle(selectedCar, route);
 
-        Vehicle v = null;
-        String carTracker = car.getCarTrackerId();
-        System.out.println(carTracker);
+        sim.addCar(v, route);
+        map.addCarGraphic(v.getCarGraphic());
 
-        if (carTracker != null)
-        {
-            if (carTracker.length() != 0)
-            {
-                // x / 3600 / 2 = value
-                //0.22 = 80km/h
-                // x * 2 = km/s. 
-                //TODO: DATABASE AUTO
-                v = new Vehicle(carTracker, route, 0.011);
-                sim.addCar(v, route);
-                map.addCarGraphic(v.getCarGraphic());
-
-                validate();
-            }
-        }
+        validate();
     }//GEN-LAST:event_btAddCarActionPerformed
 
     private void btStartSimulationActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btStartSimulationActionPerformed
@@ -449,11 +452,17 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             {
                 sim.start();
                 btStartSimulation.setText("Stop Simulatie");
-            }
-            else
+            } else
             {
                 sim.stop();
                 btStartSimulation.setText("Start Simulatie");
+
+                JOptionPane.showMessageDialog(null, "Simulatie gestopt. Verplaatsingen worden verstuurd naar Verplaatsingsysteem.");
+
+                Session sess = new Session(sim.getSessionDate(), sim.getTimesteps());
+                doPostXml(sess);
+                
+                //Hier restful aanroepen om weg te sturen.
             }
         }
     }//GEN-LAST:event_btStartSimulationActionPerformed
@@ -461,7 +470,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
     private void jsIntervalStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_jsIntervalStateChanged
     {//GEN-HEADEREND:event_jsIntervalStateChanged
         sim.changeTimestepInterval(jsInterval.getValue());
-        int seconds = jsInterval.getValue() / 1000;
+        double seconds = jsInterval.getValue() / 1000;
         lbInterval.setText(String.valueOf(seconds));
     }//GEN-LAST:event_jsIntervalStateChanged
 
@@ -470,22 +479,23 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         map.removeAllMapPolygons();
         if (currentCarComboBox != null && currentCarComboBox.getSelectedItem() != null)
         {
-            for (Vehicle car : sim.getGarage().getCars())
+            for (Vehicle vehicle : CarHolder.getCars())
             {
-                CarGraphic c = car.getCarGraphic();
-                if (((String) currentCarComboBox.getSelectedItem()).equals(car.getCarTrackerId()))
+                CarGraphic c = vehicle.getCarGraphic();
+                if (((String) currentCarComboBox.getSelectedItem()).equals(vehicle.getLicensePlate()))
                 {
-                    map.setDisplayPositionByLatLon(car.getPosition().getLatitudeInDegrees(), car.getPosition().getLongitudeInDegrees(), DESIRED_FOCUS_ZOOM);
+
+                    //Car is selected, update everything
+                    map.setDisplayPositionByLatLon(vehicle.getPosition().getLatitudeInDegrees(), vehicle.getPosition().getLongitudeInDegrees(), DESIRED_FOCUS_ZOOM);
                     c.highlight(DESIRED_HIGHLIGHT_CAR_COLOR);
+                    lbCurrentCarSpeed.setText(vehicle.getCarSpeedInKM() + "");
                     map.repaint();
 
                     if (cbShowRoute.isSelected())
                     {
-                        map.drawRoute(car.getRoute().getRoute());
+                        map.drawRoute(vehicle.getRoute().getRoute());
                     }
-                    // map.highlightCarGraphic((String) currentCarComboBox.getSelectedItem());
-                }
-                else
+                } else
                 {
                     c.highlight(DESIRED_DEFAULT_CAR_COLOR);
                     map.repaint();
@@ -506,13 +516,11 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                 {
                     //Get the cars route
                     ArrayList<Node> route = car.getRoute().getRoute();
-                    if (((String) currentCarComboBox.getSelectedItem()).equals(car.getCarTrackerId()))
+                    if (((String) currentCarComboBox.getSelectedItem()).equals(car.getLicensePlate()))
                     {
                         //And draw the route
                         map.drawRoute(route);
-
-                    }
-                    else
+                    } else
                     {
                         //If car does not equal the thing
                         map.removeAllMapPolygons();
@@ -560,20 +568,16 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                     break;
                 }
             }
-        }
-        catch (ClassNotFoundException ex)
+        } catch (ClassNotFoundException ex)
         {
             java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (InstantiationException ex)
+        } catch (InstantiationException ex)
         {
             java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (IllegalAccessException ex)
+        } catch (IllegalAccessException ex)
         {
             java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (javax.swing.UnsupportedLookAndFeelException ex)
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
         {
             java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -599,12 +603,15 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
     private javax.swing.JLabel infoLabel3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSlider jsInterval;
+    private javax.swing.JLabel lbCurrentCarSpeed;
     private javax.swing.JLabel lbInterval;
     private javax.swing.JButton logOutBtn;
     private javax.swing.JPanel mapPanel;
@@ -663,5 +670,14 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         ownerLabel.setText(driver.getFirstName() + " " + driver.getLastName());
         numberOfCarsLabel.setText(Integer.toString(adminService.getCarsFromUser(driver).size()));
         loggedInDriver = driver;
+    }
+
+    public void doPostXml(Session s)
+    {
+        ClientConfig config = new DefaultClientConfig();
+        Client client = Client.create(config);
+        //De URL klopt natuurlijk nog niet
+        WebResource service = client.resource("http://localhost:8080/VerplaatsingSysteemWeb/");
+        service.path("resources").path("xml").post(s);
     }
 }

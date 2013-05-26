@@ -4,46 +4,46 @@
  */
 package domain_simulation;
 
+import com.marbl.administration.domain.Car;
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import openstreetmaps.org.openstreetmap.gui.CarGraphic;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
-import org.openstreetmap.osmosis.core.domain.v0_6.Way;
 
 /**
  *
  * @author Leslie Aerts
  */
-public class Vehicle
+@XmlRootElement(name="vehicle_position")
+public class Vehicle extends com.marbl.administration.domain.Car
 {
-
-    private String carTrackerId;
     private double carSpeed;
-    //private VehiclePosition pos;
     private CarGraphic graphic;
     private Route route;
 
-    public Vehicle(String idString, ArrayList<Node> routeNodes, double carSpeed)
+    public Vehicle(Car c, ArrayList<Node> routeNodes)
     {
-        this.carTrackerId = idString;
+        super(c.getCarTrackerId(), c.getLicensePlate(), c.getType(), c.getPaintColor(), c.getMass(), c.getClassification(), c.getBrand(), c.getModel(), c.getDriverBsn());
         this.route = new Route(routeNodes);
         Node n = this.route.getRoute().get(0);
-        graphic = new CarGraphic(carTrackerId, n.getLatitude(), n.getLongitude());
-        this.carSpeed = carSpeed;
-        //System.out.println("StartPos: " + graphic.getLat() + " - " + graphic.getLon());
-        
-        //pos = new VehiclePosition();
+        graphic = new CarGraphic(this.getCarTrackerId(), n.getLatitude(), n.getLongitude());
+        this.carSpeed = Navigation.getCarSpeedCalc(50);
     }
 
+    @Override
+    @XmlAttribute(name="tracker_id")
     public String getCarTrackerId()
     {
-        return carTrackerId;
+        return this.getCarTrackerId();
     }
-
-    public void setCarTrackerId(String carId)
+    
+    public double getCarSpeedInKM()
     {
-        this.carTrackerId = carId;
+        return this.carSpeed * 2 * 3600;
     }
-
+    
+    
     public double getCarSpeed()
     {
         return carSpeed;
@@ -51,25 +51,18 @@ public class Vehicle
 
     public void setCarSpeed(double carSpeed)
     {
-        this.carSpeed = carSpeed;
+        this.carSpeed = Navigation.getCarSpeedCalc(carSpeed);
     }
-    
-    
-    
+
     public GeoPosition getPosition()
     {
         return new GeoPosition(graphic.getLat(), graphic.getLon());
     }
-    
+
     public void setPosition(GeoPosition newPos)
     {
         graphic.place(newPos.getLatitudeInDegrees(), newPos.getLongitudeInDegrees());
     }
-
-    //public void setPos(VehiclePosition pos)
-    //{
-    //    this.pos = pos;
-    //}
 
     public CarGraphic getCarGraphic()
     {
@@ -88,66 +81,12 @@ public class Vehicle
 
     /**
      * Places the car directly at the position.
+     *
      * @param lat
-     * @param lon 
+     * @param lon
      */
     public void place(double lat, double lon)
     {
         this.graphic.place(lat, lon);
     }
-
-    /**
-     * Translates from the current position.
-     * @param lat
-     * @param lon 
-     */
-    //public void move(double lat, double lon)
-    //{
-    //    this.graphic.move(lat, lon);
-    //}
-    
-//    public void progress()
-//    {
-//        int progress = this.route.getTargetIndex();
-//        double distance = 0;
-//        GeoPosition newPos = null;
-//        Node fromNode = null;
-//        if (progress != 0)
-//        {
-//            fromNode = this.route.getRoute().get(progress - 1);
-//        } else
-//        {
-//            fromNode = this.route.getRoute().get(0);
-//        }
-//
-//        if (progress < this.route.getRoute().size())
-//        {
-//            Node toNode = this.route.getRoute().get(progress);
-//            distance = distance(getCarGraphic().getLat(), getCarGraphic().getLon(), toNode.getLatitude(), toNode.getLongitude(), 'K');
-//            newPos = NewPositionWithAngleAndDistance(this, distance, getBearing(fromNode, toNode));
-//
-//            this.place(newPos.getLatitude(), newPos.getLongitude());
-//            System.out.println(distance);
-//            if (distance <= 1)
-//            {
-//                this.route.setTargetIndex(progress + 1);
-//            }
-//        }
-//    }
-
-//
-
-//
-//    // (tonode - from node) * currentpos /  distance = % van edge  + fromnode
-//    private GeoPosition NewPositionWithAngleAndDistance(Vehicle curPos, double distance, double bearing)
-//    {
-//        double radLat = deg2rad(curPos.getCarGraphic().getLat());
-//        double radLon = deg2rad(curPos.getCarGraphic().getLon());
-//
-//        double newLat = Math.asin(Math.sin(radLat) * Math.cos(distance / Earth_Radius) + Math.cos(radLat) * Math.sin(distance / Earth_Radius) * Math.cos(bearing));
-//        double newLon = radLon + Math.atan2(Math.sin(bearing) * Math.sin(distance / Earth_Radius)
-//                * Math.cos(radLat), Math.cos(distance / Earth_Radius) - Math.sin(radLat) * Math.sin(newLat));
-//        GeoPosition newPos = new GeoPosition(newLon, newLat);
-//        return newPos;
-//    }
 }

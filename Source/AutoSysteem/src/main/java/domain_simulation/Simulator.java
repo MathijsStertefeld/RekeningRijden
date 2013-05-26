@@ -14,8 +14,9 @@ import org.openstreetmap.osmosis.core.domain.v0_6.Node;
  *
  * @author Leslie Aerts
  */
-public class Simulation implements Runnable
+public class Simulator implements Runnable
 {
+
     private long timestepInterval;
     private ArrayList<TimeStep> timesteps;
     private Thread t1;
@@ -26,7 +27,7 @@ public class Simulation implements Runnable
     private boolean isRunning = false;
     private Frame tempframe;
 
-    public Simulation(long timestepInterval, long carInterval, Frame f)
+    public Simulator(long timestepInterval, long carInterval, Frame f)
     {
         this.timestepInterval = timestepInterval;
         timesteps = new ArrayList<TimeStep>();
@@ -52,7 +53,7 @@ public class Simulation implements Runnable
         carSim.stop();
     }
 
-    public void addCar(Vehicle c,ArrayList<Node> route)
+    public void addCar(Vehicle c, ArrayList<Node> route)
     {
         garage.addCar(c, route);
     }
@@ -87,16 +88,18 @@ public class Simulation implements Runnable
             {
                 double time = (double) timesteps.size();
                 TimeStep ts = new TimeStep(time);
-                timesteps.add(ts);
-                tempframe.setOutputText("Timestep " + ts.getTime() + "\n");
-                for (Vehicle c : CarHolder.getCars())
-                {
-                    tempframe.getMap().repaint();
-                    //HIER MOET IK IETS RETURNEN ZODAT HET ER UIT KOMT
-                    tempframe.setOutputText("Car " + c.getCarTrackerId() + " pos is " + c.getCarGraphic().getLat() + "," + c.getCarGraphic().getLon() + "\n");
-                }
 
-                System.out.println("\n");
+                tempframe.setOutputText("Timestep " + ts.getTime() + "\n");
+                for (Vehicle v : CarHolder.getCars())
+                {
+                    ts.addVehicle(v);
+                    //HIER MOET IK IETS RETURNEN ZODAT HET ER UIT KOMT
+                    tempframe.setOutputText("Car " + v.getCarTrackerId() + " pos is " + v.getCarGraphic().getLat() + "," + v.getCarGraphic().getLon() + "\n");
+                }
+                tempframe.getMap().repaint();
+                timesteps.add(ts);
+
+                tempframe.setOutputText("\n\n");
                 try
                 {
                     t1.sleep(timestepInterval);
@@ -105,11 +108,22 @@ public class Simulation implements Runnable
                     t1.join();
                     return;
                 }
-
             } catch (Exception ex)
             {
                 ex.printStackTrace();
             }
         }
     }
+
+    public ArrayList<TimeStep> getTimesteps()
+    {
+        return timesteps;
+    }
+
+    public void setTimesteps(ArrayList<TimeStep> timesteps)
+    {
+        this.timesteps = timesteps;
+    }
+    
+    
 }
