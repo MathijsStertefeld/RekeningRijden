@@ -59,4 +59,25 @@ public class EmployeeService implements Serializable {
     public String count() {
         return String.valueOf(employeeDAO.count());
     }
+    
+    @POST
+    @Path("login")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(
+            @QueryParam("username") String username,
+            @QueryParam("password") String password) {
+        
+        for (Employee employee : employeeDAO.findAll()) {
+            if (employee.getUsername().equals(username)) {
+                if (employee.getPassword().equals(password)) {
+                    return Response.status(Response.Status.OK).entity(employee).build();
+                } else {
+                    break;
+                }
+            }
+        }
+        
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
 }

@@ -45,11 +45,11 @@
                 <h:form>
                     <h:outputLabel  value="Username: " />
                     <br/>
-                    <h:inputText id="username" value="#{employeeBean.loginUsername}"  style="width: 250px" />
+                    <h:inputText id="username" value="#{employeeBean.username}"  style="width: 250px" />
                     <br/>
                     <h:outputLabel  value="Password: " />
                     <br/>
-                    <h:inputSecret id="password" value="#{employeeBean.loginPassword}"  style="width: 250px" />
+                    <h:inputSecret id="password" value="#{employeeBean.password}"  style="width: 250px" />
                     <br/>
                     <br/>
                     <h:commandButton id="submit" value=" Login " action="#{employeeBean.login()}" />
