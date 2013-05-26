@@ -1,4 +1,6 @@
-package domain_simulation;
+package domain;
+
+import domain.GeoPosition;
 
 public class WorldMath {
 

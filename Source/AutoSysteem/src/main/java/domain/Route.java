@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain_simulation;
+package domain;
 
 import java.util.ArrayList;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;

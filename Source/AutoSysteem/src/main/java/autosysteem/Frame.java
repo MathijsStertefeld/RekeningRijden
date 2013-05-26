@@ -5,16 +5,19 @@
 package autosysteem;
 
 import com.marbl.administration.domain.Car;
+import com.marbl.administration.domain.CarType;
+import com.marbl.administration.domain.Classification;
 import com.marbl.administration.domain.Driver;
+import com.marbl.administration.domain.PaintColor;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-import domain_simulation.CarHolder;
-import domain_simulation.Osmosis;
-import domain_simulation.Session;
-import domain_simulation.Simulator;
-import domain_simulation.Vehicle;
+import domain.CarHolder;
+import domain.Osmosis;
+import domain.Session;
+import domain.Simulator;
+import domain.Vehicle;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -69,36 +72,43 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         // Add the map to the form and fill in settings
         addMap();
 
-        // Fill the comboBox.
-        currentCarComboBox.removeAllItems();
-
-        for (CarGraphic c : map.getAllCarGraphics())
-        {
-            currentCarComboBox.addItem(c.getCarTrackerId());
-        }
+//        // Fill the comboBox.
+///        currentCarComboBox.removeAllItems();
+//
+//        for (CarGraphic c : map.getAllCarGraphics())
+//        {
+//            currentCarComboBox.addItem(c.getCarTrackerId());
+//        }
 
         //FOR TESTING PURPOSES
         if (loggedInDriver == null)
         {
+        //loggedInDriver = new Driver();
             loggedInDriver = adminService.getDriver("leslie.aerts@marbl.com", "leslie123");
             setDriver(loggedInDriver);
         }
 
         //Simulation happens here
         sim = new Simulator(jsInterval.getValue(), CAR_SIMULATION_STEP, this);
-        for (Vehicle c : sim.getGarage().getCars())
+
+        for (Vehicle c : CarHolder.getCars())
         {
             currentCarComboBox.addItem(c.getCarTrackerId());
         }
 
+        //File has been found. No errors.
         if (Osmosis.init())
         {
             validate();
+        } else
+        {
+            JOptionPane.showMessageDialog(null, "Kan bestand 'bigroads.xml' niet vinden. Wegennetwerk niet ingeladen. Vraag naar Leslie of Alexander.");
         }
 
         //Autoscrolls output pane
         DefaultCaret caret = (DefaultCaret) outputPane.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -132,7 +142,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         lbCurrentCarSpeed = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         btAddCar = new javax.swing.JMenuItem();
@@ -147,7 +156,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         mapPanel.setLayout(mapPanelLayout);
         mapPanelLayout.setHorizontalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 531, Short.MAX_VALUE)
+            .addGap(0, 516, Short.MAX_VALUE)
         );
         mapPanelLayout.setVerticalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +171,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 
         numberOfCarsLabel.setText("jLabel1");
 
-        currentCarComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         currentCarComboBox.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -177,7 +185,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 
         jsInterval.setMaximum(10000);
         jsInterval.setMinimum(100);
-        jsInterval.setValue(5000);
+        jsInterval.setValue(1000);
         jsInterval.addChangeListener(new javax.swing.event.ChangeListener()
         {
             public void stateChanged(javax.swing.event.ChangeEvent evt)
@@ -258,13 +266,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jsInterval, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(btStartSimulation, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(fitToScreenBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(logOutBtn))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(cbShowRoute))
                             .addComponent(jScrollPane1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,15 +278,24 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(infoLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(currentCarComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(currentCarComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(cbShowRoute)))
                         .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbCurrentCarSpeed)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbCurrentCarSpeed)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(fitToScreenBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(logOutBtn)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -323,16 +333,14 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbInterval, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2))
-                        .addGap(25, 25, 25)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                        .addGap(27, 27, 27)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fitToScreenBtn)
                     .addComponent(logOutBtn))
                 .addContainerGap())
         );
-
-        jLabel1.setText("Welkom.");
 
         jMenu1.setText("Simulatie");
 
@@ -356,28 +364,19 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mapPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1)))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mapPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(mapPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addContainerGap())
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -397,11 +396,12 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 
     private void btAddCarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btAddCarActionPerformed
     {//GEN-HEADEREND:event_btAddCarActionPerformed
-        //String result = JOptionPane.showInputDialog("Vul een cartracker-id in.");
 
         // Get all the cars from the current logged in driver;
-        Collection<Car> cars = adminService.getCarsFromUser(loggedInDriver);
+        //Collection<Car> cars = adminService.getCarsFromUser(loggedInDriver);
 
+        Collection<Car> cars = new ArrayList<Car>();
+        cars.add(new Car("t1", "t2", CarType.VAN, PaintColor.CREAM, 50, Classification.UNKNOWN, "lol", "lol2", 124));
         ArrayList<String> carStrings = new ArrayList<String>();
 
         // Add carStrings in format: "Volkswagen Beetle (AA-11-BB)"
@@ -450,19 +450,30 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         {
             if (!sim.isRunning())
             {
-                sim.start();
-                btStartSimulation.setText("Stop Simulatie");
+                if (CarHolder.getCars().size() > 0)
+                {
+                    sim.start();
+                    btStartSimulation.setText("Stop Simulatie");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Er zijn nog geen auto's in de simulatie geplaatst.", null, JOptionPane.WARNING_MESSAGE);
+                }
+
             } else
             {
                 sim.stop();
                 btStartSimulation.setText("Start Simulatie");
-
-                JOptionPane.showMessageDialog(null, "Simulatie gestopt. Verplaatsingen worden verstuurd naar Verplaatsingsysteem.");
-
                 Session sess = new Session(sim.getSessionDate(), sim.getTimesteps());
-                doPostXml(sess);
-                
-                //Hier restful aanroepen om weg te sturen.
+
+                if (sendSession(sess))
+                {
+                    JOptionPane.showMessageDialog(null, "Simulatie gestopt. De verplaatsingsgegevens van de auto's zijn verstuurd.");
+                } else
+                {
+                    JOptionPane.showMessageDialog(null, "Simulatie gestopt.");
+                }
+
             }
         }
     }//GEN-LAST:event_btStartSimulationActionPerformed
@@ -601,7 +612,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
     private javax.swing.JLabel infoLabel;
     private javax.swing.JLabel infoLabel2;
     private javax.swing.JLabel infoLabel3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -672,12 +682,22 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         loggedInDriver = driver;
     }
 
-    public void doPostXml(Session s)
+    public boolean sendSession(Session s)
     {
-        ClientConfig config = new DefaultClientConfig();
-        Client client = Client.create(config);
-        //De URL klopt natuurlijk nog niet
-        WebResource service = client.resource("http://localhost:8080/VerplaatsingSysteemWeb/");
-        service.path("resources").path("xml").post(s);
+        if (CarHolder.getCars().size() > 0)
+        {
+            JOptionPane.showMessageDialog(null, "Simulatie gestopt. Verplaatsingen worden verstuurd naar Verplaatsingsysteem.");
+            ClientConfig config = new DefaultClientConfig();
+            Client client = Client.create(config);
+            //De URL klopt natuurlijk nog niet
+            WebResource service = client.resource("http://localhost:8080/VerplaatsingSysteemWeb/");
+            service.path("resources").path("xml").post(s);
+            return true;
+
+        } else
+        {
+            return false;
+        }
+
     }
 }

@@ -2,12 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain_simulation;
+package domain;
 
-import domain_simulation.Vehicle;
+import domain.Vehicle;
 import java.util.ArrayList;
 import java.util.Date;
 import autosysteem.Frame;
+import domain.CarHolder;
+import domain.TimeStep;
+import domain.Vehicle;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 
 /**

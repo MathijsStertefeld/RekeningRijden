@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain_simulation;
+package domain;
 
+import domain.simulation.Navigation;
 import com.marbl.administration.domain.Car;
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -31,12 +32,12 @@ public class Vehicle extends com.marbl.administration.domain.Car
         this.carSpeed = Navigation.getCarSpeedCalc(50);
     }
 
-    @Override
-    @XmlAttribute(name="tracker_id")
-    public String getCarTrackerId()
-    {
-        return this.getCarTrackerId();
-    }
+//    @Override
+//    @XmlAttribute(name="tracker_id")
+//    public String getCarTrackerId()
+//    {
+//        return this.getCarTrackerId();
+//    }
     
     public double getCarSpeedInKM()
     {

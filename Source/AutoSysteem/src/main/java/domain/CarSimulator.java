@@ -2,9 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain_simulation;
+package domain;
 
-import domain_simulation.Vehicle;
+import domain.CarHolder;
+import domain.GeoPosition;
+import domain.Vehicle;
+import domain.Vehicle;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 import org.openstreetmap.osmosis.core.domain.v0_6.Way;
 
