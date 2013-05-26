@@ -8,6 +8,7 @@ import com.marbl.administration.domain.Car;
 import com.marbl.administration.domain.Driver;
 import com.marbl.administration.domain.utils.Hasher;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
@@ -68,23 +69,21 @@ public class AdministrationService
 
     public Driver getDriver(String email, String password)
     {
-        Driver driver;
-
         Hasher hasher = new Hasher("SHA-256", "UTF-8");
-
         password = hasher.hash(password);
 
-        try
+        ClientResponse cr = resource.path("resources").path("drivers").path("login")
+                .queryParam("email", email)
+                .queryParam("password", password)
+                .accept(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class);
+
+        switch (cr.getClientResponseStatus())
         {
-            driver = resource.path("resources").path("drivers").path("login").queryParam("email", email)
-                    .queryParam("password", password).get(Driver.class);
-        } catch (WebApplicationException ex)
-        {
-            return null;
+            case OK:
+                return cr.getEntity(Driver.class);
+            default:
+                return null;
         }
-
-        String hashedPassword = hasher.hash(password);
-
-        return driver;
     }
 }
