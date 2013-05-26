@@ -29,12 +29,12 @@ public class Rate implements Serializable {
         this.name = name;
     }
     
-    public Type getRateType()
+    public Type getType()
     {
         return type;
     }
     
-    public void setRateType(Type type) {
+    public void setType(Type type) {
         this.type = type;
     }
     

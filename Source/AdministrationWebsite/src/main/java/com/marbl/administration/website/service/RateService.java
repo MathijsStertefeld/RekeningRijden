@@ -42,11 +42,11 @@ public class RateService implements Serializable {
     
     public ArrayList<Rate> findAllHighwayRates()
     {
-        ArrayList<Rate> rates = new ArrayList();
+        ArrayList<Rate> rates = new ArrayList<>();
         for (Rate r : webResource.get(new GenericType<ArrayList<Rate>>() { }))
         {
-            if (r.getClass() == Rate.class) {
-                rates.add((Rate)r);
+            if (r.getType() == Rate.Type.HIGHWAY) {
+                rates.add(r);
             }
         }
         return rates;
@@ -54,11 +54,12 @@ public class RateService implements Serializable {
     
     public ArrayList<Rate> findAllCityRates()
     {
-        ArrayList<Rate> rates = new ArrayList();
+        ArrayList<Rate> rates = new ArrayList<>();
         for (Rate r : webResource.get(new GenericType<ArrayList<Rate>>() { }))
         {
-            if (r.getClass() == Rate.class) {
-                rates.add((Rate)r);
+            if (r.getType() == Rate.Type.CITY)
+            {
+                rates.add(r);
             }
         }
         return rates;
@@ -66,11 +67,11 @@ public class RateService implements Serializable {
     
     public ArrayList<Rate> findAllRegionRates()
     {
-        ArrayList<Rate> rates = new ArrayList();
+        ArrayList<Rate> rates = new ArrayList<>();
         for (Rate r : webResource.get(new GenericType<ArrayList<Rate>>() { }))
         {
-            if (r.getClass() == Rate.class) {
-                rates.add((Rate)r);
+            if (r.getType() == Rate.Type.REGION) {
+                rates.add(r);
             }
         }
         return rates;
@@ -78,11 +79,11 @@ public class RateService implements Serializable {
     
     public ArrayList<Rate> findAllVehicleRates()
     {
-        ArrayList<Rate> rates = new ArrayList();
+        ArrayList<Rate> rates = new ArrayList<>();
         for (Rate r : webResource.get(new GenericType<ArrayList<Rate>>() { }))
         {
-            if (r.getClass() == Rate.class) {
-                rates.add((Rate)r);
+            if (r.getType() == Rate.Type.VEHICLE) {
+                rates.add(r);
             }
         }
         return rates;
@@ -93,8 +94,8 @@ public class RateService implements Serializable {
         Rate rate = new Rate();
         for (Rate r : webResource.get(new GenericType<ArrayList<Rate>>() { }))
         {
-            if (r.getClass() == Rate.class) {
-                rate = (Rate)r;
+            if (r.getType() == Rate.Type.MASS) {
+                rate = r;
             }
         }
         return rate;
