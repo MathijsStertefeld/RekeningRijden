@@ -57,7 +57,7 @@ public class XMLParser extends DefaultHandler
 
     public Session readMovementXML()
     {
-        s = new Session();
+
 
         //Bestandsnaam MOET "verplaatsing_yyyymmdd.xml" zijn.
         String temp = xmlToRead.getName();
@@ -69,22 +69,26 @@ public class XMLParser extends DefaultHandler
         int month = Integer.parseInt(dateName.substring(4, 6));
         int day = Integer.parseInt(dateName.substring(6, 8));
 
-        GregorianCalendar gc = new GregorianCalendar(year, month - 1, day);
-        Date d = gc.getTime();
+
         try
         {
 
             parser.parse(xmlToRead, this);
-        } catch (SAXException ex)
-        {
-            Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex)
+        }
+        catch (SAXException ex)
         {
             Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
         }
+        catch (IOException ex)
+        {
+            Logger.getLogger(XMLParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        GregorianCalendar gc = new GregorianCalendar(year, month - 1, day);
+        Date d = gc.getTime();
 
+        s = new Session(d, timesteps);
         //s.setSessionDate(d);
-        s.setTimesteps(timesteps);
+
         // System.out.println(year + " " + month + " " + day);
         //s = new Session(d, timesteps);
         return s;

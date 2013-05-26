@@ -5,6 +5,12 @@
 package com.marbl.autosysteem;
 
 import java.util.ArrayList;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -12,11 +18,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Leslie Aerts
  */
+@Entity
 @XmlRootElement
 public class TimeStep
 {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     private double time;
+    @OneToMany(cascade = CascadeType.MERGE)
     private ArrayList<Movement> movements;
 //    private ArrayList<Vehicle> vehicles;
 
@@ -52,7 +63,6 @@ public class TimeStep
     {
         movements.add(m);
     }
-
 //    public ArrayList<Vehicle> getVehicles()
 //    {
 //        return vehicles;
