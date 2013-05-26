@@ -4,6 +4,7 @@
  */
 package domain;
 
+import com.marbl.autosysteem.GeoPosition;
 import java.util.ArrayList;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 

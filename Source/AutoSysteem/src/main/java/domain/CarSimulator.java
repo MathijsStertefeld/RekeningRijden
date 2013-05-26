@@ -4,10 +4,7 @@
  */
 package domain;
 
-import domain.CarHolder;
-import domain.GeoPosition;
-import domain.Vehicle;
-import domain.Vehicle;
+import com.marbl.autosysteem.GeoPosition;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 import org.openstreetmap.osmosis.core.domain.v0_6.Way;
 

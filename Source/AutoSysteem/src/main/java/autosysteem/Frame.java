@@ -5,10 +5,7 @@
 package autosysteem;
 
 import com.marbl.administration.domain.Car;
-import com.marbl.administration.domain.CarType;
-import com.marbl.administration.domain.Classification;
 import com.marbl.administration.domain.Driver;
-import com.marbl.administration.domain.PaintColor;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;

@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlAttribute;
  *
  * @author Leslie Aerts
  */
-class Edge
+public class Edge
 {
 
     private String edge_id;

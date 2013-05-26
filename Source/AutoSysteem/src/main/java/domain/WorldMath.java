@@ -1,6 +1,6 @@
 package domain;
 
-import domain.GeoPosition;
+import com.marbl.autosysteem.GeoPosition;
 
 public class WorldMath {
 

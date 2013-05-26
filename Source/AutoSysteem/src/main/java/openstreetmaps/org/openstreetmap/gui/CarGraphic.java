@@ -4,7 +4,7 @@
  */
 package openstreetmaps.org.openstreetmap.gui;
 
-import domain.GeoPosition;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;

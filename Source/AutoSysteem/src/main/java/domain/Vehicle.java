@@ -5,6 +5,8 @@
 package domain;
 
 import com.marbl.administration.domain.Car;
+import com.marbl.autosysteem.Edge;
+import com.marbl.autosysteem.GeoPosition;
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlRootElement;
 import openstreetmaps.org.openstreetmap.gui.CarGraphic;
@@ -15,9 +17,11 @@ import org.openstreetmap.osmosis.core.domain.v0_6.Way;
  *
  * @author Leslie Aerts
  */
-@XmlRootElement(name="vehicle_position")
+@XmlRootElement(name = "vehicle_position")
 public class Vehicle extends com.marbl.administration.domain.Car
 {
+
+    private boolean finished;
     private double carSpeed;
     private CarGraphic graphic;
     private Route route;
@@ -29,6 +33,7 @@ public class Vehicle extends com.marbl.administration.domain.Car
         Node n = this.route.getRoute().get(0);
         graphic = new CarGraphic(this.getCarTrackerId(), n.getLatitude(), n.getLongitude());
         this.carSpeed = Navigation.getCarSpeedCalc(50);
+        this.finished = false;
     }
 
 //    @Override
@@ -37,13 +42,11 @@ public class Vehicle extends com.marbl.administration.domain.Car
 //    {
 //        return this.getCarTrackerId();
 //    }
-    
     public double getCarSpeedInKM()
     {
         return this.carSpeed * 2 * 3600;
     }
-    
-    
+
     public double getCarSpeed()
     {
         return carSpeed;
@@ -97,6 +100,18 @@ public class Vehicle extends com.marbl.administration.domain.Car
         Edge e = Osmosis.createNewEdgeFromWay(w);
         e.setName(Osmosis.getValueOfWay(w, "name"));
 
-        return e;        
+        return e;
     }
+
+    public boolean isFinished()
+    {
+        return finished;
+    }
+
+    public void setFinished(boolean finished)
+    {
+        this.finished = finished;
+    }
+    
+    
 }

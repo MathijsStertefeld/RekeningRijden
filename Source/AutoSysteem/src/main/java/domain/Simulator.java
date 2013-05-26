@@ -4,13 +4,12 @@
  */
 package domain;
 
-import domain.Vehicle;
+import autosysteem.Frame;
+import com.marbl.autosysteem.GeoPosition;
+import com.marbl.autosysteem.Movement;
+import com.marbl.autosysteem.TimeStep;
 import java.util.ArrayList;
 import java.util.Date;
-import autosysteem.Frame;
-import domain.CarHolder;
-import domain.TimeStep;
-import domain.Vehicle;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 
 /**
@@ -107,7 +106,7 @@ public class Simulator implements Runnable
                     
                     Movement m = new Movement(v.getDriverBSN(), v.getCarTrackerId(), sessionDate, v.getCurrentEdge().getName(), distance);
                     ts.addMovement(m);
-                    ts.addVehicle(v);
+                    //ts.addVehicle(v);
                     System.out.println("distance since last is" + distance);
 
                     tempframe.setOutputText("Car " + v.getCarTrackerId() + " pos is " + v.getCarGraphic().getLat() + "," + v.getCarGraphic().getLon() + "\n");

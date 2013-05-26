@@ -4,7 +4,7 @@ package domain;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import domain.GeoPosition;
+import com.marbl.autosysteem.GeoPosition;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 
 /**

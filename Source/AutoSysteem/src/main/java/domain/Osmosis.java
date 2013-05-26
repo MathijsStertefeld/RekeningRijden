@@ -4,6 +4,7 @@
  */
 package domain;
 
+import com.marbl.autosysteem.Edge;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +21,6 @@ import org.openstreetmap.osmosis.core.task.v0_6.RunnableSource;
 import org.openstreetmap.osmosis.core.task.v0_6.Sink;
 import org.openstreetmap.osmosis.xml.common.CompressionMethod;
 import org.openstreetmap.osmosis.xml.v0_6.XmlReader;
-
 
 
 /**
