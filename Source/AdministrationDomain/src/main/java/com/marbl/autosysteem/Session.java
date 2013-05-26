@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -36,7 +37,8 @@ public class Session implements Serializable
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date sessiondate;
     
-    @OneToMany(cascade= CascadeType.MERGE,mappedBy="parentSession")
+    //@OneToMany(cascade= CascadeType.MERGE,mappedBy="parentSession")
+    @Transient
     private Collection<TimeStep> timesteps;
 
     public Session()
