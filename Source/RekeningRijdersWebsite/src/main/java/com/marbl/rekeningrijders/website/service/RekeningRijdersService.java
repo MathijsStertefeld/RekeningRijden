@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 //</editor-fold>
 
@@ -65,8 +66,12 @@ public class RekeningRijdersService implements Serializable {
         Hasher hasher = new Hasher("SHA-256", "UTF-8");
         password = hasher.hash(password);
         
-        return resource.path("drivers").path("login").queryParam("email", email)
-                .queryParam("password", password).get(Driver.class);
+        try {
+            return resource.path("drivers").path("login").queryParam("email", email)
+                    .queryParam("password", password).get(Driver.class);
+        } catch (WebApplicationException ex) {
+            return null;
+        }
     }
 
     public void register(Driver driver) {

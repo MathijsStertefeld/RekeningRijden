@@ -86,14 +86,15 @@ public class DriverService implements Serializable {
     @Path("login")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Driver login(String email, String password) {
+    public Driver login(
+            @QueryParam("email") String email,
+            @QueryParam("password") String password) {
+        
         for (Driver driver : driverDAO.findAll()) {
             if (driver.getEmail().equals(email)) {
                 if (driver.getPassword().equals(password)) {
                     return driver;
                 } else {
-                    System.out.println(password);
-                    System.out.println(driver.getPassword());
                     break;
                 }
             }

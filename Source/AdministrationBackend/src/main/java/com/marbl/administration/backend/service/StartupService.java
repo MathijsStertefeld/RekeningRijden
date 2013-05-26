@@ -56,7 +56,6 @@ public class StartupService implements Serializable {
         Driver[] drivers = driverGenerator.generate();
 
         for (int i = 0; i < drivers.length; i++) {
-            System.out.println(drivers[i].getEmail());
             driverDAO.create(drivers[i]);
         }
         //</editor-fold>
