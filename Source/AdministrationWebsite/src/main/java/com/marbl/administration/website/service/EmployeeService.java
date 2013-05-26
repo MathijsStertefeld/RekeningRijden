@@ -4,6 +4,7 @@ import com.marbl.administration.domain.Employee;
 import com.marbl.administration.domain.utils.Hasher;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
+import com.sun.jersey.api.json.JSONConfiguration;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -17,6 +18,7 @@ public class EmployeeService implements Serializable {
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
+        config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
         wr = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/employees/");
     }
