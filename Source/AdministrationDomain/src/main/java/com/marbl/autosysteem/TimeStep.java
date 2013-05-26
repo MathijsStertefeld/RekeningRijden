@@ -43,6 +43,26 @@ public class TimeStep
         movements = new ArrayList<Movement>();
     }
 
+    public long getId()
+    {
+        return id;
+    }
+
+    public void setId(long id)
+    {
+        this.id = id;
+    }
+
+    public Session getParentSession()
+    {
+        return parentSession;
+    }
+
+    public void setParentSession(Session parentSession)
+    {
+        this.parentSession = parentSession;
+    }
+    
     @XmlAttribute(name = "time")
     public double getTime()
     {
@@ -66,7 +86,7 @@ public class TimeStep
 
     public void addMovement(Movement m)
     {
-        m.setTimeStep(this);
+        m.setParentTimestep(this);
         movements.add(m);
     }
 

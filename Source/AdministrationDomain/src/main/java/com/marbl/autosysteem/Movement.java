@@ -175,8 +175,15 @@ public class Movement implements Serializable
         this.distance = distance;
     }
 
-    void setTimeStep(TimeStep aThis)
+    public TimeStep getParentTimestep()
     {
-        this.parentTimestep = aThis;
+        return parentTimestep;
     }
+
+    public void setParentTimestep(TimeStep parentTimestep)
+    {
+        this.parentTimestep = parentTimestep;
+    }
+    
+    
 }

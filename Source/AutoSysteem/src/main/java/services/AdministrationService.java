@@ -12,6 +12,7 @@ import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,7 +31,9 @@ public class AdministrationService
 
     public AdministrationService()
     {
+
         ClientConfig config = new DefaultClientConfig();
+        config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
 
         resource = client.resource("http://192.168.30.185:8080/AdministrationBackend/");

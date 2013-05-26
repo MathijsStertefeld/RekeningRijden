@@ -17,8 +17,7 @@ public class Edge
 {
 
     @Id
-    private String edge_id;
-    
+    private String edge_id;    
     private String name;
     private String type; // Values are "city", "highway" or "region".
     private String city;

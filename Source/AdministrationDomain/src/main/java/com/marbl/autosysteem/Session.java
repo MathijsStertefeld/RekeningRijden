@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Leslie Aerts
  */
-@Entity
+@Entity(name = "simsession")
 @XmlRootElement(name = "collection")
 public class Session
 {
@@ -32,12 +32,12 @@ public class Session
     private int authCode = 0;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date sessiondate;
-    @OneToMany(cascade= CascadeType.MERGE,mappedBy="session")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "session")
     private Collection<TimeStep> timesteps;
 
     public Session()
     {
-        this.timesteps = timesteps;
+        this.timesteps = new ArrayList<TimeStep>();
     }
 
     public Session(Date date, ArrayList<TimeStep> timesteps)
@@ -45,13 +45,23 @@ public class Session
         this.timesteps = timesteps;
     }
 
+    public long getId()
+    {
+        return id;
+    }
+
+    public void setId(long id)
+    {
+        this.id = id;
+    }
+
     @XmlAttribute(name = "date")
-    public Date getDate()
+    public Date getSessionDate()
     {
         return sessiondate;
     }
 
-    public void setDate(Date date)
+    public void setSessionDate(Date date)
     {
         this.sessiondate = date;
     }
