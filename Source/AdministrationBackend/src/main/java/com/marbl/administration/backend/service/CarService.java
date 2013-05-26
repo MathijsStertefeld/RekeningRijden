@@ -76,7 +76,7 @@ public class CarService implements Serializable {
         for (Car car : carDAO.findAll()) {
             if (true
                     && (carTrackerId == null || carTrackerId.equals(car.getCarTrackerId()))
-                    && (driverBSN == null || driverBSN == car.getDriverBSN())
+                    && (driverBSN == null || driverBSN.equals(car.getDriverBSN()))
                     && (licensePlate == null || licensePlate.equals(car.getLicensePlate()))) {
                 cars.add(car);
             }

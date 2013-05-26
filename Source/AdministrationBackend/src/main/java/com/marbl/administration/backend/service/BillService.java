@@ -72,12 +72,12 @@ public class BillService implements Serializable {
             @QueryParam("id") Long id) {
 
         ArrayList<Bill> bills = new ArrayList();
-
+        
         for (Bill bill : billDAO.findAll()) {
             if (true
                     && (carTrackerId == null || carTrackerId.equals(bill.getCarTrackerId()))
-                    && (driverBSN == null || driverBSN == bill.getDriverBSN())
-                    && (id == null || id == bill.getID())) {
+                    && (driverBSN == null || driverBSN.equals(bill.getDriverBSN()))
+                    && (id == null || id.equals(bill.getID()))) {
                 bills.add(bill);
             }
         }

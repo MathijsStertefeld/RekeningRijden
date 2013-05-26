@@ -77,7 +77,7 @@ public class DriverService implements Serializable {
 
         for (Driver driver : driverDAO.findAll()) {
             if (true
-                    && (bsn == null || bsn == driver.getBSN())
+                    && (bsn == null || bsn.equals(driver.getBSN()))
                     && (email == null || email.equals(driver.getEmail()))
                     && (firstName == null || firstName.equals(driver.getFirstName()))
                     && (lastName == null || lastName.equals(driver.getLastName()))
