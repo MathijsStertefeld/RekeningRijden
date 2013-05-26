@@ -40,7 +40,7 @@ public class RestfulMovementService
             if (true 
                     && (driverBsn == null || driverBsn == m.getDriverBsn() )
                     && (carTrackerId == null || carTrackerId.equals(m.getCarTrackerId()))
-                    && (date == null || date.equals(m.getDate())))
+                    && (date == null || date.equals(m.getMovementDate())))
             {
                 movements.add(m);
             }

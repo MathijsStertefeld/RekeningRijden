@@ -29,13 +29,15 @@ public class TimeStep
     private double time;
     @OneToMany(cascade = CascadeType.MERGE)
     private ArrayList<Movement> movements;
-//    private ArrayList<Vehicle> vehicles;
+
+    public TimeStep()
+    {
+    }
 
     public TimeStep(double time)
     {
         this.time = time;
         movements = new ArrayList<Movement>();
-//        vehicles = new ArrayList<Vehicle>();
     }
 
     @XmlAttribute(name = "time")
@@ -63,18 +65,4 @@ public class TimeStep
     {
         movements.add(m);
     }
-//    public ArrayList<Vehicle> getVehicles()
-//    {
-//        return vehicles;
-//    }
-//
-//    public void setVehicles(ArrayList<Vehicle> vehicles)
-//    {
-//        this.vehicles = vehicles;
-//    }
-//
-//    public void addVehicle(Vehicle v)
-//    {
-//        this.vehicles.add(v);
-//    }
 }

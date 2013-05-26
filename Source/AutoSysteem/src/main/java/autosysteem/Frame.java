@@ -681,15 +681,21 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 
     public boolean sendSession(Session s)
     {
+
         if (CarHolder.getCars().size() > 0)
         {
+            this.outputPane.removeAll();
+
             JOptionPane.showMessageDialog(null, "Simulatie gestopt. Verplaatsingen worden verstuurd naar Verplaatsingsysteem.");
             ClientConfig config = new DefaultClientConfig();
             Client client = Client.create(config);
 
+            this.setOutputText("Verbinding maken met verplaatsingsysteem...\n\n");
             //De URL klopt natuurlijk nog niet
             WebResource service = client.resource("http://localhost:8080/VerplaatsingSysteemWeb/");
-            service.path("resources").path("xml").post(s);
+            this.setOutputText("Versturen gegevens...\n\n");
+            service.path("webresources").path("session").post(s);
+            this.setOutputText("Klaar.\n\n");
             return true;
 
         } else

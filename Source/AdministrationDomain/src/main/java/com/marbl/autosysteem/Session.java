@@ -7,10 +7,12 @@ package com.marbl.autosysteem;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -28,13 +30,14 @@ public class Session
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private int authCode = 0;
-    
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date date;
+    private Date sessiondate;
+    @OneToMany(cascade= CascadeType.ALL)
     private Collection<TimeStep> timesteps;
 
     public Session()
     {
+        this.timesteps = timesteps;
     }
 
     public Session(Date date, ArrayList<TimeStep> timesteps)
@@ -42,20 +45,15 @@ public class Session
         this.timesteps = timesteps;
     }
 
-    public Session()
-    {
-        this.timesteps = timesteps;
-    }
-
     @XmlAttribute(name = "date")
     public Date getDate()
     {
-        return date;
+        return sessiondate;
     }
 
     public void setDate(Date date)
     {
-        this.date = date;
+        this.sessiondate = date;
     }
 
     public Collection<TimeStep> getTimesteps()

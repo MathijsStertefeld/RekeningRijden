@@ -4,6 +4,7 @@
  */
 package com.marbl.verplaatsingsysteem.service;
 
+import com.marbl.autosysteem.Movement;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -13,11 +14,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.marbl.verplaatsingsysteem.XMLParser;
-import com.marbl.autosysteem.Edge;
-//import verplaatsingensysteem.domain.Lane;
 import com.marbl.autosysteem.Session;
 import com.marbl.autosysteem.TimeStep;
-import com.marbl.autosysteem.Movement;
 
 /**
  *
@@ -62,37 +60,21 @@ public class RestfulReceiverService
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
-    @Path("/transfer")
     public void sendXML(Session s)
     {
         System.out.println(s);
         System.out.println("Accepting file...");
-        System.out.println("Writing to database...");
 
-//        vpService.createSession(s);
-//        for (TimeStep step : s.getTimesteps())
-//        {
-//            System.out.println(step);
-//            vpService.createTimeStep(step);
-//            for (Edge e : step.getEdges())
-//            {
-//                System.out.println(e);
-//                vpService.createEdge(e);
-//                for (Lane l : e.getLanes())
-//                {
-//                    System.out.println(l);
-//                    vpService.createLane(l);
-//                    System.out.println("Size is" + l.getPositions().size());
-//                    for (VehiclePosition p : l.getPositions())
-//                    {
-//                        //COLLECTION IS NULL. WAAROM!? IS ENIGE FOUT NOG.
-//                        System.out.println(p);
-//                        vpService.createVehiclePosition(p);
-//                    }
-//                }
-//            }
-//        }
-
+        
+        vpService.createSession(s);
+        for(TimeStep ts : s.getTimesteps())
+        {
+            vpService.createTimeStep(ts);
+            for(Movement m : ts.getMovements())
+            {
+                vpService.createMovement(m);
+            }
+        }
         System.out.println("Done.");
     }
 }

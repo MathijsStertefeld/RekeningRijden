@@ -7,6 +7,9 @@ package com.marbl.autosysteem;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -14,6 +17,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Movement")
+@XmlRootElement(name = "movement")
 public class Movement implements Serializable
 {
 
@@ -25,17 +29,25 @@ public class Movement implements Serializable
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date movementDate;
     private String type; // Values are "city", "highway" or "region".
-    private String city;
-    private String highway;
-    private String region;
+    private String cityName;
+    private String highwayName;
+    private String regionName;
     private double distance;
 
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
+    
+    @XmlTransient
     public long getId()
     {
         return id;
     }
 
+    public void setId(long id)
+    {
+        this.id = id;
+    }
+
+    @XmlAttribute(name = "driver_bsn")
     public int getDriverBsn()
     {
         return driverBsn;
@@ -46,6 +58,7 @@ public class Movement implements Serializable
         this.driverBsn = driverBsn;
     }
 
+    @XmlAttribute(name = "car_tracker_id")
     public String getCarTrackerId()
     {
         return carTrackerId;
@@ -56,16 +69,18 @@ public class Movement implements Serializable
         this.carTrackerId = carTrackerId;
     }
 
-    public Date getDate()
+    @XmlTransient
+    public Date getMovementDate()
     {
         return movementDate;
     }
 
-    public void setDate(Date movementDate)
+    public void setMovementDate(Date movementDate)
     {
         this.movementDate = movementDate;
     }
 
+    @XmlAttribute(name = "road_type")
     public String getType()
     {
         return type;
@@ -76,34 +91,37 @@ public class Movement implements Serializable
         this.type = type;
     }
 
-    public String getCity()
+    @XmlAttribute(name = "city")
+    public String getCityName()
     {
-        return city;
+        return cityName;
     }
 
-    public void setCity(String city)
+    public void setCityName(String cityName)
     {
-        this.city = city;
+        this.cityName = cityName;
     }
 
-    public String getHighway()
+    @XmlAttribute(name = "highway")
+    public String getHighwayName()
     {
-        return highway;
+        return highwayName;
     }
 
-    public void setHighway(String highway)
+    public void setHighwayName(String highwayName)
     {
-        this.highway = highway;
+        this.highwayName = highwayName;
     }
 
-    public String getRegion()
+    @XmlAttribute(name = "region")
+    public String getRegionName()
     {
-        return region;
+        return regionName;
     }
 
-    public void setRegion(String region)
+    public void setRegionName(String regionName)
     {
-        this.region = region;
+        this.regionName = regionName;
     }
 
     public double getDistance()
@@ -115,17 +133,17 @@ public class Movement implements Serializable
     {
         this.distance = distance;
     }
-    //</editor-fold>
 
+    //</editor-fold>
     public Movement(int driverBsn, String carTrackerId, Date movementDate, String type, String city, String highway, String region, double distance)
     {
         this.driverBsn = driverBsn;
         this.carTrackerId = carTrackerId;
         this.movementDate = movementDate;
         this.type = type;
-        this.city = city;
-        this.highway = highway;
-        this.region = region;
+        this.cityName = city;
+        this.highwayName = highway;
+        this.regionName = region;
         this.distance = distance;
     }
 
