@@ -94,23 +94,20 @@ public class Simulator implements Runnable
                 tempframe.setOutputText("Timestep " + ts.getTime() + "\n");
                 for (Vehicle v : CarHolder.getCars())
                 {
-                    double distance = 5;
                     //Add movement to ts
-//                    if (timesteps.size() > 0)
-//                    {
-//                        int lastTimeStepIndex = timesteps.size()-1;
-//                        int lastVehicleIndex = timesteps.get(lastTimeStepIndex).getVehicles().indexOf(v);
-//                        Vehicle previousVehicle = timesteps.get(lastTimeStepIndex).getVehicles().get(lastVehicleIndex);
-//                        distance = this.getDistanceInMeters(previousVehicle.getPosition(), v.getPosition());
-//                    }   
-                    
+                    System.out.println("Timestep: " + timestepInterval);
+                    double x = 1000.0000 / timestepInterval;
+                    System.out.println(x);
+                    double distance = (v.getCarSpeedInKM() / 3600) * 1000 / x;
+
                     Movement m = new Movement(v.getDriverBSN(), v.getCarTrackerId(), sessionDate, v.getCurrentEdge().getName(), distance);
                     ts.addMovement(m);
-                    //ts.addVehicle(v);
-                    System.out.println("distance since last is" + distance);
+
+                    System.out.println("distance since last is in meters " + distance);
 
                     tempframe.setOutputText("Car " + v.getCarTrackerId() + " pos is " + v.getCarGraphic().getLat() + "," + v.getCarGraphic().getLon() + "\n");
                 }
+
                 tempframe.setOutputText("\n\n");
 
                 tempframe.getMap().repaint();
