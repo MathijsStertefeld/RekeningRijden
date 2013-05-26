@@ -142,7 +142,10 @@ public class Simulator implements Runnable
     public Session generateSession()
     {
         Session s = new Session(sessionDate, timesteps);
-
+        for(TimeStep ts : timesteps)
+        {
+            ts.setSession(s);
+        }
         return s;
     }
 }

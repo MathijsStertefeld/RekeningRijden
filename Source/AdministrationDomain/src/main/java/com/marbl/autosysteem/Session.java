@@ -32,7 +32,7 @@ public class Session
     private int authCode = 0;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date sessiondate;
-    @OneToMany(cascade= CascadeType.ALL)
+    @OneToMany(cascade= CascadeType.MERGE,mappedBy="session")
     private Collection<TimeStep> timesteps;
 
     public Session()

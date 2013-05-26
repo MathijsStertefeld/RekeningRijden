@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,8 +28,10 @@ public class TimeStep
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private double time;
-    @OneToMany(cascade = CascadeType.MERGE,mappedBy="timestep")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "parentTimestep")
     private ArrayList<Movement> movements;
+    @ManyToOne
+    private Session parentSession;
 
     public TimeStep()
     {
@@ -63,6 +66,12 @@ public class TimeStep
 
     public void addMovement(Movement m)
     {
+        m.setTimeStep(this);
         movements.add(m);
+    }
+
+    public void setSession(Session s)
+    {
+        this.parentSession = s;
     }
 }

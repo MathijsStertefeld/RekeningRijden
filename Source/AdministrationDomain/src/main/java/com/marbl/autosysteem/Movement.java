@@ -33,9 +33,23 @@ public class Movement implements Serializable
     private String highwayName;
     private String regionName;
     private double distance;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private TimeStep parentTimestep;
 
     //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
-    
+    public Movement(long id, int driverBsn, String carTrackerId, Date movementDate, String type, String cityName, String highwayName, String regionName, double distance, TimeStep parent)
+    {
+        this.id = id;
+        this.driverBsn = driverBsn;
+        this.carTrackerId = carTrackerId;
+        this.movementDate = movementDate;
+        this.type = type;
+        this.cityName = cityName;
+        this.highwayName = highwayName;
+        this.regionName = regionName;
+        this.distance = distance;
+    }
+
     @XmlTransient
     public long getId()
     {
@@ -135,7 +149,7 @@ public class Movement implements Serializable
     }
 
     //</editor-fold>
-    public Movement(int driverBsn, String carTrackerId, Date movementDate, String type, String city, String highway, String region, double distance)
+    public Movement(TimeStep parent, int driverBsn, String carTrackerId, Date movementDate, String type, String city, String highway, String region, double distance)
     {
         this.driverBsn = driverBsn;
         this.carTrackerId = carTrackerId;
@@ -145,6 +159,7 @@ public class Movement implements Serializable
         this.highwayName = highway;
         this.regionName = region;
         this.distance = distance;
+    this.parentTimestep = parent;
     }
 
     public Movement()
@@ -158,5 +173,10 @@ public class Movement implements Serializable
         this.movementDate = movementDate;
         this.type = type;
         this.distance = distance;
+    }
+
+    void setTimeStep(TimeStep aThis)
+    {
+        this.parentTimestep = aThis;
     }
 }
