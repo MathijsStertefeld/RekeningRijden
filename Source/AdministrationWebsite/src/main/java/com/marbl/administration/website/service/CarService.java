@@ -13,25 +13,58 @@ import javax.ws.rs.core.MediaType;
 @Stateless
 public class CarService implements Serializable {
 
-    private WebResource resource;
+    private WebResource wr;
 
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
-        resource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/cars/");
+        wr = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/cars/");
     }
 
     public Car edit(Car car) {
-        return resource.accept(MediaType.APPLICATION_JSON).put(Car.class, car);
+        ClientResponse cr = wr
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.APPLICATION_JSON)
+                .put(ClientResponse.class, car);
+        
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(Car.class);
+            default:
+                return null;
+        }
     }
 
     public Car find(String carTrackerId) {
-        return resource.path(carTrackerId).accept(MediaType.APPLICATION_JSON).get(Car.class);
+        ClientResponse cr = wr.path(carTrackerId)
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.TEXT_PLAIN)
+                .get(ClientResponse.class);
+        
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(Car.class);
+            default:
+                return null;
+        }
     }
 
     public ArrayList<Car> findAll() {
-        return resource.accept(MediaType.APPLICATION_JSON).get(new GenericType<ArrayList<Car>>() { });
+        ClientResponse cr = wr
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.TEXT_PLAIN)
+                .get(ClientResponse.class);
+        
+        GenericType<ArrayList<Car>> gt = new GenericType<ArrayList<Car>>() {
+        };
+        
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(gt);
+            default:
+                return null;
+        }
     }
 }

@@ -47,6 +47,7 @@ public class BillService implements Serializable {
     public Bill find(Long id) {
         ClientResponse cr = wr.path(id.toString())
                 .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.TEXT_PLAIN)
                 .get(ClientResponse.class);
         
         switch (cr.getClientResponseStatus()) {
@@ -60,6 +61,7 @@ public class BillService implements Serializable {
     public ArrayList<Bill> findAll() {
         ClientResponse cr = wr
                 .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.TEXT_PLAIN)
                 .get(ClientResponse.class);
         
         GenericType<ArrayList<Bill>> gt = new GenericType<ArrayList<Bill>>() {

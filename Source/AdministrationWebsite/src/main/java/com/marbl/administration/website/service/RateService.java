@@ -8,106 +8,113 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.ws.rs.core.MediaType;
 
 @Stateless
 public class RateService implements Serializable {
 
-    private WebResource resource;
+    private WebResource wr;
 
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
-        resource = client.resource("http://localhost:8080/AdministrationBackend/resources/rates/");
-    }
-
-    public void create(Rate rate) {
-        resource.post(Rate.class, rate);
+        wr = client.resource("http://localhost:8080/AdministrationBackend/resources/rates/");
     }
 
     public Rate edit(Rate rate) {
-        return resource.put(Rate.class, rate);
-    }
-
-    public void remove(String name) {
-        resource.path(name).delete();
+        return wr.put(Rate.class, rate);
     }
 
     public Rate find(String name) {
-        return resource.path(name).get(Rate.class);
+        ClientResponse cr = wr.path(name)
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.TEXT_PLAIN)
+                .get(ClientResponse.class);
+
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(Rate.class);
+            default:
+                return null;
+        }
     }
 
     public ArrayList<Rate> findAll() {
-        return resource.get(new GenericType<ArrayList<Rate>>() { });
+        ClientResponse cr = wr
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.TEXT_PLAIN)
+                .get(ClientResponse.class);
+
+        GenericType<ArrayList<Rate>> gt = new GenericType<ArrayList<Rate>>() {
+        };
+
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(gt);
+            default:
+                return null;
+        }
     }
-    
-    public ArrayList<Rate> findAllHighwayRates()
-    {
-        ArrayList<Rate> rates = new ArrayList<>();
-        for (Rate r : resource.get(new GenericType<ArrayList<Rate>>() { }))
-        {
+
+    public ArrayList<Rate> findAllHighwayRates() {
+        ArrayList<Rate> rates = new ArrayList();
+        
+        for (Rate r : findAll()) {
             if (r.getType() == Rate.Type.HIGHWAY) {
                 rates.add(r);
             }
         }
+        
         return rates;
     }
-    
-    public ArrayList<Rate> findAllCityRates()
-    {
-        ArrayList<Rate> rates = new ArrayList<>();
-        for (Rate r : resource.get(new GenericType<ArrayList<Rate>>() { }))
-        {
-            if (r.getType() == Rate.Type.CITY)
-            {
+
+    public ArrayList<Rate> findAllCityRates() {
+        ArrayList<Rate> rates = new ArrayList();
+        
+        for (Rate r : findAll()) {
+            if (r.getType() == Rate.Type.CITY) {
                 rates.add(r);
             }
         }
+        
         return rates;
     }
-    
-    public ArrayList<Rate> findAllRegionRates()
-    {
-        ArrayList<Rate> rates = new ArrayList<>();
-        for (Rate r : resource.get(new GenericType<ArrayList<Rate>>() { }))
-        {
+
+    public ArrayList<Rate> findAllRegionRates() {
+        ArrayList<Rate> rates = new ArrayList();
+        
+        for (Rate r : findAll()) {
             if (r.getType() == Rate.Type.REGION) {
                 rates.add(r);
             }
         }
+        
         return rates;
     }
-    
-    public ArrayList<Rate> findAllVehicleRates()
-    {
-        ArrayList<Rate> rates = new ArrayList<>();
-        for (Rate r : resource.get(new GenericType<ArrayList<Rate>>() { }))
-        {
+
+    public ArrayList<Rate> findAllVehicleRates() {
+        ArrayList<Rate> rates = new ArrayList();
+        
+        for (Rate r : findAll()) {
             if (r.getType() == Rate.Type.VEHICLE) {
                 rates.add(r);
             }
         }
+        
         return rates;
     }
-    
-    public Rate findMassRate()
-    {
+
+    public Rate findMassRate() {
         Rate rate = new Rate();
-        for (Rate r : resource.get(new GenericType<ArrayList<Rate>>() { }))
-        {
+        
+        for (Rate r : findAll()) {
             if (r.getType() == Rate.Type.MASS) {
                 rate = r;
             }
         }
+        
         return rate;
-    }
-
-    public ArrayList<Rate> findRange(Integer from, Integer to) {
-        return resource.path(from.toString()).path(to.toString()).get(new GenericType<ArrayList<Rate>>() { });
-    }
-
-    public int count() {
-        return Integer.parseInt(resource.path("count").get(String.class));
     }
 }

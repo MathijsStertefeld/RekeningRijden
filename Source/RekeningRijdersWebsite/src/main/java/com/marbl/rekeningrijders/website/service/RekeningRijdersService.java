@@ -27,47 +27,136 @@ public class RekeningRijdersService implements Serializable {
         wr = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/");
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Bill Methods">
+    public Bill editBill(Bill bill) {
+        ClientResponse cr = wr.path("bills")
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.APPLICATION_JSON)
+                .put(ClientResponse.class, bill);
+
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(Bill.class);
+            default:
+                return null;
+        }
+    }
+
+    public Bill findBill(Long id) {
+        ClientResponse cr = wr.path("bills").path(id.toString())
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.TEXT_PLAIN)
+                .get(ClientResponse.class);
+        
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(Bill.class);
+            default:
+                return null;
+        }
+    }
+
+    public ArrayList<Bill> findBillsByBSN(Integer driverBSN) {
+        ClientResponse cr = wr.path("bills")
+                .queryParam("driverBSN", driverBSN.toString())
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.TEXT_PLAIN)
+                .get(ClientResponse.class);
+        
+        GenericType<ArrayList<Bill>> gt = new GenericType<ArrayList<Bill>>() {
+        };
+        
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(gt);
+            default:
+                return null;
+        }
+    }
+
     public void payBill(Long billId) {
         Bill bill = findBill(billId);
         bill.setPaymentDate(new Date());
         bill.setPaymentStatus(PaymentStatus.PAID);
         wr.path("bills").put(Bill.class, bill);
     }
+    //</editor-fold>
 
-    public void editDriver(Driver driver) {
-        wr.path("drivers")
-                .accept(MediaType.APPLICATION_JSON).put(Driver.class, driver);
+    //<editor-fold defaultstate="collapsed" desc="Car Methods">
+    public Car editCar(Car car) {
+        ClientResponse cr = wr.path("cars")
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.APPLICATION_JSON)
+                .put(ClientResponse.class, car);
+        
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(Car.class);
+            default:
+                return null;
+        }
+    }
+
+    public Car findCar(String carTrackerId) {
+        ClientResponse cr = wr.path("cars").path(carTrackerId)
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.TEXT_PLAIN)
+                .get(ClientResponse.class);
+        
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(Car.class);
+            default:
+                return null;
+        }
+    }
+
+    public ArrayList<Car> findCarsByBSN(Integer driverBSN) {
+        ClientResponse cr = wr.path("cars")
+                .queryParam("driverBSN", driverBSN.toString())
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.TEXT_PLAIN)
+                .get(ClientResponse.class);
+        
+        GenericType<ArrayList<Car>> gt = new GenericType<ArrayList<Car>>() {
+        };
+        
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(gt);
+            default:
+                return null;
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Driver Methods">
+    public void createDriver(Driver driver) {
+        ClientResponse cr = wr.path("drivers")
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, driver);
+    }
+
+    public Driver editDriver(Driver driver) {
+        ClientResponse cr = wr.path("drivers")
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.APPLICATION_JSON)
+                .put(ClientResponse.class, driver);
+
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(Driver.class);
+            default:
+                return null;
+        }
     }
 
     public Driver findDriver(Integer bsn) {
-        Driver driver = wr.path("drivers")
-                .path(Integer.toString(bsn)).accept(MediaType.APPLICATION_JSON)
-                .get(Driver.class);
-        return driver;
-    }
-
-    public Driver findDriverByEmail(String email) {
-        ArrayList<Driver> drivers = new ArrayList(wr
-                .path("drivers").queryParam("email", email)
+        ClientResponse cr = wr.path("drivers").path(bsn.toString())
                 .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<ArrayList<Driver>>() { }));
-
-        if (drivers.size() > 0) {
-            return drivers.get(0);
-        } else {
-            return null;
-        }
-    }
-    
-    public Driver login(String email, String password) {
-        Hasher hasher = new Hasher("SHA-256", "UTF-8");
-        password = hasher.hash(password);
-        
-        ClientResponse cr = wr.path("drivers").path("login")
-                .queryParam("email", email)
-                .queryParam("password", password)
-                .accept(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class);
+                .type(MediaType.TEXT_PLAIN)
+                .get(ClientResponse.class);
         
         switch (cr.getClientResponseStatus()) {
             case OK:
@@ -77,46 +166,23 @@ public class RekeningRijdersService implements Serializable {
         }
     }
 
-    public void register(Driver driver) {
-        wr.path("drivers").post(Driver.class, driver);
-    }
+    public Driver login(String email, String password) {
+        Hasher hasher = new Hasher("SHA-256", "UTF-8");
+        password = hasher.hash(password);
 
-    public ArrayList<Bill> findBillsByBSN(Integer bsn) {
-        return wr.path("bills")
-                .queryParam("driverBSN", bsn.toString())
+        ClientResponse cr = wr.path("drivers").path("login")
+                .queryParam("email", email)
+                .queryParam("password", password)
                 .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<ArrayList<Bill>>() {
-        });
-    }
+                .type(MediaType.TEXT_PLAIN)
+                .post(ClientResponse.class);
 
-    public Bill findBill(Long id) {
-        Bill bill = wr.path("bills")
-                .path(Long.toString(id)).accept(MediaType.APPLICATION_JSON)
-                .get(Bill.class);
-
-        return bill;
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(Driver.class);
+            default:
+                return null;
+        }
     }
-
-    public void editBill(Bill bill) {
-        wr.path("bills")
-                .accept(MediaType.APPLICATION_JSON).put(bill);
-    }
-
-    public ArrayList<Car> findCarsByBSN(Integer bsn) {
-        return wr.path("cars")
-                .queryParam("driverBSN", bsn.toString())
-                .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<ArrayList<Car>>() {
-        });
-    }
-
-    public Car findCar(String carTrackerId) {
-        Car car = wr.path("cars").path(carTrackerId)
-                .accept(MediaType.APPLICATION_JSON).get(Car.class);
-        return car;
-    }
-
-    public void editCar(Car car) {
-        wr.path("cars").put(Car.class, car);
-    }
+    //</editor-fold>
 }

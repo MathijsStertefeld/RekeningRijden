@@ -124,7 +124,7 @@ public class RegisterBean implements Serializable {
                 email, hasher.hash(password), residence, address,
                 zipCode, dateOfBirth, false);
         newDriver.getGroups().add(DriverGroup.DRIVER);
-        service.register(newDriver);
+        service.createDriver(newDriver);
         sendMail();
     }
 

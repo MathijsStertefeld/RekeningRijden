@@ -61,7 +61,7 @@ public class PaymentWithPayPalServlet extends HttpServlet {
     }
 
     // ##Create
-    // Sample showing to create a Payment using PayPal
+    // Sample showing to createDriver a Payment using PayPal
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -211,7 +211,7 @@ public class PaymentWithPayPalServlet extends HttpServlet {
             payer.setPaymentMethod("paypal");
 
             // ###Payment
-            // A Payment Resource; create one using
+            // A Payment Resource; createDriver one using
             // the above types and intent as 'sale'
             Payment payment = new Payment();
             payment.setIntent("sale");

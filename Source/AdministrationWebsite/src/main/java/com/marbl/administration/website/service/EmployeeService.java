@@ -24,8 +24,17 @@ public class EmployeeService implements Serializable {
     }
 
     public Employee find(String username) {
-        return wr.path(username)
-                .get(Employee.class);
+        ClientResponse cr = wr.path(username)
+                .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.TEXT_PLAIN)
+                .get(ClientResponse.class);
+        
+        switch (cr.getClientResponseStatus()) {
+            case OK:
+                return cr.getEntity(Employee.class);
+            default:
+                return null;
+        }
     }
     
     public Employee login(String username, String password) {
@@ -36,6 +45,7 @@ public class EmployeeService implements Serializable {
                 .queryParam("username", username)
                 .queryParam("password", password)
                 .accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.TEXT_PLAIN)
                 .post(ClientResponse.class);
         
         switch (cr.getClientResponseStatus()) {
