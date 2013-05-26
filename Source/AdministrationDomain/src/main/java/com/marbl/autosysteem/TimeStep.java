@@ -31,6 +31,10 @@ public class TimeStep
     private ArrayList<Movement> movements;
 //    private ArrayList<Vehicle> vehicles;
 
+    public TimeStep()
+    {
+    }
+
     public TimeStep(double time)
     {
         this.time = time;
