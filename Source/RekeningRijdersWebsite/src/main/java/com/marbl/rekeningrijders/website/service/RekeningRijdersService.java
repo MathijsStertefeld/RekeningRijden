@@ -5,6 +5,7 @@ import com.marbl.administration.domain.*;
 import com.marbl.administration.domain.utils.Hasher;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.GenericType;
+import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
@@ -13,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 //</editor-fold>
 
@@ -68,7 +68,7 @@ public class RekeningRijdersService implements Serializable {
         try {
             return resource.path("drivers").path("login").queryParam("email", email)
                     .queryParam("password", password).get(Driver.class);
-        } catch (WebApplicationException ex) {
+        } catch (UniformInterfaceException ex) {
             return null;
         }
     }

@@ -2,10 +2,13 @@ package com.marbl.administration.website.bean;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.Bill;
+import com.marbl.administration.domain.Car;
 import com.marbl.administration.website.service.BillService;
+import com.marbl.administration.website.service.CarService;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -23,8 +26,8 @@ public class BillBean implements Serializable {
     private BillService service;
     private ArrayList<Bill> all;
     private Bill current;
-    private int month;
-    private int year;
+    @Inject
+    private CarService carService;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -34,22 +37,6 @@ public class BillBean implements Serializable {
 
     public Bill getCurrent() {
         return current;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
     //</editor-fold>
 
@@ -71,6 +58,33 @@ public class BillBean implements Serializable {
         if (current == null) {
             showOverview();
         }
+    }
+    
+    public void generate() {
+        ArrayList<Bill> bills = new ArrayList();
+        
+        // TODO: iterate through movement history
+        for (Car car : carService.findAll()) {
+            
+            // TODO: use driver bsn and car tracker id from history
+            Integer driverBSN = car.getDriverBSN();
+            String carTrackerId = car.getCarTrackerId();
+            
+            // TODO: use rates to calculate payment amount
+            Double paymentAmount = 100d;
+            
+            // TODO: generate bills for all unpaid months
+            Integer paymentMonth = Calendar.getInstance().get(Calendar.MONTH) - 1;
+            Integer paymentYear = Calendar.getInstance().get(Calendar.YEAR);
+            
+            bills.add(new Bill(driverBSN, carTrackerId, paymentAmount, paymentMonth, paymentYear));
+        }
+        
+        for (Bill bill : bills) {
+            service.create(bill);
+        }
+        
+        findAll();
     }
 
     public void saveChanges() {

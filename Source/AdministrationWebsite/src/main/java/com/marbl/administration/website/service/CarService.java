@@ -12,24 +12,24 @@ import javax.ws.rs.core.MediaType;
 @Stateless
 public class CarService implements Serializable {
 
-    private WebResource webResource;
+    private WebResource resource;
 
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        webResource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/cars/");
+        resource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/cars/");
     }
 
     public Car edit(Car car) {
-        return webResource.accept(MediaType.APPLICATION_JSON).put(Car.class, car);
+        return resource.accept(MediaType.APPLICATION_JSON).put(Car.class, car);
     }
 
     public Car find(String carTrackerId) {
-        return webResource.path(carTrackerId).accept(MediaType.APPLICATION_JSON).get(Car.class);
+        return resource.path(carTrackerId).accept(MediaType.APPLICATION_JSON).get(Car.class);
     }
 
     public ArrayList<Car> findAll() {
-        return webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<ArrayList<Car>>() { });
+        return resource.accept(MediaType.APPLICATION_JSON).get(new GenericType<ArrayList<Car>>() { });
     }
 }

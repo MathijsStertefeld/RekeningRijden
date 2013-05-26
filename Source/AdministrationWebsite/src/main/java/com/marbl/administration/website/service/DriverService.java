@@ -11,24 +11,24 @@ import javax.ejb.Stateless;
 @Stateless
 public class DriverService implements Serializable {
 
-    private WebResource webResource;
+    private WebResource resource;
 
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        webResource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/drivers/");
+        resource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/drivers/");
     }
 
     public Driver edit(Driver driver) {
-        return webResource.put(Driver.class, driver);
+        return resource.put(Driver.class, driver);
     }
 
     public Driver find(Integer bsn) {
-        return webResource.path(bsn.toString()).get(Driver.class);
+        return resource.path(bsn.toString()).get(Driver.class);
     }
 
     public ArrayList<Driver> findAll() {
-        return webResource.get(new GenericType<ArrayList<Driver>>() { });
+        return resource.get(new GenericType<ArrayList<Driver>>() { });
     }
 }

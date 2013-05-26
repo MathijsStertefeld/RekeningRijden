@@ -134,7 +134,7 @@ public class PaymentWithPayPalServlet extends HttpServlet {
                 //set paymentstatus on bill
                 
                 Bill bill = service.findBill(Long.parseLong(responseBillID));
-                System.out.println("BILL TEST: " + bill.getId() + " Amount: " + bill.getPaymentAmount());
+                System.out.println("BILL TEST: " + bill.getID() + " Amount: " + bill.getPaymentAmount());
                 service.payBill(Long.parseLong(responseBillID));
             }
             else
@@ -195,7 +195,7 @@ public class PaymentWithPayPalServlet extends HttpServlet {
             Transaction transaction = new Transaction();
             transaction.setAmount(amount);
             transaction
-                    .setDescription("BillID=" + bill.getId());
+                    .setDescription("BillID=" + bill.getID());
 
             // The Payment creation API requires a list of
             // Transaction; add the created `Transaction`
@@ -223,7 +223,7 @@ public class PaymentWithPayPalServlet extends HttpServlet {
             String guid = UUID.randomUUID().toString().replaceAll("-", "");
             redirectUrls.setCancelUrl(req.getScheme() + "://"
                     + req.getServerName() + ":" + req.getServerPort()
-                    + req.getContextPath() + "/paymentwithpaypal?cancelPaypalBillID=" + bill.getId() + "?guid=" + guid);
+                    + req.getContextPath() + "/paymentwithpaypal?cancelPaypalBillID=" + bill.getID() + "?guid=" + guid);
             redirectUrls.setReturnUrl(req.getScheme() + "://"
                     + req.getServerName() + ":" + req.getServerPort()
                     + req.getContextPath() + "/paymentwithpaypal?guid=" + guid);

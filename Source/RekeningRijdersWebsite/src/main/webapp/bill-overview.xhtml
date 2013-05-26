@@ -32,11 +32,11 @@
             <ui:define name="SiteContent">
                 <h:form id="billForm">
 
-                    <p:dataTable sortBy="#{bill.id}" id="dataTable" var="bill" value="#{billBean.all}" tableStyle="table-layout:fixed;">
-                        <p:column sortBy="#{bill.id}" style="white-space:normal" headerText="#{msg.BO_BillID}">
+                    <p:dataTable sortBy="#{bill.ID}" id="dataTable" var="bill" value="#{billBean.all}" tableStyle="table-layout:fixed;">
+                        <p:column sortBy="#{bill.ID}" style="white-space:normal" headerText="#{msg.BO_BillID}">
                             <h:outputLink value="bill-details.xhtml">
-                                <f:param name="id" value="#{bill.id}" />
-                                <h:outputText value="#{bill.id}" />
+                                <f:param name="id" value="#{bill.ID}" />
+                                <h:outputText value="#{bill.ID}" />
                             </h:outputLink>
                         </p:column>
 

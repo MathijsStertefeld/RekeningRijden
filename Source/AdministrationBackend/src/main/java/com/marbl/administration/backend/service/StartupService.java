@@ -37,19 +37,19 @@ public class StartupService implements Serializable {
         Hasher hasher = new Hasher("SHA-256", "UTF-8");
 
         //<editor-fold defaultstate="collapsed" desc="Employees">
-        Employee[] employees = new Employee[3];
+        ArrayList<Employee> employees = new ArrayList();
 
-        employees[0] = new Employee("admin", hasher.hash("admin123"));
-        employees[1] = new Employee("employee", hasher.hash("employee123"));
-        employees[2] = new Employee("rate123", hasher.hash("rate123"));
+        employees.add(new Employee("admin", hasher.hash("admin123")));
+        employees.add(new Employee("employee", hasher.hash("employee123")));
+        employees.add(new Employee("rate123", hasher.hash("rate123")));
         
-        employees[0].getGroups().add(EmployeeGroup.ADMIN);
-        employees[0].getGroups().add(EmployeeGroup.RATE_EMPLOYEE);
-        employees[1].getGroups().add(EmployeeGroup.RATE_EMPLOYEE);
+        employees.get(0).getGroups().add(EmployeeGroup.ADMIN);
+        employees.get(0).getGroups().add(EmployeeGroup.RATE_EMPLOYEE);
+        employees.get(1).getGroups().add(EmployeeGroup.RATE_EMPLOYEE);
 
-        for (int i = 0; i < employees.length; i++) {
-            employees[i].getGroups().add(EmployeeGroup.EMPLOYEE);
-            employeeDAO.create(employees[i]);
+        for (int i = 0; i < employees.size(); i++) {
+            employees.get(i).getGroups().add(EmployeeGroup.EMPLOYEE);
+            employeeDAO.create(employees.get(i));
         }
         //</editor-fold>
 
@@ -85,12 +85,13 @@ public class StartupService implements Serializable {
         //<editor-fold defaultstate="collapsed" desc="Bills">
         ArrayList<Bill> bills = new ArrayList();
 
-        bills.add(new Bill(1L, new Date(), new Date(), 100, PaymentStatus.CANCELED,
-                drivers[0].getBSN(), cars[0].getCarTrackerId()));
-        bills.add(new Bill(2L, new Date(), new Date(), 100, PaymentStatus.PAID,
-                drivers[1].getBSN(), cars[1].getCarTrackerId()));
-        bills.add(new Bill(3L, new Date(), new Date(), 100, PaymentStatus.OPEN,
-                drivers[2].getBSN(), cars[2].getCarTrackerId()));
+        bills.add(new Bill(drivers[0].getBSN(), cars[0].getCarTrackerId(), 100d, 1, 2013));
+        bills.add(new Bill(drivers[1].getBSN(), cars[1].getCarTrackerId(), 100d, 1, 2013));
+        bills.add(new Bill(drivers[2].getBSN(), cars[2].getCarTrackerId(), 100d, 1, 2013));
+        
+        bills.get(0).setPaymentDate(new Date());
+        bills.get(0).setPaymentStatus(PaymentStatus.PAID);
+        bills.get(1).setPaymentStatus(PaymentStatus.CANCELED);
 
         for (int i = 0; i < bills.size(); i++) {
             billDAO.create(bills.get(i));

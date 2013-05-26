@@ -10,16 +10,16 @@ import javax.ejb.Stateless;
 @Stateless
 public class EmployeeService implements Serializable {
 
-    private WebResource webResource;
+    private WebResource resource;
 
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        webResource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/employees/");
+        resource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/employees/");
     }
 
     public Employee find(String username) {
-        return webResource.path(username).get(Employee.class);
+        return resource.path(username).get(Employee.class);
     }
 }

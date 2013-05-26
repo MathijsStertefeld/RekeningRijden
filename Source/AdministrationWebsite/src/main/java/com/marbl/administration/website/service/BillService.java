@@ -12,24 +12,28 @@ import javax.ws.rs.core.MediaType;
 @Stateless
 public class BillService implements Serializable {
 
-    private WebResource webResource;
+    private WebResource resource;
 
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        webResource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/bills/");
+        resource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/bills/");
+    }
+    
+    public void create(Bill bill) {
+        resource.post(Bill.class, bill);
     }
 
     public Bill edit(Bill bill) {
-        return webResource.accept(MediaType.APPLICATION_JSON).put(Bill.class, bill);
+        return resource.accept(MediaType.APPLICATION_JSON).put(Bill.class, bill);
     }
 
     public Bill find(Long id) {
-        return webResource.path(id.toString()).accept(MediaType.APPLICATION_JSON).get(Bill.class);
+        return resource.path(id.toString()).accept(MediaType.APPLICATION_JSON).get(Bill.class);
     }
 
     public ArrayList<Bill> findAll() {
-        return webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<ArrayList<Bill>>() { });
+        return resource.accept(MediaType.APPLICATION_JSON).get(new GenericType<ArrayList<Bill>>() { });
     }
 }
