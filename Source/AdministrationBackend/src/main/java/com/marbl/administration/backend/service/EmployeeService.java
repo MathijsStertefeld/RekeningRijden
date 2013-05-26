@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 //</editor-fold>
 
 @Stateless
-@Path("/employees")
+@Path("employees")
 public class EmployeeService implements Serializable {
     
     @Inject

@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 //</editor-fold>
 
 @Stateless
-@Path("/drivers")
+@Path("drivers")
 public class DriverService implements Serializable {
     
     //<editor-fold defaultstate="collapsed" desc="Fields">

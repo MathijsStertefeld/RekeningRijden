@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 //</editor-fold>
 
 @Stateless
-@Path("/cars")
+@Path("cars")
 public class CarService implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
