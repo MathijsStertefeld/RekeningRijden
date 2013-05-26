@@ -65,7 +65,7 @@ public class LogInFrame extends javax.swing.JFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        logInBtn.setText("Log in");
+        logInBtn.setText("Inloggen");
         logInBtn.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -74,7 +74,7 @@ public class LogInFrame extends javax.swing.JFrame
             }
         });
 
-        cancelBtn.setText("Cancel");
+        cancelBtn.setText("Annuleren");
         cancelBtn.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -163,7 +163,7 @@ public class LogInFrame extends javax.swing.JFrame
             this.dispose();
         } else
         {
-            errorLabel.setText("Incorrect password or email!");
+            errorLabel.setText("Incorrect wachtwoord of e-mail adres!");
         }
 
     }//GEN-LAST:event_logInBtnActionPerformed

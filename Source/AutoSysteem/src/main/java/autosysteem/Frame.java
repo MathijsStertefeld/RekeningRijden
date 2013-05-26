@@ -398,10 +398,10 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
     {//GEN-HEADEREND:event_btAddCarActionPerformed
 
         // Get all the cars from the current logged in driver;
-        //Collection<Car> cars = adminService.getCarsFromUser(loggedInDriver);
+        Collection<Car> cars = adminService.getCarsFromUser(loggedInDriver);
 
-        Collection<Car> cars = new ArrayList<Car>();
-        cars.add(new Car("t1", "t2", CarType.VAN, PaintColor.CREAM, 50, Classification.UNKNOWN, "lol", "lol2", 124));
+        //Collection<Car> cars = new ArrayList<Car>();
+        //cars.add(new Car("t1", "t2", CarType.VAN, PaintColor.CREAM, 50, Classification.UNKNOWN, "lol", "lol2", 124));
         ArrayList<String> carStrings = new ArrayList<String>();
 
         // Add carStrings in format: "Volkswagen Beetle (AA-11-BB)"
