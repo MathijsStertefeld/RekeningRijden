@@ -3,6 +3,8 @@ package com.marbl.administration.backend.service;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.backend.dao.BillDAO;
 import com.marbl.administration.domain.Bill;
+import com.sun.jersey.api.client.ClientResponse;
+import java.awt.MediaTracker;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.Stateless;
@@ -22,24 +24,25 @@ public class BillService implements Serializable {
     //</editor-fold>
 
     @POST
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response create(Bill bill) {
         billDAO.create(bill);
-        return Response.ok().build();
+        return Response.status(Response.Status.CREATED).entity(bill).build();
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Bill edit(Bill bill) {
-        return billDAO.edit(bill);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response edit(Bill bill) {
+        bill = billDAO.edit(bill);
+        return Response.status(Response.Status.OK).entity(bill).build();
     }
 
     @DELETE
     @Path("{id}")
     public Response remove(@PathParam("id") Long id) {
-        billDAO.remove(billDAO.find(id));
-        return Response.ok().build();
+        Bill bill = billDAO.find(id);
+        billDAO.remove(bill);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @GET
