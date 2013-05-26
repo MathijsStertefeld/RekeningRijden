@@ -5,7 +5,7 @@ import com.marbl.administration.domain.*;
 import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -22,14 +22,14 @@ public class CarBean implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private RekeningRijdersService service;
-    private Collection<Car> all;
+    private ArrayList<Car> all;
     private Car current;
     @Inject
     private DriverBean driverBean;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public Collection<Car> getAll() {
+    public ArrayList<Car> getAll() {
         return all;
     }
 

@@ -4,7 +4,7 @@ import com.marbl.administration.domain.Car;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.MediaType;
@@ -29,7 +29,7 @@ public class CarService implements Serializable {
         return webResource.path(carTrackerId).accept(MediaType.APPLICATION_JSON).get(Car.class);
     }
 
-    public Collection<Car> findAll() {
-        return webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<Collection<Car>>() { });
+    public ArrayList<Car> findAll() {
+        return webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<ArrayList<Car>>() { });
     }
 }

@@ -4,7 +4,7 @@ import com.marbl.administration.domain.Bill;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.MediaType;
@@ -29,7 +29,7 @@ public class BillService implements Serializable {
         return webResource.path(id.toString()).accept(MediaType.APPLICATION_JSON).get(Bill.class);
     }
 
-    public Collection<Bill> findAll() {
-        return webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<Collection<Bill>>() { });
+    public ArrayList<Bill> findAll() {
+        return webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<ArrayList<Bill>>() { });
     }
 }

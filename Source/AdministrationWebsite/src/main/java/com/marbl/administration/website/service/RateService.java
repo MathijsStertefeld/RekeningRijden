@@ -5,7 +5,6 @@ import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
@@ -37,14 +36,14 @@ public class RateService implements Serializable {
         return webResource.path(name).get(Rate.class);
     }
 
-    public Collection<Rate> findAll() {
-        return webResource.get(new GenericType<Collection<Rate>>() { });
+    public ArrayList<Rate> findAll() {
+        return webResource.get(new GenericType<ArrayList<Rate>>() { });
     }
     
-    public Collection<Rate> findAllHighwayRates()
+    public ArrayList<Rate> findAllHighwayRates()
     {
-        Collection<Rate> rates = new ArrayList<>();
-        for (Rate r : webResource.get(new GenericType<Collection<Rate>>() { }))
+        ArrayList<Rate> rates = new ArrayList();
+        for (Rate r : webResource.get(new GenericType<ArrayList<Rate>>() { }))
         {
             if (r.getClass() == Rate.class) {
                 rates.add((Rate)r);
@@ -53,10 +52,10 @@ public class RateService implements Serializable {
         return rates;
     }
     
-    public Collection<Rate> findAllCityRates()
+    public ArrayList<Rate> findAllCityRates()
     {
-        Collection<Rate> rates = new ArrayList<>();
-        for (Rate r : webResource.get(new GenericType<Collection<Rate>>() { }))
+        ArrayList<Rate> rates = new ArrayList();
+        for (Rate r : webResource.get(new GenericType<ArrayList<Rate>>() { }))
         {
             if (r.getClass() == Rate.class) {
                 rates.add((Rate)r);
@@ -65,10 +64,10 @@ public class RateService implements Serializable {
         return rates;
     }
     
-    public Collection<Rate> findAllRegionRates()
+    public ArrayList<Rate> findAllRegionRates()
     {
-        Collection<Rate> rates = new ArrayList<>();
-        for (Rate r : webResource.get(new GenericType<Collection<Rate>>() { }))
+        ArrayList<Rate> rates = new ArrayList();
+        for (Rate r : webResource.get(new GenericType<ArrayList<Rate>>() { }))
         {
             if (r.getClass() == Rate.class) {
                 rates.add((Rate)r);
@@ -77,10 +76,10 @@ public class RateService implements Serializable {
         return rates;
     }
     
-    public Collection<Rate> findAllVehicleRates()
+    public ArrayList<Rate> findAllVehicleRates()
     {
-        Collection<Rate> rates = new ArrayList<>();
-        for (Rate r : webResource.get(new GenericType<Collection<Rate>>() { }))
+        ArrayList<Rate> rates = new ArrayList();
+        for (Rate r : webResource.get(new GenericType<ArrayList<Rate>>() { }))
         {
             if (r.getClass() == Rate.class) {
                 rates.add((Rate)r);
@@ -92,7 +91,7 @@ public class RateService implements Serializable {
     public Rate findMassRate()
     {
         Rate rate = new Rate();
-        for (Rate r : webResource.get(new GenericType<Collection<Rate>>() { }))
+        for (Rate r : webResource.get(new GenericType<ArrayList<Rate>>() { }))
         {
             if (r.getClass() == Rate.class) {
                 rate = (Rate)r;
@@ -101,8 +100,8 @@ public class RateService implements Serializable {
         return rate;
     }
 
-    public Collection<Rate> findRange(Integer from, Integer to) {
-        return webResource.path(from.toString()).path(to.toString()).get(new GenericType<Collection<Rate>>() { });
+    public ArrayList<Rate> findRange(Integer from, Integer to) {
+        return webResource.path(from.toString()).path(to.toString()).get(new GenericType<ArrayList<Rate>>() { });
     }
 
     public int count() {

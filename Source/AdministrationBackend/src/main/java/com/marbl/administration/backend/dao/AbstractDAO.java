@@ -1,7 +1,7 @@
 package com.marbl.administration.backend.dao;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
@@ -40,19 +40,19 @@ public abstract class AbstractDAO<Entity extends Serializable, ID extends Serial
         return em.find(entityClass, id);
     }
 
-    public Collection<Entity> findAll() {
+    public ArrayList<Entity> findAll() {
         CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        return em.createQuery(cq).getResultList();
+        return new ArrayList(em.createQuery(cq).getResultList());
     }
 
-    public Collection<Entity> findRange(int[] range) {
+    public ArrayList<Entity> findRange(int[] range) {
         CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         javax.persistence.Query q = em.createQuery(cq);
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
-        return q.getResultList();
+        return new ArrayList(q.getResultList());
     }
 
     public int count() {

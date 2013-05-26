@@ -4,7 +4,6 @@ package com.marbl.administration.backend.utils;
 import com.marbl.administration.domain.Driver;
 import com.marbl.administration.domain.DriverGroup;
 import com.marbl.administration.domain.utils.Hasher;
-import java.util.ArrayList;
 import java.util.Date;
 //</editor-fold>
 
@@ -58,11 +57,9 @@ public final class DriverGenerator {
         String address = "Hoofdstraat 1";
         String zipCode = "1234AB";
         Date dateOfBirth = new Date();
-        ArrayList<DriverGroup> groups = new ArrayList<>();
-        groups.add(DriverGroup.DRIVER);
         Boolean activated = true;
 
         return new Driver(bsn, firstName, lastName, email, password,
-                residence, address, zipCode, dateOfBirth, groups, activated);
+                residence, address, zipCode, dateOfBirth, activated);
     }
 }

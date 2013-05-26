@@ -7,7 +7,6 @@ import com.marbl.administration.domain.utils.Hasher;
 import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 import javax.enterprise.context.SessionScoped;
@@ -121,9 +120,10 @@ public class RegisterBean implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public void register() {
         Hasher hasher = new Hasher("SHA-256", "UTF-8");
-        Driver newDriver = new Driver(bsn, firstName, lastName, email,
-                hasher.hash(password), residence, address, zipCode,
-                dateOfBirth, Arrays.asList(DriverGroup.DRIVER), false);
+        Driver newDriver = new Driver(bsn, firstName, lastName,
+                email, hasher.hash(password), residence, address,
+                zipCode, dateOfBirth, false);
+        newDriver.getGroups().add(DriverGroup.DRIVER);
         service.register(newDriver);
         sendMail();
     }

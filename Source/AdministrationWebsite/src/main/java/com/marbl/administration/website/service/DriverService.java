@@ -4,7 +4,7 @@ import com.marbl.administration.domain.Driver;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
@@ -28,7 +28,7 @@ public class DriverService implements Serializable {
         return webResource.path(bsn.toString()).get(Driver.class);
     }
 
-    public Collection<Driver> findAll() {
-        return webResource.get(new GenericType<Collection<Driver>>() { });
+    public ArrayList<Driver> findAll() {
+        return webResource.get(new GenericType<ArrayList<Driver>>() { });
     }
 }

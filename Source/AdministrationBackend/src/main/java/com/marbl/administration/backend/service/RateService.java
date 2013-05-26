@@ -4,7 +4,7 @@ package com.marbl.administration.backend.service;
 import com.marbl.administration.backend.dao.RateDAO;
 import com.marbl.administration.domain.Rate;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -49,14 +49,14 @@ public class RateService implements Serializable {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Collection<Rate> findAll() {
+    public ArrayList<Rate> findAll() {
         return rateDAO.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Collection<Rate> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public ArrayList<Rate> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return rateDAO.findRange(new int[]{from, to});
     }
 

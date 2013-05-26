@@ -5,7 +5,7 @@ import com.marbl.administration.domain.*;
 import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -22,14 +22,14 @@ public class BillBean implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private RekeningRijdersService service;
-    private Collection<Bill> all;
+    private ArrayList<Bill> all;
     private Bill current;
     @Inject
     private DriverBean driverBean;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public Collection<Bill> getAll() {
+    public ArrayList<Bill> getAll() {
         return all;
     }
 
@@ -37,7 +37,7 @@ public class BillBean implements Serializable {
         return current;
     }
 
-    public Collection<Object> getMovements() {
+    public ArrayList<Object> getMovements() {
         if (current != null) {
             return current.getMovements();
         } else {

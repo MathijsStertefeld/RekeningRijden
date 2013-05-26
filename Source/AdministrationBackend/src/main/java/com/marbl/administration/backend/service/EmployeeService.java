@@ -4,7 +4,7 @@ package com.marbl.administration.backend.service;
 import com.marbl.administration.backend.dao.EmployeeDAO;
 import com.marbl.administration.domain.Employee;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -49,7 +49,7 @@ public class EmployeeService implements Serializable {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Collection<Employee> findAll() {
+    public ArrayList<Employee> findAll() {
         return employeeDAO.findAll();
     }
 

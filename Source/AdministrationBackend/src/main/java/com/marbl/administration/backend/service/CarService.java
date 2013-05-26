@@ -5,7 +5,6 @@ import com.marbl.administration.backend.dao.CarDAO;
 import com.marbl.administration.domain.Car;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -52,12 +51,12 @@ public class CarService implements Serializable {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Collection<Car> findAll(
+    public ArrayList<Car> findAll(
             @QueryParam("carTrackerId") String carTrackerId,
             @QueryParam("driverBSN") Integer driverBSN,
             @QueryParam("licensePlate") String licensePlate) {
 
-        Collection<Car> cars = new ArrayList<>();
+        ArrayList<Car> cars = new ArrayList();
 
         for (Car car : carDAO.findAll()) {
             if (true

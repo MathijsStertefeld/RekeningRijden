@@ -5,9 +5,8 @@ import com.marbl.administration.domain.Rate;
 import com.marbl.administration.website.service.RateService;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -22,28 +21,28 @@ public class RateBean implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private RateService service;
-    private Collection<Rate> highwayRates;
-    private Collection<Rate> regionRates;
-    private Collection<Rate> cityRates;
-    private Collection<Rate> vehicleRates;
+    private ArrayList<Rate> highwayRates;
+    private ArrayList<Rate> regionRates;
+    private ArrayList<Rate> cityRates;
+    private ArrayList<Rate> vehicleRates;
     private Rate massRate;
     private Rate current;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public Collection<Rate> getHighwayRates() {
+    public ArrayList<Rate> getHighwayRates() {
         return highwayRates;
     }
     
-    public Collection<Rate> getRegionRates() {
+    public ArrayList<Rate> getRegionRates() {
         return regionRates;
     }
     
-    public Collection<Rate> getCityRates() {
+    public ArrayList<Rate> getCityRates() {
         return cityRates;
     }
     
-    public Collection<Rate> getVehicleRates() {
+    public ArrayList<Rate> getVehicleRates() {
         return vehicleRates;
     }
     

@@ -5,7 +5,6 @@ import com.marbl.administration.backend.dao.DriverDAO;
 import com.marbl.administration.domain.Driver;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -52,14 +51,14 @@ public class DriverService implements Serializable {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Collection<Driver> findAll(
+    public ArrayList<Driver> findAll(
             @QueryParam("bsn") Integer bsn,
             @QueryParam("email") String email,
             @QueryParam("firstName") String firstName,
             @QueryParam("lastName") String lastName,
             @QueryParam("residence") String residence) {
         
-        Collection<Driver> drivers = new ArrayList<>();
+        ArrayList<Driver> drivers = new ArrayList();
 
         for (Driver driver : driverDAO.findAll()) {
             if (true

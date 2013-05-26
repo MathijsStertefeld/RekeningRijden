@@ -3,7 +3,6 @@ package com.marbl.administration.domain;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 //</editor-fold>
@@ -25,7 +24,7 @@ public class Car implements Serializable {
     private int driverBSN;
     @ElementCollection
     @CollectionTable(name = "CAR_DRIVER")
-    private Collection<Integer> drivers;
+    private ArrayList<Integer> drivers;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -101,11 +100,11 @@ public class Car implements Serializable {
         this.driverBSN = driverBSN;
     }
     
-    public Collection<Integer> getDriverHistory() {
+    public ArrayList<Integer> getDriverHistory() {
         return drivers;
     }
     
-    public void setDriverHistory(Collection<Integer> driverHistory) {
+    public void setDriverHistory(ArrayList<Integer> driverHistory) {
         this.drivers = driverHistory;
     }
     //</editor-fold>
@@ -127,7 +126,7 @@ public class Car implements Serializable {
         this.brand = brand;
         this.model = model;
         this.driverBSN = driverBSN;
-        this.drivers = new ArrayList<>();
+        this.drivers = new ArrayList();
     }
     //</editor-fold>
 

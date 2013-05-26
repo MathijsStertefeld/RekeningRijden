@@ -37,14 +37,19 @@ public class StartupService implements Serializable {
         Hasher hasher = new Hasher("SHA-256", "UTF-8");
 
         //<editor-fold defaultstate="collapsed" desc="Employees">
-        ArrayList<Employee> employees = new ArrayList<>();
+        Employee[] employees = new Employee[3];
 
-        employees.add(new Employee("admin", hasher.hash("admin123"), EmployeeGroup.ADMIN));
-        employees.add(new Employee("employee", hasher.hash("employee123"), EmployeeGroup.EMPLOYEE));
-        employees.add(new Employee("rate123", hasher.hash("rate123"), EmployeeGroup.RATE_EMPLOYEE));
+        employees[0] = new Employee("admin", hasher.hash("admin123"));
+        employees[1] = new Employee("employee", hasher.hash("employee123"));
+        employees[2] = new Employee("rate123", hasher.hash("rate123"));
+        
+        employees[0].getGroups().add(EmployeeGroup.ADMIN);
+        employees[0].getGroups().add(EmployeeGroup.RATE_EMPLOYEE);
+        employees[1].getGroups().add(EmployeeGroup.RATE_EMPLOYEE);
 
-        for (int i = 0; i < employees.size(); i++) {
-            employeeDAO.create(employees.get(i));
+        for (int i = 0; i < employees.length; i++) {
+            employees[i].getGroups().add(EmployeeGroup.EMPLOYEE);
+            employeeDAO.create(employees[i]);
         }
         //</editor-fold>
 
@@ -54,8 +59,13 @@ public class StartupService implements Serializable {
                 new String[]{"Arends", "Geerts", "Aerts", "Lenders", "Stertefeld"});
 
         Driver[] drivers = driverGenerator.generate();
+        
+        drivers[0].getGroups().add(DriverGroup.ADMIN);
+        drivers[0].getGroups().add(DriverGroup.JAM_DRIVER);
+        drivers[1].getGroups().add(DriverGroup.JAM_DRIVER);
 
         for (int i = 0; i < drivers.length; i++) {
+            drivers[i].getGroups().add(DriverGroup.DRIVER);
             driverDAO.create(drivers[i]);
         }
         //</editor-fold>
@@ -73,7 +83,7 @@ public class StartupService implements Serializable {
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Bills">
-        ArrayList<Bill> bills = new ArrayList<>();
+        ArrayList<Bill> bills = new ArrayList();
 
         bills.add(new Bill(1L, new Date(), new Date(), 100, PaymentStatus.CANCELED,
                 drivers[0].getBSN(), cars[0].getCarTrackerId()));
@@ -88,7 +98,7 @@ public class StartupService implements Serializable {
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="CityRates">
-        ArrayList<Rate> cityRates = new ArrayList<>();
+        ArrayList<Rate> cityRates = new ArrayList();
  
         cityRates.add(new Rate("Den Bosch", Rate.Type.CITY, 1.2));
         cityRates.add(new Rate("Eindhoven", Rate.Type.CITY, 1));
@@ -100,7 +110,7 @@ public class StartupService implements Serializable {
         //</editor-fold>
  
         //<editor-fold defaultstate="collapsed" desc="HighwayRates">
-        ArrayList<Rate> highwayRates = new ArrayList<>();
+        ArrayList<Rate> highwayRates = new ArrayList();
  
         highwayRates.add(new Rate("A2", Rate.Type.HIGHWAY,      new double[]{1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.8, 1.8, 1.8, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.8, 1.8, 1.8, 1.1, 1.1, 1.1, 1.1}));
         highwayRates.add(new Rate("A50", Rate.Type.HIGHWAY,     new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 1.5, 1.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 1.5, 1.5, 1.0, 1.0, 1.0, 1.0}));
@@ -113,7 +123,7 @@ public class StartupService implements Serializable {
         //</editor-fold>
  
         //<editor-fold defaultstate="collapsed" desc="RegionRates">
-        ArrayList<Rate> regionRates = new ArrayList<>();
+        ArrayList<Rate> regionRates = new ArrayList();
  
         regionRates.add(new Rate("Regio Den Bosch", Rate.Type.REGION, 1.2));
         regionRates.add(new Rate("Regio Eindhoven", Rate.Type.REGION, 1));
@@ -127,7 +137,7 @@ public class StartupService implements Serializable {
         //</editor-fold>
  
         //<editor-fold defaultstate="collapsed" desc="VehicleRates">
-        ArrayList<Rate> vehicleRates = new ArrayList<>();
+        ArrayList<Rate> vehicleRates = new ArrayList();
  
         vehicleRates.add(new Rate("Unknown", Rate.Type.VEHICLE, 1));
         vehicleRates.add(new Rate("Passenger Car", Rate.Type.VEHICLE, 1));
