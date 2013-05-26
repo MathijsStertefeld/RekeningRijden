@@ -38,6 +38,8 @@ public class BillService implements Serializable {
     }
 
     @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response remove(Bill bill) {
         billDAO.remove(bill);
         return Response.status(Response.Status.OK).entity(bill).build();

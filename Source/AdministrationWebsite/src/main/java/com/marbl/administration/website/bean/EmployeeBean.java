@@ -5,8 +5,6 @@ import com.marbl.administration.domain.Employee;
 import com.marbl.administration.website.service.EmployeeService;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;

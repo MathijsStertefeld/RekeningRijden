@@ -3,7 +3,6 @@ package com.marbl.administration.backend.service;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.backend.dao.EmployeeDAO;
 import com.marbl.administration.domain.Employee;
-import com.marbl.administration.domain.utils.Hasher;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.Stateless;
@@ -16,49 +15,79 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("employees")
 public class EmployeeService implements Serializable {
-    
+
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private EmployeeDAO employeeDAO;
+    //</editor-fold>
 
     @POST
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response create(Employee employee) {
         employeeDAO.create(employee);
-        return Response.ok().build();
+        return Response.status(Response.Status.CREATED).entity(employee).build();
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Employee edit(Employee employee) {
-        return employeeDAO.edit(employee);
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response edit(Employee employee) {
+        employee = employeeDAO.edit(employee);
+        return Response.status(Response.Status.OK).entity(employee).build();
     }
 
     @DELETE
-    @Path("{id}")
-    public Response remove(@PathParam("id") String name) {
-        employeeDAO.remove(employeeDAO.find(name));
-        return Response.ok().build();
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response remove(Employee employee) {
+        employeeDAO.remove(employee);
+        return Response.status(Response.Status.OK).entity(employee).build();
+    }
+
+    @DELETE
+    @Path("{username}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response remove(@PathParam("username") String username) {
+        Employee employee = employeeDAO.find(username);
+        return remove(employee);
     }
 
     @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Employee find(@PathParam("id") String name) {
-        return employeeDAO.find(name);
+    @Path("{username}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response find(@PathParam("username") String username) {
+        Employee employee = employeeDAO.find(username);
+        return Response.status(Response.Status.OK).entity(employee).build();
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ArrayList<Employee> findAll() {
-        return employeeDAO.findAll();
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findAll(
+            @QueryParam("username") String username) {
+
+        ArrayList<Employee> employees = new ArrayList();
+
+        for (Employee employee : employeeDAO.findAll()) {
+            if (true
+                    && (username == null || username.equals(employee.getUsername()))) {
+                employees.add(employee);
+            }
+        }
+
+        return Response.status(Response.Status.OK).entity(employees).build();
     }
 
     @GET
     @Path("count")
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public String count() {
-        return String.valueOf(employeeDAO.count());
+    public Response count() {
+        String s = String.valueOf(employeeDAO.count());
+        return Response.status(Response.Status.OK).entity(s).build();
     }
     
     @POST

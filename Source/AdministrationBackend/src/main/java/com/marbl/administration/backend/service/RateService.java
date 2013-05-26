@@ -15,55 +15,78 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("rates")
 public class RateService implements Serializable {
-    
+
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private RateDAO rateDAO;
+    //</editor-fold>
 
     @POST
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response create(Rate rate) {
         rateDAO.create(rate);
-        return Response.ok().build();
+        return Response.status(Response.Status.CREATED).entity(rate).build();
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Rate edit(Rate rate) {
-        return rateDAO.edit(rate);
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response edit(Rate rate) {
+        rate = rateDAO.edit(rate);
+        return Response.status(Response.Status.OK).entity(rate).build();
     }
 
     @DELETE
-    @Path("{id}")
-    public Response remove(@PathParam("id") String name) {
-        rateDAO.remove(rateDAO.find(name));
-        return Response.ok().build();
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response remove(Rate rate) {
+        rateDAO.remove(rate);
+        return Response.status(Response.Status.OK).entity(rate).build();
+    }
+
+    @DELETE
+    @Path("{name}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response remove(@PathParam("name") String name) {
+        Rate rate = rateDAO.find(name);
+        return remove(rate);
     }
 
     @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Rate find(@PathParam("id") String id) {
-        return rateDAO.find(id);
+    @Path("{name}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response find(@PathParam("name") String name) {
+        Rate rate = rateDAO.find(name);
+        return Response.status(Response.Status.OK).entity(rate).build();
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ArrayList<Rate> findAll() {
-        return rateDAO.findAll();
-    }
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findAll(
+            @QueryParam("name") String name) {
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ArrayList<Rate> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return rateDAO.findRange(new int[]{from, to});
+        ArrayList<Rate> rates = new ArrayList();
+
+        for (Rate rate : rateDAO.findAll()) {
+            if (true
+                    && (name == null || name.equals(rate.getName()))) {
+                rates.add(rate);
+            }
+        }
+
+        return Response.status(Response.Status.OK).entity(rates).build();
     }
 
     @GET
     @Path("count")
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public String count() {
-        return String.valueOf(rateDAO.count());
+    public Response count() {
+        String s = String.valueOf(rateDAO.count());
+        return Response.status(Response.Status.OK).entity(s).build();
     }
 }

@@ -22,36 +22,51 @@ public class CarService implements Serializable {
     //</editor-fold>
 
     @POST
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response create(Car car) {
         carDAO.create(car);
-        return Response.ok().build();
+        return Response.status(Response.Status.CREATED).entity(car).build();
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Car edit(Car car) {
-        return carDAO.edit(car);
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response edit(Car car) {
+        car = carDAO.edit(car);
+        return Response.status(Response.Status.OK).entity(car).build();
+    }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response remove(Car car) {
+        carDAO.remove(car);
+        return Response.status(Response.Status.OK).entity(car).build();
     }
 
     @DELETE
     @Path("{carTrackerId}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response remove(@PathParam("carTrackerId") String carTrackerId) {
-        carDAO.remove(carDAO.find(carTrackerId));
-        return Response.ok().build();
+        Car car = carDAO.find(carTrackerId);
+        return remove(car);
     }
 
     @GET
     @Path("{carTrackerId}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Car find(@PathParam("carTrackerId") String carTrackerId) {
-        return carDAO.find(carTrackerId);
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response find(@PathParam("carTrackerId") String carTrackerId) {
+        Car car = carDAO.find(carTrackerId);
+        return Response.status(Response.Status.OK).entity(car).build();
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ArrayList<Car> findAll(
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findAll(
             @QueryParam("carTrackerId") String carTrackerId,
             @QueryParam("driverBSN") Integer driverBSN,
             @QueryParam("licensePlate") String licensePlate) {
@@ -67,13 +82,15 @@ public class CarService implements Serializable {
             }
         }
 
-        return cars;
+        return Response.status(Response.Status.OK).entity(cars).build();
     }
 
     @GET
     @Path("count")
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public String count() {
-        return String.valueOf(carDAO.count());
+    public Response count() {
+        String s = String.valueOf(carDAO.count());
+        return Response.status(Response.Status.OK).entity(s).build();
     }
 }
