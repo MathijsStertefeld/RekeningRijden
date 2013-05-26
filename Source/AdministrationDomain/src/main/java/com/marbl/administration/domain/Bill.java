@@ -22,7 +22,7 @@ public class Bill implements Serializable {
     private Date paymentDate;
     private double paymentAmount;
     private PaymentStatus paymentStatus;
-    private int driverBsn;
+    private int driverBSN;
     private String carTrackerId;
     private Collection<Object> movements;
     //</editor-fold>
@@ -44,12 +44,12 @@ public class Bill implements Serializable {
         this.carTrackerId = carTrackerId;
     }
 
-    public int getDriverBsn() {
-        return driverBsn;
+    public int getDriverBSN() {
+        return driverBSN;
     }
 
-    public void setDriverBsn(int driverBsn) {
-        this.driverBsn = driverBsn;
+    public void setDriverBSN(int driverBSN) {
+        this.driverBSN = driverBSN;
     }
 
     public Date getPeriodDate() {
@@ -99,13 +99,13 @@ public class Bill implements Serializable {
     }
 
     public Bill(Long id, Date periodDate, Date paymentDate, double paymentAmount,
-            PaymentStatus paymentStatus, int driverBsn, String carTrackerId) {
+            PaymentStatus paymentStatus, int driverBSN, String carTrackerId) {
         this.id = id;
         this.periodDate = periodDate;
         this.paymentDate = paymentDate;
         this.paymentAmount = paymentAmount;
         this.paymentStatus = paymentStatus;
-        this.driverBsn = driverBsn;
+        this.driverBSN = driverBSN;
         this.carTrackerId = carTrackerId;
         this.movements = new ArrayList<>();
     }

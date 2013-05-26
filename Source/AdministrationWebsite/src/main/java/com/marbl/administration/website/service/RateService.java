@@ -58,44 +58,44 @@ public class RateService implements Serializable {
         Collection<Rate> rates = new ArrayList<>();
         for (Rate r : webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { }))
         {
-            if (r.getClass() == CityRate.class) {
-                rates.add((CityRate)r);
+            if (r.getClass() == Rate.class) {
+                rates.add((Rate)r);
             }
         }
         return rates;
     }
     
-    public Collection<RegionRate> findAllRegionRates()
+    public Collection<Rate> findAllRegionRates()
     {
-        Collection<RegionRate> rates = new ArrayList<>();
+        Collection<Rate> rates = new ArrayList<>();
         for (Rate r : webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { }))
         {
-            if (r.getClass() == RegionRate.class) {
-                rates.add((RegionRate)r);
+            if (r.getClass() == Rate.class) {
+                rates.add((Rate)r);
             }
         }
         return rates;
     }
     
-    public Collection<VehicleRate> findAllVehicleRates()
+    public Collection<Rate> findAllVehicleRates()
     {
-        Collection<VehicleRate> rates = new ArrayList<>();
+        Collection<Rate> rates = new ArrayList<>();
         for (Rate r : webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { }))
         {
-            if (r.getClass() == VehicleRate.class) {
-                rates.add((VehicleRate)r);
+            if (r.getClass() == Rate.class) {
+                rates.add((Rate)r);
             }
         }
         return rates;
     }
     
-    public MassRate findMassRate()
+    public Rate findMassRate()
     {
-        MassRate rate = new MassRate();
+        Rate rate = new Rate();
         for (Rate r : webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { }))
         {
-            if (r.getClass() == MassRate.class) {
-                rate = (MassRate)r;
+            if (r.getClass() == Rate.class) {
+                rate = (Rate)r;
             }
         }
         return rate;

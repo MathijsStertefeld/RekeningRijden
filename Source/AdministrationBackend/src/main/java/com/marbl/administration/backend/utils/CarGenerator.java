@@ -50,8 +50,8 @@ public final class CarGenerator {
         Classification classification = Classification.values()[index % Classification.values().length];
         String brand = brands[index % brands.length];
         String model = models[index % models.length];
-        int driverBsn = drivers[index % drivers.length].getBsn();
+        int driverBSN = drivers[index % drivers.length].getBSN();
 
-        return new Car(carTrackerId, licensePlate, carType, paintColor, mass, classification, brand, model, driverBsn);
+        return new Car(carTrackerId, licensePlate, carType, paintColor, mass, classification, brand, model, driverBSN);
     }
 }

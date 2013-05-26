@@ -45,11 +45,11 @@ public class RegisterBean implements Serializable {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public int getBsn() {
+    public int getBSN() {
         return bsn;
     }
 
-    public void setBsn(int bsn) {
+    public void setBSN(int bsn) {
         this.bsn = bsn;
     }
 

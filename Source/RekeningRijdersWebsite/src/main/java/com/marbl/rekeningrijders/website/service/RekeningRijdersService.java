@@ -64,9 +64,9 @@ public class RekeningRijdersService implements Serializable {
         resource.path("drivers").post(Driver.class, driver);
     }
 
-    public Collection<Bill> findBillsByBsn(Integer bsn) {
+    public Collection<Bill> findBillsByBSN(Integer bsn) {
         return resource.path("bills")
-                .queryParam("driverBsn", bsn.toString())
+                .queryParam("driverBSN", bsn.toString())
                 .accept(MediaType.APPLICATION_JSON)
                 .get(new GenericType<Collection<Bill>>() {
         });
@@ -85,9 +85,9 @@ public class RekeningRijdersService implements Serializable {
                 .accept(MediaType.APPLICATION_JSON).put(bill);
     }
 
-    public Collection<Car> findCarsByBsn(Integer bsn) {
+    public Collection<Car> findCarsByBSN(Integer bsn) {
         return resource.path("cars")
-                .queryParam("driverBsn", bsn.toString())
+                .queryParam("driverBSN", bsn.toString())
                 .accept(MediaType.APPLICATION_JSON)
                 .get(new GenericType<Collection<Car>>() {
         });

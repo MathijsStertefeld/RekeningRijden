@@ -22,8 +22,10 @@ public class Car implements Serializable {
     private PaintColor paintColor;
     private int mass;
     private Classification classification;
-    private int driverBsn;
-    private Collection<Integer> driverHistory;
+    private int driverBSN;
+    @ElementCollection
+    @CollectionTable(name = "CAR_DRIVER")
+    private Collection<Integer> drivers;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -91,20 +93,20 @@ public class Car implements Serializable {
         this.classification = classification;
     }
 
-    public int getDriverBsn() {
-        return driverBsn;
+    public int getDriverBSN() {
+        return driverBSN;
     }
 
-    public void setDriverBsn(int driverBsn) {
-        this.driverBsn = driverBsn;
+    public void setDriverBSN(int driverBSN) {
+        this.driverBSN = driverBSN;
     }
     
     public Collection<Integer> getDriverHistory() {
-        return driverHistory;
+        return drivers;
     }
     
     public void setDriverHistory(Collection<Integer> driverHistory) {
-        this.driverHistory = driverHistory;
+        this.drivers = driverHistory;
     }
     //</editor-fold>
 
@@ -115,7 +117,7 @@ public class Car implements Serializable {
     }
 
     public Car(String carTrackerId, String licensePlate, CarType type, PaintColor paintColor,
-            int mass, Classification classification, String brand, String model, int driverBsn) {
+            int mass, Classification classification, String brand, String model, int driverBSN) {
         this.carTrackerId = carTrackerId;
         this.licensePlate = licensePlate;
         this.type = type;
@@ -124,8 +126,8 @@ public class Car implements Serializable {
         this.classification = classification;
         this.brand = brand;
         this.model = model;
-        this.driverBsn = driverBsn;
-        this.driverHistory = new ArrayList<>();
+        this.driverBSN = driverBSN;
+        this.drivers = new ArrayList<>();
     }
     //</editor-fold>
 

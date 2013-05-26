@@ -99,8 +99,7 @@ public class EmployeeBean implements Serializable {
             loginUsername = "";
             loginPassword = "";
             externalContext.redirect(".");
-        } catch (IOException ex) {
-        } catch (ServletException ex) {
+        } catch (IOException | ServletException ex) {
             facesContext.addMessage(null, new FacesMessage(ex.getMessage()));
         }
     }
