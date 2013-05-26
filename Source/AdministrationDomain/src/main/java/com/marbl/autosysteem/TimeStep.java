@@ -27,12 +27,8 @@ public class TimeStep
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private double time;
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.MERGE,mappedBy="timestep")
     private ArrayList<Movement> movements;
-
-    public TimeStep()
-    {
-    }
 
     public TimeStep()
     {

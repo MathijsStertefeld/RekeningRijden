@@ -69,6 +69,7 @@ public class RestfulReceiverService
         vpService.createSession(s);
         for(TimeStep ts : s.getTimesteps())
         {
+            System.out.println("Timestep");
             vpService.createTimeStep(ts);
             for(Movement m : ts.getMovements())
             {
