@@ -34,6 +34,10 @@ public class TimeStep
     {
     }
 
+    public TimeStep()
+    {
+    }
+
     public TimeStep(double time)
     {
         this.time = time;
