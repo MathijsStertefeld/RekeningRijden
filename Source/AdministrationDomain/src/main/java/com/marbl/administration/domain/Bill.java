@@ -2,9 +2,7 @@ package com.marbl.administration.domain;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 //</editor-fold>
@@ -15,49 +13,65 @@ public class Bill implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date periodDate;
+    private Integer driverBSN;
+    private String carTrackerId;
+    private Double paymentAmount;
+    private Integer paymentMonth;
+    private Integer paymentYear;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date paymentDate;
-    private double paymentAmount;
     private PaymentStatus paymentStatus;
-    private int driverBSN;
-    private String carTrackerId;
-    private List<Object> movements;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public Long getId() {
+    public Long getID() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setID(Long ID) {
+        this.id = ID;
     }
-    
+
+    public Integer getDriverBSN() {
+        return driverBSN;
+    }
+
+    public void setDriverBSN(Integer driverBSN) {
+        this.driverBSN = driverBSN;
+    }
+
     public String getCarTrackerId() {
         return carTrackerId;
     }
-    
+
     public void setCarTrackerId(String carTrackerId) {
         this.carTrackerId = carTrackerId;
     }
 
-    public int getDriverBSN() {
-        return driverBSN;
+    public Double getPaymentAmount() {
+        return paymentAmount;
     }
 
-    public void setDriverBSN(int driverBSN) {
-        this.driverBSN = driverBSN;
+    public void setPaymentAmount(Double paymentAmount) {
+        this.paymentAmount = paymentAmount;
     }
 
-    public Date getPeriodDate() {
-        return periodDate;
+    public Integer getPaymentMonth() {
+        return paymentMonth;
     }
 
-    public void setPeriodDate(Date periodDate) {
-        this.periodDate = periodDate;
+    public void setPaymentMonth(Integer paymentMonth) {
+        this.paymentMonth = paymentMonth;
+    }
+
+    public Integer getPaymentYear() {
+        return paymentYear;
+    }
+
+    public void setPaymentYear(Integer paymentYear) {
+        this.paymentYear = paymentYear;
     }
 
     public Date getPaymentDate() {
@@ -68,14 +82,6 @@ public class Bill implements Serializable {
         this.paymentDate = paymentDate;
     }
 
-    public double getPaymentAmount() {
-        return paymentAmount;
-    }
-
-    public void setPaymentAmount(double paymentAmount) {
-        this.paymentAmount = paymentAmount;
-    }
-
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
@@ -83,38 +89,34 @@ public class Bill implements Serializable {
     public void setPaymentStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
-
-    public List<Object> getMovements() {
-        return movements;
-    }
-
-    public void setMovements(List<Object> movements) {
-        this.movements = movements;
-    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Bill() {
-        this(0L, new Date(), new Date(), 0, PaymentStatus.UNKNOWN, 0, "");
+        this(0, "", 0D, 0, 0);
     }
 
-    public Bill(Long id, Date periodDate, Date paymentDate, double paymentAmount,
-            PaymentStatus paymentStatus, int driverBSN, String carTrackerId) {
-        this.id = id;
-        this.periodDate = periodDate;
-        this.paymentDate = paymentDate;
-        this.paymentAmount = paymentAmount;
-        this.paymentStatus = paymentStatus;
+    public Bill(Integer driverBSN, String carTrackerId, Double paymentAmount,
+            Integer paymentMonth, Integer paymentYear) {
+
         this.driverBSN = driverBSN;
         this.carTrackerId = carTrackerId;
-        this.movements = new ArrayList();
+        this.paymentAmount = paymentAmount;
+        this.paymentMonth = paymentMonth;
+        this.paymentYear = paymentYear;
+
+        paymentStatus = PaymentStatus.OPEN;
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
     @Override
     public int hashCode() {
-        return id.hashCode();
+        if (id != null) {
+            return id.hashCode();
+        } else {
+            return 0;
+        }
     }
 
     @Override

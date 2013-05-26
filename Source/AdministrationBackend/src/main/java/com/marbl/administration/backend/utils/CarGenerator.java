@@ -43,7 +43,7 @@ public final class CarGenerator {
         index++;
 
         String carTrackerId = "t" + index;
-        String licensePlate = "AB-CD-01";
+        String licensePlate = "AB-CD-0" + index % 10;
         CarType carType = CarType.values()[index % CarType.values().length];
         PaintColor paintColor = PaintColor.values()[index % PaintColor.values().length];
         int mass = 1000;

@@ -62,7 +62,7 @@ public class BillService implements Serializable {
             if (true
                     && (carTrackerId == null || carTrackerId.equals(bill.getCarTrackerId()))
                     && (driverBSN == null || driverBSN == bill.getDriverBSN())
-                    && (id == null || id == bill.getId())) {
+                    && (id == null || id == bill.getID())) {
                 bills.add(bill);
             }
         }
