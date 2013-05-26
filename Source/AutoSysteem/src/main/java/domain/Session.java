@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Session
 {
 
+    private int authCode = 0;
     private Date date;
     private Collection<TimeStep> timesteps;
 
@@ -45,5 +46,15 @@ public class Session
     public void setTimesteps(Collection<TimeStep> timesteps)
     {
         this.timesteps = timesteps;
+    }
+
+    public int getAuthCode()
+    {
+        return authCode;
+    }
+
+    public void setAuthCode(int auth)
+    {
+        this.authCode = auth;
     }
 }

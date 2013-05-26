@@ -81,12 +81,12 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 //        }
 
         //FOR TESTING PURPOSES
-        if (loggedInDriver == null)
-        {
+         if (loggedInDriver == null)
+         {
         //loggedInDriver = new Driver();
-            loggedInDriver = adminService.getDriver("leslie.aerts@marbl.com", "leslie123");
-            setDriver(loggedInDriver);
-        }
+             loggedInDriver = adminService.getDriver("leslie.aerts@marbl.com", "leslie123");
+             setDriver(loggedInDriver);
+         }
 
         //Simulation happens here
         sim = new Simulator(jsInterval.getValue(), CAR_SIMULATION_STEP, this);
@@ -454,8 +454,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                 {
                     sim.start();
                     btStartSimulation.setText("Stop Simulatie");
-                }
-                else
+                } else
                 {
                     JOptionPane.showMessageDialog(null, "Er zijn nog geen auto's in de simulatie geplaatst.", null, JOptionPane.WARNING_MESSAGE);
                 }
@@ -463,10 +462,9 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             } else
             {
                 sim.stop();
-                btStartSimulation.setText("Start Simulatie");
-                Session sess = new Session(sim.getSessionDate(), sim.getTimesteps());
+                btStartSimulation.setText("Start Simulatie");               
 
-                if (sendSession(sess))
+                if (sendSession(sim.generateSession()))
                 {
                     JOptionPane.showMessageDialog(null, "Simulatie gestopt. De verplaatsingsgegevens van de auto's zijn verstuurd.");
                 } else
@@ -689,6 +687,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             JOptionPane.showMessageDialog(null, "Simulatie gestopt. Verplaatsingen worden verstuurd naar Verplaatsingsysteem.");
             ClientConfig config = new DefaultClientConfig();
             Client client = Client.create(config);
+            
             //De URL klopt natuurlijk nog niet
             WebResource service = client.resource("http://localhost:8080/VerplaatsingSysteemWeb/");
             service.path("resources").path("xml").post(s);

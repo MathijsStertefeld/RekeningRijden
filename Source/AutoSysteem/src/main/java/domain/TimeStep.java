@@ -15,14 +15,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class TimeStep
 {
+
     private double time;
+    private ArrayList<Movement> movements;
     private ArrayList<Vehicle> vehicles;
 
     public TimeStep(double time)
     {
         this.time = time;
+        movements = new ArrayList<Movement>();
         vehicles = new ArrayList<Vehicle>();
     }
+
     @XmlAttribute(name = "time")
     public double getTime()
     {
@@ -34,6 +38,21 @@ public class TimeStep
         this.time = time;
     }
 
+    public ArrayList<Movement> getMovements()
+    {
+        return movements;
+    }
+
+    public void setMovements(ArrayList<Movement> movements)
+    {
+        this.movements = movements;
+    }
+
+    public void addMovement(Movement m)
+    {
+        movements.add(m);
+    }
+
     public ArrayList<Vehicle> getVehicles()
     {
         return vehicles;
@@ -43,9 +62,9 @@ public class TimeStep
     {
         this.vehicles = vehicles;
     }
-    
+
     public void addVehicle(Vehicle v)
     {
-        vehicles.add(v);
+        this.vehicles.add(v);
     }
 }

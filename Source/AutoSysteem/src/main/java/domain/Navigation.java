@@ -1,8 +1,9 @@
+package domain;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain.simulation;
 
 import domain.GeoPosition;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
@@ -79,7 +80,7 @@ public class Navigation
         return bearing;
     }
 
-    private static double getDistance(double lat1, double lon1, double lat2, double lon2, char unit)
+    public static double getDistance(double lat1, double lon1, double lat2, double lon2, char unit)
     {
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));

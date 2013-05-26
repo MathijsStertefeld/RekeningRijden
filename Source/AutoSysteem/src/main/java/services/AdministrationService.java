@@ -15,6 +15,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import sun.security.provider.SHA;
 
@@ -38,18 +39,19 @@ public class AdministrationService
     public Collection<Car> getCarsFromUser(Driver driver)
     {
         Collection<Car> cars;
-        System.out.println(resource.path("resources").path("cars").queryParam("driverBsn", Integer.toString(driver.getBsn())));
-        
-        String bsn =Integer.toString(driver.getBsn());
-        
-        cars = resource.path("resources").path("cars")
-                .queryParam("driverBsn", bsn )
+        System.out.println(resource.path("cars").queryParam("driverBsn", Integer.toString(driver.getBSN())));
+
+        String bsn = Integer.toString(driver.getBSN());
+
+        cars = resource.path("cars")
+                .queryParam("driverBsn", bsn)
                 .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<Collection<Car>>() {
+                .get(new GenericType<Collection<Car>>()
+        {
         });
 //.path("resources").path("cars").queryParam("driverBsn", Integer.toString(driver.getBsn())).accept(MediaType.APPLICATION_JSON).get(new GenericType<Collection<Car>>()
- //       {
-   //     });
+        //       {
+        //     });
 
 //        Collection<String> carTrackers = new ArrayList<String>();
 //
@@ -67,19 +69,19 @@ public class AdministrationService
 
         Hasher hasher = new Hasher("SHA-256", "UTF-8");
 
-        driver = new ArrayList<Driver>(resource.path("resources").path("drivers").queryParam("email", email).accept(MediaType.APPLICATION_JSON).get(new GenericType<Collection<Driver>>()
-        {
-        })).get(0);
+        password = hasher.hash(password);
 
-        String hashedPassword = hasher.hash(password);
-
-        if (hashedPassword.equals(driver.getPassword()))
+        try
         {
-            return driver;
-        }
-        else
+            driver = resource.path("resources").path("drivers").path("login").queryParam("email", email)
+                    .queryParam("password", password).get(Driver.class);
+        } catch (WebApplicationException ex)
         {
             return null;
         }
+
+        String hashedPassword = hasher.hash(password);
+
+        return driver;
     }
 }

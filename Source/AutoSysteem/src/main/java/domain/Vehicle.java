@@ -4,13 +4,12 @@
  */
 package domain;
 
-import domain.simulation.Navigation;
 import com.marbl.administration.domain.Car;
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import openstreetmaps.org.openstreetmap.gui.CarGraphic;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
+import org.openstreetmap.osmosis.core.domain.v0_6.Way;
 
 /**
  *
@@ -25,7 +24,7 @@ public class Vehicle extends com.marbl.administration.domain.Car
 
     public Vehicle(Car c, ArrayList<Node> routeNodes)
     {
-        super(c.getCarTrackerId(), c.getLicensePlate(), c.getType(), c.getPaintColor(), c.getMass(), c.getClassification(), c.getBrand(), c.getModel(), c.getDriverBsn());
+        super(c.getCarTrackerId(), c.getLicensePlate(), c.getType(), c.getPaintColor(), c.getMass(), c.getClassification(), c.getBrand(), c.getModel(), c.getDriverBSN());
         this.route = new Route(routeNodes);
         Node n = this.route.getRoute().get(0);
         graphic = new CarGraphic(this.getCarTrackerId(), n.getLatitude(), n.getLongitude());
@@ -89,5 +88,15 @@ public class Vehicle extends com.marbl.administration.domain.Car
     public void place(double lat, double lon)
     {
         this.graphic.place(lat, lon);
+    }
+
+    public Edge getCurrentEdge()
+    {
+        Node n = this.getRoute().getRoute().get(this.getRoute().getTargetIndex());
+        Way w = Osmosis.getWayFromNode(n);
+        Edge e = Osmosis.createNewEdgeFromWay(w);
+        e.setName(Osmosis.getValueOfWay(w, "name"));
+
+        return e;        
     }
 }
