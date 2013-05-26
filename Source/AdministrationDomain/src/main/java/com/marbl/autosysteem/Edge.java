@@ -4,6 +4,7 @@
  */
 package com.marbl.autosysteem;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAttribute;
 
@@ -11,10 +12,13 @@ import javax.xml.bind.annotation.XmlAttribute;
  *
  * @author Leslie Aerts
  */
+@Entity
 public class Edge
 {
 
+    @Id
     private String edge_id;
+    
     private String name;
     private String type; // Values are "city", "highway" or "region".
     private String city;
