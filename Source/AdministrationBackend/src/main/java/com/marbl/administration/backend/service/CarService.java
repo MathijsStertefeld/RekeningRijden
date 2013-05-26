@@ -54,7 +54,7 @@ public class CarService implements Serializable {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Collection<Car> findAll(
             @QueryParam("carTrackerId") String carTrackerId,
-            @QueryParam("driverBsn") Integer driverBsn,
+            @QueryParam("driverBSN") Integer driverBSN,
             @QueryParam("licensePlate") String licensePlate) {
 
         Collection<Car> cars = new ArrayList<>();
@@ -62,7 +62,7 @@ public class CarService implements Serializable {
         for (Car car : carDAO.findAll()) {
             if (true
                     && (carTrackerId == null || carTrackerId.equals(car.getCarTrackerId()))
-                    && (driverBsn == null || driverBsn == car.getDriverBsn())
+                    && (driverBSN == null || driverBSN == car.getDriverBSN())
                     && (licensePlate == null || licensePlate.equals(car.getLicensePlate()))) {
                 cars.add(car);
             }
@@ -73,7 +73,7 @@ public class CarService implements Serializable {
 
     @GET
     @Path("count")
-    @Produces("text/plain")
+    @Produces(MediaType.TEXT_PLAIN)
     public String count() {
         return String.valueOf(carDAO.count());
     }
