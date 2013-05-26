@@ -18,33 +18,33 @@ public class RateService implements Serializable {
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        webResource = client.resource("http://localhost:8080/AdministrationBackend/");
+        webResource = client.resource("http://localhost:8080/AdministrationBackend/resources/rates/");
     }
 
     public void create(Rate rate) {
-        webResource.path("resources").path("rate").post(Rate.class, rate);
+        webResource.post(Rate.class, rate);
     }
 
     public Rate edit(Rate rate) {
-        return webResource.path("resources").path("rate").put(Rate.class, rate);
+        return webResource.put(Rate.class, rate);
     }
 
     public void remove(String name) {
-        webResource.path("resources").path("rate").path(name).delete();
+        webResource.path(name).delete();
     }
 
     public Rate find(String name) {
-        return webResource.path("resources").path("rate").path(name).get(Rate.class);
+        return webResource.path(name).get(Rate.class);
     }
 
     public Collection<Rate> findAll() {
-        return webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { });
+        return webResource.get(new GenericType<Collection<Rate>>() { });
     }
     
     public Collection<Rate> findAllHighwayRates()
     {
         Collection<Rate> rates = new ArrayList<>();
-        for (Rate r : webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { }))
+        for (Rate r : webResource.get(new GenericType<Collection<Rate>>() { }))
         {
             if (r.getClass() == Rate.class) {
                 rates.add((Rate)r);
@@ -56,7 +56,7 @@ public class RateService implements Serializable {
     public Collection<Rate> findAllCityRates()
     {
         Collection<Rate> rates = new ArrayList<>();
-        for (Rate r : webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { }))
+        for (Rate r : webResource.get(new GenericType<Collection<Rate>>() { }))
         {
             if (r.getClass() == Rate.class) {
                 rates.add((Rate)r);
@@ -68,7 +68,7 @@ public class RateService implements Serializable {
     public Collection<Rate> findAllRegionRates()
     {
         Collection<Rate> rates = new ArrayList<>();
-        for (Rate r : webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { }))
+        for (Rate r : webResource.get(new GenericType<Collection<Rate>>() { }))
         {
             if (r.getClass() == Rate.class) {
                 rates.add((Rate)r);
@@ -80,7 +80,7 @@ public class RateService implements Serializable {
     public Collection<Rate> findAllVehicleRates()
     {
         Collection<Rate> rates = new ArrayList<>();
-        for (Rate r : webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { }))
+        for (Rate r : webResource.get(new GenericType<Collection<Rate>>() { }))
         {
             if (r.getClass() == Rate.class) {
                 rates.add((Rate)r);
@@ -92,7 +92,7 @@ public class RateService implements Serializable {
     public Rate findMassRate()
     {
         Rate rate = new Rate();
-        for (Rate r : webResource.path("resources").path("rate").get(new GenericType<Collection<Rate>>() { }))
+        for (Rate r : webResource.get(new GenericType<Collection<Rate>>() { }))
         {
             if (r.getClass() == Rate.class) {
                 rate = (Rate)r;
@@ -102,10 +102,10 @@ public class RateService implements Serializable {
     }
 
     public Collection<Rate> findRange(Integer from, Integer to) {
-        return webResource.path("resources").path("rate").path(from.toString()).path(to.toString()).get(new GenericType<Collection<Rate>>() { });
+        return webResource.path(from.toString()).path(to.toString()).get(new GenericType<Collection<Rate>>() { });
     }
 
     public int count() {
-        return Integer.parseInt(webResource.path("resources").path("rate").path("count").get(String.class));
+        return Integer.parseInt(webResource.path("count").get(String.class));
     }
 }

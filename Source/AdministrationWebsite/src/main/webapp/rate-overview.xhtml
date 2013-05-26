@@ -33,7 +33,7 @@
                 <h:form id="rateForm">
                     <strong>Regio</strong>
                     
-                    <p:dataTable sortBy="#{rate.name}" id="regionDataTable" var="rate" value="#{rateBean.all}" tableStyle="table-layout:fixed;">
+                    <p:dataTable sortBy="#{rate.name}" id="regionDataTable" var="rate" value="#{rateBean.regionRates}" tableStyle="table-layout:fixed;">
                         <p:column sortBy="#{rate.name}}" style="white-space:normal" headerText="Naam">
                             <h:outputLink value="rate-details.xhtml">
                                 <f:param name="name" value="#{rate.name}" />
@@ -47,7 +47,7 @@
                     </p:dataTable>
 
                     <strong>Stad</strong>
-                    <p:dataTable id="cityDataTable" var="rate" value="#{rateBean.all}" tableStyle="table-layout:fixed;">
+                    <p:dataTable id="cityDataTable" var="rate" value="#{rateBean.cityRates}" tableStyle="table-layout:fixed;">
                         <p:column sortBy="#{rate.name}}" style="white-space:normal" headerText="Naam">
                             <h:outputLink value="rate-details.xhtml">
                                 <f:param name="name" value="#{rate.name}" />
@@ -61,7 +61,7 @@
                     </p:dataTable>
 
                     <strong>Snelweg</strong>
-                    <p:dataTable id="highwayDataTable" var="rate" value="#{rateBean.all}" tableStyle="table-layout:fixed;">
+                    <p:dataTable id="highwayDataTable" var="rate" value="#{rateBean.highwayRates}" tableStyle="table-layout:fixed;">
                         <p:column sortBy="#{rate.name}}" style="white-space:normal" headerText="Naam">
                             <h:outputLink value="rate-details.xhtml">
                                 <f:param name="name" value="#{rate.name}" />
@@ -79,7 +79,7 @@
                     </p:dataTable>
 
                     <strong>Voertuig Type</strong>
-                    <p:dataTable id="verhicleTypeDataTable" var="rate" value="#{rateBean.all}" tableStyle="table-layout:fixed;">
+                    <p:dataTable id="verhicleTypeDataTable" var="rate" value="#{rateBean.vehicleRates}" tableStyle="table-layout:fixed;">
                         <p:column sortBy="#{rate.name}}" style="white-space:normal" headerText="Naam">
                             <h:outputLink value="rate-details.xhtml">
                                 <f:param name="name" value="#{rate.name}" />

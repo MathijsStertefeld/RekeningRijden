@@ -4,7 +4,6 @@ import com.marbl.administration.domain.Employee;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import java.io.Serializable;
-import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
@@ -17,10 +16,10 @@ public class EmployeeService implements Serializable {
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        webResource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/");
+        webResource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/employees/");
     }
 
     public Employee find(String username) {
-        return webResource.path("employees").path(username).get(Employee.class);
+        return webResource.path(username).get(Employee.class);
     }
 }

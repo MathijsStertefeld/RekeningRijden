@@ -18,18 +18,18 @@ public class BillService implements Serializable {
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        webResource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/");
+        webResource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/bills/");
     }
 
     public Bill edit(Bill bill) {
-        return webResource.path("bills").accept(MediaType.APPLICATION_JSON).put(Bill.class, bill);
+        return webResource.accept(MediaType.APPLICATION_JSON).put(Bill.class, bill);
     }
 
     public Bill find(Long id) {
-        return webResource.path("bills").path(id.toString()).accept(MediaType.APPLICATION_JSON).get(Bill.class);
+        return webResource.path(id.toString()).accept(MediaType.APPLICATION_JSON).get(Bill.class);
     }
 
     public Collection<Bill> findAll() {
-        return webResource.path("bills").accept(MediaType.APPLICATION_JSON).get(new GenericType<Collection<Bill>>() { });
+        return webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<Collection<Bill>>() { });
     }
 }
