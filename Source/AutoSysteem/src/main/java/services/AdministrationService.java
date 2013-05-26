@@ -39,12 +39,12 @@ public class AdministrationService
     public Collection<Car> getCarsFromUser(Driver driver)
     {
         Collection<Car> cars;
-        System.out.println(resource.path("resources").path("cars").queryParam("driverBsn", Integer.toString(driver.getBSN())));
+        System.out.println(resource.path("resources").path("cars").queryParam("driverBSN", Integer.toString(driver.getBSN())));
 
         String bsn = Integer.toString(driver.getBSN());
 
         cars = resource.path("resources").path("cars")
-                .queryParam("driverBsn", bsn)
+                .queryParam("driverBSN", bsn)
                 .accept(MediaType.APPLICATION_JSON)
                 .get(new GenericType<Collection<Car>>()
         {

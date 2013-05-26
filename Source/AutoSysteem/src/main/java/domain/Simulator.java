@@ -95,15 +95,16 @@ public class Simulator implements Runnable
                 tempframe.setOutputText("Timestep " + ts.getTime() + "\n");
                 for (Vehicle v : CarHolder.getCars())
                 {
-                    double distance = 0;
+                    double distance = 5;
                     //Add movement to ts
-                    if (timesteps.size() > 0)
-                    {
-                        int lastTimeStepIndex = timesteps.size()-1;
-                        int lastVehicleIndex = timesteps.get(lastTimeStepIndex).getVehicles().size()-1;
-                        Vehicle previousVehicle = timesteps.get(lastTimeStepIndex).getVehicles().get(lastVehicleIndex);
-                        distance = this.getDistanceInMeters(previousVehicle.getPosition(), v.getPosition());
-                    }
+//                    if (timesteps.size() > 0)
+//                    {
+//                        int lastTimeStepIndex = timesteps.size()-1;
+//                        int lastVehicleIndex = timesteps.get(lastTimeStepIndex).getVehicles().indexOf(v);
+//                        Vehicle previousVehicle = timesteps.get(lastTimeStepIndex).getVehicles().get(lastVehicleIndex);
+//                        distance = this.getDistanceInMeters(previousVehicle.getPosition(), v.getPosition());
+//                    }   
+                    
                     Movement m = new Movement(v.getDriverBSN(), v.getCarTrackerId(), sessionDate, v.getCurrentEdge().getName(), distance);
                     ts.addMovement(m);
                     ts.addVehicle(v);
@@ -143,16 +144,13 @@ public class Simulator implements Runnable
 
     private double getDistanceInMeters(GeoPosition from, GeoPosition to)
     {
-        return Navigation.getDistance(from.getLatitudeInDegrees(), from.getLongitudeInDegrees(), to.getLatitudeInDegrees(), to.getLongitudeInDegrees(), 'K')*1000;
+        return Navigation.getDistance(from.getLatitudeInDegrees(), from.getLongitudeInDegrees(), to.getLatitudeInDegrees(), to.getLongitudeInDegrees(), 'M');
     }
 
     public Session generateSession()
     {
         Session s = new Session(sessionDate, timesteps);
 
-        for (TimeStep ts : this.timesteps)
-        {
-        }
         return s;
     }
 }

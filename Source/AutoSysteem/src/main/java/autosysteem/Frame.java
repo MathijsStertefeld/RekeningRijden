@@ -81,12 +81,12 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 //        }
 
         //FOR TESTING PURPOSES
-         if (loggedInDriver == null)
-         {
-        //loggedInDriver = new Driver();
-             loggedInDriver = adminService.getDriver("leslie.aerts@marbl.com", "leslie123");
-             setDriver(loggedInDriver);
-         }
+        if (loggedInDriver == null)
+        {
+            //loggedInDriver = new Driver();
+            loggedInDriver = adminService.getDriver("leslie.aerts@marbl.com", "leslie123");
+            setDriver(loggedInDriver);
+        }
 
         //Simulation happens here
         sim = new Simulator(jsInterval.getValue(), CAR_SIMULATION_STEP, this);
@@ -412,35 +412,37 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         }
         String chosenCarString = (String) JOptionPane.showInputDialog(this, "Selecteer een auto.", "Auto selectie", JOptionPane.QUESTION_MESSAGE, null, carStrings.toArray(), carStrings.get(0));
 
-        // Create a car object.
-        Car selectedCar = null;
-        for (Car c : cars)
+        if (chosenCarString != null && chosenCarString.length() != 0)
         {
-            //String carString = c.getBrand() + " " + c.getModel() + " (" + c.getLicensePlate() + ")";
-            if (c.getLicensePlate().equals(chosenCarString))
+            // Create a car object.
+            Car selectedCar = null;
+            for (Car c : cars)
             {
-                selectedCar = c;
+                //String carString = c.getBrand() + " " + c.getModel() + " (" + c.getLicensePlate() + ")";
+                if (c.getLicensePlate().equals(chosenCarString))
+                {
+                    selectedCar = c;
+                }
             }
+
+            // Add the license plate to the currentCarComboBox
+            if (selectedCar != null)
+            {
+                currentCarComboBox.addItem(selectedCar.getLicensePlate());
+            }
+
+            String routeAmountString = JOptionPane.showInputDialog(null, "Hoeveel wegen moet de route van deze auto bevatten?");
+
+            int routeAmount = Integer.parseInt(routeAmountString);
+
+            //TODO: AFVANGEN
+            ArrayList<Node> route = Osmosis.plotPath(routeAmount);
+
+            Vehicle v = new Vehicle(selectedCar, route);
+
+            sim.addCar(v, route);
+            map.addCarGraphic(v.getCarGraphic());
         }
-
-        // Add the license plate to the currentCarComboBox
-        if (selectedCar != null)
-        {
-            currentCarComboBox.addItem(selectedCar.getLicensePlate());
-        }
-
-        String routeAmountString = JOptionPane.showInputDialog(null, "Hoeveel wegen moet de route van deze auto bevatten?");
-
-        int routeAmount = Integer.parseInt(routeAmountString);
-
-        //TODO: AFVANGEN
-        ArrayList<Node> route = Osmosis.plotPath(routeAmount);
-
-        Vehicle v = new Vehicle(selectedCar, route);
-
-        sim.addCar(v, route);
-        map.addCarGraphic(v.getCarGraphic());
-
         validate();
     }//GEN-LAST:event_btAddCarActionPerformed
 
@@ -462,7 +464,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             } else
             {
                 sim.stop();
-                btStartSimulation.setText("Start Simulatie");               
+                btStartSimulation.setText("Start Simulatie");
 
                 if (sendSession(sim.generateSession()))
                 {
@@ -687,7 +689,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             JOptionPane.showMessageDialog(null, "Simulatie gestopt. Verplaatsingen worden verstuurd naar Verplaatsingsysteem.");
             ClientConfig config = new DefaultClientConfig();
             Client client = Client.create(config);
-            
+
             //De URL klopt natuurlijk nog niet
             WebResource service = client.resource("http://localhost:8080/VerplaatsingSysteemWeb/");
             service.path("resources").path("xml").post(s);

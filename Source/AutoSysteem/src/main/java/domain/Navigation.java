@@ -4,7 +4,6 @@ package domain;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import domain.GeoPosition;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 
@@ -14,6 +13,7 @@ import org.openstreetmap.osmosis.core.domain.v0_6.Node;
  */
 public class Navigation
 {
+
     private static final double Earth_Radius = 6371;
 
     public static double getCarSpeedCalc(double km)
@@ -82,21 +82,33 @@ public class Navigation
 
     public static double getDistance(double lat1, double lon1, double lat2, double lon2, char unit)
     {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        if (unit == 'K')
-        {
-            dist = dist * 1.609344;
-        } else
-        {
-            if (unit == 'N')
-            {
-                dist = dist * 0.8684;
-            }
-        }
-        return (dist);
+//        double theta = lon1 - lon2;
+//        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+//        dist = Math.acos(dist);
+//        dist = rad2deg(dist);
+//        dist = dist * 60 * 1.1515;
+//        if (unit == 'M')
+//        {
+//            dist = dist * 1.609344*1000;
+//        } else
+//        {
+//            if (unit == 'N')
+//            {
+//                dist = dist * 0.8684;
+//            }
+//        }
+
+        long R = 6371; // km
+        double dLat = deg2rad(lat2 - lat1);
+        double dLon = deg2rad(lon2 - lon1);
+        double lat11 = deg2rad(lat1);
+        double lat22 = deg2rad(lat2);
+
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat11) * Math.cos(lat22);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double d = R * c;
+        System.out.println(d);
+        return d;
     }
 }
