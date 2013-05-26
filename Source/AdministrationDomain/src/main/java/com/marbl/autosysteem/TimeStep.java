@@ -4,6 +4,7 @@
  */
 package com.marbl.autosysteem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -21,15 +23,16 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class TimeStep
+public class TimeStep implements Serializable
 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private double time;
+    private double timestepTime;
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "parentTimestep")
     private ArrayList<Movement> movements;
+
     @ManyToOne
     private Session parentSession;
 
@@ -39,7 +42,7 @@ public class TimeStep
 
     public TimeStep(double time)
     {
-        this.time = time;
+        this.timestepTime = time;
         movements = new ArrayList<Movement>();
     }
 
@@ -53,6 +56,7 @@ public class TimeStep
         this.id = id;
     }
 
+    @XmlTransient
     public Session getParentSession()
     {
         return parentSession;
@@ -66,12 +70,12 @@ public class TimeStep
     @XmlAttribute(name = "time")
     public double getTime()
     {
-        return time;
+        return timestepTime;
     }
 
     public void setTime(double time)
     {
-        this.time = time;
+        this.timestepTime = time;
     }
 
     public ArrayList<Movement> getMovements()
@@ -90,8 +94,4 @@ public class TimeStep
         movements.add(m);
     }
 
-    public void setSession(Session s)
-    {
-        this.parentSession = s;
-    }
 }

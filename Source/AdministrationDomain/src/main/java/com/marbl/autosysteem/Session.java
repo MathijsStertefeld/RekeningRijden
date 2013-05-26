@@ -4,6 +4,7 @@
  */
 package com.marbl.autosysteem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -12,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -23,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity(name = "simsession")
 @XmlRootElement(name = "collection")
-public class Session
+public class Session implements Serializable
 {
 
     @Id
@@ -32,12 +35,13 @@ public class Session
     private int authCode = 0;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date sessiondate;
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "session")
+    
+    @OneToMany(cascade= CascadeType.MERGE,mappedBy="parentSession")
     private Collection<TimeStep> timesteps;
 
     public Session()
     {
-        this.timesteps = new ArrayList<TimeStep>();
+        this.timesteps = new ArrayList<>();
     }
 
     public Session(Date date, ArrayList<TimeStep> timesteps)

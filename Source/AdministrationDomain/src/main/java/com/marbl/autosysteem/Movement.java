@@ -175,6 +175,7 @@ public class Movement implements Serializable
         this.distance = distance;
     }
 
+    @XmlTransient
     public TimeStep getParentTimestep()
     {
         return parentTimestep;
