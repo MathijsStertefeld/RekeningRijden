@@ -1,6 +1,7 @@
 package com.marbl.administration.website.service;
 
 import com.marbl.administration.domain.Employee;
+import com.marbl.administration.domain.utils.Hasher;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import java.io.Serializable;
@@ -26,6 +27,9 @@ public class EmployeeService implements Serializable {
     }
     
     public Employee login(String username, String password) {
+        Hasher hasher = new Hasher("SHA-256", "UTF-8");
+        password = hasher.hash(password);
+        
         ClientResponse cr = wr.path("login")
                 .queryParam("username", username)
                 .queryParam("password", password)

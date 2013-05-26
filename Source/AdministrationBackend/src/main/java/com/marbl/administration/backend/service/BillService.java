@@ -3,8 +3,6 @@ package com.marbl.administration.backend.service;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.backend.dao.BillDAO;
 import com.marbl.administration.domain.Bill;
-import com.sun.jersey.api.client.ClientResponse;
-import java.awt.MediaTracker;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.Stateless;

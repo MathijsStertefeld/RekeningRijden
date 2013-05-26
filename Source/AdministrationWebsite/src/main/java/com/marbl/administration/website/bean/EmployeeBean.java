@@ -3,8 +3,12 @@ package com.marbl.administration.website.bean;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.Employee;
 import com.marbl.administration.website.service.EmployeeService;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 //</editor-fold>
@@ -40,19 +44,15 @@ public class EmployeeBean implements Serializable {
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Methods">
-    public String checkLogin() {
+    public void checkLogin() throws IOException {
         if (employee == null) {
-            return "login.xhtml";
-        } else {
-            return null;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
         }
     }
     
-    public String checkLogout() {
+    public void checkLogout() throws IOException {
         if (employee != null) {
-            return "car-overview.xhtml";
-        } else {
-            return null;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("car-overview.xhtml");
         }
     }
     
@@ -65,6 +65,7 @@ public class EmployeeBean implements Serializable {
     
     public String logout() {
         employee = null;
+        System.out.println(employee);
         return "";
     }
     //</editor-fold>

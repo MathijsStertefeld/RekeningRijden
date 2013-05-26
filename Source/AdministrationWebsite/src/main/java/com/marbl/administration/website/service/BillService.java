@@ -60,7 +60,7 @@ public class BillService implements Serializable {
                 .accept(MediaType.APPLICATION_JSON)
                 .get(ClientResponse.class);
         
-        GenericType<ArrayList<Bill>> gt = new GenericType() {
+        GenericType<ArrayList<Bill>> gt = new GenericType<ArrayList<Bill>>() {
         };
         
         switch (cr.getClientResponseStatus()) {
