@@ -5,7 +5,7 @@ import com.marbl.administration.domain.Bill;
 import com.marbl.administration.website.service.BillService;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -21,14 +21,14 @@ public class BillBean implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private BillService service;
-    private Collection<Bill> all;
+    private ArrayList<Bill> all;
     private Bill current;
     private int month;
     private int year;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public Collection<Bill> getAll() {
+    public ArrayList<Bill> getAll() {
         return all;
     }
 

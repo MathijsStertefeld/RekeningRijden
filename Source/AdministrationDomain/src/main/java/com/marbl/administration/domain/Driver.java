@@ -2,9 +2,9 @@ package com.marbl.administration.domain;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 //</editor-fold>
@@ -30,7 +30,7 @@ public class Driver implements Serializable {
         @JoinColumn(name = "BSN")})
     @Column(name = "GROUPNAME")
     @Enumerated(EnumType.STRING)
-    private Collection<DriverGroup> groups;
+    private List<DriverGroup> groups;
     private Boolean activated;
     //</editor-fold>
 
@@ -107,11 +107,11 @@ public class Driver implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Collection<DriverGroup> getGroups() {
+    public List<DriverGroup> getGroups() {
         return groups;
     }
 
-    public void setGroups(Collection<DriverGroup> groups) {
+    public void setGroups(List<DriverGroup> groups) {
         this.groups = groups;
     }
 
@@ -127,13 +127,12 @@ public class Driver implements Serializable {
     
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Driver() {
-        this(900000000, "", "", "", "", "", "", "", new Date(),
-                Arrays.asList(DriverGroup.DRIVER), false);
+        this(900000000, "", "", "", "", "", "", "", new Date(), false);
     }
 
-    public Driver(Integer bsn, String firstName, String lastName, String email,
-            String Password, String residence, String address, String zipCode,
-            Date dateOfBirth, Collection<DriverGroup> groups, Boolean activated) {
+    public Driver(Integer bsn, String firstName, String lastName,
+            String email, String Password, String residence, String address,
+            String zipCode, Date dateOfBirth, Boolean activated) {
         this.bsn = bsn;
         this.email = email;
         this.password = Password;
@@ -143,8 +142,8 @@ public class Driver implements Serializable {
         this.address = address;
         this.zipCode = zipCode;
         this.dateOfBirth = dateOfBirth;
-        this.groups = groups;
         this.activated = activated;
+        this.groups = new ArrayList();
     }
     //</editor-fold>
 

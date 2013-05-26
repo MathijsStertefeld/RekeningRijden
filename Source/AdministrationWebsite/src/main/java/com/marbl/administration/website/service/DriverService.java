@@ -4,7 +4,7 @@ import com.marbl.administration.domain.Driver;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 
@@ -17,18 +17,18 @@ public class DriverService implements Serializable {
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
-        webResource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/");
+        webResource = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/drivers/");
     }
 
     public Driver edit(Driver driver) {
-        return webResource.path("drivers").put(Driver.class, driver);
+        return webResource.put(Driver.class, driver);
     }
 
     public Driver find(Integer bsn) {
-        return webResource.path("drivers").path(bsn.toString()).get(Driver.class);
+        return webResource.path(bsn.toString()).get(Driver.class);
     }
 
-    public Collection<Driver> findAll() {
-        return webResource.path("drivers").get(new GenericType<Collection<Driver>>() { });
+    public ArrayList<Driver> findAll() {
+        return webResource.get(new GenericType<ArrayList<Driver>>() { });
     }
 }

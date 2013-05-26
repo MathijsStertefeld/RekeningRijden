@@ -112,8 +112,7 @@ public class EmployeeBean implements Serializable {
         try {
             request.logout();
             externalContext.redirect(".");
-        } catch (IOException ex) {
-        } catch (ServletException ex) {
+        } catch (IOException | ServletException ex) {
         }
     }
     //</editor-fold>

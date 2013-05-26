@@ -40,15 +40,15 @@
                     <h:outputLabel for="name" value="Naam: " /><br />
                     <h:inputText id="name" value="#{rateBean.current.name}" style="width: 250px" disabled="true" /><br/>
                     
-                    <h:outputLabel for="price" value="Prijs: " /><br />
-                    <h:inputText id="price" value="#{rateBean.current.price}" style="width: 250px" /><br/>
-                    
                     <h:outputLabel for="roadType" value="Type: " /><br />
                     <h:selectOneMenu id="roadType" style="width: 250px">
                         <f:selectItem itemValue="REGION" itemLabel="Regio" />
                         <f:selectItem itemValue="CITY" itemLabel="Stad" />
                         <f:selectItem itemValue="HIGHWAY" itemLabel="Snelweg" />
                     </h:selectOneMenu><br/>
+                    
+                    <h:outputLabel for="price" value="Prijs: " /><br />
+                    <h:inputText id="price" value="#{rateBean.current.price}" style="width: 250px" /><br/>
                     
                     <h:outputLabel for="timePeriod" value="Tijdsperiode: " /><br />
                     <h:selectOneMenu id="timePeriod" style="width: 250px">

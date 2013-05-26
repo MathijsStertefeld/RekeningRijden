@@ -3,17 +3,10 @@ package com.marbl.administration.backend.service;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.backend.dao.DriverDAO;
 import com.marbl.administration.domain.Driver;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import javax.ejb.Stateless;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -58,14 +51,14 @@ public class DriverService implements Serializable {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Collection<Driver> findAll(
+    public ArrayList<Driver> findAll(
             @QueryParam("bsn") Integer bsn,
             @QueryParam("email") String email,
             @QueryParam("firstName") String firstName,
             @QueryParam("lastName") String lastName,
             @QueryParam("residence") String residence) {
         
-        Collection<Driver> drivers = new ArrayList<>();
+        ArrayList<Driver> drivers = new ArrayList();
 
         for (Driver driver : driverDAO.findAll()) {
             if (true
@@ -88,29 +81,24 @@ public class DriverService implements Serializable {
         return String.valueOf(driverDAO.count());
     }
     
-    @POST
+    @GET
     @Path("login")
     @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Driver login(String email, String password) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = facesContext.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Driver login(
+            @QueryParam("email") String email,
+            @QueryParam("password") String password) {
         
         for (Driver driver : driverDAO.findAll()) {
             if (driver.getEmail().equals(email)) {
-                try {
-                    String username = driver.getBSN().toString();
-                    request.login(username, password);
+                if (driver.getPassword().equals(password)) {
                     return driver;
-                } catch (ServletException ex) {
-                    facesContext.addMessage(null, new FacesMessage(ex.getMessage()));
+                } else {
+                    break;
                 }
-                
-                break;
             }
         }
         
-        return null;
+        throw new WebApplicationException(404);
     }
 }

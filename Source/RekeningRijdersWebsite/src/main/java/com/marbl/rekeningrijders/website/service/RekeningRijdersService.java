@@ -2,6 +2,7 @@ package com.marbl.rekeningrijders.website.service;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.*;
+import com.marbl.administration.domain.utils.Hasher;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
@@ -9,10 +10,10 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 //</editor-fold>
 
@@ -48,14 +49,26 @@ public class RekeningRijdersService implements Serializable {
     }
 
     public Driver findDriverByEmail(String email) {
-        ArrayList<Driver> drivers = new ArrayList<>(resource
+        ArrayList<Driver> drivers = new ArrayList(resource
                 .path("drivers").queryParam("email", email)
                 .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<Collection<Driver>>() { }));
+                .get(new GenericType<ArrayList<Driver>>() { }));
 
         if (drivers.size() > 0) {
             return drivers.get(0);
         } else {
+            return null;
+        }
+    }
+    
+    public Driver login(String email, String password) {
+        Hasher hasher = new Hasher("SHA-256", "UTF-8");
+        password = hasher.hash(password);
+        
+        try {
+            return resource.path("drivers").path("login").queryParam("email", email)
+                    .queryParam("password", password).get(Driver.class);
+        } catch (WebApplicationException ex) {
             return null;
         }
     }
@@ -64,11 +77,11 @@ public class RekeningRijdersService implements Serializable {
         resource.path("drivers").post(Driver.class, driver);
     }
 
-    public Collection<Bill> findBillsByBSN(Integer bsn) {
+    public ArrayList<Bill> findBillsByBSN(Integer bsn) {
         return resource.path("bills")
                 .queryParam("driverBSN", bsn.toString())
                 .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<Collection<Bill>>() {
+                .get(new GenericType<ArrayList<Bill>>() {
         });
     }
 
@@ -85,11 +98,11 @@ public class RekeningRijdersService implements Serializable {
                 .accept(MediaType.APPLICATION_JSON).put(bill);
     }
 
-    public Collection<Car> findCarsByBSN(Integer bsn) {
+    public ArrayList<Car> findCarsByBSN(Integer bsn) {
         return resource.path("cars")
                 .queryParam("driverBSN", bsn.toString())
                 .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<Collection<Car>>() {
+                .get(new GenericType<ArrayList<Car>>() {
         });
     }
 

@@ -5,7 +5,6 @@ import com.marbl.administration.backend.dao.BillDAO;
 import com.marbl.administration.domain.Bill;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -52,12 +51,12 @@ public class BillService implements Serializable {
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Collection<Bill> findAll(
+    public ArrayList<Bill> findAll(
             @QueryParam("carTrackerId") String carTrackerId,
             @QueryParam("driverBSN") Integer driverBSN,
             @QueryParam("id") Long id) {
 
-        Collection<Bill> bills = new ArrayList<>();
+        ArrayList<Bill> bills = new ArrayList();
 
         for (Bill bill : billDAO.findAll()) {
             if (true
