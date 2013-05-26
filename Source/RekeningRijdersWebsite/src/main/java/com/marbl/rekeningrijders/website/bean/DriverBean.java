@@ -97,7 +97,7 @@ public class DriverBean implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        Driver driver = service.findDriverByEmail(loginEmail);
+        Driver driver = service.login(loginEmail, loginPassword);
         
         if (driver != null) {
             try {
@@ -106,8 +106,7 @@ public class DriverBean implements Serializable {
                 loginEmail = "";
                 loginPassword = "";
                 externalContext.redirect(".");
-            } catch (IOException ex) {
-            } catch (ServletException ex) {
+            } catch (IOException | ServletException ex) {
                 facesContext.addMessage(null, new FacesMessage(ex.getMessage()));
             }
         }
@@ -121,8 +120,7 @@ public class DriverBean implements Serializable {
         try {
             request.logout();
             externalContext.redirect(".");
-        } catch (IOException ex) {
-        } catch (ServletException ex) {
+        } catch (IOException | ServletException ex) {
         }
     }
 

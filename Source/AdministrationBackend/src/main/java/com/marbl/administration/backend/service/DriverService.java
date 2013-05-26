@@ -3,17 +3,11 @@ package com.marbl.administration.backend.service;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.backend.dao.DriverDAO;
 import com.marbl.administration.domain.Driver;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.ejb.Stateless;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -90,24 +84,15 @@ public class DriverService implements Serializable {
     
     @POST
     @Path("login")
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Driver login(String email, String password) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = facesContext.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        
         for (Driver driver : driverDAO.findAll()) {
             if (driver.getEmail().equals(email)) {
-                try {
-                    String username = driver.getBSN().toString();
-                    request.login(username, password);
+                if (driver.getPassword().equals(password)) {
                     return driver;
-                } catch (ServletException ex) {
-                    facesContext.addMessage(null, new FacesMessage(ex.getMessage()));
+                } else {
+                    break;
                 }
-                
-                break;
             }
         }
         

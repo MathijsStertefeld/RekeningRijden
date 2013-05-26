@@ -2,6 +2,7 @@ package com.marbl.rekeningrijders.website.service;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.*;
+import com.marbl.administration.domain.utils.Hasher;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
@@ -58,6 +59,15 @@ public class RekeningRijdersService implements Serializable {
         } else {
             return null;
         }
+    }
+    
+    public Driver login(String email, String password) {
+        Hasher hasher = new Hasher("SHA-256", "UTF-8");
+        password = hasher.hash(password);
+        
+        return resource.path("drivers").path("login")
+                .queryParam("email", email).queryParam("password", password)
+                .accept(MediaType.APPLICATION_JSON).post(Driver.class);
     }
 
     public void register(Driver driver) {
