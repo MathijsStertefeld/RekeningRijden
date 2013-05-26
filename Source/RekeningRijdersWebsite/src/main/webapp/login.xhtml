@@ -60,11 +60,11 @@
                         <h2>#{msg.LO_Login}</h2>
                         <h:outputLabel  value="#{msg.LO_Email}: " />
                         <br/>
-                        <h:inputText id="email" value="#{driverBean.loginEmail}"  style="width: 250px" />
+                        <h:inputText id="email" value="#{driverBean.email}"  style="width: 250px" />
                         <br/>
                         <h:outputLabel  value="#{msg.LO_Password}: " />
                         <br/>
-                        <h:inputSecret id="password" value="#{driverBean.loginPassword}"  style="width: 250px" />
+                        <h:inputSecret id="password" value="#{driverBean.password}"  style="width: 250px" />
                         <br/>
                         <br/>
                         <h:commandButton id="submit" value=" #{msg.LO_Log_In} " action="#{driverBean.login()}" />

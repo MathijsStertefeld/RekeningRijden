@@ -40,7 +40,7 @@ public class CarBean implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public void findAll() {
-        all = service.findCarsByBSN(driverBean.getLoggedInDriver().getBSN());
+        all = service.findCarsByBSN(driverBean.getDriver().getBSN());
     }
 
     public void findCurrent() {

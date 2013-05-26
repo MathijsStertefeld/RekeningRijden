@@ -15,43 +15,58 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("drivers")
 public class DriverService implements Serializable {
-    
+
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private DriverDAO driverDAO;
     //</editor-fold>
 
     @POST
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response create(Driver driver) {
         driverDAO.create(driver);
-        return Response.ok().build();
+        return Response.status(Response.Status.CREATED).entity(driver).build();
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Driver edit(Driver driver) {
-        return driverDAO.edit(driver);
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response edit(Driver driver) {
+        driver = driverDAO.edit(driver);
+        return Response.status(Response.Status.OK).entity(driver).build();
     }
 
     @DELETE
-    @Path("{id}")
-    public Response remove(@PathParam("id") Integer bsn) {
-        driverDAO.remove(driverDAO.find(bsn));
-        return Response.ok().build();
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response remove(Driver driver) {
+        driverDAO.remove(driver);
+        return Response.status(Response.Status.OK).entity(driver).build();
+    }
+
+    @DELETE
+    @Path("{bsn}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response remove(@PathParam("bsn") Integer bsn) {
+        Driver driver = driverDAO.find(bsn);
+        return remove(driver);
     }
 
     @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Driver find(@PathParam("id") Integer bsn) {
-        return driverDAO.find(bsn);
+    @Path("{bsn}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response find(@PathParam("bsn") Integer bsn) {
+        Driver driver = driverDAO.find(bsn);
+        return Response.status(Response.Status.OK).entity(driver).build();
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public ArrayList<Driver> findAll(
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findAll(
             @QueryParam("bsn") Integer bsn,
             @QueryParam("email") String email,
             @QueryParam("firstName") String firstName,
@@ -71,14 +86,16 @@ public class DriverService implements Serializable {
             }
         }
 
-        return drivers;
+        return Response.status(Response.Status.OK).entity(drivers).build();
     }
 
     @GET
     @Path("count")
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public String count() {
-        return String.valueOf(driverDAO.count());
+    public Response count() {
+        String s = String.valueOf(driverDAO.count());
+        return Response.status(Response.Status.OK).entity(s).build();
     }
     
     @POST
