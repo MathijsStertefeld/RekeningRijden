@@ -2,6 +2,9 @@ package com.marbl.administration.domain;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 //</editor-fold>
@@ -15,7 +18,7 @@ public class Rate implements Serializable {
     private String name;
     private Type type;
     private double price;
-    private double[] prices;
+    private double rushHourPrice;
     
     public enum Type { REGION, HIGHWAY, CITY, VEHICLE, MASS}
     //</editor-fold>
@@ -46,12 +49,12 @@ public class Rate implements Serializable {
         this.price = price;
     }
     
-    public double[] getPrices() {
-        return prices;
+    public double getRushHourPrice() {
+        return rushHourPrice;
     }
     
-    public void setPrices(double[] prices) {
-        this.prices = prices;
+    public void setRushHourPrice(double rushHourPrice) {
+        this.rushHourPrice = rushHourPrice;
     }
     
     //</editor-fold>
@@ -67,10 +70,11 @@ public class Rate implements Serializable {
         this.price = price;
     }
     
-        public Rate(String name, Type type, double[] prices) {
+        public Rate(String name, Type type, double price, double rushHourPrice) {
         this.name = name;
         this.type = type;
-        this.prices = prices;
+        this.price = price;
+        this.rushHourPrice = rushHourPrice;
     }
     //</editor-fold>
 
@@ -88,6 +92,18 @@ public class Rate implements Serializable {
     @Override
     public String toString() {
         return "Rate{" + "name=" + name + '}';
+    }
+    
+    public boolean retrieveSingleRate()
+    {
+        if (type == Type.HIGHWAY)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
     //</editor-fold>
 }

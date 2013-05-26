@@ -92,7 +92,7 @@ public class Simulator implements Runnable
                 double time = (double) timesteps.size();
                 TimeStep ts = new TimeStep(time);
 
-                tempframe.setOutputText("Timestep " + ts.getTime() + "\n");
+                tempframe.setOutputText("Timestep " + ts.getTimestepTime() + "\n");
                 for (Vehicle v : CarHolder.getCars())
                 {
                     //Add movement to ts

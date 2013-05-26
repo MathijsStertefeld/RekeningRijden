@@ -30,11 +30,9 @@ public class TimeStep implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private double timestepTime;
-    
+    private double time;
     @Transient
     private ArrayList<Movement> movements;
-
     @ManyToOne(cascade = CascadeType.MERGE)
     private Session parentSession;
 
@@ -44,7 +42,7 @@ public class TimeStep implements Serializable
 
     public TimeStep(double time)
     {
-        this.timestepTime = time;
+        this.time = time;
         movements = new ArrayList<Movement>();
     }
 
@@ -58,7 +56,6 @@ public class TimeStep implements Serializable
         this.id = id;
     }
 
-    @XmlTransient
     public Session getParentSession()
     {
         return parentSession;
@@ -68,16 +65,16 @@ public class TimeStep implements Serializable
     {
         this.parentSession = parentSession;
     }
-    
-    @XmlAttribute(name = "time")
-    public double getTime()
+
+    @XmlAttribute(name = "timesteptime")
+    public double getTimestepTime()
     {
-        return timestepTime;
+        return time;
     }
 
-    public void setTime(double time)
+    public void setTimestepTime(double timestepTime)
     {
-        this.timestepTime = time;
+        this.time = timestepTime;
     }
 
     public ArrayList<Movement> getMovements()
@@ -95,5 +92,4 @@ public class TimeStep implements Serializable
         m.setParentTimestep(this);
         movements.add(m);
     }
-
 }
