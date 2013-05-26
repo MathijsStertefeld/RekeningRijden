@@ -1,12 +1,7 @@
 package com.marbl.administration.website.bean;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
-import com.marbl.administration.domain.HighwayRate;
-import com.marbl.administration.domain.MassRate;
 import com.marbl.administration.domain.Rate;
-import com.marbl.administration.domain.RegionRate;
-import com.marbl.administration.domain.CityRate;
-import com.marbl.administration.domain.VehicleRate;
 import com.marbl.administration.website.service.RateService;
 import java.io.IOException;
 import java.io.Serializable;
@@ -27,36 +22,36 @@ public class RateBean implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private RateService service;
-    private Collection<HighwayRate> highwayRates;
-    private Collection<RegionRate> regionRates;
-    private Collection<CityRate> cityRates;
-    private Collection<VehicleRate> vehicleRates;
-    private MassRate massRate;
+    private Collection<Rate> highwayRates;
+    private Collection<Rate> regionRates;
+    private Collection<Rate> cityRates;
+    private Collection<Rate> vehicleRates;
+    private Rate massRate;
     private Rate current;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public Collection<HighwayRate> getHighwayRates() {
+    public Collection<Rate> getHighwayRates() {
         return highwayRates;
     }
     
-    public Collection<RegionRate> getRegionRates() {
+    public Collection<Rate> getRegionRates() {
         return regionRates;
     }
     
-    public Collection<CityRate> getCityRates() {
+    public Collection<Rate> getCityRates() {
         return cityRates;
     }
     
-    public Collection<VehicleRate> getVehicleRates() {
+    public Collection<Rate> getVehicleRates() {
         return vehicleRates;
     }
     
-    public MassRate getMassRate() {
+    public Rate getMassRate() {
         return massRate;
     }
     
-    public void setMassRate(MassRate massRate) {
+    public void setMassRate(Rate massRate) {
         this.massRate = massRate;
     }
 

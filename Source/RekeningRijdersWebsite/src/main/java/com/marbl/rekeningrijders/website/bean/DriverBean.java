@@ -101,7 +101,7 @@ public class DriverBean implements Serializable {
         
         if (driver != null) {
             try {
-                String loginUsername = String.valueOf(driver.getBsn());
+                String loginUsername = String.valueOf(driver.getBSN());
                 request.login(loginUsername, loginPassword);
                 loginEmail = "";
                 loginPassword = "";

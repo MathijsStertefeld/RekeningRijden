@@ -77,11 +77,11 @@ public class StartupService implements Serializable {
         ArrayList<Bill> bills = new ArrayList<>();
 
         bills.add(new Bill(1L, new Date(), new Date(), 100, PaymentStatus.CANCELED,
-                drivers[0].getBsn(), cars[0].getCarTrackerId()));
+                drivers[0].getBSN(), cars[0].getCarTrackerId()));
         bills.add(new Bill(2L, new Date(), new Date(), 100, PaymentStatus.PAID,
-                drivers[1].getBsn(), cars[1].getCarTrackerId()));
+                drivers[1].getBSN(), cars[1].getCarTrackerId()));
         bills.add(new Bill(3L, new Date(), new Date(), 100, PaymentStatus.OPEN,
-                drivers[2].getBsn(), cars[2].getCarTrackerId()));
+                drivers[2].getBSN(), cars[2].getCarTrackerId()));
 
         for (int i = 0; i < bills.size(); i++) {
             billDAO.create(bills.get(i));

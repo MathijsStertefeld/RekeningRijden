@@ -54,7 +54,7 @@ public class BillService implements Serializable {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Collection<Bill> findAll(
             @QueryParam("carTrackerId") String carTrackerId,
-            @QueryParam("driverBsn") Integer driverBsn,
+            @QueryParam("driverBSN") Integer driverBSN,
             @QueryParam("id") Long id) {
 
         Collection<Bill> bills = new ArrayList<>();
@@ -62,7 +62,7 @@ public class BillService implements Serializable {
         for (Bill bill : billDAO.findAll()) {
             if (true
                     && (carTrackerId == null || carTrackerId.equals(bill.getCarTrackerId()))
-                    && (driverBsn == null || driverBsn == bill.getDriverBsn())
+                    && (driverBSN == null || driverBSN == bill.getDriverBSN())
                     && (id == null || id == bill.getId())) {
                 bills.add(bill);
             }
@@ -73,7 +73,7 @@ public class BillService implements Serializable {
 
     @GET
     @Path("count")
-    @Produces("text/plain")
+    @Produces(MediaType.TEXT_PLAIN)
     public String count() {
         return String.valueOf(billDAO.count());
     }

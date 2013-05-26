@@ -35,11 +35,11 @@ public class Driver implements Serializable {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public Integer getBsn() {
+    public Integer getBSN() {
         return bsn;
     }
 
-    public void setBsn(Integer bsn) {
+    public void setBSN(Integer bsn) {
         this.bsn = bsn;
     }
 

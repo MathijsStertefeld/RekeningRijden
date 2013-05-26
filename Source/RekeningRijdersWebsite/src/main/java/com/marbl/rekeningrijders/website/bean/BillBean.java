@@ -48,7 +48,7 @@ public class BillBean implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public void findAll() {
-        all = service.findBillsByBsn(driverBean.getLoggedInDriver().getBsn());
+        all = service.findBillsByBSN(driverBean.getLoggedInDriver().getBSN());
     }
 
     public void findCurrent() {

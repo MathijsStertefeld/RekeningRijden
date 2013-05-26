@@ -55,7 +55,7 @@ public class EmployeeService implements Serializable {
 
     @GET
     @Path("count")
-    @Produces("text/plain")
+    @Produces(MediaType.TEXT_PLAIN)
     public String count() {
         return String.valueOf(employeeDAO.count());
     }
