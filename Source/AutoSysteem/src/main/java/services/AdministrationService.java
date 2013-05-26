@@ -7,79 +7,54 @@ package services;
 import com.marbl.administration.domain.Car;
 import com.marbl.administration.domain.Driver;
 import com.marbl.administration.domain.utils.Hasher;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.GenericType;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.*;
+import com.sun.jersey.api.client.config.*;
 import com.sun.jersey.api.json.JSONConfiguration;
-
-import java.util.ArrayList;
 import java.util.Collection;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
-import sun.security.provider.SHA;
 
 /**
  *
  * @author Eagle
  */
-public class AdministrationService
-{
+public class AdministrationService {
 
-    private WebResource resource;
+    private WebResource wr;
 
-    public AdministrationService()
-    {
-
+    public AdministrationService() {
         ClientConfig config = new DefaultClientConfig();
         config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
 
-        resource = client.resource("http://192.168.30.185:8080/AdministrationBackend/");
+        wr = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/");
     }
 
-    public Collection<Car> getCarsFromUser(Driver driver)
-    {
+    public Collection<Car> getCarsFromUser(Driver driver) {
         Collection<Car> cars;
-        System.out.println(resource.path("resources").path("cars").queryParam("driverBSN", Integer.toString(driver.getBSN())));
-
+        
         String bsn = Integer.toString(driver.getBSN());
 
-        cars = resource.path("resources").path("cars")
+        cars = wr.path("cars")
                 .queryParam("driverBSN", bsn)
                 .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<Collection<Car>>()
-        {
+                .get(new GenericType<Collection<Car>>() {
         });
-//.path("resources").path("cars").queryParam("driverBsn", Integer.toString(driver.getBsn())).accept(MediaType.APPLICATION_JSON).get(new GenericType<Collection<Car>>()
-        //       {
-        //     });
-
-//        Collection<String> carTrackers = new ArrayList<String>();
-//
-//        for (int i = 0; i < cars.size(); i++)
-//        {
-//            carTrackers.add(cars.get(i).getCarTrackerId());
-//        }
 
         return cars;
     }
 
-    public Driver getDriver(String email, String password)
-    {
+    public Driver getDriver(String email, String password) {
         Hasher hasher = new Hasher("SHA-256", "UTF-8");
         password = hasher.hash(password);
 
-        ClientResponse cr = resource.path("resources").path("drivers").path("login")
+        System.out.println();
+        ClientResponse cr = wr.path("drivers").path("login")
                 .queryParam("email", email)
                 .queryParam("password", password)
                 .accept(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class);
 
-        switch (cr.getClientResponseStatus())
-        {
+        switch (cr.getClientResponseStatus()) {
             case OK:
                 return cr.getEntity(Driver.class);
             default:
