@@ -63,7 +63,7 @@ public class RekeningRijdersService implements Serializable {
         Hasher hasher = new Hasher("SHA-256", "UTF-8");
         password = hasher.hash(password);
         
-        ClientResponse cr = wr.path("login")
+        ClientResponse cr = wr.path("drivers").path("login")
                 .queryParam("email", email)
                 .queryParam("password", password)
                 .accept(MediaType.APPLICATION_JSON)
