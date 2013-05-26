@@ -4,14 +4,6 @@
  */
 package autosysteem;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import domain.Session;
-import domain.Simulator;
-import domain.Vehicle;
-
 
 /**
  *

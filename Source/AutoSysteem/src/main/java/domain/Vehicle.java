@@ -47,7 +47,7 @@ public class Vehicle extends com.marbl.administration.domain.Car
         return this.carSpeed * 2 * 3600;
     }
 
-    public double getCarSpeed()
+        public double getCarSpeed()
     {
         return carSpeed;
     }

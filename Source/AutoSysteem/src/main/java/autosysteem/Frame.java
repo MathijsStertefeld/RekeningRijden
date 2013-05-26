@@ -6,13 +6,13 @@ package autosysteem;
 
 import com.marbl.administration.domain.Car;
 import com.marbl.administration.domain.Driver;
+import com.marbl.autosysteem.Session;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import domain.CarHolder;
 import domain.Osmosis;
-import domain.Session;
 import domain.Simulator;
 import domain.Vehicle;
 import java.awt.BorderLayout;

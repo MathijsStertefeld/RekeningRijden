@@ -7,6 +7,7 @@ package domain;
 import autosysteem.Frame;
 import com.marbl.autosysteem.GeoPosition;
 import com.marbl.autosysteem.Movement;
+import com.marbl.autosysteem.Session;
 import com.marbl.autosysteem.TimeStep;
 import java.util.ArrayList;
 import java.util.Date;
@@ -136,11 +137,6 @@ public class Simulator implements Runnable
     public void setTimesteps(ArrayList<TimeStep> timesteps)
     {
         this.timesteps = timesteps;
-    }
-
-    private double getDistanceInMeters(GeoPosition from, GeoPosition to)
-    {
-        return Navigation.getDistance(from.getLatitudeInDegrees(), from.getLongitudeInDegrees(), to.getLatitudeInDegrees(), to.getLongitudeInDegrees(), 'M');
     }
 
     public Session generateSession()
