@@ -3,6 +3,7 @@ package com.marbl.administration.domain;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 //</editor-fold>
@@ -20,7 +21,7 @@ public class Employee implements Serializable {
         @JoinColumn(name = "USERNAME")})
     @Column(name = "GROUPNAME")
     @Enumerated(EnumType.STRING)
-    private ArrayList<EmployeeGroup> groups;
+    private List<EmployeeGroup> groups;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -40,11 +41,11 @@ public class Employee implements Serializable {
         this.password = password;
     }
 
-    public ArrayList<EmployeeGroup> getGroups() {
+    public List<EmployeeGroup> getGroups() {
         return groups;
     }
 
-    public void setGroups(ArrayList<EmployeeGroup> groups) {
+    public void setGroups(List<EmployeeGroup> groups) {
         this.groups = groups;
     }
     //</editor-fold>

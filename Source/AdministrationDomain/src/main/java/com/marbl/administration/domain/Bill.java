@@ -4,6 +4,7 @@ package com.marbl.administration.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 //</editor-fold>
@@ -23,7 +24,7 @@ public class Bill implements Serializable {
     private PaymentStatus paymentStatus;
     private int driverBSN;
     private String carTrackerId;
-    private ArrayList<Object> movements;
+    private List<Object> movements;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -83,11 +84,11 @@ public class Bill implements Serializable {
         this.paymentStatus = paymentStatus;
     }
 
-    public ArrayList<Object> getMovements() {
+    public List<Object> getMovements() {
         return movements;
     }
 
-    public void setMovements(ArrayList<Object> movements) {
+    public void setMovements(List<Object> movements) {
         this.movements = movements;
     }
     //</editor-fold>

@@ -4,6 +4,7 @@ package com.marbl.administration.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 //</editor-fold>
@@ -29,7 +30,7 @@ public class Driver implements Serializable {
         @JoinColumn(name = "BSN")})
     @Column(name = "GROUPNAME")
     @Enumerated(EnumType.STRING)
-    private ArrayList<DriverGroup> groups;
+    private List<DriverGroup> groups;
     private Boolean activated;
     //</editor-fold>
 
@@ -106,11 +107,11 @@ public class Driver implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public ArrayList<DriverGroup> getGroups() {
+    public List<DriverGroup> getGroups() {
         return groups;
     }
 
-    public void setGroups(ArrayList<DriverGroup> groups) {
+    public void setGroups(List<DriverGroup> groups) {
         this.groups = groups;
     }
 
