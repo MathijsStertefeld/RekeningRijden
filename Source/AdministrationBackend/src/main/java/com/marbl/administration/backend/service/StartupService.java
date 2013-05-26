@@ -8,6 +8,7 @@ import com.marbl.administration.domain.*;
 import com.marbl.administration.domain.utils.Hasher;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -112,12 +113,17 @@ public class StartupService implements Serializable {
  
         //<editor-fold defaultstate="collapsed" desc="HighwayRates">
         ArrayList<Rate> highwayRates = new ArrayList();
- 
-        highwayRates.add(new Rate("A2", Rate.Type.HIGHWAY,      new double[]{1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.8, 1.8, 1.8, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.8, 1.8, 1.8, 1.1, 1.1, 1.1, 1.1}));
-        highwayRates.add(new Rate("A50", Rate.Type.HIGHWAY,     new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 1.5, 1.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 1.5, 1.5, 1.0, 1.0, 1.0, 1.0}));
-        highwayRates.add(new Rate("A67", Rate.Type.HIGHWAY,     new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 1.5, 1.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 1.5, 1.5, 1.0, 1.0, 1.0, 1.0}));
-        highwayRates.add(new Rate("A270", Rate.Type.HIGHWAY,    new double[]{1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}));
- 
+        
+        //highwayRates.add(new Rate("A2", Rate.Type.HIGHWAY,      new ArrayList<Double>(Arrays.asList(1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.8, 1.8, 1.8, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.8, 1.8, 1.8, 1.1, 1.1, 1.1, 1.1))));
+        //highwayRates.add(new Rate("A50", Rate.Type.HIGHWAY,     new ArrayList<Double>(Arrays.asList(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 1.5, 1.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 1.5, 1.5, 1.0, 1.0, 1.0, 1.0))));
+        //highwayRates.add(new Rate("A67", Rate.Type.HIGHWAY,     new ArrayList<Double>(Arrays.asList(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 1.5, 1.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.5, 1.5, 1.5, 1.0, 1.0, 1.0, 1.0))));
+        //highwayRates.add(new Rate("A270", Rate.Type.HIGHWAY,    new ArrayList<Double>(Arrays.asList(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0))));
+        
+        highwayRates.add(new Rate("A2", Rate.Type.HIGHWAY, 1.1, 1.8));
+        highwayRates.add(new Rate("A50", Rate.Type.HIGHWAY, 1.0, 1.5));
+        highwayRates.add(new Rate("A67", Rate.Type.HIGHWAY, 1.0, 1.5));
+        highwayRates.add(new Rate("A270", Rate.Type.HIGHWAY, 1.0, 1.0));
+        
         for (int i = 0; i < highwayRates.size(); i++) {
             rateDAO.create(highwayRates.get(i));
         }
@@ -153,6 +159,7 @@ public class StartupService implements Serializable {
        
         //<editor-fold defaultstate="collapsed" desc="MassRate">
         Rate massRate = new Rate("Massa", Rate.Type.MASS, 0.1);
-        //<editor-fold>
+        rateDAO.create(massRate);
+        //</editor-fold>
     }
 }

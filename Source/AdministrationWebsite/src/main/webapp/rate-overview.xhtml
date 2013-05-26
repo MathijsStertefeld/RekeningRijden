@@ -42,7 +42,7 @@
                             </h:outputLink>
                         </p:column>
 
-                        <p:column sortBy="#{rate.price}" style="white-space:normal" headerText="Prijs">
+                        <p:column sortBy="#{rate.price}" style="white-space:normal" headerText="Tarief">
                             <h:outputText value="#{rate.price}" />
                         </p:column>
                     </p:dataTable>
@@ -56,7 +56,7 @@
                             </h:outputLink>
                         </p:column>
 
-                        <p:column sortBy="#{rate.price}" style="white-space:normal" headerText="Prijs">
+                        <p:column sortBy="#{rate.price}" style="white-space:normal" headerText="Tarief">
                             <h:outputText value="#{rate.price}" />
                         </p:column>
                     </p:dataTable>
@@ -70,83 +70,17 @@
                             </h:outputLink>
                         </p:column>
 
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="00-01">
-                            <h:outputText value="#{rate.prices[0]}" />
+                        <p:column sortBy="#{rate.price}" style="white-space:normal" headerText="Tarief">
+                            <h:outputText value="#{rate.price}" />
                         </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="01-02">
-                            <h:outputText value="#{rate.prices[1]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="02-03">
-                            <h:outputText value="#{rate.prices[2]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="03-04">
-                            <h:outputText value="#{rate.prices[3]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="04-05">
-                            <h:outputText value="#{rate.prices[4]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="05-06">
-                            <h:outputText value="#{rate.prices[5]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="06-07">
-                            <h:outputText value="#{rate.prices[6]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="07-08">
-                            <h:outputText value="#{rate.prices[7]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="08-09">
-                            <h:outputText value="#{rate.prices[8]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="09-10">
-                            <h:outputText value="#{rate.prices[9]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="10-11">
-                            <h:outputText value="#{rate.prices[10]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="11-12">
-                            <h:outputText value="#{rate.prices[11]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="12-13">
-                            <h:outputText value="#{rate.prices[12]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="13-14">
-                            <h:outputText value="#{rate.prices[13]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="14-15">
-                            <h:outputText value="#{rate.prices[14]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="15-16">
-                            <h:outputText value="#{rate.prices[15]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="16-17">
-                            <h:outputText value="#{rate.prices[16]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="17-18">
-                            <h:outputText value="#{rate.prices[17]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="18-19">
-                            <h:outputText value="#{rate.prices[18]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="19-20">
-                            <h:outputText value="#{rate.prices[19]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="20-21">
-                            <h:outputText value="#{rate.prices[20]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="21-22">
-                            <h:outputText value="#{rate.prices[21]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="22-23">
-                            <h:outputText value="#{rate.prices[22]}" />
-                        </p:column>
-                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="23-24">
-                            <h:outputText value="#{rate.prices[23]}" />
+                        <p:column sortBy="#{rate.rushHourPrice}" style="white-space:normal" headerText="Spits Tarief">
+                            <h:outputText value="#{rate.rushHourPrice}" />
                         </p:column>
                         
                     </p:dataTable>
 
                     <strong>Voertuig Type</strong>
-                    <p:dataTable id="verhicleTypeDataTable" var="rate" value="#{rateBean.vehicleRates}" tableStyle="table-layout:fixed;">
+                    <p:dataTable id="vehicleTypeDataTable" var="rate" value="#{rateBean.vehicleRates}" tableStyle="table-layout:fixed;">
                         <p:column sortBy="#{rate.name}}" style="white-space:normal" headerText="Naam">
                             <h:outputLink value="rate-details.xhtml">
                                 <f:param name="name" value="#{rate.name}" />
@@ -160,10 +94,23 @@
                     </p:dataTable>
 
                     <strong>Massa</strong>
-                    <h:outputText value="#{rateBean.massRate.price}" />
-                    <h:commandButton value=" Wijzigen " action="rate-details.xhtml" >
+                    <br/>
+                    <p:dataTable id="massTypeDataTable" var="rate" value="#{rateBean.massRate}" tableStyle="table-layout:fixed;">
+                        <p:column sortBy="#{rate.name}" style="white-space:normal" headerText="Naam">
+                            <h:outputLink value="rate-details.xhtml" >
+                                <f:param name="name" value="#{rate.name}" />
+                                <h:outputText value="#{rate.name}" />
+                            </h:outputLink>
+                        </p:column>
+                        
+                        <p:column sortBy="#{rate.price}" style="white-space:normal" headerText="Tarief">
+                            <h:outputText value="#{rate.price}" />
+                        </p:column>
+                    </p:dataTable>
+                    <!--h:outputLink value="rate-details.xhtml" >
                         <f:param name="name" value="#{rateBean.massRate.name}" />
-                    </h:commandButton>
+                        <h:outputText value="#{rateBean.massRate.price}" />
+                    </h:outputLink-->
                     <br/>
                 </h:form>
             </ui:define>

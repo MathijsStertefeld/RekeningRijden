@@ -5,6 +5,8 @@ import com.marbl.administration.domain.Rate;
 import com.marbl.administration.website.service.RateService;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -58,6 +60,7 @@ public class RateBean implements Serializable {
     public Rate getCurrent() {
         return current;
     }
+    
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
