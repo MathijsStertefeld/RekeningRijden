@@ -3,6 +3,7 @@ package com.marbl.administration.website.service;
 import com.marbl.administration.domain.Bill;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
+import com.sun.jersey.api.json.JSONConfiguration;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
@@ -17,6 +18,7 @@ public class BillService implements Serializable {
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
+        config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
         wr = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/bills/");
     }
@@ -60,7 +62,7 @@ public class BillService implements Serializable {
                 .accept(MediaType.APPLICATION_JSON)
                 .get(ClientResponse.class);
         
-        GenericType<ArrayList<Bill>> gt = new GenericType() {
+        GenericType<ArrayList<Bill>> gt = new GenericType<ArrayList<Bill>>() {
         };
         
         switch (cr.getClientResponseStatus()) {

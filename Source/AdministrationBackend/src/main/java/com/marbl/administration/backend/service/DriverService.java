@@ -81,24 +81,24 @@ public class DriverService implements Serializable {
         return String.valueOf(driverDAO.count());
     }
     
-    @GET
+    @POST
     @Path("login")
     @Consumes(MediaType.TEXT_PLAIN)
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Driver login(
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(
             @QueryParam("email") String email,
             @QueryParam("password") String password) {
         
         for (Driver driver : driverDAO.findAll()) {
             if (driver.getEmail().equals(email)) {
                 if (driver.getPassword().equals(password)) {
-                    return driver;
+                    return Response.status(Response.Status.OK).entity(driver).build();
                 } else {
                     break;
                 }
             }
         }
         
-        throw new WebApplicationException(404);
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 }

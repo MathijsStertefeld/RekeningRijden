@@ -3,6 +3,7 @@ package com.marbl.administration.backend.service;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.backend.dao.EmployeeDAO;
 import com.marbl.administration.domain.Employee;
+import com.marbl.administration.domain.utils.Hasher;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.Stateless;

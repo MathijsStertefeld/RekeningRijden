@@ -3,6 +3,7 @@ package com.marbl.administration.website.service;
 import com.marbl.administration.domain.Rate;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
+import com.sun.jersey.api.json.JSONConfiguration;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
@@ -16,6 +17,7 @@ public class RateService implements Serializable {
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
+        config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
         resource = client.resource("http://localhost:8080/AdministrationBackend/resources/rates/");
     }
