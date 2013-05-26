@@ -6,6 +6,7 @@ import com.marbl.rekeningrijders.website.service.RekeningRijdersService;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -37,7 +38,7 @@ public class BillBean implements Serializable {
         return current;
     }
 
-    public ArrayList<Object> getMovements() {
+    public List<Object> getMovements() {
         if (current != null) {
             return current.getMovements();
         } else {
