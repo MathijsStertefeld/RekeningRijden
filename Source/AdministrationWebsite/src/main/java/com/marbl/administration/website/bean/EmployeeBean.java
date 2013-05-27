@@ -12,10 +12,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 //</editor-fold>
 
+// This bean is used by login.xhtml.
 @Named
 @SessionScoped
 public class EmployeeBean implements Serializable {
-    
+
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private EmployeeService service;
@@ -23,7 +24,7 @@ public class EmployeeBean implements Serializable {
     private String username;
     private String password;
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public String getUsername() {
         return username;
@@ -41,41 +42,37 @@ public class EmployeeBean implements Serializable {
         this.password = password;
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public void checkLogin() throws IOException {
         if (employee == null) {
             FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
         }
     }
-    
+
     public void checkLogout() throws IOException {
         if (employee != null) {
             FacesContext.getCurrentInstance().getExternalContext().redirect("car-overview.xhtml");
         }
     }
-    
+
     public String login() {
         employee = service.login(username, password);
         username = "";
         password = "";
         return "";
     }
-    
+
     public String logout() {
         employee = null;
         System.out.println(employee);
         return "";
     }
-    
-    public boolean findPermission()
-    {
-        if (employee.getGroups().contains(EmployeeGroup.RATE_EMPLOYEE))
-        {
+
+    public boolean findPermission() {
+        if (employee.getGroups().contains(EmployeeGroup.RATE_EMPLOYEE)) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }

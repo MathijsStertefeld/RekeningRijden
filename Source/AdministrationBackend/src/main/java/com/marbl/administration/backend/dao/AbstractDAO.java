@@ -1,21 +1,30 @@
 package com.marbl.administration.backend.dao;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
+//</editor-fold>
+
+// Inherit from this class to create a DAO for easy database usage.
 
 public abstract class AbstractDAO<Entity extends Serializable, ID extends Serializable> implements Serializable {
 
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     @PersistenceContext
     protected EntityManager em;
     private Class<Entity> entityClass;
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Constructors">
     public AbstractDAO(Class<Entity> entityClass) {
         this.entityClass = entityClass;
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     public void create(Entity entity) {
         if (entity != null && !findAll().contains(entity)) {
             em.persist(entity);
@@ -62,4 +71,5 @@ public abstract class AbstractDAO<Entity extends Serializable, ID extends Serial
         javax.persistence.Query q = em.createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
+    //</editor-fold>
 }

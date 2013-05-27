@@ -5,21 +5,25 @@ import java.io.Serializable;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 //</editor-fold>
+
+// This bean is used by template.xhtml.
 
 @Named
 @SessionScoped
 @Stateful
 public class LocaleBean implements Serializable {
 
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     private Locale currentLocale;
     private Locale localeNL;
     private Locale localeEN;
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public Locale getCurrentLocale() {
         return currentLocale;
     }
@@ -28,7 +32,9 @@ public class LocaleBean implements Serializable {
         this.currentLocale = currentLocale;
         FacesContext.getCurrentInstance().getViewRoot().setLocale(currentLocale);
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     @PostConstruct
     public void postConstruct() {
         localeNL = new Locale.Builder().setLanguage("nl").build();
@@ -43,4 +49,5 @@ public class LocaleBean implements Serializable {
     public void changeLocaleToEN() {
         setCurrentLocale(localeEN);
     }
+    //</editor-fold>
 }

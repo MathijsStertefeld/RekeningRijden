@@ -4,6 +4,8 @@ package com.marbl.administration.backend.utils;
 import com.marbl.administration.domain.*;
 //</editor-fold>
 
+// This class is used to generate mock cars for testing.
+
 public final class CarGenerator {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
@@ -13,6 +15,7 @@ public final class CarGenerator {
     private String[] models;
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Constructors">
     public CarGenerator(Driver[] drivers, String[] brands, String[] models) {
         this.drivers = drivers;
         this.brands = brands;
@@ -20,7 +23,9 @@ public final class CarGenerator {
         
         reset();
     }
+    //</editor-fold>
     
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     public void reset() {
         index = -1;
     }
@@ -54,4 +59,5 @@ public final class CarGenerator {
 
         return new Car(carTrackerId, licensePlate, carType, paintColor, mass, classification, brand, model, driverBSN);
     }
+    //</editor-fold>
 }

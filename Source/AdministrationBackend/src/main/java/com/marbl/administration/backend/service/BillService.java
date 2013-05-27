@@ -12,6 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 //</editor-fold>
 
+// Use this service to create, edit, delete or find bills.
+
 @Stateless
 @Path("bills")
 public class BillService implements Serializable {
@@ -21,6 +23,7 @@ public class BillService implements Serializable {
     private BillDAO billDAO;
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -93,4 +96,5 @@ public class BillService implements Serializable {
         String s = String.valueOf(billDAO.count());
         return Response.status(Response.Status.OK).entity(s).build();
     }
+    //</editor-fold>
 }

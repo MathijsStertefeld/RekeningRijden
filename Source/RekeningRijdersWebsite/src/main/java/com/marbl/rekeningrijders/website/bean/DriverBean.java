@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 //</editor-fold>
 
+// This bean is used by login.xhtml, driver-details.xhtml and driver-overview.xhtml.
+
 @Named
 @SessionScoped
 public class DriverBean implements Serializable {
@@ -27,7 +29,7 @@ public class DriverBean implements Serializable {
     public Driver getDriver() {
         return driver;
     }
-    
+
     public String getEmail() {
         return email;
     }
@@ -51,7 +53,7 @@ public class DriverBean implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
         }
     }
-    
+
     public void checkLogout() throws IOException {
         if (driver != null) {
             FacesContext.getCurrentInstance().getExternalContext().redirect("driver-overview.xhtml");
@@ -64,7 +66,7 @@ public class DriverBean implements Serializable {
         password = "";
         return "";
     }
-    
+
     public String logout() {
         driver = null;
         return "";

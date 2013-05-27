@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 //</editor-fold>
 
+// This class represents a bill that should be paid by drivers.
+
 @Entity
 @XmlRootElement
 public class Bill implements Serializable {
@@ -89,15 +91,11 @@ public class Bill implements Serializable {
     public void setPaymentStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
-    
-    public Boolean notOpen() {
-        return paymentStatus != PaymentStatus.OPEN;
-    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Bill() {
-        this(0, "", 0D, 0, 0);
+        this(null, null, null, null, null);
     }
 
     public Bill(Integer driverBSN, String carTrackerId, Double paymentAmount,
@@ -114,6 +112,10 @@ public class Bill implements Serializable {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
+    public Boolean notOpen() {
+        return paymentStatus != PaymentStatus.OPEN;
+    }
+    
     @Override
     public int hashCode() {
         if (id != null) {

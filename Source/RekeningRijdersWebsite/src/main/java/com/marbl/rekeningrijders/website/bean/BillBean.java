@@ -15,6 +15,8 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 //</editor-fold>
 
+// This bean is used by bill-details.xhtml and bill-overview.xhtml.
+
 @Named
 @SessionScoped
 public class BillBean implements Serializable {
@@ -57,7 +59,7 @@ public class BillBean implements Serializable {
             showOverview();
         }
     }
-    
+
     public Driver findLoggedInDriver() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
@@ -79,7 +81,7 @@ public class BillBean implements Serializable {
     public void showOverview() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
-        
+
         try {
             externalContext.redirect("bill-overview.xhtml");
             current = null;

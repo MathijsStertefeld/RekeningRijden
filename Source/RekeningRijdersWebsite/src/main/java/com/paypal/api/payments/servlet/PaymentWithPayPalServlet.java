@@ -4,8 +4,8 @@
 // API used: /v1/payments/payment
 package com.paypal.api.payments.servlet;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.Bill;
-import com.marbl.administration.domain.PaymentStatus;
 import com.paypal.api.payments.*;
 import com.paypal.api.payments.util.*;
 import com.paypal.core.rest.*;
@@ -23,20 +23,19 @@ import com.marbl.rekeningrijders.util.GoogleConverter;
 import java.util.logging.Level;
 import org.json.JSONArray;
 import org.json.JSONObject;
+//</editor-fold>
 
-/**
- * @author lvairamani
- *
- */
 @Stateless
 public class PaymentWithPayPalServlet extends HttpServlet {
 
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private RekeningRijdersService service;
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger
             .getLogger(PaymentWithPayPalServlet.class);
     Map<String, String> map = new HashMap<String, String>();
+    //</editor-fold>
 
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {
@@ -117,46 +116,44 @@ public class PaymentWithPayPalServlet extends HttpServlet {
                 JSONObject transactionObject = transactionArray.getJSONObject(0);
                 responseBillID = (String) transactionObject.getString("description");
                 responseBillID = responseBillID.replace("BillID=", "");
-                
+
                 JSONArray relatedResourcesArray = transactionObject.getJSONArray("related_resources");
                 JSONObject relatedResourceObject = relatedResourcesArray.getJSONObject(0);
                 System.out.println("object3: " + relatedResourceObject);
-                JSONObject saleObject = relatedResourceObject.getJSONObject("sale");  
+                JSONObject saleObject = relatedResourceObject.getJSONObject("sale");
                 saleState = saleObject.getString("state");
 
             } catch (Exception ex) {
                 java.util.logging.Logger.getLogger(PaymentWithPayPalServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            
-            if(saleState.equals("completed"))
-            {
+
+            if (saleState.equals("completed")) {
                 //set paymentstatus on bill
-                
+
                 Bill bill = service.findBill(Long.parseLong(responseBillID));
                 System.out.println("BILL TEST: " + bill.getID() + " Amount: " + bill.getPaymentAmount());
                 service.payBill(Long.parseLong(responseBillID));
-            }
-            else
+            } else {
                 System.out.println("STATE ELSE = " + saleState);
-            
-            
+            }
+
+
             //req.setAttribute("request", Payment.getLastRequest());
             //req.getRequestDispatcher("response.jsp").forward(req, resp);
-            
+
             resp.sendRedirect("bill-details.xhtml?billID=" + responseBillID);
             //resp.sendRedirect("login.xhtml");
         } else {
-            
-            if(req.getParameter("cancelPaypalBillID") != null)
-            {
+
+            if (req.getParameter("cancelPaypalBillID") != null) {
                 resp.sendRedirect("bill-details.xhtml?billID=" + req.getParameter("cancelPaypalBillID"));
                 return;
             }
-            
+
             Long billId = Long.parseLong(req.getParameter("billID"));
             Bill bill = service.findBill(billId);
-            
+
             //if(bill.getPaymentStatus() == PaymentStatus.PAID || bill.getPaymentStatus() == PaymentStatus.CANCELED)
             //{
             //    resp.sendRedirect("bill-overview.xhtml");

@@ -9,6 +9,8 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 //</editor-fold>
 
+// This class represents a driver and is used for authentication.
+
 @Entity
 @XmlRootElement
 public class Driver implements Serializable {
@@ -122,12 +124,11 @@ public class Driver implements Serializable {
     public void setActivated(Boolean activated) {
         this.activated = activated;
     }
-
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Driver() {
-        this(900000000, "", "", "", "", "", "", "", new Date(), false);
+        this(null, null, null, null, null, null, null, null, null, null);
     }
 
     public Driver(Integer bsn, String firstName, String lastName,

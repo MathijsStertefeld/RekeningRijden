@@ -12,6 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 //</editor-fold>
 
+// Use this service to create, edit, delete or find employees.
+
 @Stateless
 @Path("employees")
 public class EmployeeService implements Serializable {
@@ -21,6 +23,7 @@ public class EmployeeService implements Serializable {
     private EmployeeDAO employeeDAO;
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -110,4 +113,5 @@ public class EmployeeService implements Serializable {
         
         return Response.status(Response.Status.NOT_FOUND).build();
     }
+    //</editor-fold>
 }

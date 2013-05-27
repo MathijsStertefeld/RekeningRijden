@@ -12,6 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 //</editor-fold>
 
+// Use this service to create, edit, delete or find rates.
+
 @Stateless
 @Path("rates")
 public class RateService implements Serializable {
@@ -21,6 +23,7 @@ public class RateService implements Serializable {
     private RateDAO rateDAO;
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -89,4 +92,5 @@ public class RateService implements Serializable {
         String s = String.valueOf(rateDAO.count());
         return Response.status(Response.Status.OK).entity(s).build();
     }
+    //</editor-fold>
 }

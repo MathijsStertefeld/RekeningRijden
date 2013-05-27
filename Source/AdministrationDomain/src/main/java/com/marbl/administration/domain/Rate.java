@@ -2,12 +2,11 @@ package com.marbl.administration.domain;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 //</editor-fold>
+
+// This class represents a rate that is used to calculate a bills total price.
 
 @Entity
 @XmlRootElement
@@ -16,11 +15,9 @@ public class Rate implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Id
     private String name;
-    private Type type;
-    private double price;
-    private double rushHourPrice;
-    
-    public enum Type { REGION, HIGHWAY, CITY, VEHICLE, MASS}
+    private RateType type;
+    private Double price;
+    private Double rushHourPrice;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -31,46 +28,42 @@ public class Rate implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public Type getType()
-    {
+
+    public RateType getType() {
         return type;
     }
-    
-    public void setType(Type type) {
+
+    public void setType(RateType type) {
         this.type = type;
     }
-    
-    public double getPrice() {
+
+    public Double getPrice() {
         return price;
     }
-    
-    public void setPrice(double price) {
+
+    public void setPrice(Double price) {
         this.price = price;
     }
-    
-    public double getRushHourPrice() {
+
+    public Double getRushHourPrice() {
         return rushHourPrice;
     }
-    
-    public void setRushHourPrice(double rushHourPrice) {
+
+    public void setRushHourPrice(Double rushHourPrice) {
         this.rushHourPrice = rushHourPrice;
     }
-    
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Rate() {
-        this("", Type.REGION, 0);
+        this(null, null, null);
     }
 
-    public Rate(String name, Type type, double price) {
-        this.name = name;
-        this.type = type;
-        this.price = price;
+    public Rate(String name, RateType type, Double price) {
+        this(name, type, price, 0D);
     }
-    
-        public Rate(String name, Type type, double price, double rushHourPrice) {
+
+    public Rate(String name, RateType type, Double price, Double rushHourPrice) {
         this.name = name;
         this.type = type;
         this.price = price;
@@ -79,6 +72,10 @@ public class Rate implements Serializable {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
+    public boolean notHighway() {
+        return (type != RateType.HIGHWAY);
+    }
+
     @Override
     public int hashCode() {
         return name.hashCode();
@@ -92,18 +89,6 @@ public class Rate implements Serializable {
     @Override
     public String toString() {
         return "Rate{" + "name=" + name + '}';
-    }
-    
-    public boolean retrieveSingleRate()
-    {
-        if (type == Type.HIGHWAY)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
     }
     //</editor-fold>
 }

@@ -14,11 +14,16 @@ import javax.ejb.Stateless;
 import javax.ws.rs.core.MediaType;
 //</editor-fold>
 
+// This service calls the backend's service to manipulate entities.
+
 @Stateless
 public class RekeningRijdersService implements Serializable {
 
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     private WebResource wr;
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
@@ -47,7 +52,7 @@ public class RekeningRijdersService implements Serializable {
                 .accept(MediaType.APPLICATION_JSON)
                 .type(MediaType.TEXT_PLAIN)
                 .get(ClientResponse.class);
-        
+
         switch (cr.getClientResponseStatus()) {
             case OK:
                 return cr.getEntity(Bill.class);
@@ -62,10 +67,10 @@ public class RekeningRijdersService implements Serializable {
                 .accept(MediaType.APPLICATION_JSON)
                 .type(MediaType.TEXT_PLAIN)
                 .get(ClientResponse.class);
-        
+
         GenericType<ArrayList<Bill>> gt = new GenericType<ArrayList<Bill>>() {
         };
-        
+
         switch (cr.getClientResponseStatus()) {
             case OK:
                 return cr.getEntity(gt);
@@ -88,7 +93,7 @@ public class RekeningRijdersService implements Serializable {
                 .accept(MediaType.APPLICATION_JSON)
                 .type(MediaType.APPLICATION_JSON)
                 .put(ClientResponse.class, car);
-        
+
         switch (cr.getClientResponseStatus()) {
             case OK:
                 return cr.getEntity(Car.class);
@@ -102,7 +107,7 @@ public class RekeningRijdersService implements Serializable {
                 .accept(MediaType.APPLICATION_JSON)
                 .type(MediaType.TEXT_PLAIN)
                 .get(ClientResponse.class);
-        
+
         switch (cr.getClientResponseStatus()) {
             case OK:
                 return cr.getEntity(Car.class);
@@ -117,10 +122,10 @@ public class RekeningRijdersService implements Serializable {
                 .accept(MediaType.APPLICATION_JSON)
                 .type(MediaType.TEXT_PLAIN)
                 .get(ClientResponse.class);
-        
+
         GenericType<ArrayList<Car>> gt = new GenericType<ArrayList<Car>>() {
         };
-        
+
         switch (cr.getClientResponseStatus()) {
             case OK:
                 return cr.getEntity(gt);
@@ -157,7 +162,7 @@ public class RekeningRijdersService implements Serializable {
                 .accept(MediaType.APPLICATION_JSON)
                 .type(MediaType.TEXT_PLAIN)
                 .get(ClientResponse.class);
-        
+
         switch (cr.getClientResponseStatus()) {
             case OK:
                 return cr.getEntity(Driver.class);
@@ -184,5 +189,6 @@ public class RekeningRijdersService implements Serializable {
                 return null;
         }
     }
+    //</editor-fold>
     //</editor-fold>
 }

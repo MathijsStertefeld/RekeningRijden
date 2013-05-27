@@ -1,5 +1,6 @@
 package com.marbl.administration.website.service;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.Driver;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
@@ -9,12 +10,18 @@ import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.MediaType;
+//</editor-fold>
+
+// This service calls the backend's service to manipulate drivers.
 
 @Stateless
 public class DriverService implements Serializable {
 
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     private WebResource wr;
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
@@ -67,4 +74,5 @@ public class DriverService implements Serializable {
                 return null;
         }
     }
+    //</editor-fold>
 }

@@ -1,6 +1,8 @@
 package com.marbl.administration.website.service;
 
+//<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.Rate;
+import com.marbl.administration.domain.RateType;
 import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import com.sun.jersey.api.json.JSONConfiguration;
@@ -9,12 +11,18 @@ import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ws.rs.core.MediaType;
+//</editor-fold>
+
+// This service calls the backend's service to manipulate rates.
 
 @Stateless
 public class RateService implements Serializable {
 
+    //<editor-fold defaultstate="collapsed" desc="Fields">
     private WebResource wr;
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     @PostConstruct
     public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
@@ -64,7 +72,7 @@ public class RateService implements Serializable {
         ArrayList<Rate> rates = new ArrayList();
         
         for (Rate r : findAll()) {
-            if (r.getType() == Rate.Type.HIGHWAY) {
+            if (r.getType() == RateType.HIGHWAY) {
                 rates.add(r);
             }
         }
@@ -76,7 +84,7 @@ public class RateService implements Serializable {
         ArrayList<Rate> rates = new ArrayList();
         
         for (Rate r : findAll()) {
-            if (r.getType() == Rate.Type.CITY) {
+            if (r.getType() == RateType.CITY) {
                 rates.add(r);
             }
         }
@@ -88,7 +96,7 @@ public class RateService implements Serializable {
         ArrayList<Rate> rates = new ArrayList();
         
         for (Rate r : findAll()) {
-            if (r.getType() == Rate.Type.REGION) {
+            if (r.getType() == RateType.REGION) {
                 rates.add(r);
             }
         }
@@ -100,7 +108,7 @@ public class RateService implements Serializable {
         ArrayList<Rate> rates = new ArrayList();
         
         for (Rate r : findAll()) {
-            if (r.getType() == Rate.Type.VEHICLE) {
+            if (r.getType() == RateType.VEHICLE) {
                 rates.add(r);
             }
         }
@@ -112,11 +120,12 @@ public class RateService implements Serializable {
         Rate rate = new Rate();
         
         for (Rate r : findAll()) {
-            if (r.getType() == Rate.Type.MASS) {
+            if (r.getType() == RateType.MASS) {
                 rate = r;
             }
         }
         
         return rate;
     }
+    //</editor-fold>
 }

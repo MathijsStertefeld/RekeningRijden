@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 //</editor-fold>
 
+// This class represents a car that is owned by a driver.
+
 @Entity
 @XmlRootElement
 public class Car implements Serializable {
@@ -20,9 +22,9 @@ public class Car implements Serializable {
     private String model;
     private CarType type;
     private PaintColor paintColor;
-    private int mass;
+    private Integer mass;
     private Classification classification;
-    private int driverBSN;
+    private Integer driverBSN;
     @ElementCollection
     @CollectionTable(name = "CAR_DRIVER")
     private List<Integer> drivers;
@@ -77,11 +79,11 @@ public class Car implements Serializable {
         this.paintColor = paintColor;
     }
 
-    public int getMass() {
+    public Integer getMass() {
         return mass;
     }
 
-    public void setMass(int mass) {
+    public void setMass(Integer mass) {
         this.mass = mass;
     }
 
@@ -93,18 +95,18 @@ public class Car implements Serializable {
         this.classification = classification;
     }
 
-    public int getDriverBSN() {
+    public Integer getDriverBSN() {
         return driverBSN;
     }
 
-    public void setDriverBSN(int driverBSN) {
+    public void setDriverBSN(Integer driverBSN) {
         this.driverBSN = driverBSN;
     }
-    
+
     public List<Integer> getDriverHistory() {
         return drivers;
     }
-    
+
     public void setDriverHistory(List<Integer> driverHistory) {
         this.drivers = driverHistory;
     }
@@ -112,12 +114,11 @@ public class Car implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Car() {
-        this("", "", CarType.UNKNOWN, PaintColor.UNKNOWN,
-                0, Classification.UNKNOWN, "", "", 0);
+        this(null, null, null, null, null, null, null, null, null);
     }
 
     public Car(String carTrackerId, String licensePlate, CarType type, PaintColor paintColor,
-            int mass, Classification classification, String brand, String model, int driverBSN) {
+            Integer mass, Classification classification, String brand, String model, Integer driverBSN) {
         this.carTrackerId = carTrackerId;
         this.licensePlate = licensePlate;
         this.type = type;

@@ -12,6 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 //</editor-fold>
 
+// Use this service to create, edit, delete or find drivers.
+
 @Stateless
 @Path("drivers")
 public class DriverService implements Serializable {
@@ -21,6 +23,7 @@ public class DriverService implements Serializable {
     private DriverDAO driverDAO;
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -118,4 +121,5 @@ public class DriverService implements Serializable {
         
         return Response.status(Response.Status.NOT_FOUND).build();
     }
+    //</editor-fold>
 }

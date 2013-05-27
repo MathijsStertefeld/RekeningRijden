@@ -5,17 +5,16 @@ import com.marbl.administration.domain.Rate;
 import com.marbl.administration.website.service.RateService;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 //</editor-fold>
+
+// This bean is used by rate-details.xhtml and rate-overview.xhtml.
 
 @Named
 @SessionScoped

@@ -15,6 +15,8 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 //</editor-fold>
 
+// This bean is used by car-details.xhtml and car-overview.xhtml.
+
 @Named
 @SessionScoped
 public class CarBean implements Serializable {
@@ -57,7 +59,7 @@ public class CarBean implements Serializable {
             showOverview();
         }
     }
-    
+
     public Driver findLoggedInDriver() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
@@ -79,7 +81,7 @@ public class CarBean implements Serializable {
     public void showOverview() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
-        
+
         try {
             externalContext.redirect("car-overview.xhtml");
             current = null;

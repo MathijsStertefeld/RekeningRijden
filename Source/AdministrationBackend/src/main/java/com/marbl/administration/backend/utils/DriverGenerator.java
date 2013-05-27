@@ -7,6 +7,8 @@ import com.marbl.administration.domain.utils.Hasher;
 import java.util.Date;
 //</editor-fold>
 
+// This class is used to generate mock drivers for testing.
+
 public final class DriverGenerator {
 
     //<editor-fold defaultstate="collapsed" desc="Fields">
@@ -18,6 +20,7 @@ public final class DriverGenerator {
     private String[] lastNames;
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Constructors">
     public DriverGenerator(String emailProvider, Hasher hasher, String[] firstNames, String[] lastNames) {
         this.emailProvider = emailProvider;
         this.hasher = hasher;
@@ -26,7 +29,9 @@ public final class DriverGenerator {
         
         reset();
     }
+    //</editor-fold>
     
+    //<editor-fold defaultstate="collapsed" desc="Methods">
     public void reset() {
         index = -1;
     }
@@ -62,4 +67,5 @@ public final class DriverGenerator {
         return new Driver(bsn, firstName, lastName, email, password,
                 residence, address, zipCode, dateOfBirth, activated);
     }
+    //</editor-fold>
 }

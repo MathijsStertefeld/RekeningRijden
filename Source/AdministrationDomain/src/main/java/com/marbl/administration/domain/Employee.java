@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 //</editor-fold>
 
+// This class represents a employee and is used for authentication.
+
 @Entity
 @XmlRootElement
 public class Employee implements Serializable {
@@ -52,7 +54,7 @@ public class Employee implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public Employee() {
-        this("", "");
+        this(null, null);
     }
 
     public Employee(String username, String password) {

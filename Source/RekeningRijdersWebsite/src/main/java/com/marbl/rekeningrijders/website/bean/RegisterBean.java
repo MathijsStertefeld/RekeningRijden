@@ -25,6 +25,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 //</editor-fold>
 
+// This bean is used by login.xhtml.
+
 @Named
 @SessionScoped
 public class RegisterBean implements Serializable {
@@ -120,15 +122,15 @@ public class RegisterBean implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public void register() {
         Hasher hasher = new Hasher("SHA-256", "UTF-8");
-        
+
         Driver driver = new Driver(bsn, firstName, lastName,
                 email, hasher.hash(password), residence, address,
                 zipCode, dateOfBirth, false);
         driver.getGroups().add(DriverGroup.DRIVER);
-        
+
         service.createDriver(driver);
         sendMail();
-        
+
         bsn = null;
         firstName = null;
         lastName = null;

@@ -14,6 +14,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 //</editor-fold>
 
+// This bean is used by car-details.xhtml and car-overview.xhtml.
+
 @Named
 @SessionScoped
 public class CarBean implements Serializable {

@@ -3,18 +3,15 @@ package com.marbl.administration.website.bean;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.Bill;
 import com.marbl.administration.domain.Car;
-import com.marbl.administration.domain.CarType;
 import com.marbl.administration.website.service.BillService;
 import com.marbl.administration.website.service.CarService;
 import com.marbl.administration.website.service.MovementService;
 import com.marbl.administration.website.service.RateService;
 import com.marbl.autosysteem.Movement;
-import com.marbl.autosysteem.TimeStep;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -22,6 +19,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 //</editor-fold>
+
+// This bean is used by bill-details.xhtml and bill-overview.xhtml.
 
 @Named
 @SessionScoped
