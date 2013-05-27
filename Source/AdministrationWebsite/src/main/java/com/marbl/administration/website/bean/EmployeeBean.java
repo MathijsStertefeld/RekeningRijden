@@ -2,6 +2,7 @@ package com.marbl.administration.website.bean;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.Employee;
+import com.marbl.administration.domain.EmployeeGroup;
 import com.marbl.administration.website.service.EmployeeService;
 import java.io.IOException;
 import java.io.Serializable;
@@ -65,6 +66,18 @@ public class EmployeeBean implements Serializable {
         employee = null;
         System.out.println(employee);
         return "";
+    }
+    
+    public boolean findPermission()
+    {
+        if (employee.getGroups().contains(EmployeeGroup.RATE_EMPLOYEE))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     //</editor-fold>
 }
