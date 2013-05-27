@@ -11,7 +11,6 @@ import com.sun.jersey.api.client.*;
 import com.sun.jersey.api.client.config.*;
 import com.sun.jersey.api.json.JSONConfiguration;
 import java.util.ArrayList;
-import java.util.Collection;
 import javax.ws.rs.core.MediaType;
 
 /**

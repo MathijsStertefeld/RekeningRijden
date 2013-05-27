@@ -13,9 +13,14 @@ import org.openstreetmap.osmosis.core.domain.v0_6.Node;
  */
 public class Navigation
 {
-
     private static final double Earth_Radius = 6371;
 
+    
+    /**
+     * Calculates the car speed needed for the simulation.
+     * @param km The speed you want the car to go in km/h.
+     * @return Returns the car speed in simulation units.
+     */
     public static double getCarSpeedCalc(double km)
     {
         double sp = 0;
@@ -24,6 +29,14 @@ public class Navigation
         return sp;
     }
 
+    /**
+     * Moves the geoposition along a linear line between the two positions.
+     * @param from Begin node
+     * @param to Destination node
+     * @param distance Distance to travel
+     * @return The new position along the line.
+     */
+    @Deprecated
     public static GeoPosition navigate(Node from, Node to, double distance)
     {
         double startLat = deg2rad(from.getLatitude());
@@ -31,45 +44,51 @@ public class Navigation
 
         //in KM
         double distanceToTravel = distance;
-
-        //double maxDistance = getDistance(from.getLatitude(), from.getLongitude(), to.getLatitude(), to.getLongitude(), 'M');
-
         double bearing = getBearing(from, to);
 
         double newLat = Math.asin(Math.sin(startLat) * Math.cos(distanceToTravel / Earth_Radius)
                 + Math.cos(startLat) * Math.sin(distanceToTravel / Earth_Radius) * Math.cos(bearing));
 
-        //        var lat2 = Math.asin(Math.sin(lat1) * Math.cos(d / R)
-        //                + Math.cos(lat1) * Math.sin(d / R) * Math.cos(brng));
-
         double newLon = startLon + Math.atan2(Math.sin(bearing) * Math.sin(distanceToTravel / Earth_Radius) * Math.cos(startLat),
                 Math.cos(distanceToTravel / Earth_Radius) - Math.sin(startLat) * Math.sin(newLat));
-
-        //        var lon2 = lon1 + Math.atan2(Math.sin(brng) * Math.sin(d / R) * Math.cos(lat1),
-        //                Math.cos(d / R) - Math.sin(lat1) * Math.sin(lat2));
-
         GeoPosition nextPoint = new GeoPosition(rad2deg(newLat), rad2deg(newLon));
 
         return nextPoint;
     }
 
+    /**
+     * Calculates the radians from degrees.
+     * @param deg The degrees.
+     * @return The radians.
+     */
     private static double deg2rad(double deg)
     {
         return (deg * Math.PI / 180.0);
     }
 
+    /**
+     * Calculates the degrees from radians.
+     * @param rad The radians.
+     * @return The degrees.
+     */
     private static double rad2deg(double rad)
     {
         return (rad * 180 / Math.PI);
     }
 
+    /**
+     * Calculates the bearing.
+     * @param from Current node location
+     * @param to Node destination
+     * @return The bearing
+     */
     private static double getBearing(Node from, Node to)
     {
         double endLat = deg2rad(to.getLatitude());
         double endLon = deg2rad(to.getLongitude());
         double myLat = deg2rad(from.getLatitude());
         double myLon = deg2rad(from.getLongitude());
-        //double dLat = endLat - myLat; // Not used here
+        
         double dLon = endLon - myLon;
 
         double y = Math.sin(dLon) * Math.cos(endLat);
@@ -80,24 +99,17 @@ public class Navigation
         return bearing;
     }
 
+    /**
+     * Calculates the distance.
+     * @param lat1 Start Latitude
+     * @param lon1 Start Longitude
+     * @param lat2 End Latitude
+     * @param lon2 Start Longitude
+     * @param unit Distance Unit (K, M)
+     * @return 
+     */
     public static double getDistance(double lat1, double lon1, double lat2, double lon2, char unit)
     {
-//        double theta = lon1 - lon2;
-//        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-//        dist = Math.acos(dist);
-//        dist = rad2deg(dist);
-//        dist = dist * 60 * 1.1515;
-//        if (unit == 'M')
-//        {
-//            dist = dist * 1.609344*1000;
-//        } else
-//        {
-//            if (unit == 'N')
-//            {
-//                dist = dist * 0.8684;
-//            }
-//        }
-
         long R = 6371; // km
         double dLat = deg2rad(lat2 - lat1);
         double dLon = deg2rad(lon2 - lon1);

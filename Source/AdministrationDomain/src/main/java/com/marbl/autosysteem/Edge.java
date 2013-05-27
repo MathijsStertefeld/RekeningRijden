@@ -16,7 +16,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 @Entity
 public class Edge implements Serializable
 {
-
     @Id
     private String edge_id;
     private String name;

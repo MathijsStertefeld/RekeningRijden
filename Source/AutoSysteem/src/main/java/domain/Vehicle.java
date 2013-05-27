@@ -8,7 +8,6 @@ import com.marbl.administration.domain.Car;
 import com.marbl.autosysteem.Edge;
 import com.marbl.autosysteem.GeoPosition;
 import java.util.ArrayList;
-import javax.xml.bind.annotation.XmlRootElement;
 import openstreetmaps.org.openstreetmap.gui.CarGraphic;
 import org.openstreetmap.osmosis.core.domain.v0_6.Node;
 import org.openstreetmap.osmosis.core.domain.v0_6.Way;
@@ -19,6 +18,7 @@ import org.openstreetmap.osmosis.core.domain.v0_6.Way;
  */
 public class Vehicle extends com.marbl.administration.domain.Car
 {
+
     private boolean finished;
     private double carSpeed;
     private CarGraphic graphic;
@@ -34,18 +34,13 @@ public class Vehicle extends com.marbl.administration.domain.Car
         this.finished = false;
     }
 
-//    @Override
-//    @XmlAttribute(name="tracker_id")
-//    public String getCarTrackerId()
-//    {
-//        return this.getCarTrackerId();
-//    }
+
     public double getCarSpeedInKM()
     {
         return this.carSpeed * 2 * 3600;
     }
 
-        public double getCarSpeed()
+    public double getCarSpeed()
     {
         return carSpeed;
     }
@@ -96,8 +91,13 @@ public class Vehicle extends com.marbl.administration.domain.Car
         Node n = this.getRoute().getRoute().get(this.getRoute().getTargetIndex());
         Way w = Osmosis.getWayFromNode(n);
         Edge e = Osmosis.createNewEdgeFromWay(w);
-        e.setName(Osmosis.getValueOfWay(w, "name"));
+        String name = Osmosis.getValueOfWay(w, "name");
 
+        if (name.length() == 0 || name == null)
+        {
+            name = "empty";
+        }
+        e.setName(name);
         return e;
     }
 
@@ -110,6 +110,4 @@ public class Vehicle extends com.marbl.administration.domain.Car
     {
         this.finished = finished;
     }
-    
-    
 }

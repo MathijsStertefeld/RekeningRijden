@@ -47,6 +47,10 @@ public class Route
         this.route = route;
     }
 
+    /**
+     * Gets the current position of the route.
+     * @return 
+     */
     public GeoPosition getTargetNodePosition()
     {
         return new GeoPosition(route.get(targetNodeIndex).getLatitude(), route.get(targetNodeIndex).getLongitude());

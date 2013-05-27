@@ -28,7 +28,7 @@ public class CarHolder
 
     public void setCars(ArrayList<Vehicle> cars)
     {
-        this.cars = cars;
+        CarHolder.cars = cars;
     }
 
     public void addCar(Vehicle c, ArrayList<Node> route)

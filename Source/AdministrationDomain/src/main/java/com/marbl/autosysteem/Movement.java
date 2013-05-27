@@ -19,7 +19,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement(name = "movement")
 public class Movement implements Serializable
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

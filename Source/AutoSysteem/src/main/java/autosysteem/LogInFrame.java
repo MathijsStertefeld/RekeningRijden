@@ -5,14 +5,10 @@
 package autosysteem;
 
 import com.marbl.administration.domain.Driver;
-import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import services.AdministrationService;
 
 /**
@@ -30,7 +26,7 @@ public class LogInFrame extends javax.swing.JFrame
      */
     public LogInFrame()
     {
-        super("Log in...");
+        super("Inloggen");
 
         adminService = new AdministrationService();
         try
@@ -151,7 +147,7 @@ public class LogInFrame extends javax.swing.JFrame
             password += passWordChar[i];
         }
 
-        System.out.println("Username " + userName + " / Password " + password);
+        //System.out.println("Username " + userName + " / Password " + password);
         Driver driver = adminService.getDriver(userName, password);
 
         if (driver != null)

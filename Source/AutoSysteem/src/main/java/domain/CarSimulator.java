@@ -86,14 +86,10 @@ public class CarSimulator implements Runnable
                         distanceToTarget = WorldMath.DistanceInKM(c.getPosition(), c.getRoute().getTargetNodePosition());
                     }
 
-                    //System.out.println("PrePos: " + c.getPosition().getLatitudeInDegrees() + " - " + c.getPosition().getLongitudeInDegrees());
-                    //System.out.println("TargetNodePos: " + c.getRoute().getTargetNodePosition().getLatitudeInDegrees() + " - " + c.getRoute().getTargetNodePosition().getLongitudeInDegrees());
                     double bearing = WorldMath.AngleToInRadians(c.getPosition(), c.getRoute().getTargetNodePosition());
                     ///Was speed hieronder                 
                     GeoPosition newPosition = WorldMath.NewPositionWithAngleAndDistance(c.getPosition(), remainingDistance, bearing);
-                    //System.out.println("new Position: " + newPosition.getLatitudeInDegrees() + " - " + newPosition.getLongitudeInDegrees());
                     c.setPosition(newPosition);
-                    //System.out.println(" ");
                 }
 
                 try

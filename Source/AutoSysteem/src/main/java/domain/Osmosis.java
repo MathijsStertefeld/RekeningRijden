@@ -34,6 +34,10 @@ public class Osmosis
     public static ArrayList<Way> ways;
     public static ArrayList<Relation> relations;
 
+    /**
+     * Initializes Osmosis.
+     * @return Wether it succeeded
+     */
     public static boolean init()
     {
         nodes = new ArrayList<Node>();
@@ -49,21 +53,38 @@ public class Osmosis
         return false;
     }
 
+    /**
+     * Returns all nodes
+     * @return nodes
+     */
     public static ArrayList<Node> getNodes()
     {
         return nodes;
     }
 
+    /**
+     * Returns all ways
+     * @return  ways
+     */
     public static ArrayList<Way> getWays()
     {
         return ways;
     }
 
+    /**
+     * Returns all relations
+     * @return relations
+     */
     public static ArrayList<Relation> getRelations()
     {
         return relations;
     }
 
+    /**
+     * Returns a single node
+     * @param id the id of the node
+     * @return the node
+     */
     private static Node getNode(long id)
     {
         for (Node n : nodes)
@@ -76,6 +97,11 @@ public class Osmosis
         return null;
     }
 
+    /**
+     * Gets the way this node belongs to
+     * @param n The node
+     * @return The way
+     */
     public static Way getWayFromNode(Node n)
     {
         for (Way w : ways)
@@ -91,6 +117,10 @@ public class Osmosis
         return null;
     }
 
+    /**
+     * Reads the XML file with roads
+     * @param f The file to read from
+     */
     public static void parseFile(File f)
     {
         File file = f;// the input file
@@ -133,16 +163,12 @@ public class Osmosis
             @Override
             public void initialize(Map<String, Object> map)
             {
-                // throw new UnsupportedOperationException("Not supported yet.");
             }
         };
 
         //boolean pbf = false;
         CompressionMethod compression = CompressionMethod.None;
-
         RunnableSource reader;
-
-
         reader = new XmlReader(file, false, compression);
 
 
@@ -165,6 +191,11 @@ public class Osmosis
 
     }
 
+    /**
+     * Creates a path of nodes. It chooses a random startnode and starts plotting forward to connected nodes.
+     * @param amountOfWays The amount of Ways to iterate through.
+     * @return A list of nodes.
+     */
     public static ArrayList<Node> plotPath(int amountOfWays)
     {
         ArrayList<Node> routeNodes = new ArrayList<Node>();
@@ -299,6 +330,11 @@ public class Osmosis
         return node.getId();
     }
 
+    /**
+     * Converts a way to an edge.
+     * @param way a way
+     * @return an edge
+     */
     public static Edge createNewEdgeFromWay(Way way)
     {
         Edge edge = new Edge();

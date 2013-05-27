@@ -71,22 +71,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         // Add the map to the form and fill in settings
         addMap();
 
-//        // Fill the comboBox.
-///        currentCarComboBox.removeAllItems();
-//
-//        for (CarGraphic c : map.getAllCarGraphics())
-//        {
-//            currentCarComboBox.addItem(c.getCarTrackerId());
-//        }
-
-        //FOR TESTING PURPOSES
-        if (loggedInDriver == null)
-        {
-            //loggedInDriver = new Driver();
-            loggedInDriver = adminService.getDriver("leslie.aerts@marbl.com", "leslie123");
-            setDriver(loggedInDriver);
-        }
-
         //Simulation happens here
         sim = new Simulator(jsInterval.getValue(), CAR_SIMULATION_STEP, this);
 
@@ -381,7 +365,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /////TEMP?
     public JMapViewer getMap()
     {
         return map;
@@ -391,22 +374,17 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
     {
         this.outputPane.append(text);
     }
-    /////TEMP?
 
     private void btAddCarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btAddCarActionPerformed
     {//GEN-HEADEREND:event_btAddCarActionPerformed
 
         // Get all the cars from the current logged in driver;
         Collection<Car> cars = adminService.getCarsFromUser(loggedInDriver);
-
-        //Collection<Car> cars = new ArrayList<Car>();
-        //cars.add(new Car("t1", "t2", CarType.VAN, PaintColor.CREAM, 50, Classification.UNKNOWN, "lol", "lol2", 124));
         ArrayList<String> carStrings = new ArrayList<String>();
 
         // Add carStrings in format: "Volkswagen Beetle (AA-11-BB)"
         for (Car c : cars)
         {
-            //carStrings.add(c.getLicensePlate());
             carStrings.add(c.getBrand() + " " + c.getModel() + " (" + c.getLicensePlate() + ")");
         }
         String chosenCarString = (String) JOptionPane.showInputDialog(this, "Selecteer een auto.", "Auto selectie", JOptionPane.QUESTION_MESSAGE, null, carStrings.toArray(), carStrings.get(0));
@@ -446,10 +424,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                 } else
                 {
                     int routeAmount = Integer.parseInt(routeAmountString);
-
-                    //TODO: AFVANGEN
                     ArrayList<Node> route = Osmosis.plotPath(routeAmount);
-
                     Vehicle v = new Vehicle(selectedCar, route);
 
                     sim.addCar(v, route);
@@ -513,7 +488,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                 String carString = vehicle.getBrand() + " " + vehicle.getModel() + " (" + vehicle.getLicensePlate() + ")";
                 if (((String) currentCarComboBox.getSelectedItem()).equals(carString))
                 {
-
                     //Car is selected, update everything
                     map.setDisplayPositionByLatLon(vehicle.getPosition().getLatitudeInDegrees(), vehicle.getPosition().getLongitudeInDegrees(), DESIRED_FOCUS_ZOOM);
                     c.highlight(DESIRED_HIGHLIGHT_CAR_COLOR);
@@ -575,52 +549,10 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         LogInFrame frame = new LogInFrame();
         frame.setVisible(true);
         this.loggedInDriver = null;
-        this.dispose();        // TODO add your handling code here:
+        this.dispose();
+        
     }//GEN-LAST:event_logOutBtnActionPerformed
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[])
-//    {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try
-//        {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
-//            {
-//                if ("Nimbus".equals(info.getName()))
-//                {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex)
-//        {
-//            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex)
-//        {
-//            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex)
-//        {
-//            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex)
-//        {
-//            java.util.logging.Logger.getLogger(Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable()
-//        {
-//            public void run()
-//            {
-//                new Frame().setVisible(true);
-//            }
-//        });
-//    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem btAddCar;
     private javax.swing.JButton btStartSimulation;
@@ -664,6 +596,9 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         }
     }
 
+    /**
+     * Adds the map to 
+     */
     public void addMap()
     {
         // Instantiate the map
@@ -712,7 +647,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             Client client = Client.create(config);
 
             this.setOutputText("Verbinding maken met verplaatsingsysteem...\n\n");
-            //De URL klopt natuurlijk nog niet
             WebResource service = client.resource("http://192.168.30.187:8080/VerplaatsingSysteemWeb/");
             this.setOutputText("Versturen gegevens...\n\n");
             service.path("resources").path("session").post(s);

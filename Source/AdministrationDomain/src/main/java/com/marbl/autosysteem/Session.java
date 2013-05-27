@@ -8,14 +8,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -36,7 +32,7 @@ public class Session implements Serializable
     private int authCode = 0;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date sessiondate;
-    //@OneToMany(cascade= CascadeType.MERGE,mappedBy="parentSession")
+
     @Transient
     private Collection<TimeStep> timesteps;
 

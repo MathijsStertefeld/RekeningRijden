@@ -45,6 +45,9 @@ public class Simulator implements Runnable
         tempframe = f;
     }
 
+    /**
+     * Starts the thread for the timestep simulator.
+     */
     public void start()
     {
         t1 = new Thread(this);
@@ -53,6 +56,9 @@ public class Simulator implements Runnable
         carSim.start();
     }
 
+    /**
+     * Stops the thread.
+     */
     public void stop()
     {
         isRunning = false;
@@ -60,11 +66,20 @@ public class Simulator implements Runnable
         carSim.stop();
     }
 
+    /**
+     * Adds a car and attaches a route to it.
+     * @param c The car
+     * @param route The route
+     */
     public void addCar(Vehicle c, ArrayList<Node> route)
     {
         garage.addCar(c, route);
     }
 
+    /**
+     * Gets the static carholder
+     * @return 
+     */
     public CarHolder getGarage()
     {
         return garage;
@@ -82,7 +97,6 @@ public class Simulator implements Runnable
 
     public void changeTimestepInterval(long interval)
     {
-        // tsSim.changeInterval(interval);
         this.timestepInterval = interval;
     }
 
@@ -100,7 +114,6 @@ public class Simulator implements Runnable
                 for (Vehicle v : CarHolder.getCars())
                 {
                     //Add movement to ts
-                    //System.out.println("Timestep: " + timestepInterval);
                     double x = 1000.0000 / timestepInterval;
                     System.out.println(x);
                     double distance = (v.getCarSpeedInKM() / 3600) * 1000 / x;
@@ -113,10 +126,6 @@ public class Simulator implements Runnable
 
                     Movement m = new Movement(v.getDriverBSN(), v.getCarTrackerId(), new Date(), wayName, distance);
                     ts.addMovement(m);
-
-
-                    //System.out.println("distance since last is in meters " + distance);
-
                     tempframe.setOutputText("Car " + v.getCarTrackerId() + " pos is " + v.getCarGraphic().getLat() + "," + v.getCarGraphic().getLon() + "\n");
                 }
 
@@ -124,7 +133,6 @@ public class Simulator implements Runnable
 
                 tempframe.getMap().repaint();
                 timesteps.add(ts);
-                //sendSession(ts);
                 try
                 {
                     t1.sleep(timestepInterval);
@@ -150,6 +158,10 @@ public class Simulator implements Runnable
         this.timesteps = timesteps;
     }
 
+    /**
+     * Generates a session to send over restful to the movementsystem
+     * @return 
+     */
     public Session generateSession()
     {
         Session s = new Session(this.sessionDate, timesteps);
@@ -160,6 +172,12 @@ public class Simulator implements Runnable
         return s;
     }
 
+    /**
+     * Sends the session over restful to movementsystem.
+     * @param s
+     * @return 
+     */
+    @Deprecated
     public boolean sendSession(TimeStep s)
     {
 
@@ -170,11 +188,7 @@ public class Simulator implements Runnable
             JOptionPane.showMessageDialog(null, "Simulatie gestopt. Verplaatsingen worden verstuurd naar Verplaatsingsysteem.");
             ClientConfig config = new DefaultClientConfig();
             Client client = Client.create(config);
-
-            //tempframe.setOutputText("Verbinding maken met verplaatsingsysteem...\n\n");
-            //De URL klopt natuurlijk nog niet
             WebResource service = client.resource("http://192.168.30.187/VerplaatsingSysteemWeb/");
-            //tempframe.setOutputText("Versturen gegevens...\n\n");
             service.path("resources").path("session").post(s);
             tempframe.setOutputText("Timestep verzonden.\n\n");
 

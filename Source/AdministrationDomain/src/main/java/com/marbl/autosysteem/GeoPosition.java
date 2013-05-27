@@ -9,9 +9,6 @@ package com.marbl.autosysteem;
  * @author Leslie Aerts
  */
 public class GeoPosition {
-
-    //private final static double DEGREES_TO_RADIANS = Math.PI / 180d;
-    //private final static double RADIANS_TO_DEGREES = 180d / Math.PI;
     
     //Always save these in degrees
     private double longitude;
