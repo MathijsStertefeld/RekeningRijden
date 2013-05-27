@@ -69,32 +69,33 @@ public class RestfulReceiverService
         }
         System.out.println("Done.");
     }
-//    @POST
-//    @Consumes(MediaType.APPLICATION_XML)
-//    public void sendXML(TimeStep s)
-//    {
-//        System.out.println(s);
-//        System.out.println("Accepting file...");
-//        //tempsess = s;
-//
-//        vpService.createTimeStep(s);
-//        
-//        for(Movement m : s.getMovements())
+    @POST
+    @Consumes(MediaType.APPLICATION_XML)
+    @Path("send_timestep")
+    public void sendXML(TimeStep s)
+    {
+        System.out.println(s);
+        System.out.println("Accepting file...");
+        //tempsess = s;
+
+        vpService.createTimeStep(s);
+        
+        for(Movement m : s.getMovements())
+        {
+            vpService.createMovement(m);
+        }
+        
+        
+//        vpService.createSession(s);
+//        for (TimeStep ts : s.getTimesteps())
 //        {
-//            vpService.createMovement(m);
+//            System.out.println("Timestep");
+//            vpService.createTimeStep(ts);
+//            for (Movement m : ts.getMovements())
+//            {
+//                vpService.createMovement(m);
+//            }
 //        }
-//        
-//        
-////        vpService.createSession(s);
-////        for (TimeStep ts : s.getTimesteps())
-////        {
-////            System.out.println("Timestep");
-////            vpService.createTimeStep(ts);
-////            for (Movement m : ts.getMovements())
-////            {
-////                vpService.createMovement(m);
-////            }
-////        }
-//        System.out.println("Done.");
-//    }
+        System.out.println("Done.");
+    }
 }

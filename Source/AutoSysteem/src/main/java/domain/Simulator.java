@@ -174,7 +174,7 @@ public class Simulator implements Runnable
 
             //tempframe.setOutputText("Verbinding maken met verplaatsingsysteem...\n\n");
             //De URL klopt natuurlijk nog niet
-            WebResource service = client.resource("http://localhost:8080/VerplaatsingSysteemWeb/");
+            WebResource service = client.resource("http://192.168.30.187/VerplaatsingSysteemWeb/");
             //tempframe.setOutputText("Versturen gegevens...\n\n");
             service.path("resources").path("session").post(s);
             tempframe.setOutputText("Timestep verzonden.\n\n");

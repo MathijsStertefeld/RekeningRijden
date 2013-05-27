@@ -12,7 +12,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author Eagle
  */
 @Entity
@@ -26,7 +25,7 @@ public class Movement implements Serializable
     private long id;
     private int driverBsn;
     private String carTrackerId;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date movementDate;
     private String wayName; // Values are "city", "highway" or "region".
     private double distance;
