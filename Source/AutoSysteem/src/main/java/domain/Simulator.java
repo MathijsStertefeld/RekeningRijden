@@ -5,7 +5,6 @@
 package domain;
 
 import autosysteem.Frame;
-import com.marbl.autosysteem.GeoPosition;
 import com.marbl.autosysteem.Movement;
 import com.marbl.autosysteem.Session;
 import com.marbl.autosysteem.TimeStep;

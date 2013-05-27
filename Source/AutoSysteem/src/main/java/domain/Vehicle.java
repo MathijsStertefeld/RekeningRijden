@@ -17,10 +17,8 @@ import org.openstreetmap.osmosis.core.domain.v0_6.Way;
  *
  * @author Leslie Aerts
  */
-@XmlRootElement(name = "vehicle_position")
 public class Vehicle extends com.marbl.administration.domain.Car
 {
-
     private boolean finished;
     private double carSpeed;
     private CarGraphic graphic;

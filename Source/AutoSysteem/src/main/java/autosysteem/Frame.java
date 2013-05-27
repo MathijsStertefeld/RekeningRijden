@@ -19,6 +19,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.text.DefaultCaret;
@@ -60,8 +62,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         try
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -98,8 +99,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         if (Osmosis.init())
         {
             validate();
-        }
-        else
+        } else
         {
             JOptionPane.showMessageDialog(null, "Kan bestand 'bigroads.xml' niet vinden. Wegennetwerk niet ingeladen. Vraag naar Leslie of Alexander.");
         }
@@ -436,20 +436,28 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 
             if (routeAmountString != null && routeAmountString.length() != 0)
             {
-                int routeAmount = Integer.parseInt(routeAmountString);
 
 
-                //TODO: AFVANGEN
-                ArrayList<Node> route = Osmosis.plotPath(routeAmount);
+                Pattern p = Pattern.compile("[A-Z,a-z,&%$#@!()*^]");
+                Matcher m = p.matcher(routeAmountString);
+                if (m.find())
+                {
+                    JOptionPane.showMessageDialog(null, "Dit is geen geldig getal.", null, JOptionPane.ERROR_MESSAGE);
+                } else
+                {
+                    int routeAmount = Integer.parseInt(routeAmountString);
 
-                Vehicle v = new Vehicle(selectedCar, route);
+                    //TODO: AFVANGEN
+                    ArrayList<Node> route = Osmosis.plotPath(routeAmount);
 
-                sim.addCar(v, route);
-                map.addCarGraphic(v.getCarGraphic());
-            }
-            else
+                    Vehicle v = new Vehicle(selectedCar, route);
+
+                    sim.addCar(v, route);
+                    map.addCarGraphic(v.getCarGraphic());
+                }
+            } else
             {
-                JOptionPane.showMessageDialog(this, "Er is geen aantal wegen ingevuld", "Fout bij aanmaken route", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Er is geen getal ingevuld.", "Fout bij aanmaken route", JOptionPane.ERROR_MESSAGE);
             }
         }
         validate();
@@ -465,14 +473,12 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                 {
                     sim.start();
                     btStartSimulation.setText("Stop Simulatie");
-                }
-                else
+                } else
                 {
                     JOptionPane.showMessageDialog(null, "Er zijn nog geen auto's in de simulatie geplaatst.", null, JOptionPane.WARNING_MESSAGE);
                 }
 
-            }
-            else
+            } else
             {
                 sim.stop();
                 btStartSimulation.setText("Start Simulatie");
@@ -480,8 +486,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                 if (sendSession(sim.generateSession()))
                 {
                     JOptionPane.showMessageDialog(null, "Simulatie gestopt. De verplaatsingsgegevens van de auto's zijn verstuurd.");
-                }
-                else
+                } else
                 {
                     JOptionPane.showMessageDialog(null, "Simulatie gestopt.");
                 }
@@ -519,8 +524,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                     {
                         map.drawRoute(vehicle.getRoute().getRoute());
                     }
-                }
-                else
+                } else
                 {
                     c.highlight(DESIRED_DEFAULT_CAR_COLOR);
                     map.repaint();
@@ -546,8 +550,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                     {
                         //And draw the route
                         map.drawRoute(route);
-                    }
-                    else
+                    } else
                     {
                         //If car does not equal the thing
                         map.removeAllMapPolygons();
@@ -716,8 +719,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             this.setOutputText("Klaar.\n\n");
             return true;
 
-        }
-        else
+        } else
         {
             return false;
         }
