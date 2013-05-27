@@ -4,6 +4,7 @@
  */
 package com.marbl.autosysteem;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -13,16 +14,12 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author Leslie Aerts
  */
 @Entity
-public class Edge
+public class Edge implements Serializable
 {
 
     @Id
-    private String edge_id;    
+    private String edge_id;
     private String name;
-    private String type; // Values are "city", "highway" or "region".
-    private String city;
-    private String highway;
-    private String region;
 
     public Edge()
     {
@@ -47,45 +44,5 @@ public class Edge
     public void setName(String name)
     {
         this.name = name;
-    }
-
-    public String getType()
-    {
-        return type;
-    }
-
-    public void setType(String type)
-    {
-        this.type = type;
-    }
-
-    public String getCity()
-    {
-        return city;
-    }
-
-    public void setCity(String city)
-    {
-        this.city = city;
-    }
-
-    public String getHighway()
-    {
-        return highway;
-    }
-
-    public void setHighway(String highway)
-    {
-        this.highway = highway;
-    }
-
-    public String getRegion()
-    {
-        return region;
-    }
-
-    public void setRegion(String region)
-    {
-        this.region = region;
     }
 }

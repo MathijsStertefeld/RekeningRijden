@@ -6,13 +6,12 @@ package com.marbl.autosysteem;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import javax.persistence.CascadeType;
+import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,19 +29,21 @@ public class TimeStep implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private double time;
+    private double timestepTime;
+    
     @Transient
-    private ArrayList<Movement> movements;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    private Collection<Movement> movements;
+    @ManyToOne
     private Session parentSession;
 
     public TimeStep()
     {
+        movements = new ArrayList<Movement>();
     }
 
     public TimeStep(double time)
     {
-        this.time = time;
+        this.timestepTime = time;
         movements = new ArrayList<Movement>();
     }
 
@@ -56,6 +57,7 @@ public class TimeStep implements Serializable
         this.id = id;
     }
 
+    @XmlTransient
     public Session getParentSession()
     {
         return parentSession;
@@ -66,23 +68,23 @@ public class TimeStep implements Serializable
         this.parentSession = parentSession;
     }
 
-    @XmlAttribute(name = "timesteptime")
+    @XmlAttribute(name = "time")
     public double getTimestepTime()
     {
-        return time;
+        return timestepTime;
     }
 
     public void setTimestepTime(double timestepTime)
     {
-        this.time = timestepTime;
+        this.timestepTime = timestepTime;
     }
 
-    public ArrayList<Movement> getMovements()
+    public Collection<Movement> getMovements()
     {
         return movements;
     }
 
-    public void setMovements(ArrayList<Movement> movements)
+    public void setMovements(Collection<Movement> movements)
     {
         this.movements = movements;
     }

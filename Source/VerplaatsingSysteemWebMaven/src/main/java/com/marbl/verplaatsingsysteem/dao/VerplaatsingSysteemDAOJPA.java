@@ -132,7 +132,7 @@ public class VerplaatsingSysteemDAOJPA implements VerplaatsingSysteemDAO
     @Override
     public List<Movement> findAllMovements()
     {
-        String query = "SELECT m FROM Movement";
+        String query = "SELECT m FROM Movement m";
         TypedQuery q = em.createQuery(query, Movement.class);
         List<Movement> movements = q.getResultList();
 

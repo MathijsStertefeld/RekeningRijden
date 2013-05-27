@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import com.marbl.verplaatsingsysteem.XMLParser;
 import com.marbl.autosysteem.Session;
 import com.marbl.autosysteem.TimeStep;
+import javax.rmi.CORBA.Tie;
 
 /**
  *
@@ -26,6 +27,8 @@ import com.marbl.autosysteem.TimeStep;
 public class RestfulReceiverService
 {
 
+    Session tempsess;
+    
     @Inject
     VerplaatsingSysteemService vpService;
 
@@ -41,21 +44,7 @@ public class RestfulReceiverService
     @Path("get_session")
     public Session test2()
     {
-        Session s = null;
-        try
-        {
-            //Werkt niet meteen. Bestand moet in glassfish folder. Zie exception output of vraag naar Leslie.
-            XMLParser parser = new XMLParser("verplaatsing_19901218.xml");
-            System.out.println("Server: File found.");
-            System.out.println("Server: Starting XML to POJO.");
-            s = parser.readMovementXML();
-            System.out.println("Server: Done. Succesfully parsed.");
-            //System.out.println("Server: Test; parent session of timestep 1 is" + s.getTimeStep(1).getParentSession());
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return s;
+        return tempsess;
     }
 
     @POST
@@ -64,18 +53,48 @@ public class RestfulReceiverService
     {
         System.out.println(s);
         System.out.println("Accepting file...");
+        tempsess = s;
 
-        
         vpService.createSession(s);
-        for(TimeStep ts : s.getTimesteps())
+        for (TimeStep ts : s.getTimesteps())
         {
             System.out.println("Timestep");
             vpService.createTimeStep(ts);
-            for(Movement m : ts.getMovements())
+            System.out.println(ts.getMovements().size());
+            for (Movement m : ts.getMovements())
             {
+                System.out.println(m);
                 vpService.createMovement(m);
             }
         }
         System.out.println("Done.");
     }
+//    @POST
+//    @Consumes(MediaType.APPLICATION_XML)
+//    public void sendXML(TimeStep s)
+//    {
+//        System.out.println(s);
+//        System.out.println("Accepting file...");
+//        //tempsess = s;
+//
+//        vpService.createTimeStep(s);
+//        
+//        for(Movement m : s.getMovements())
+//        {
+//            vpService.createMovement(m);
+//        }
+//        
+//        
+////        vpService.createSession(s);
+////        for (TimeStep ts : s.getTimesteps())
+////        {
+////            System.out.println("Timestep");
+////            vpService.createTimeStep(ts);
+////            for (Movement m : ts.getMovements())
+////            {
+////                vpService.createMovement(m);
+////            }
+////        }
+//        System.out.println("Done.");
+//    }
 }

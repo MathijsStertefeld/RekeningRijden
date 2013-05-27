@@ -36,18 +36,19 @@ public class Session implements Serializable
     private int authCode = 0;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date sessiondate;
-    
     //@OneToMany(cascade= CascadeType.MERGE,mappedBy="parentSession")
     @Transient
     private Collection<TimeStep> timesteps;
 
     public Session()
     {
+
         this.timesteps = new ArrayList<>();
     }
 
     public Session(Date date, ArrayList<TimeStep> timesteps)
     {
+        this.sessiondate = date;
         this.timesteps = timesteps;
     }
 

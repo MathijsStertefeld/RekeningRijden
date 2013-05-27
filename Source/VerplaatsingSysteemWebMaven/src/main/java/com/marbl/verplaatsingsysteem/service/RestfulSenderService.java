@@ -103,7 +103,7 @@ public class RestfulSenderService
         }
         else
         {
-            throw new NullPointerException("Timestep with time " + time + " cannot be found.");
+            return null;
         }
     } 
 }
