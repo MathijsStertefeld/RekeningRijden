@@ -58,7 +58,7 @@
                         </p:column>
 
                         <p:column style="white-space:normal" headerText="#{msg.BO_Pay}">
-                            <h:outputLink value="paymentwithpaypal" disabled="#{bill.isPayed()}">
+                            <h:outputLink value="paymentwithpaypal" disabled="#{bill.notOpen()}">
                                 <f:param name="billID" value="#{bill.ID}" />
                                 <h:outputText value="#{msg.BO_Pay}" />
                             </h:outputLink>
