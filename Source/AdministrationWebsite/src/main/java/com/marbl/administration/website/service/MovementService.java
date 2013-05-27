@@ -7,7 +7,6 @@ import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
@@ -15,34 +14,32 @@ import javax.ejb.Stateless;
 import javax.ws.rs.core.MediaType;
 
 @Stateless
-public class MovementService implements Serializable
-{
-    
+public class MovementService implements Serializable {
+
     private WebResource wr;
 
     @PostConstruct
-    public void postConstruct()
-    {
+    public void postConstruct() {
         ClientConfig config = new DefaultClientConfig();
-        config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
         wr = client.resource("http://192.168.30.187:8080/VerplaatsingSysteemWeb/resources/");
     }
-    
-    public ArrayList<Movement> findAll(Integer driverBsn, String carTrackerId)
-    {
+
+    public ArrayList<Movement> findAll(Integer driverBsn, String carTrackerId) {
         ClientResponse cr = wr.path("movement")
                 .queryParam("driverBsn", driverBsn.toString())
                 .queryParam("carTrackerId", carTrackerId)
                 .accept(MediaType.APPLICATION_JSON)
                 .get(ClientResponse.class);
-        
+
         GenericType<ArrayList<Movement>> gt = new GenericType<ArrayList<Movement>>() {
         };
-        
+
         switch (cr.getClientResponseStatus()) {
             case OK:
-                return cr.getEntity(gt);
+                if (cr.hasEntity()) {
+                    return cr.getEntity(gt);
+                }
             default:
                 return null;
         }

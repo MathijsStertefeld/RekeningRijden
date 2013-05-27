@@ -35,7 +35,9 @@ public class RateService implements Serializable {
 
         switch (cr.getClientResponseStatus()) {
             case OK:
-                return cr.getEntity(Rate.class);
+                if (cr.hasEntity()) {
+                    return cr.getEntity(Rate.class);
+                }
             default:
                 return null;
         }

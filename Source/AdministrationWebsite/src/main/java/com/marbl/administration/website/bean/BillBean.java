@@ -97,7 +97,20 @@ public class BillBean implements Serializable {
                     System.err.println(paymentAmount);
                     paymentAmount /= 1000;
                     System.err.println(paymentAmount);
-                    paymentAmount *= rateService.find(car.getType().toString()).getPrice();
+                    
+                    switch (car.getType()) {
+                        case AUTOBUS:
+                            paymentAmount *= rateService.find("Autobus").getPrice();
+                        case PASSENGER_CAR:
+                            paymentAmount *= rateService.find("Passenger Car").getPrice();
+                        case TRUCK:
+                            paymentAmount *= rateService.find("Truck").getPrice();
+                        case VAN:
+                            paymentAmount *= rateService.find("Van").getPrice();
+                        default:
+                            paymentAmount *= rateService.find("Unknown").getPrice();
+                    }
+                    
                     System.err.println(paymentAmount);
                     paymentAmount *= (car.getMass() * rateService.findMassRate().getPrice());
                     System.err.println(paymentAmount);
