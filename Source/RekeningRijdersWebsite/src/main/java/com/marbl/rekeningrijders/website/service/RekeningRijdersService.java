@@ -93,7 +93,7 @@ public class RekeningRijdersService implements Serializable {
             case OK:
                 return cr.getEntity(Car.class);
             default:
-                return null;
+                return car;
         }
     }
 

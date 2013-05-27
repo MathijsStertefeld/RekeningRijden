@@ -32,7 +32,7 @@ public class RegisterBean implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Fields">
     @Inject
     private RekeningRijdersService service;
-    private int bsn;
+    private Integer bsn;
     private String email;
     private String password;
     private String firstName;
@@ -44,11 +44,11 @@ public class RegisterBean implements Serializable {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
-    public int getBSN() {
+    public Integer getBSN() {
         return bsn;
     }
 
-    public void setBSN(int bsn) {
+    public void setBSN(Integer bsn) {
         this.bsn = bsn;
     }
 
@@ -120,12 +120,24 @@ public class RegisterBean implements Serializable {
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public void register() {
         Hasher hasher = new Hasher("SHA-256", "UTF-8");
-        Driver newDriver = new Driver(bsn, firstName, lastName,
+        
+        Driver driver = new Driver(bsn, firstName, lastName,
                 email, hasher.hash(password), residence, address,
                 zipCode, dateOfBirth, false);
-        newDriver.getGroups().add(DriverGroup.DRIVER);
-        service.createDriver(newDriver);
+        driver.getGroups().add(DriverGroup.DRIVER);
+        
+        service.createDriver(driver);
         sendMail();
+        
+        bsn = null;
+        firstName = null;
+        lastName = null;
+        email = null;
+        password = null;
+        residence = null;
+        address = null;
+        zipCode = null;
+        dateOfBirth = null;
     }
 
     public void sendMail() {
@@ -152,7 +164,7 @@ public class RegisterBean implements Serializable {
             message.setFrom(new InternetAddress("payment@RekeningRijders.no-ip.biz"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
             message.setSubject("Activatie Rekening Rijders");
-            message.setText("Klik op onderstaande link om uw account te activeren.\nhttp://localhost:8080/RekeningRijdersWebsiteM/activation.xhtml?bsn=" + bsn);
+            message.setText("Klik op onderstaande link om uw account te activeren.\nhttp://localhost:8080/RekeningRijdersWebsite/activation.xhtml?bsn=" + bsn);
 
             Transport.send(message);
         } catch (MessagingException e) {
