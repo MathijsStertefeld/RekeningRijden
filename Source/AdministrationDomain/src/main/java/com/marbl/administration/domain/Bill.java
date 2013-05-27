@@ -89,6 +89,10 @@ public class Bill implements Serializable {
     public void setPaymentStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
+    
+    public Boolean getIsPayed() {
+        return paymentStatus != PaymentStatus.OPEN;
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">

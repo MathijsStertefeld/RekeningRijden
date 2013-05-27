@@ -74,11 +74,11 @@ public class RekeningRijdersService implements Serializable {
         }
     }
 
-    public void payBill(Long billId) {
+    public Bill payBill(Long billId) {
         Bill bill = findBill(billId);
         bill.setPaymentDate(new Date());
         bill.setPaymentStatus(PaymentStatus.PAID);
-        wr.path("bills").put(Bill.class, bill);
+        return editBill(bill);
     }
     //</editor-fold>
 
