@@ -60,7 +60,8 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         try
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -97,7 +98,8 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         if (Osmosis.init())
         {
             validate();
-        } else
+        }
+        else
         {
             JOptionPane.showMessageDialog(null, "Kan bestand 'bigroads.xml' niet vinden. Wegennetwerk niet ingeladen. Vraag naar Leslie of Alexander.");
         }
@@ -404,8 +406,8 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         // Add carStrings in format: "Volkswagen Beetle (AA-11-BB)"
         for (Car c : cars)
         {
-            carStrings.add(c.getLicensePlate());
-//            carStrings.add(c.getBrand() + " " + c.getModel() + " (" + c.getLicensePlate() + ")");
+            //carStrings.add(c.getLicensePlate());
+            carStrings.add(c.getBrand() + " " + c.getModel() + " (" + c.getLicensePlate() + ")");
         }
         String chosenCarString = (String) JOptionPane.showInputDialog(this, "Selecteer een auto.", "Auto selectie", JOptionPane.QUESTION_MESSAGE, null, carStrings.toArray(), carStrings.get(0));
 
@@ -415,8 +417,8 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             Car selectedCar = null;
             for (Car c : cars)
             {
-                //String carString = c.getBrand() + " " + c.getModel() + " (" + c.getLicensePlate() + ")";
-                if (c.getLicensePlate().equals(chosenCarString))
+                String carString = c.getBrand() + " " + c.getModel() + " (" + c.getLicensePlate() + ")";
+                if (carString.equals(chosenCarString))
                 {
                     selectedCar = c;
                 }
@@ -425,20 +427,30 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             // Add the license plate to the currentCarComboBox
             if (selectedCar != null)
             {
-                currentCarComboBox.addItem(selectedCar.getLicensePlate());
+                String selectedCarString = selectedCar.getBrand() + " " + selectedCar.getModel() + " (" + selectedCar.getLicensePlate() + ")";
+                currentCarComboBox.addItem(selectedCarString);
+                currentCarComboBox.setSelectedItem(selectedCar);
             }
 
             String routeAmountString = JOptionPane.showInputDialog(null, "Hoeveel wegen moet de route van deze auto bevatten?");
 
-            int routeAmount = Integer.parseInt(routeAmountString);
+            if (routeAmountString != null && routeAmountString.length() != 0)
+            {
+                int routeAmount = Integer.parseInt(routeAmountString);
 
-            //TODO: AFVANGEN
-            ArrayList<Node> route = Osmosis.plotPath(routeAmount);
 
-            Vehicle v = new Vehicle(selectedCar, route);
+                //TODO: AFVANGEN
+                ArrayList<Node> route = Osmosis.plotPath(routeAmount);
 
-            sim.addCar(v, route);
-            map.addCarGraphic(v.getCarGraphic());
+                Vehicle v = new Vehicle(selectedCar, route);
+
+                sim.addCar(v, route);
+                map.addCarGraphic(v.getCarGraphic());
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Er is geen aantal wegen ingevuld", "Fout bij aanmaken route", JOptionPane.ERROR_MESSAGE);
+            }
         }
         validate();
     }//GEN-LAST:event_btAddCarActionPerformed
@@ -453,12 +465,14 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                 {
                     sim.start();
                     btStartSimulation.setText("Stop Simulatie");
-                } else
+                }
+                else
                 {
                     JOptionPane.showMessageDialog(null, "Er zijn nog geen auto's in de simulatie geplaatst.", null, JOptionPane.WARNING_MESSAGE);
                 }
 
-            } else
+            }
+            else
             {
                 sim.stop();
                 btStartSimulation.setText("Start Simulatie");
@@ -466,7 +480,8 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                 if (sendSession(sim.generateSession()))
                 {
                     JOptionPane.showMessageDialog(null, "Simulatie gestopt. De verplaatsingsgegevens van de auto's zijn verstuurd.");
-                } else
+                }
+                else
                 {
                     JOptionPane.showMessageDialog(null, "Simulatie gestopt.");
                 }
@@ -490,7 +505,8 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             for (Vehicle vehicle : CarHolder.getCars())
             {
                 CarGraphic c = vehicle.getCarGraphic();
-                if (((String) currentCarComboBox.getSelectedItem()).equals(vehicle.getLicensePlate()))
+                String carString = vehicle.getBrand() + " " + vehicle.getModel() + " (" + vehicle.getLicensePlate() + ")";
+                if (((String) currentCarComboBox.getSelectedItem()).equals(carString))
                 {
 
                     //Car is selected, update everything
@@ -503,7 +519,8 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                     {
                         map.drawRoute(vehicle.getRoute().getRoute());
                     }
-                } else
+                }
+                else
                 {
                     c.highlight(DESIRED_DEFAULT_CAR_COLOR);
                     map.repaint();
@@ -524,11 +541,13 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
                 {
                     //Get the cars route
                     ArrayList<Node> route = car.getRoute().getRoute();
-                    if (((String) currentCarComboBox.getSelectedItem()).equals(car.getLicensePlate()))
+                    String carString = car.getBrand() + " " + car.getModel() + " (" + car.getLicensePlate() + ")";
+                    if (((String) currentCarComboBox.getSelectedItem()).equals(carString))
                     {
                         //And draw the route
                         map.drawRoute(route);
-                    } else
+                    }
+                    else
                     {
                         //If car does not equal the thing
                         map.removeAllMapPolygons();
@@ -555,7 +574,6 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
         this.loggedInDriver = null;
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_logOutBtnActionPerformed
-
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -698,7 +716,8 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
             this.setOutputText("Klaar.\n\n");
             return true;
 
-        } else
+        }
+        else
         {
             return false;
         }
