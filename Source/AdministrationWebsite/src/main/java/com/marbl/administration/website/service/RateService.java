@@ -20,7 +20,7 @@ public class RateService implements Serializable {
         ClientConfig config = new DefaultClientConfig();
         config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
-        wr = client.resource("http://localhost:8080/AdministrationBackend/resources/rates/");
+        wr = client.resource("http://192.168.30.185:8080/AdministrationBackend/resources/rates/");
     }
 
     public Rate edit(Rate rate) {

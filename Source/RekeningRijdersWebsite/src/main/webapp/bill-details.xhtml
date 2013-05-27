@@ -51,9 +51,7 @@
                     <h:inputText id="paymentYear" value="#{billBean.current.paymentYear}" style="width: 250px" disabled="true"/><br/>
 
                     <strong><h:outputLabel for="paymentDate" value="#{msg.BE_PaymentDate}: " /></strong><br />
-                    <h:inputText id="paymentDate" value="#{billBean.current.paymentDate}" style="width: 250px">
-                        <f:convertDateTime pattern="d/M/yyyy" />
-                    </h:inputText><br/>
+                    <h:inputText id="paymentDate" value="#{billBean.current.paymentDate}" style="width: 250px" disabled="true" /><br/>
 
                     <strong><h:outputLabel for="paymentAmount" value="#{msg.BE_PaymentAmount}: " /></strong><br />
                     <h:inputText id="paymentAmount" value="#{billBean.current.paymentAmount}" style="width: 250px" disabled="true"/><br/>
