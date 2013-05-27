@@ -3,12 +3,18 @@ package com.marbl.administration.website.bean;
 //<editor-fold defaultstate="collapsed" desc="Imports">
 import com.marbl.administration.domain.Bill;
 import com.marbl.administration.domain.Car;
+import com.marbl.administration.domain.CarType;
 import com.marbl.administration.website.service.BillService;
 import com.marbl.administration.website.service.CarService;
+import com.marbl.administration.website.service.MovementService;
+import com.marbl.administration.website.service.RateService;
+import com.marbl.autosysteem.Movement;
+import com.marbl.autosysteem.TimeStep;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -28,6 +34,16 @@ public class BillBean implements Serializable {
     private Bill current;
     @Inject
     private CarService carService;
+    @Inject
+    private RateService rateService;
+    @Inject
+    private MovementService movementService;
+    
+    /*private Movement mockMovement1 = new Movement(1, 900000000, "t0", new Date(), "", "", "Regio Eindhoven", "REGION", 200, new TimeStep());
+    private Movement mockMovement2 = new Movement(2, 900000000, "t0", new Date(), "", "", "Regio Eindhoven", "REGION", 100, new TimeStep());
+    private Movement mockMovement3 = new Movement(3, 900000000, "t0", new Date(), "", "", "Eindhoven", "CITY", 100, new TimeStep());
+    private Movement mockMovement4 = new Movement(4, 900000000, "t0", new Date(), "", "", "A2", "HIGHWAY", 100, new TimeStep());
+    private Movement mockMovement5 = new Movement(5, 900000000, "t0", new Date(), "", "", "A2", "HIGHWAY", 200, new TimeStep());*/
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Getters & Setters">
@@ -71,7 +87,26 @@ public class BillBean implements Serializable {
             String carTrackerId = car.getCarTrackerId();
             
             // TODO: use rates to calculate payment amount
-            Double paymentAmount = 100d;
+            Double paymentAmount = 0d;
+            ArrayList<Movement> movement = movementService.findAll(car.getDriverBSN(), car.getCarTrackerId());
+            if (movement != null)
+            {
+                for (Movement mov : movement)
+                {
+                    paymentAmount = mov.getDistance();
+                    System.err.println(paymentAmount);
+                    paymentAmount /= 1000;
+                    System.err.println(paymentAmount);
+                    paymentAmount *= rateService.find(car.getType().toString()).getPrice();
+                    System.err.println(paymentAmount);
+                    paymentAmount *= (car.getMass() * rateService.findMassRate().getPrice());
+                    System.err.println(paymentAmount);
+                    paymentAmount *= rateService.findAllRegionRates().get(1).getPrice();
+                    System.err.println(paymentAmount);              
+                }
+            }
+            
+            
             
             // TODO: generate bills for all unpaid months
             Integer paymentMonth = Calendar.getInstance().get(Calendar.MONTH) - 1;
