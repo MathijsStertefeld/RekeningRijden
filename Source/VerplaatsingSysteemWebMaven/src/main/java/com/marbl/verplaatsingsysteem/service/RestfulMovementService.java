@@ -14,12 +14,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import com.marbl.autosysteem.Movement;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author Eagle
  */
 @Path("/movement")
+@Stateless
 public class RestfulMovementService
 {
     @Inject
@@ -34,6 +36,8 @@ public class RestfulMovementService
             )
     {
         Collection<Movement> movements = new ArrayList<Movement>();
+        
+        System.out.println(vpService);
         
         for (Movement m : vpService.findAllMovements())
         {
