@@ -90,7 +90,7 @@ public class Bill implements Serializable {
         this.paymentStatus = paymentStatus;
     }
     
-    public Boolean getIsPayed() {
+    public Boolean notOpen() {
         return paymentStatus != PaymentStatus.OPEN;
     }
     //</editor-fold>
