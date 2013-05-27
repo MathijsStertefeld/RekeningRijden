@@ -692,7 +692,7 @@ public class Frame extends javax.swing.JFrame implements JMapViewerEventListener
 
             this.setOutputText("Verbinding maken met verplaatsingsysteem...\n\n");
             //De URL klopt natuurlijk nog niet
-            WebResource service = client.resource("http://localhost:8080/VerplaatsingSysteemWeb/");
+            WebResource service = client.resource("http://192.168.30.187:8080/VerplaatsingSysteemWeb/");
             this.setOutputText("Versturen gegevens...\n\n");
             service.path("resources").path("session").post(s);
             this.setOutputText("Klaar.\n\n");
